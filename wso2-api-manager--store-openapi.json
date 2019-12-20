@@ -1,0 +1,1074 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.14.0",
+        "title": "WSO2 API Manager - Store",
+        "description": "This specifies a **RESTful API** for WSO2 **API Manager** - Store.\n\nPlease see [full swagger definition](https:\/\/raw.githubusercontent.com\/wso2\/carbon-apimgt\/v6.1.66\/components\/apimgt\/org.wso2.carbon.apimgt.rest.api.store\/src\/main\/resources\/store-api.yaml) of the API which is written using [swagger 2.0](http:\/\/swagger.io\/) specification.\n",
+        "termsOfService": "http:\/\/exmple.com\/license\/"
+    },
+    "servers": [
+        "http:\/\/apis.wso2.com\/api\/am\/store\/v0.14"
+    ],
+    "paths": {
+        "\/apis": {
+            "get": {
+                "summary": "Retrieve\/Search APIs\n",
+                "description": "This operation provides you a list of available APIs qualifying under a given search condition.\n\nEach retrieved API is represented with a minimal amount of attributes. If you want to get complete details of an API, you need to use **Get details of an API** operation.\n\nThis operation supports retriving APIs of other tenants. The required tenant domain need to be specified as a header `X-WSO2-Tenant`. If not specified super tenant's APIs will be retrieved. If you used an Authorization header, the ",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an API if the provider of the API is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match an API if the provider of the API starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, subcontext, doc, provider, tag**]\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven quer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}": {
+            "get": {
+                "summary": "Get details of an API\n",
+                "description": "Using this operation, you can retrieve complete details of a single API. You need to provide the Id of the API to retrive it.\n\n`X-WSO2-Tenant` header can be used to retrive an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But if it is provided, it will be validated and c",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}\/swagger": {
+            "get": {
+                "summary": "Get swagger definition\n",
+                "description": "You can use this operation to retrieve the swagger definition of an API.\n\n `X-WSO2-Tenant` header can be used to retrive the swagger definition an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's swagger definition, you need to provide",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/generate-sdk\/": {
+            "post": {
+                "summary": "Generate SDK for an API\n",
+                "description": "This operation can be used to generate SDK for an API by providing the id of the API along with the preferred language.\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}\/documents": {
+            "get": {
+                "summary": "Get a list of documents of an API\n",
+                "description": "This operation can be used to retrive a list of documents belonging to an API by providing the id of the API.\n\n`X-WSO2-Tenant` header can be used to retrive documents of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's ",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}\/documents\/{documentId}": {
+            "get": {
+                "summary": "Get a document of an API\n",
+                "description": "This operation can be used to retrieve a particular document's metadata associated with an API.\n\n`X-WSO2-Tenant` header can be used to retrive a document of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's document, you",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}\/documents\/{documentId}\/content": {
+            "get": {
+                "summary": "Get the content of an API document\n",
+                "description": "This operation can be used to retrive the content of an API's document.\n\nThe document can be of 3 types. In each cases responses are different.\n\n1. **Inline type**:\n   The content of the document will be retrieved in `text\/plain` content type\n2. **FILE type**:\n   The file will be downloaded with the related content type (eg. `application\/pdf`)\n3. **URL type**:\n    The client will recieve the URL of the document as the Location header with the response with - `303 See Other`\n\n`X-WSO2-Tenant` head",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/apis\/{apiId}\/thumbnail": {
+            "get": {
+                "summary": "Get thumbnail image",
+                "description": "This operation can be used to download a thumbnail image of an API.\n\n`X-WSO2-Tenant` header can be used to retrive a thumbnail of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's thumbnail, you need to provide Authoriza",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/applications": {
+            "get": {
+                "summary": "Retrieve\/Search applications\n",
+                "description": "This operation can be used to retrieve list of applications that is belonged to the user associated with the provided access token.\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an API if the provider of the API is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match an API if the provider of the API starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, subcontext, doc, provider, tag**]\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven quer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying APIs is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/APIList"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new application\n",
+                "description": "This operation can be used to create a new application specifying the details of the application in the payload.\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": []
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "APIList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "pagination": {
+                        "description": "",
+                        "type": ""
+                    }
+                }
+            },
+            "list": {
+                "type": "array"
+            },
+            "APIInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "context": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "provider": {
+                        "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "thumbnailUri": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "scopes": {
+                "type": "array"
+            },
+            "API": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "context": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "provider": {
+                        "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n",
+                        "type": "string"
+                    },
+                    "apiDefinition": {
+                        "description": "Swagger definition of the API which contains details about URI templates and scopes\n",
+                        "type": "string"
+                    },
+                    "wsdlUri": {
+                        "description": "WSDL URL if the API is based on a WSDL endpoint\n",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "isDefaultVersion": {
+                        "description": "",
+                        "type": "boolean"
+                    },
+                    "transport": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "authorizationHeader": {
+                        "description": "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used.\n",
+                        "type": "string"
+                    },
+                    "apiSecurity": {
+                        "description": "Supported API security for the API ( mutualssl and\/or oauth2)\n",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "description": "Search keywords related to the API",
+                        "type": "array"
+                    },
+                    "tiers": {
+                        "description": "The subscription tiers selected for the particular API",
+                        "type": "array"
+                    },
+                    "thumbnailUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "additionalProperties": {
+                        "description": "Custom(user defined) properties of API\n",
+                        "type": "object"
+                    },
+                    "endpointURLs": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "businessInformation": {
+                        "description": "",
+                        "type": ""
+                    },
+                    "labels": {
+                        "description": "Labels of micro-gateway environments attached to the API.\n",
+                        "type": "array"
+                    },
+                    "environmentList": {
+                        "description": "The environment list configured with non empty endpoint URLs for the particular API.",
+                        "type": "array"
+                    }
+                }
+            },
+            "transport": {
+                "type": "array"
+            },
+            "tags": {
+                "type": "array"
+            },
+            "tiers": {
+                "type": "array"
+            },
+            "additionalProperties": {
+                "type": "object"
+            },
+            "endpointURLs": {
+                "type": "array"
+            },
+            "labels": {
+                "type": "array"
+            },
+            "environmentList": {
+                "type": "array"
+            },
+            "Label": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accessUrls": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "accessUrls": {
+                "type": "array"
+            },
+            "ApplicationList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "Application": {
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "subscriber": {
+                        "description": "If subscriber is not given user invoking the API will be taken as the subscriber.\n",
+                        "type": "string"
+                    },
+                    "throttlingTier": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "callbackUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tokenType": {
+                        "description": "Type of the access token generated for this application.\n\n**OAUTH:** A UUID based access token which is issued by default.\n**JWT:** A self-contained, signed JWT based access token. **Note:** This can be only used in Microgateway environments.\n",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "owner": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "keys": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "object"
+                    }
+                }
+            },
+            "keys": {
+                "type": "array"
+            },
+            "attributes": {
+                "type": "object"
+            },
+            "ApplicationInfo": {
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "subscriber": {
+                        "description": "If subscriber is not given user invoking the API will be taken as the subscriber.\n",
+                        "type": "string"
+                    },
+                    "throttlingTier": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "object"
+                    },
+                    "owner": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "DocumentList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "Document": {
+                "type": "object",
+                "properties": {
+                    "documentId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "summary": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "sourceType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "sourceUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "otherTypeName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "TierList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "Tier": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tierLevel": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "description": "",
+                        "type": "object"
+                    },
+                    "requestCount": {
+                        "description": "Maximum number of requests which can be sent within a provided unit time\n",
+                        "type": "integer"
+                    },
+                    "unitTime": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "tierPlan": {
+                        "description": "This attribute declares whether this tier is available under commercial or free\n",
+                        "type": "string"
+                    },
+                    "stopOnQuotaReach": {
+                        "description": "If this attribute is set to false, you are capabale of sending requests\neven if the request count exceeded within a unit time\n",
+                        "type": "boolean"
+                    },
+                    "TierPermissions": {
+                        "description": "",
+                        "type": ""
+                    }
+                }
+            },
+            "TierPermissions": {
+                "type": "object"
+            },
+            "SubscriptionList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "Subscription": {
+                "type": "object",
+                "properties": {
+                    "subscriptionId": {
+                        "description": "The UUID of the subscription",
+                        "type": "string"
+                    },
+                    "applicationId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "apiIdentifier": {
+                        "description": "The unique identifier of the API.",
+                        "type": "string"
+                    },
+                    "tier": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "Tag": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "weight": {
+                        "description": "",
+                        "type": "integer"
+                    }
+                }
+            },
+            "TagList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "Error message.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "moreInfo": {
+                        "description": "Preferably an url with more details about the error.\n",
+                        "type": "string"
+                    },
+                    "error": {
+                        "description": "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n",
+                        "type": "array"
+                    }
+                }
+            },
+            "error": {
+                "type": "array"
+            },
+            "ErrorListItem": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "Error message.",
+                        "type": "string"
+                    }
+                }
+            },
+            "Token": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "description": "Access token",
+                        "type": "string"
+                    },
+                    "tokenScopes": {
+                        "description": "Valid scopes for the access token",
+                        "type": "array"
+                    },
+                    "validityTime": {
+                        "description": "Maximum validity time for the access token",
+                        "type": "integer"
+                    }
+                }
+            },
+            "tokenScopes": {
+                "type": "array"
+            },
+            "ApplicationKey": {
+                "type": "object",
+                "properties": {
+                    "consumerKey": {
+                        "description": "The consumer key associated with the application and identifying the client",
+                        "type": "string"
+                    },
+                    "consumerSecret": {
+                        "description": "The client secret that is used to authenticate the client with the authentication server",
+                        "type": "string"
+                    },
+                    "supportedGrantTypes": {
+                        "description": "The grant types that are supported by the application",
+                        "type": "array"
+                    },
+                    "callbackUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "keyState": {
+                        "description": "Describes the state of the key generation.",
+                        "type": "string"
+                    },
+                    "keyType": {
+                        "description": "Describes to which endpoint the key belongs",
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "Token": {
+                        "description": "",
+                        "type": "object"
+                    },
+                    "token": {
+                        "description": "",
+                        "type": ""
+                    }
+                }
+            },
+            "supportedGrantTypes": {
+                "type": "array"
+            },
+            "ApplicationKeyReGenerateResponse": {
+                "type": "object",
+                "properties": {
+                    "consumerKey": {
+                        "description": "The consumer key associated with the application and identifying the client",
+                        "type": "string"
+                    },
+                    "consumerSecret": {
+                        "description": "The client secret that is used to authenticate the client with the authentication server",
+                        "type": "string"
+                    }
+                }
+            },
+            "ApplicationKeyGenerateRequest": {
+                "type": "object",
+                "properties": {
+                    "keyType": {
+                        "description": "Describes to which endpoint the key belongs",
+                        "type": "string"
+                    },
+                    "validityTime": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "supportedGrantTypes": {
+                        "description": "The grant types that are supported by the application",
+                        "type": "array"
+                    },
+                    "callbackUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accessAllowDomains": {
+                        "description": "Allowed domains for the access token",
+                        "type": "array"
+                    },
+                    "scopes": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "clientId": {
+                        "description": "Client ID for generating access token.",
+                        "type": "string"
+                    },
+                    "clientSecret": {
+                        "description": "Client secret for generating access token. This is given together with the client Id.",
+                        "type": "string"
+                    }
+                }
+            },
+            "accessAllowDomains": {
+                "type": "array"
+            },
+            "ApplicationKeyReGenerateRequest": {
+                "type": "object",
+                "properties": {
+                    "consumerKey": {
+                        "description": "The consumer key associated with the application and identifying the client",
+                        "type": "string"
+                    }
+                }
+            },
+            "ScopeInfo": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "Allowed roles for the scope",
+                        "type": "array"
+                    }
+                }
+            },
+            "roles": {
+                "type": "array"
+            },
+            "TierPermissionInfo": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "Allowed roles for the scope",
+                        "type": "array"
+                    }
+                }
+            },
+            "ApplicationScope": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "Roles scope is bounded to",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "ScopeList": {
+                "type": "object",
+                "properties": {
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "SearchResultList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of APIs returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "pagination": {
+                        "description": "",
+                        "type": ""
+                    }
+                }
+            },
+            "SearchResult": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "APISearchResult": {
+                "type": "object"
+            },
+            "DocumentSearchResult": {
+                "type": "object"
+            }
+        }
+    }
+}
