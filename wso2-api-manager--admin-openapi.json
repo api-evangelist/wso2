@@ -1,0 +1,365 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.11.0",
+        "title": "WSO2 API Manager - Admin",
+        "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - Admin Portal.\n\nIt is written with [swagger 2](http:\/\/swagger.io\/).\n",
+        "termsOfService": "http:\/\/exmple.com\/license\/"
+    },
+    "servers": [
+        "http:\/\/apis.wso2.com\/api\/am\/admin\/v0.11"
+    ],
+    "paths": {
+        "\/throttling\/policies\/application": {
+            "get": {
+                "summary": "Get all Application level throttle policies",
+                "description": "Get all Application level throttle policies\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nPolicies returned\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/ApplicationThrottlePolicyList"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add an Application level throttle policy",
+                "description": "Add an Application level throttle policy\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": []
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "Error message.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "A detail description about the error message.\n",
+                        "type": "string"
+                    },
+                    "moreInfo": {
+                        "description": "Preferably an url with more details about the error.\n",
+                        "type": "string"
+                    },
+                    "error": {
+                        "description": "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n",
+                        "type": "array"
+                    }
+                }
+            },
+            "error": {
+                "type": "array"
+            },
+            "ErrorListItem": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "Error message.",
+                        "type": "string"
+                    }
+                }
+            },
+            "ThrottlePolicy": {
+                "type": "object",
+                "properties": {
+                    "policyId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "policyName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "A detail description about the error message.\n",
+                        "type": "string"
+                    },
+                    "isDeployed": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AdvancedThrottlePolicyInfo": {
+                "type": "object"
+            },
+            "AdvancedThrottlePolicy": {
+                "type": "object"
+            },
+            "AdvancedThrottlePolicyList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "list": {
+                "type": "array"
+            },
+            "ApplicationThrottlePolicy": {
+                "type": "object"
+            },
+            "ApplicationThrottlePolicyList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "SubscriptionThrottlePolicy": {
+                "type": "object"
+            },
+            "SubscriptionThrottlePolicyList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "CustomRule": {
+                "type": "object"
+            },
+            "CustomRuleList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "ConditionalGroup": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "description": "A detail description about the error message.\n",
+                        "type": "string"
+                    },
+                    "conditions": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "limit": {
+                        "description": "",
+                        "type": ""
+                    },
+                    "ThrottleLimit": {
+                        "description": "",
+                        "type": "object"
+                    }
+                }
+            },
+            "conditions": {
+                "type": "array"
+            },
+            "limit": {
+                "type": "object"
+            },
+            "ThrottleCondition": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "invertCondition": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "HeaderCondition": {
+                "type": "object"
+            },
+            "IPCondition": {
+                "type": "object"
+            },
+            "JWTClaimsCondition": {
+                "type": "object"
+            },
+            "QueryParameterCondition": {
+                "type": "object"
+            },
+            "ThrottleLimit": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "timeUnit": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "unitTime": {
+                        "description": "",
+                        "type": "integer"
+                    }
+                }
+            },
+            "BandwidthLimit": {
+                "type": "object"
+            },
+            "RequestCountLimit": {
+                "type": "object"
+            },
+            "BlockingCondition": {
+                "type": "object",
+                "properties": {
+                    "conditionId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "conditionType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "conditionValue": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "BlockingConditionList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "CustomAttribute": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "mediationList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of Advanced throttle policies returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of sequences qualified.\nEmpty if no more sequences are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of sequences qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "MediationInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "Mediation": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "config": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
