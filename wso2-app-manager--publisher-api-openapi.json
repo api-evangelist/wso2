@@ -1,0 +1,896 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.1.0",
+        "title": "WSO2 APP Manager - Publisher API",
+        "description": "This document specifies a **RESTful API** for **WSO2 APP Manager - Publisher**.\n\n\n\n\nIt is written with [swagger 2](http:\/\/swagger.io\/).\n",
+        "termsOfService": "http:\/\/exmple.com\/license\/"
+    },
+    "servers": [
+        "http:\/\/apis.wso2.com\/api\/appm\/publisher\/v1.1"
+    ],
+    "paths": {
+        "\/apps\/{appType}": {
+            "get": {
+                "summary": "Get all Apps",
+                "description": "Get a list of available Apps qualifying under a given search condition.\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "A search condition.\n\n\n\n\nYou can search attributes by using an **\"attribute:\"** modifier.\n\n\n\n\nEg. \"provider:wso2\" will match an App if the provider of the App contains \"wso2\".\n\n\n\n\nSupported attribute modifiers are [**provider, app_name, app_version, app_id, business_owner_id**]\n\n\n\n\nIf no advanced attribute modifier has been specified, the search will match the\ngiven query string against the App name.\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK.\nList of qualifying Apps is returned.\n",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$href": "#\/components\/schemas\/AppList"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new App",
+                "description": "Create a new App\n",
+                "operationId": "",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "No Name",
+                        "in": "query",
+                        "description": ""
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AppList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of App returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "appList": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "appSummaryList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "appList": {
+                "type": "array"
+            },
+            "appSummaryList": {
+                "type": "array"
+            },
+            "AppSummary": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "context": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "provider": {
+                        "description": "If the provider value is not given, the user invoking the App will be used as the provider.\n",
+                        "type": "string"
+                    },
+                    "lifecycleState": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "rating": {
+                        "description": "User rating for the app\n",
+                        "type": "number"
+                    }
+                }
+            },
+            "App": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The App type (either Webapp\/Mobile app)",
+                        "type": "string"
+                    },
+                    "appmeta": {
+                        "description": "",
+                        "type": "object"
+                    },
+                    "uriTemplates": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "policyGroups": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "marketType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "recentChanges": {
+                        "description": "recent changes",
+                        "type": "string"
+                    },
+                    "icon": {
+                        "description": "the image icon of the application\n",
+                        "type": "string"
+                    },
+                    "isSite": {
+                        "description": "Either a webapp or site",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "context": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "logoutURL": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "businessOwnerId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "visibleTenants": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "claims": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "trackingCode": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "skipGateway": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "serviceProviderCreationEnabled": {
+                        "description": "",
+                        "type": "boolean"
+                    },
+                    "allowAnonymousAccess": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "acsUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "provider": {
+                        "description": "If the provider value is not given, the user invoking the App will be used as the provider.\n",
+                        "type": "string"
+                    },
+                    "appDefinition": {
+                        "description": "Swagger definition of the App which contains details about URI templates and scopes\n",
+                        "type": "string"
+                    },
+                    "isDefaultVersion": {
+                        "description": "",
+                        "type": "boolean"
+                    },
+                    "transport": {
+                        "description": "Supported transports for the App (http and\/or https).\n",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "thumbnailUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "visibleRoles": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "path": {
+                        "description": "path of asset",
+                        "type": "string"
+                    },
+                    "resourceId": {
+                        "description": "Resource ID path of the asset.\n",
+                        "type": "string"
+                    },
+                    "lifecycle": {
+                        "description": "lifecycle type of the asset\n",
+                        "type": "string"
+                    },
+                    "lifecycleState": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "rating": {
+                        "description": "User rating for the app\n",
+                        "type": "number"
+                    },
+                    "appUrL": {
+                        "description": "URL of the asset\n",
+                        "type": "string"
+                    },
+                    "bundleversion": {
+                        "description": "Bundleversion of the asset\n",
+                        "type": "string"
+                    },
+                    "category": {
+                        "description": "category of the asset\n",
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "description": "displayName of the asset\n",
+                        "type": "string"
+                    },
+                    "screenshots": {
+                        "description": "Screenshots attached to the application\n",
+                        "type": "array"
+                    },
+                    "banner": {
+                        "description": "\/publisher\/api\/mobileapp\/getfile\/uWnObGDXigTO7pl.jpg\n",
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "description": "createdtime of the asset\n",
+                        "type": "string"
+                    },
+                    "platform": {
+                        "description": "platform of the asset\n",
+                        "type": "string"
+                    },
+                    "appType": {
+                        "description": "mobile app type (eg: webapp\/ios\/android)",
+                        "type": "string"
+                    },
+                    "mediaType": {
+                        "description": "media yype",
+                        "type": "string"
+                    },
+                    "lifecycleAvailableActions": {
+                        "description": "platform of the asset\n",
+                        "type": "string"
+                    },
+                    "customProperties": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "appmeta": {
+                "type": "object"
+            },
+            "uriTemplates": {
+                "type": "array"
+            },
+            "policyGroups": {
+                "type": "array"
+            },
+            "visibleTenants": {
+                "type": "array"
+            },
+            "claims": {
+                "type": "array"
+            },
+            "tags": {
+                "type": "array"
+            },
+            "visibleRoles": {
+                "type": "array"
+            },
+            "screenshots": {
+                "type": "array"
+            },
+            "customProperties": {
+                "type": "array"
+            },
+            "DocumentList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of App returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "list": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "list": {
+                "type": "array"
+            },
+            "Document": {
+                "type": "object",
+                "properties": {
+                    "documentId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The App type (either Webapp\/Mobile app)",
+                        "type": "string"
+                    },
+                    "summary": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "sourceType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "sourceUrl": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "fileName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "otherTypeName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "Binary": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "description": "path of asset",
+                        "type": "string"
+                    },
+                    "package": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "StaticContent": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "description": "path of asset",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseMessage": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "TagList": {
+                "type": "object",
+                "properties": {
+                    "tags": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "TierList": {
+                "type": "object",
+                "properties": {
+                    "tierList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "tierList": {
+                "type": "array"
+            },
+            "Tier": {
+                "type": "object",
+                "properties": {
+                    "tierName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tierDisplayName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tierDescription": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tierSortKey": {
+                        "description": "",
+                        "type": "integer"
+                    }
+                }
+            },
+            "PolicyPartial": {
+                "type": "object",
+                "properties": {
+                    "policyPartialId": {
+                        "description": "ID of the policy\n",
+                        "type": "integer"
+                    },
+                    "policyPartialName": {
+                        "description": "Name of the policy\n",
+                        "type": "string"
+                    },
+                    "policyPartial": {
+                        "description": "policy content\n",
+                        "type": "string"
+                    },
+                    "isSharedPartial": {
+                        "description": "whether shared or not",
+                        "type": "boolean"
+                    },
+                    "policyPartialDesc": {
+                        "description": "description about the policy",
+                        "type": "string"
+                    }
+                }
+            },
+            "PolicyPartialList": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "description": "Number of App returned.\n",
+                        "type": "integer"
+                    },
+                    "next": {
+                        "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+                        "type": "string"
+                    },
+                    "previous": {
+                        "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+                        "type": "string"
+                    },
+                    "policyList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "policyList": {
+                "type": "array"
+            },
+            "PolicyPartialInfo": {
+                "type": "object",
+                "properties": {
+                    "policyPartialId": {
+                        "description": "ID of the policy\n",
+                        "type": "integer"
+                    },
+                    "policyPartialName": {
+                        "description": "Name of the policy\n",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserIdList": {
+                "type": "object",
+                "properties": {
+                    "userIds": {
+                        "description": "List of User Names",
+                        "type": "object"
+                    }
+                }
+            },
+            "userIds": {
+                "type": "object"
+            },
+            "RoleIdList": {
+                "type": "object",
+                "properties": {
+                    "roleIds": {
+                        "description": "List of Role Id's",
+                        "type": "object"
+                    }
+                }
+            },
+            "roleIds": {
+                "type": "object"
+            },
+            "JavaPolicyList": {
+                "type": "object",
+                "properties": {
+                    "policyList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "JavaPolicy": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "java policy id\n",
+                        "type": "integer"
+                    },
+                    "displayName": {
+                        "description": "displayName of the asset\n",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "displayOrder": {
+                        "description": "display order of the policy in UI\n",
+                        "type": "integer"
+                    }
+                }
+            },
+            "LifeCycle": {
+                "type": "object",
+                "properties": {
+                    "state": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "actions": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "async": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "actions": {
+                "type": "array"
+            },
+            "LifeCycleHistory": {
+                "type": "object",
+                "properties": {
+                    "order": {
+                        "description": "Sequence order Id.\n",
+                        "type": "integer"
+                    },
+                    "state": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "targetState": {
+                        "description": "Next\/target Lifecycle state.\n",
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "description": "Executed time.\n",
+                        "type": "string"
+                    },
+                    "user": {
+                        "description": "Executed user.\n",
+                        "type": "string"
+                    }
+                }
+            },
+            "LifeCycleHistoryList": {
+                "type": "object",
+                "properties": {
+                    "lifeCycleHistoryList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "lifeCycleHistoryList": {
+                "type": "array"
+            },
+            "PListAssets": {
+                "type": "array",
+                "properties": {
+                    "kind": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "PListInfo": {
+                "type": "object",
+                "properties": {
+                    "PListAssets": {
+                        "description": "",
+                        "type": "array"
+                    },
+                    "bundleIdentifier": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "bundleversion": {
+                        "description": "Bundleversion of the asset\n",
+                        "type": "string"
+                    },
+                    "kind": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "PList": {
+                "type": "object",
+                "properties": {
+                    "PListAssets": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "StatSummary": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "result": {
+                "type": "array"
+            },
+            "BusinessOwnerList": {
+                "type": "object",
+                "properties": {
+                    "businessOwnerList": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "businessOwnerList": {
+                "type": "array"
+            },
+            "BusinessOwner": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "java policy id\n",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "site": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "properties": {
+                        "description": "",
+                        "type": "array"
+                    }
+                }
+            },
+            "properties": {
+                "type": "array"
+            },
+            "BusinessOwnerProperties": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "isVisible": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "UriTemplate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "java policy id\n",
+                        "type": "integer"
+                    },
+                    "urlPattern": {
+                        "description": "URL pattern of the URI\n",
+                        "type": "string"
+                    },
+                    "httpVerb": {
+                        "description": "Http verb of the uri pattern\n",
+                        "type": "string"
+                    },
+                    "policyGroupName": {
+                        "description": "The name of the uri template policy group\n",
+                        "type": "string"
+                    },
+                    "policyGroupId": {
+                        "description": "Database ID of the associated policy group.\n",
+                        "type": "integer"
+                    }
+                }
+            },
+            "PolicyGroups": {
+                "type": "object",
+                "properties": {
+                    "policyGroupId": {
+                        "description": "Database ID of the associated policy group.\n",
+                        "type": "integer"
+                    },
+                    "policyGroupName": {
+                        "description": "The name of the uri template policy group\n",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "throttlingTier": {
+                        "description": "Throttling tier\n",
+                        "type": "string"
+                    },
+                    "userRoles": {
+                        "description": "The name of the uri template policy group\n",
+                        "type": "array"
+                    },
+                    "policyPartialMapping": {
+                        "description": "Entitlement policy partial name list\n",
+                        "type": "array"
+                    },
+                    "allowAnonymousAccess": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "userRoles": {
+                "type": "array"
+            },
+            "policyPartialMapping": {
+                "type": "array"
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "moreInfo": {
+                        "description": "Preferably an url with more details about the error.\n",
+                        "type": "string"
+                    },
+                    "error": {
+                        "description": "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n",
+                        "type": "array"
+                    }
+                }
+            },
+            "error": {
+                "type": "array"
+            },
+            "ErrorListItem": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "CustomProperty": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
