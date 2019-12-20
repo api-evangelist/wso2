@@ -1,0 +1,67 @@
+{
+    "id": "7283a1a083b2729da06c900fcfb2f164",
+    "name": "WSO2 API Manager - Admin",
+    "description": null,
+    "auth": null,
+    "events": null,
+    "variables": [],
+    "order": [],
+    "folders_order": [],
+    "folders": [],
+    "requests": [
+        {
+            "id": "270e781d3323cb99307d7f44ca67466b",
+            "name": "Get all Application level throttle policies",
+            "url": "http:\/\/apis.wso2.com\/api\/am\/admin\/v0.11\/throttling\/policies\/application",
+            "description": "Get all Application level throttle policies\n",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "get",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "No Name",
+                    "description": "",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "7283a1a083b2729da06c900fcfb2f164",
+            "rawModeData": ""
+        },
+        {
+            "id": "8f7e03109e181b3eb3003dce340ad579",
+            "name": "Add an Application level throttle policy",
+            "url": "http:\/\/apis.wso2.com\/api\/am\/admin\/v0.11\/throttling\/policies\/application",
+            "description": "Add an Application level throttle policy\n",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "7283a1a083b2729da06c900fcfb2f164",
+            "rawModeData": ""
+        }
+    ]
+}
