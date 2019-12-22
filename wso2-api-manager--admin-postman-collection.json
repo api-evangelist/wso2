@@ -1,5 +1,5 @@
 {
-    "id": "7283a1a083b2729da06c900fcfb2f164",
+    "id": "e3d31786ce1bd24cdfdda33a6ed76f21",
     "name": "WSO2 API Manager - Admin",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "270e781d3323cb99307d7f44ca67466b",
+            "id": "ec92074b9db1caa06245d1bfc85eb624",
             "name": "Get all Application level throttle policies",
             "url": "http:\/\/apis.wso2.com\/api\/am\/admin\/v0.11\/throttling\/policies\/application",
             "description": "Get all Application level throttle policies\n",
@@ -37,11 +37,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "7283a1a083b2729da06c900fcfb2f164",
+            "collectionId": "e3d31786ce1bd24cdfdda33a6ed76f21",
             "rawModeData": ""
         },
         {
-            "id": "8f7e03109e181b3eb3003dce340ad579",
+            "id": "88e4d36fc6cc6f4b5b474e4279252f67",
             "name": "Add an Application level throttle policy",
             "url": "http:\/\/apis.wso2.com\/api\/am\/admin\/v0.11\/throttling\/policies\/application",
             "description": "Add an Application level throttle policy\n",
@@ -60,7 +60,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "7283a1a083b2729da06c900fcfb2f164",
+            "collectionId": "e3d31786ce1bd24cdfdda33a6ed76f21",
             "rawModeData": ""
         }
     ]
