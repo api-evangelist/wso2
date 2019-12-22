@@ -1,5 +1,5 @@
 {
-    "id": "7615421b3e849123071a0b5e2d08e5b1",
+    "id": "745444fd980e6dd58789ee068d1a34d8",
     "name": "WSO2 API Manager - Publisher API",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "4b1ad144aef58b41b797d2bfb4ed241e",
+            "id": "1e13e3c8159052e96998122dd02502e0",
             "name": "Retrieve\/Search APIs\n",
             "url": "http:\/\/apis.wso2.com\/api\/am\/publisher\/v0.11\/apis",
             "description": "This operation provides you a list of available APIs qualifying under a given search condition.\n\nEach retrieved API is represented with a minimal amount of attributes. If you want to get complete details of an API, you need to use **Get details of an API** operation.\n",
@@ -44,11 +44,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "7615421b3e849123071a0b5e2d08e5b1",
+            "collectionId": "745444fd980e6dd58789ee068d1a34d8",
             "rawModeData": ""
         },
         {
-            "id": "9dfee320af0db9ead77c0edb37cc00c4",
+            "id": "46ca6d015cb94de095d16de8dd689333",
             "name": "Check given API attibute name is already exist\n",
             "url": "http:\/\/apis.wso2.com\/api\/am\/publisher\/v0.11\/apis",
             "description": "Using this operation, you can check a given API context is already used. You need to provide the context name you want to check.\n",
@@ -82,11 +82,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "7615421b3e849123071a0b5e2d08e5b1",
+            "collectionId": "745444fd980e6dd58789ee068d1a34d8",
             "rawModeData": ""
         },
         {
-            "id": "e7e00edca44a38d22a8e37f88e60d9b9",
+            "id": "1d163a92baafbcaa85b68da3c38b4791",
             "name": "Create a new API",
             "url": "http:\/\/apis.wso2.com\/api\/am\/publisher\/v0.11\/apis",
             "description": "This operation can be used to create a new API specifying the details of the API in the payload. The new API will be in `CREATED` state.\n\nThere is a special capability for a user who has `APIM Admin` permission such that he can create APIs on behalf of other users. For that he can to specify `\"provider\" : \"some_other_user\"` in the payload so that the API's creator will be shown as `some_other_user` in the UI.\n",
@@ -105,7 +105,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "7615421b3e849123071a0b5e2d08e5b1",
+            "collectionId": "745444fd980e6dd58789ee068d1a34d8",
             "rawModeData": ""
         }
     ]
