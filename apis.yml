@@ -1,0 +1,30 @@
+aid: wso2
+name: WSO2
+segments:
+  - Gateways
+description: >-
+  WSO2 API Manager is an open-source API management platform supporting REST, SOAP, and GraphQL with flexible hybrid deployment.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Gateways
+created: '2026-03-03'
+modified: '2026-03-03'
+url: https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: wso2:wso2
+    name: WSO2
+    description: >-
+      WSO2 API Manager is an open-source API management platform supporting REST, SOAP, and GraphQL with flexible hybrid deployment.
+    humanURL: https://example.com
+    tags:
+      - Gateways
+    properties:
+      - type: Documentation
+        url: https://example.com
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
