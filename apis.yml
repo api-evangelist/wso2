@@ -16,7 +16,7 @@ tags:
   - API Management
   - Open Source
 created: '2026-03-03'
-modified: '2026-03-03'
+modified: '2026-03-18'
 url: https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
@@ -120,6 +120,45 @@ apis:
         url: https://apim.docs.wso2.com/en/latest/reference/product-apis/devops-apis/devops-v0/devops-v0/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.devops/src/main/resources/devops-api.yaml
+  - aid: wso2:dcr-api
+    name: WSO2 DCR API
+    description: >-
+      The WSO2 API Manager Dynamic Client Registration (DCR) API enables
+      OAuth2 client applications to register themselves programmatically with
+      the WSO2 Identity Server key manager. It follows the OpenID Connect
+      Dynamic Client Registration specification and is used to automate
+      application onboarding for API access.
+    humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/
+    baseURL: https://apis.wso2.com
+    tags:
+      - OAuth2
+      - Client Registration
+      - Identity
+      - Security
+    properties:
+      - type: Documentation
+        url: https://apim.docs.wso2.com/en/latest/reference/product-apis/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.dcr/src/main/resources/dcr.yaml
+  - aid: wso2:governance-api
+    name: WSO2 Governance API
+    description: >-
+      The WSO2 API Manager Governance API provides endpoints for managing
+      governance policies, rulesets, and API compliance. It enables teams to
+      define and enforce API design standards, assess policy adherence, and
+      validate artifact compliance across the API lifecycle.
+    humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
+    baseURL: https://apis.wso2.com
+    tags:
+      - Governance
+      - Compliance
+      - Policies
+      - API Management
+    properties:
+      - type: Documentation
+        url: https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.governance.rest.api/src/main/resources/governance-api.yaml
 common:
   - type: Website
     name: WSO2 API Manager
@@ -157,6 +196,24 @@ common:
   - type: SDKs
     name: SDK Generation
     url: https://apim.docs.wso2.com/en/latest/consume/generating-sdks/generate-sdks-in-dev-portal/
+  - type: Authentication
+    name: Authentication Overview
+    url: https://apim.docs.wso2.com/en/latest/api-security/
+  - type: Change Log
+    name: What's New
+    url: https://apim.docs.wso2.com/en/latest/get-started/overview/whats-new/
+  - type: Status
+    name: WSO2 Status Page
+    url: https://status.wso2.com/
+  - type: Community
+    name: WSO2 Community Forum
+    url: https://stackoverflow.com/questions/tagged/wso2
+  - type: Stack Overflow
+    name: Stack Overflow
+    url: https://stackoverflow.com/questions/tagged/wso2
+  - type: GitHubRepository
+    name: WSO2 API Manager GitHub
+    url: https://github.com/wso2/product-apim
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
