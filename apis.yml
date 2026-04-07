@@ -12,8 +12,8 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Gateways
   - API Management
+  - Gateways
   - Open Source
 created: '2026-03-03'
 modified: '2026-03-18'
@@ -30,8 +30,8 @@ apis:
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
     tags:
       - API Management
-      - Publisher
       - Lifecycle
+      - Publisher
     properties:
       - type: Documentation
         url: https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
@@ -64,8 +64,8 @@ apis:
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/admin-apis/admin-v4/admin-v4/
     tags:
       - Administration
-      - Policies
       - Configuration
+      - Policies
     properties:
       - type: Documentation
         url: https://apim.docs.wso2.com/en/latest/reference/product-apis/admin-apis/admin-v4/admin-v4/
@@ -79,8 +79,8 @@ apis:
       environments and provides endpoints for managing gateway-level operations.
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/gateway-apis/gateway-v2/gateway-v2/
     tags:
-      - Gateway
       - Deployment
+      - Gateway
       - Traffic Management
     properties:
       - type: Documentation
@@ -96,9 +96,9 @@ apis:
       Manager.
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/service-catalog-apis/service-catalog-v1/service-catalog-v1/
     tags:
-      - Service Catalog
       - Discovery
       - Integration
+      - Service Catalog
     properties:
       - type: Documentation
         url: https://apim.docs.wso2.com/en/latest/reference/product-apis/service-catalog-apis/service-catalog-v1/service-catalog-v1/
@@ -112,8 +112,8 @@ apis:
       logging, and operational tasks in DevOps pipelines.
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/devops-apis/devops-v0/devops-v0/
     tags:
-      - DevOps
       - Deployment
+      - DevOps
       - Operations
     properties:
       - type: Documentation
@@ -131,9 +131,9 @@ apis:
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/
     baseURL: https://apis.wso2.com
     tags:
-      - OAuth2
       - Client Registration
       - Identity
+      - OAuth2
       - Security
     properties:
       - type: Documentation
@@ -150,10 +150,10 @@ apis:
     humanURL: https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
     baseURL: https://apis.wso2.com
     tags:
-      - Governance
-      - Compliance
-      - Policies
       - API Management
+      - Compliance
+      - Governance
+      - Policies
     properties:
       - type: Documentation
         url: https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
