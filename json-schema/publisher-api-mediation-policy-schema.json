@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-mediation-policy-schema.json",
+  "title": "Mediation Policy",
+  "description": "MediationPolicy schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "69ea3fa6-55c6-472e-896d-e449dd34a824"
+    },
+    "name": {
+      "type": "string",
+      "example": "log_in_message"
+    },
+    "type": {
+      "type": "string",
+      "example": "in"
+    },
+    "shared": {
+      "type": "boolean",
+      "example": true
+    }
+  }
+}

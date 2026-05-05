@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-apiapi-key-associate-request-schema.json",
+  "title": "API Key association request object",
+  "description": "APIAPIKeyAssociateRequest schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "keyUUID",
+    "applicationUUID"
+  ],
+  "properties": {
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    },
+    "applicationUUID": {
+      "type": "string",
+      "description": "The UUID of the Application to be associated"
+    }
+  }
+}

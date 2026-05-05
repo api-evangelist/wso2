@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-chat-request-schema.json",
+  "title": "API Chat request",
+  "description": "ApiChatRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiChatRequestId": {
+      "type": "string",
+      "description": "Request UUID\n",
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "command": {
+      "type": "string",
+      "description": "User specified testcase to be tested against the API\n",
+      "example": "Get pet with id 123"
+    },
+    "apiSpec": {
+      "type": "object",
+      "properties": {
+        "serviceUrl": {
+          "type": "string",
+          "description": "Service URL of API if any",
+          "example": "https://localhost:8243/pizzashack/1.0.0"
+        },
+        "tools": {
+          "type": "array",
+          "description": "Extracted Http tools from the OpenAPI specification",
+          "items": {
+            "type": "object",
+            "example": {
+              "name": "GET-order_orderId",
+              "description": "Get details of an Order by providing Order Id. This tool invokes a HTTP GET resource",
+              "method": "GET",
+              "path": "/order/{orderId}",
+              "parameters": {
+                "orderId": {
+                  "location": "path",
+                  "description": "Order Id",
+                  "required": true,
+                  "style": "simple",
+                  "explode": false,
+                  "schema": {
+                    "type": "string",
+                    "format": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "HTTP status code of the response",
+          "example": 201
+        },
+        "path": {
+          "type": "string",
+          "description": "HTTP path url with encoded parameters",
+          "example": "/order/123"
+        },
+        "headers": {
+          "type": "object",
+          "description": "Response headers",
+          "example": {
+            "contentType": "application/json"
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "Response payload",
+          "example": {
+            "orderId": "300ada62-81bd-4c89-bdfa-983de3cadd77",
+            "pizzaType": "Pepperoni",
+            "quantity": 2,
+            "customerName": "John Doe",
+            "creditCardNumber": "1234567890123456",
+            "address": "123 Main St",
+            "delivered": false
+          }
+        }
+      }
+    }
+  }
+}

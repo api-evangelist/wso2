@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-ai-service-provider-endpoint-configuration-schema.json",
+  "title": "AIServiceProviderEndpointConfiguration",
+  "description": "AIServiceProviderEndpointConfiguration schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "authenticationConfiguration": {
+      "$ref": "#/components/schemas/AIServiceProviderEndpointAuthenticationConfiguration"
+    },
+    "authHeader": {
+      "type": "string",
+      "example": "Authorization",
+      "deprecated": true
+    },
+    "authQueryParameter": {
+      "type": "string",
+      "example": "ApiKey",
+      "deprecated": true
+    }
+  }
+}

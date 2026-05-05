@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-search-result-list-schema.json",
+  "title": "Search Result List",
+  "description": "SearchResultList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of results returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "example": [
+        {
+          "id": "abcff4cf-24c5-4298-a7b4-39a1fbd34693",
+          "name": "PizzaShackAPI",
+          "type": "API",
+          "transportType": null,
+          "description": null,
+          "context": "/pizzashack",
+          "version": "1.0.0",
+          "provider": "admin",
+          "status": "PUBLISHED",
+          "thumbnailUri": null,
+          "businessInformation": {
+            "businessOwner": "Jane Roe",
+            "businessOwnerEmail": "businessowner@wso2.com",
+            "technicalOwner": "John Doe",
+            "technicalOwnerEmail": "technicalowner@wso2.com"
+          },
+          "avgRating": "4.0"
+        }
+      ]
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

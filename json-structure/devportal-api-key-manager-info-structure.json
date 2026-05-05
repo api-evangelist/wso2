@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-key-manager-info-structure.json",
+  "name": "Key Manager Info",
+  "description": "KeyManagerInfo schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "Resident Key Manager"
+    },
+    "type": {
+      "type": "string",
+      "example": "default"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "display name of Keymanager\n",
+      "example": "Resident Key Manager"
+    },
+    "description": {
+      "type": "string",
+      "example": "This is Resident Key Manager"
+    },
+    "enabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "availableGrantTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "client_credentials"
+      }
+    },
+    "tokenEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9443/oauth2/token"
+    },
+    "revokeEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9443/oauth2/revoke"
+    },
+    "userInfoEndpoint": {
+      "type": "string",
+      "example": ""
+    },
+    "enableTokenGeneration": {
+      "type": "boolean",
+      "example": true
+    },
+    "enableTokenEncryption": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableTokenHashing": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableOAuthAppCreation": {
+      "type": "boolean",
+      "example": true,
+      "default": true
+    },
+    "enableMapOAuthConsumerApps": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "applicationConfiguration": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/KeyManagerApplicationConfiguration"
+      }
+    },
+    "alias": {
+      "type": "string",
+      "description": "The alias of Identity Provider.\nIf the tokenType is EXCHANGED, the alias value should be inclusive in the audience values of the JWT token\n",
+      "example": "https://localhost:9443/oauth2/token"
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {}
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.",
+      "example": "EXCHANGED",
+      "default": "DIRECT",
+      "enum": [
+        "EXCHANGED",
+        "DIRECT",
+        "BOTH"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-advanced-throttle-policy-info-schema.json",
+  "title": "Advanced Throttling Policy",
+  "description": "AdvancedThrottlePolicyInfo schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottlePolicy"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "defaultLimit": {
+          "$ref": "#/components/schemas/ThrottleLimit"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-platform-gateway-response-structure.json",
+  "name": "Platform Gateway Response",
+  "description": "Platform gateway response (without registration token). Used for list and get.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Gateway UUID"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom key-value properties"
+    },
+    "vhost": {
+      "type": "uri",
+      "readOnly": true,
+      "description": "Gateway URL (e.g. https://host or https://host:9443). Same name as platform API; type is URL."
+    },
+    "isActive": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates if the gateway is currently connected to the control plane via WebSocket"
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Gateway visibility permissions configuration",
+      "properties": {
+        "permissionType": {
+          "type": "string",
+          "enum": [
+            "PUBLIC",
+            "ALLOW",
+            "DENY"
+          ],
+          "default": "PUBLIC",
+          "description": "Permission type for gateway visibility:\n- PUBLIC: Gateway is visible to all users\n- ALLOW: Gateway is visible only to specified roles\n- DENY: Gateway is hidden from specified roles\n"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of roles for ALLOW/DENY permission types"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "datetime",
+      "readOnly": true
+    },
+    "updatedAt": {
+      "type": "datetime",
+      "readOnly": true
+    }
+  }
+}

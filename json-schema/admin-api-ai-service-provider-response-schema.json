@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-ai-service-provider-response-schema.json",
+  "title": "AIServiceProviderResponse",
+  "description": "AIServiceProviderResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "ece92bdc-e1e6-325c-b6f4-656208a041e9"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "OpenAI"
+    },
+    "apiVersion": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "builtInSupport": {
+      "type": "boolean",
+      "description": "Is built-in support"
+    },
+    "multipleModelProviderSupport": {
+      "type": "boolean",
+      "description": "Indicates whether the AI Service Provider supports multiple model providers.\nIf true, the AI Service Provider can support multiple model providers.\nIf false, the AI Service Provider supports only one model provider.\n"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string",
+      "example": "OpenAI LLM"
+    },
+    "configurations": {
+      "type": "string",
+      "description": "LLM Provider configurations"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "OpenAPI specification"
+    },
+    "modelProviders": {
+      "type": "array",
+      "description": "List of model providers supported by the AI Service Provider",
+      "items": {
+        "$ref": "#/components/schemas/ModelProvider"
+      }
+    },
+    "deprecated": {
+      "type": "boolean",
+      "description": "Indicates if the LLM provider is deprecated",
+      "example": false
+    }
+  }
+}

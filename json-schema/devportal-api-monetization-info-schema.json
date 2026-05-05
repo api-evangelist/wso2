@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-monetization-info-schema.json",
+  "title": "Monetization",
+  "description": "MonetizationInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "billingType": {
+      "type": "string",
+      "example": "fixedPrice",
+      "enum": [
+        "fixedPrice",
+        "dynamicRate"
+      ]
+    },
+    "billingCycle": {
+      "type": "string",
+      "example": "month"
+    },
+    "fixedPrice": {
+      "type": "string",
+      "example": "10"
+    },
+    "pricePerRequest": {
+      "type": "string",
+      "example": "1"
+    },
+    "currencyType": {
+      "type": "string",
+      "example": "USD"
+    }
+  }
+}

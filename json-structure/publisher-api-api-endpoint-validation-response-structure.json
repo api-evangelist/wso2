@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-endpoint-validation-response-structure.json",
+  "name": "API Endpoint url validation response",
+  "description": "ApiEndpointValidationResponse schema from WSO2 API Manager",
+  "required": [
+    "statusCode",
+    "statusMessage"
+  ],
+  "type": "object",
+  "properties": {
+    "statusCode": {
+      "type": "int32",
+      "description": "HTTP status code",
+      "example": 200
+    },
+    "statusMessage": {
+      "type": "string",
+      "description": "string",
+      "example": "OK"
+    },
+    "error": {
+      "type": "string",
+      "description": "If an error occurs, the error message will be set to this property.\nIf not, this will remain null.\n",
+      "example": null
+    }
+  }
+}

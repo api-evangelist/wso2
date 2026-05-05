@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-certificate-validity-structure.json",
+  "name": "Certificate Valid period",
+  "description": "CertificateValidity schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "example": "12-12-2017"
+    },
+    "to": {
+      "type": "string",
+      "example": "01-01-2019"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-application-token-generate-request-schema.json",
+  "title": "Application access token generation request object",
+  "description": "ApplicationTokenGenerateRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "consumerSecret": {
+      "type": "string",
+      "description": "Consumer secret of the application",
+      "example": "cV5pvyisxug5b5QZInq9cGZrMOMa"
+    },
+    "validityPeriod": {
+      "type": "integer",
+      "description": "Token validity period",
+      "format": "int64",
+      "example": 3600
+    },
+    "scopes": {
+      "type": "array",
+      "description": "Allowed scopes (space seperated) for the access token",
+      "example": [
+        "apim:subscribe"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "revokeToken": {
+      "type": "string",
+      "description": "Token to be revoked, if any",
+      "example": ""
+    },
+    "grantType": {
+      "type": "string",
+      "default": "CLIENT_CREDENTIALS",
+      "enum": [
+        "CLIENT_CREDENTIALS",
+        "TOKEN_EXCHANGE"
+      ]
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "description": "Additional parameters if Authorization server needs any"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-open-api-definition-validation-response-structure.json",
+  "name": "OpenAPI Definition Validation Response",
+  "description": "OpenAPIDefinitionValidationResponse schema from WSO2 API Manager",
+  "required": [
+    "isValid"
+  ],
+  "type": "object",
+  "properties": {
+    "isValid": {
+      "type": "boolean",
+      "description": "This attribute declares whether this definition is valid or not.\n",
+      "example": true
+    },
+    "content": {
+      "type": "string",
+      "description": "OpenAPI definition content.\n"
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "PetStore"
+        },
+        "version": {
+          "type": "string",
+          "example": "1.0.0"
+        },
+        "context": {
+          "type": "string",
+          "example": "/petstore"
+        },
+        "description": {
+          "type": "string",
+          "example": "A sample API that uses a petstore as an example to demonstrate swagger-2.0 specification"
+        },
+        "openAPIVersion": {
+          "type": "string",
+          "example": "3.0.0"
+        },
+        "endpoints": {
+          "type": "array",
+          "description": "contains host/servers specified in the OpenAPI file/URL\n",
+          "items": {
+            "type": "string",
+            "example": "https://localhost:9443/am/sample/pizzashack/v3/api/"
+          }
+        },
+        "operations": {
+          "type": "array",
+          "description": "contains operations specified in the OpenAPI file/URL\n",
+          "items": {
+            "$ref": "#/components/schemas/APIOperations"
+          }
+        }
+      },
+      "description": "API definition information\n"
+    },
+    "errors": {
+      "type": "array",
+      "description": "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n",
+      "items": {
+        "$ref": "#/components/schemas/ErrorListItem"
+      }
+    }
+  }
+}

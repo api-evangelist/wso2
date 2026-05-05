@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-tag-list-structure.json",
+  "name": "Tag List",
+  "description": "TagList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "Number of Tags returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Tag"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

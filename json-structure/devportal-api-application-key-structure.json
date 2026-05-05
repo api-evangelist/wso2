@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-key-structure.json",
+  "name": "Application key details",
+  "description": "ApplicationKey schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "keyMappingId": {
+      "type": "string",
+      "description": "Key Manager Mapping UUID",
+      "readOnly": true,
+      "example": "92ab520c-8847-427a-a921-3ed19b15aad7"
+    },
+    "keyManager": {
+      "type": "string",
+      "description": "Key Manager Name",
+      "example": "Resident Key Manager"
+    },
+    "consumerKey": {
+      "type": "string",
+      "description": "Consumer key of the application",
+      "readOnly": true,
+      "example": "vYDoc9s7IgAFdkSyNDaswBX7ejoa"
+    },
+    "consumerSecret": {
+      "type": "string",
+      "description": "Consumer secret of the application",
+      "readOnly": true,
+      "example": "TIDlOFkpzB7WjufO3OJUhy1fsvAa"
+    },
+    "consumerSecrets": {
+      "type": "array",
+      "description": "A list of all consumer secrets of the application When multiple consumer secrets are enabled",
+      "items": {
+        "$ref": "#/components/schemas/ConsumerSecret"
+      }
+    },
+    "supportedGrantTypes": {
+      "type": "array",
+      "description": "The grant types that are supported by the application",
+      "example": [
+        "client_credentials",
+        "password"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "callbackUrl": {
+      "type": "string",
+      "description": "Callback URL",
+      "example": "http://sample.com/callback/url"
+    },
+    "keyState": {
+      "type": "string",
+      "description": "Describes the state of the key generation.",
+      "example": "APPROVED"
+    },
+    "keyType": {
+      "type": "string",
+      "description": "Describes to which endpoint the key belongs",
+      "example": "PRODUCTION",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "description": "Describe the which mode Application Mapped.",
+      "example": "CREATED",
+      "enum": [
+        "MAPPED",
+        "CREATED"
+      ]
+    },
+    "groupId": {
+      "type": "string",
+      "description": "Application group id (if any).",
+      "example": "2"
+    },
+    "token": {
+      "$ref": "#/components/schemas/ApplicationToken"
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "description": "additionalProperties (if any)."
+    }
+  }
+}

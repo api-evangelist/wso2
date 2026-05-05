@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-graph-ql-custom-complexity-info-structure.json",
+  "name": "GraphQL Custom Complexity Info",
+  "description": "GraphQLCustomComplexityInfo schema from WSO2 API Manager",
+  "required": [
+    "complexityValue",
+    "field",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type found within the schema of the API\n",
+      "example": "Country"
+    },
+    "field": {
+      "type": "string",
+      "description": "The field which is found under the type within the schema of the API\n",
+      "example": "name"
+    },
+    "complexityValue": {
+      "type": "int32",
+      "description": "The complexity value allocated for the associated field under the specified type\n",
+      "example": 1
+    }
+  }
+}

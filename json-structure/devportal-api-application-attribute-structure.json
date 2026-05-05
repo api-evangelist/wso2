@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-attribute-structure.json",
+  "name": "Application attributes",
+  "description": "ApplicationAttribute schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "description of the application attribute",
+      "example": "Sample description of the attribute"
+    },
+    "type": {
+      "type": "string",
+      "description": "type of the input element to display",
+      "example": "text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "tooltop to display for the input element",
+      "example": "Sample tooltip"
+    },
+    "required": {
+      "type": "string",
+      "description": "whether this is a required attribute",
+      "example": "false"
+    },
+    "attribute": {
+      "type": "string",
+      "description": "the name of the attribute",
+      "example": "External Reference Id"
+    },
+    "hidden": {
+      "type": "string",
+      "description": "whether this is a hidden attribute",
+      "example": "false"
+    }
+  }
+}

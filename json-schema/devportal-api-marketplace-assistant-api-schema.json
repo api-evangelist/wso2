@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-marketplace-assistant-api-schema.json",
+  "title": "MarketplaceAssistantApi",
+  "description": "MarketplaceAssistantApi schema from WSO2 API Manager",
+  "required": [
+    "apiId",
+    "apiName",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "description": "Uuid of the api.",
+      "example": "1sbdhsjd-121n-nknsjkd-1213njb"
+    },
+    "apiName": {
+      "type": "string",
+      "description": "name of the api.",
+      "example": "PizzaShackAPI"
+    },
+    "version": {
+      "type": "string",
+      "description": "version of the api.",
+      "example": "1.0.0"
+    }
+  }
+}

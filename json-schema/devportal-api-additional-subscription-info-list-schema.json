@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-additional-subscription-info-list-schema.json",
+  "title": "Additional Subscription Info List",
+  "description": "AdditionalSubscriptionInfoList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of additional information sets of subscription returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AdditionalSubscriptionInfo"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

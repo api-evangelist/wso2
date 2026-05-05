@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-api-info-key-manager-schema.json",
+  "title": "APIInfoKeyManager",
+  "description": "APIInfoKeyManager schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the API."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the entry (e.g., \"API\")."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the API."
+    },
+    "transportType": {
+      "type": "string",
+      "description": "The transport type of the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "The description of the API."
+    },
+    "context": {
+      "type": "string",
+      "description": "The context of the API."
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of the API."
+    },
+    "provider": {
+      "type": "string",
+      "description": "The provider of the API."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the API."
+    },
+    "thumbnailUri": {
+      "type": "string",
+      "nullable": true,
+      "description": "The URI of the thumbnail of the API."
+    },
+    "advertiseOnly": {
+      "type": "boolean",
+      "description": "Indicates if the API is advertised only."
+    },
+    "keyManagerEntry": {
+      "type": "string",
+      "description": "The key manager entry related to the API."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "version",
+    "provider"
+  ]
+}

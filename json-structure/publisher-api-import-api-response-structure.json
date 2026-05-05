@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-import-api-response-structure.json",
+  "name": "Import API Response",
+  "description": "ImportAPIResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the imported API\n",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "revision": {
+      "type": "string",
+      "description": "Revision of the imported API\n",
+      "example": 1
+    }
+  }
+}

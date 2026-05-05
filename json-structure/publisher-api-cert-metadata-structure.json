@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-cert-metadata-structure.json",
+  "name": "Certificate",
+  "description": "Representation of the details of a certificate",
+  "type": "object",
+  "properties": {
+    "alias": {
+      "type": "string",
+      "example": "wso2carbon"
+    },
+    "endpoint": {
+      "type": "string",
+      "example": "www.abc.com"
+    }
+  }
+}

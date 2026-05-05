@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-policy-adherence-list-schema.json",
+  "title": "PolicyAdherenceList",
+  "description": "Policy adherence status of a list of policies.",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of policies returned.",
+      "example": 10
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PolicyAdherenceStatus"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-alert-type-structure.json",
+  "name": "Alert Type",
+  "description": "AlertType schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The alert Id",
+      "example": "1"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the alert.",
+      "example": "AbnormalResponseTime"
+    }
+  }
+}

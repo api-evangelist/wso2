@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-conditional-group-schema.json",
+  "title": "Conditional Groups for Throttling",
+  "description": "ConditionalGroup schema from WSO2 API Manager",
+  "required": [
+    "conditions",
+    "limit"
+  ],
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Description of the Conditional Group"
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\nPlease see schemas of each of those throttling condition in Definitions section.\n",
+      "example": "[\n  {\n    \"type\": \"HEADERCONDITION\",\n    \"invertCondition\": false,\n    \"headerCondition\":\n    {\n      \"headerName\": \"Host\",\n      \"headerValue\": \"10.100.7.77\"\n    }\n  },\n  {\n    \"type\": \"IPCONDITION\",\n    \"invertCondition\": false,\n    \"ipCondition\":\n    {\n      \"ipConditionType\": \"IPSPECIFIC\",\n      \"specificIP\": \"10.100.1.22\",\n      \"startingIP\": null,\n      \"endingIP\": null\n    }\n  },\n  {\n    \"type\": \"QUERYPARAMETERCONDITION\",\n    \"invertCondition\": false,\n    \"queryParameterCondition\":\n    {\n      \"parameterName\": \"name\",\n      \"parameterValue\": \"admin\"\n    }\n  },\n  {\n    \"type\": \"JWTCLAIMSCONDITION\",\n    \"invertCondition\": true,\n    \"jwtClaimsCondition\":\n    {\n      \"claimUrl\": \"claimUrl0\",\n      \"attribute\": \"claimAttr0\"\n    }\n  }\n]\n",
+      "items": {
+        "$ref": "#/components/schemas/ThrottleCondition"
+      }
+    },
+    "limit": {
+      "$ref": "#/components/schemas/ThrottleLimit"
+    }
+  }
+}

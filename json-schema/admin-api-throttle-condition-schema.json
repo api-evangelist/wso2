@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-throttle-condition-schema.json",
+  "title": "Throttling Conditions",
+  "description": "Conditions used for Throttling",
+  "required": [
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of the throttling condition. Allowed values are \"HEADERCONDITION\", \"IPCONDITION\", \"JWTCLAIMSCONDITION\"\nand \"QUERYPARAMETERCONDITION\".\n",
+      "enum": [
+        "HEADERCONDITION",
+        "IPCONDITION",
+        "JWTCLAIMSCONDITION",
+        "QUERYPARAMETERCONDITION"
+      ]
+    },
+    "invertCondition": {
+      "type": "boolean",
+      "description": "Specifies whether inversion of the condition to be matched against the request.\n\n**Note:** When you add conditional groups for advanced throttling policies, this paramater should have the\nsame value ('true' or 'false') for the same type of conditional group.\n",
+      "default": false
+    },
+    "headerCondition": {
+      "$ref": "#/components/schemas/HeaderCondition"
+    },
+    "ipCondition": {
+      "$ref": "#/components/schemas/IPCondition"
+    },
+    "jwtClaimsCondition": {
+      "$ref": "#/components/schemas/JWTClaimsCondition"
+    },
+    "queryParameterCondition": {
+      "$ref": "#/components/schemas/QueryParameterCondition"
+    }
+  }
+}

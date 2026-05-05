@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/service-catalog-api-service-schema-schema.json",
+  "title": "The Service Schema object",
+  "description": "ServiceSchema schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "serviceMetadata"
+  ],
+  "properties": {
+    "serviceMetadata": {
+      "$ref": "#/components/schemas/Service"
+    },
+    "definitionFile": {
+      "type": "string",
+      "format": "binary"
+    },
+    "inlineContent": {
+      "type": "string",
+      "description": "Inline content of the document"
+    }
+  }
+}

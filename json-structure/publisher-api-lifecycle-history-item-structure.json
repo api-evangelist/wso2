@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-lifecycle-history-item-structure.json",
+  "name": "Lifecycle history item",
+  "description": "LifecycleHistoryItem schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "previousState": {
+      "type": "string",
+      "example": "Created"
+    },
+    "postState": {
+      "type": "string",
+      "example": "Published"
+    },
+    "user": {
+      "type": "string",
+      "example": "admin"
+    },
+    "updatedTime": {
+      "type": "string",
+      "format": "dateTime",
+      "example": "2019-02-31T23:59:60Z"
+    }
+  }
+}

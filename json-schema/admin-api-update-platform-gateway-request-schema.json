@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-update-platform-gateway-request-schema.json",
+  "title": "Update Platform Gateway Request",
+  "description": "Request body for PUT /gateways/{gatewayId}. Per PUT semantics, send the full resource\nrepresentation. Name and vhost are immutable (server validates they match the existing gateway).\n",
+  "required": [
+    "name",
+    "displayName",
+    "vhost"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "Gateway identifier (immutable; must match existing). Required for PUT full representation."
+    },
+    "vhost": {
+      "type": "string",
+      "format": "uri",
+      "description": "Gateway URL (immutable; must match existing). Same name as platform API; type is URL. Example https://mg.wso2.com",
+      "example": "https://mg.wso2.com"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Human-readable gateway name",
+      "example": "Production Gateway 01"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1023,
+      "description": "Optional description"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom key-value properties for the gateway",
+      "example": {
+        "region": "us-west",
+        "tier": "premium"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Gateway visibility permissions (on-prem extension)",
+      "properties": {
+        "permissionType": {
+          "type": "string",
+          "enum": [
+            "PUBLIC",
+            "ALLOW",
+            "DENY"
+          ],
+          "default": "PUBLIC"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of roles for ALLOW/DENY permission types"
+        }
+      }
+    }
+  }
+}

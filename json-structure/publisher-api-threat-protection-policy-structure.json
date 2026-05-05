@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-threat-protection-policy-structure.json",
+  "name": "Threat Protection Policy Schema",
+  "description": "ThreatProtectionPolicy schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "policy",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "Policy ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the policy"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the policy"
+    },
+    "policy": {
+      "type": "string",
+      "description": "policy as a json string"
+    }
+  }
+}

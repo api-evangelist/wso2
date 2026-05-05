@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-client-cert-metadata-structure.json",
+  "name": "Client certificate meta data",
+  "description": "Meta data of certificate",
+  "type": "object",
+  "properties": {
+    "alias": {
+      "type": "string",
+      "example": "wso2carbon"
+    },
+    "apiId": {
+      "type": "string",
+      "example": "64eca60b-2e55-4c38-8603-e9e6bad7d809"
+    },
+    "tier": {
+      "type": "string",
+      "example": "Gold"
+    }
+  }
+}

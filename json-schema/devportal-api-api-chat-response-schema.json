@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-chat-response-schema.json",
+  "title": "API Chat response",
+  "description": "ApiChatResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiSpec": {
+      "type": "object",
+      "title": "Enriched API spec",
+      "required": [
+        "tools"
+      ],
+      "properties": {
+        "serviceUrl": {
+          "type": "string",
+          "description": "Extracted service URL from the OpenAPI specification if there is any",
+          "example": "https://localhost:8243/pizzashack/1.0.0"
+        },
+        "tools": {
+          "type": "array",
+          "description": "Extracted Http tools from the OpenAPI specification",
+          "items": {
+            "type": "object",
+            "example": {
+              "name": "GET-order_orderId",
+              "description": "Get details of an Order by providing Order Id. This tool invokes a HTTP GET resource",
+              "method": "GET",
+              "path": "/order/{orderId}",
+              "parameters": {
+                "orderId": {
+                  "location": "path",
+                  "description": "Order Id",
+                  "required": true,
+                  "style": "simple",
+                  "explode": false,
+                  "schema": {
+                    "type": "string",
+                    "format": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "taskStatus": {
+      "type": "string",
+      "description": "Task status (IN_PROGRESS, TERMINATED or COMPLETED)",
+      "enum": [
+        "IN_PROGRESS",
+        "TERMINATED",
+        "COMPLETED"
+      ],
+      "example": "COMPLETED"
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "HTTP method of the resource",
+          "example": "GET"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path of the resource",
+          "example": "/order/{orderId}"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Input parameters for the resource",
+          "example": {
+            "parameters": {
+              "orderId": "123"
+            }
+          }
+        }
+      }
+    },
+    "result": {
+      "type": "string",
+      "description": "completion result",
+      "example": "The pet with ID 123 is available. Here are the details: - ID: 123 - Name: asd - Status: available"
+    },
+    "queries": {
+      "type": "array",
+      "description": "list of sample queries",
+      "items": {
+        "$ref": "#/components/schemas/SampleQuery"
+      }
+    }
+  }
+}

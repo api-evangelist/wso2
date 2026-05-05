@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-shared-scope-used-api-info-schema.json",
+  "title": "API object using shared scope",
+  "description": "SharedScopeUsedAPIInfo schema from WSO2 API Manager",
+  "required": [
+    "context",
+    "name",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "CalculatorAPI"
+    },
+    "context": {
+      "type": "string",
+      "example": "CalculatorAPI"
+    },
+    "version": {
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "description": "If the provider value is not given user invoking the api will be used as the provider.\n",
+      "example": "admin"
+    },
+    "revisionID": {
+      "type": "string",
+      "example": "Revision 1"
+    },
+    "usedResourceList": {
+      "type": "array",
+      "description": "Resource list which have used the shared scope within this API\n",
+      "items": {
+        "$ref": "#/components/schemas/SharedScopeUsedAPIResourceInfo"
+      }
+    }
+  }
+}

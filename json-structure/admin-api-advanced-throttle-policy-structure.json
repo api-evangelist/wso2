@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-advanced-throttle-policy-structure.json",
+  "name": "Advanced Throttling Policy",
+  "description": "AdvancedThrottlePolicy schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottlePolicy"
+    },
+    {
+      "required": [
+        "defaultLimit"
+      ],
+      "type": "object",
+      "properties": {
+        "defaultLimit": {
+          "$ref": "#/components/schemas/ThrottleLimit"
+        },
+        "conditionalGroups": {
+          "type": "array",
+          "description": "Group of conditions which allow adding different parameter conditions to the throttling limit.\n",
+          "items": {
+            "$ref": "#/components/schemas/ConditionalGroup"
+          }
+        }
+      }
+    }
+  ]
+}

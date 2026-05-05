@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-max-tps-schema.json",
+  "title": "APIMaxTps",
+  "description": "APIMaxTps schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "production": {
+      "type": "integer",
+      "format": "int64",
+      "example": 1000
+    },
+    "productionTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the production.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    },
+    "sandbox": {
+      "type": "integer",
+      "format": "int64",
+      "example": 1000
+    },
+    "sandboxTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the sandbox.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    },
+    "tokenBasedThrottlingConfiguration": {
+      "type": "object",
+      "required": [
+        "isTokenBasedThrottlingEnabled"
+      ],
+      "properties": {
+        "productionMaxPromptTokenCount": {
+          "type": "integer",
+          "description": "Maximum prompt token count for production",
+          "format": "int64"
+        },
+        "productionMaxCompletionTokenCount": {
+          "type": "integer",
+          "description": "Maximum completion token count for production",
+          "format": "int64"
+        },
+        "productionMaxTotalTokenCount": {
+          "type": "integer",
+          "description": "Maximum total token count for production",
+          "format": "int64"
+        },
+        "sandboxMaxPromptTokenCount": {
+          "type": "integer",
+          "description": "Maximum prompt token count for sandbox",
+          "format": "int64"
+        },
+        "sandboxMaxCompletionTokenCount": {
+          "type": "integer",
+          "description": "Maximum completion token count for sandbox",
+          "format": "int64"
+        },
+        "sandboxMaxTotalTokenCount": {
+          "type": "integer",
+          "description": "Maximum total token count for sandbox",
+          "format": "int64"
+        },
+        "isTokenBasedThrottlingEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether token-based throttling is enabled"
+        }
+      }
+    }
+  }
+}

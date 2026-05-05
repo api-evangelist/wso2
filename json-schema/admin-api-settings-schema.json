@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-settings-schema.json",
+  "title": "Settings",
+  "description": "Settings schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gatewayTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "IsJWTEnabledForLoginTokens": {
+      "type": "boolean",
+      "default": false
+    },
+    "orgAccessControlEnabled": {
+      "type": "boolean",
+      "description": "Is Organization-based access control configuration enabled\n",
+      "example": true
+    },
+    "keyManagerConfiguration": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "default"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "default"
+          },
+          "defaultConsumerKeyClaim": {
+            "type": "string",
+            "example": "azp"
+          },
+          "defaultScopesClaim": {
+            "type": "string",
+            "example": "scope"
+          },
+          "authConfigurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyManagerConfiguration"
+            }
+          },
+          "configurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyManagerConfiguration"
+            }
+          },
+          "endpointConfigurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyManagerConfiguration"
+            }
+          },
+          "configurationConstraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConfigurationConstraint"
+            }
+          }
+        }
+      }
+    },
+    "gatewayConfiguration": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "default"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "default"
+          },
+          "supportedModes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "READ_WRITE"
+            }
+          },
+          "configurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GatewayConfiguration"
+            }
+          },
+          "defaultHostnameTemplate": {
+            "type": "string",
+            "example": "{apiId}.execute-api.{region}.amazonaws.com"
+          }
+        }
+      }
+    },
+    "analyticsEnabled": {
+      "type": "boolean",
+      "description": "To determine whether analytics is enabled or not",
+      "example": false
+    },
+    "transactionCounterEnable": {
+      "type": "boolean",
+      "description": "To determine whether the transaction counter is enabled or not",
+      "example": false
+    },
+    "isGatewayNotificationEnabled": {
+      "type": "boolean",
+      "description": "Is Gateway Notification Enabled",
+      "default": false
+    },
+    "platformGatewayVersions": {
+      "type": "array",
+      "description": "API Platform Gateway versions for the quick-start guide.",
+      "items": {
+        "type": "string",
+        "example": "1.0.0"
+      }
+    },
+    "consumptionExportEnabled": {
+      "type": "boolean",
+      "description": "Whether the ConsumptionDataExportService OSGi service is available",
+      "example": false
+    }
+  }
+}

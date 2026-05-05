@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-blocking-condition-structure.json",
+  "name": "Blocking Conditions",
+  "description": "Blocking Conditions",
+  "required": [
+    "conditionType",
+    "conditionValue"
+  ],
+  "type": "object",
+  "properties": {
+    "conditionId": {
+      "type": "string",
+      "description": "Id of the blocking condition",
+      "example": "b513eb68-69e8-4c32-92cf-852c101363cf"
+    },
+    "conditionType": {
+      "type": "string",
+      "description": "Type of the blocking condition",
+      "example": "IP",
+      "enum": [
+        "API",
+        "APPLICATION",
+        "IP",
+        "IPRANGE",
+        "USER"
+      ]
+    },
+    "conditionValue": {
+      "type": "object",
+      "properties": {},
+      "description": "Value of the blocking condition",
+      "example": {
+        "fixedIp": "192.168.1.1",
+        "invert": false
+      }
+    },
+    "conditionStatus": {
+      "type": "boolean",
+      "description": "Status of the blocking condition",
+      "example": true
+    }
+  }
+}

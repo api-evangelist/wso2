@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-llm-provider-summary-response-schema.json",
+  "title": "LLMProviderSummaryResponse",
+  "description": "LLMProviderSummaryResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "ece92bdc-e1e6-325c-b6f4-656208a041e9"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "open-ai"
+    },
+    "apiVersion": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "builtInSupport": {
+      "type": "boolean",
+      "description": "Is built-in support"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string",
+      "example": "OpenAI LLM Provider"
+    }
+  }
+}

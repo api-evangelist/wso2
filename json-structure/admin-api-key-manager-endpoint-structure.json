@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-key-manager-endpoint-structure.json",
+  "name": "Key Manager Endpoint.",
+  "description": "KeyManagerEndpoint schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "value"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "token_endpoint"
+    },
+    "value": {
+      "type": "string",
+      "example": "https://localhost:9443/oauth2/token"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-throttling-policy-schema.json",
+  "title": "Tier",
+  "description": "ThrottlingPolicy schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "requestCount",
+    "stopOnQuotaReach",
+    "tierPlan",
+    "unitTime"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "Platinum"
+    },
+    "description": {
+      "type": "string",
+      "example": "Allows 50 request(s) per minute."
+    },
+    "policyLevel": {
+      "type": "string",
+      "example": "api",
+      "enum": [
+        "subscription",
+        "api"
+      ]
+    },
+    "displayName": {
+      "type": "string",
+      "example": "Platinum"
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom attributes added to the policy policy\n",
+      "example": {}
+    },
+    "requestCount": {
+      "type": "integer",
+      "description": "Maximum number of requests which can be sent within a provided unit time\n",
+      "format": "int64",
+      "example": 50
+    },
+    "dataUnit": {
+      "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"\n",
+      "type": "string",
+      "example": "KB"
+    },
+    "totalTokenCount": {
+      "type": "integer",
+      "description": "Maximum number of total tokens which can be used within a provided unit time\n",
+      "format": "int64",
+      "example": 1000
+    },
+    "promptTokenCount": {
+      "type": "integer",
+      "description": "Maximum number of prompt tokens which can be used within a provided unit time\n",
+      "format": "int64",
+      "example": 500
+    },
+    "completionTokenCount": {
+      "type": "integer",
+      "description": "Maximum number of completion tokens which can be used within a provided unit time\n",
+      "format": "int64",
+      "example": 600
+    },
+    "unitTime": {
+      "type": "integer",
+      "format": "int64",
+      "example": 60000
+    },
+    "timeUnit": {
+      "type": "string",
+      "example": "min"
+    },
+    "rateLimitCount": {
+      "type": "integer",
+      "default": 0,
+      "description": "Burst control request count",
+      "example": 10
+    },
+    "rateLimitTimeUnit": {
+      "type": "string",
+      "description": "Burst control time unit",
+      "example": "min"
+    },
+    "quotaPolicyType": {
+      "type": "string",
+      "description": "Default quota limit type",
+      "enum": [
+        "REQUESTCOUNT",
+        "BANDWIDTHVOLUME",
+        "AIAPIQUOTA"
+      ],
+      "example": "REQUESTCOUNT"
+    },
+    "tierPlan": {
+      "type": "string",
+      "description": "This attribute declares whether this policy is available under commercial or free\n",
+      "example": "FREE",
+      "enum": [
+        "FREE",
+        "COMMERCIAL"
+      ]
+    },
+    "stopOnQuotaReach": {
+      "type": "boolean",
+      "description": "By making this attribute to false, you are capabale of sending requests\neven if the request count exceeded within a unit time\n",
+      "example": true
+    },
+    "monetizationProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Properties of a tier plan which are related to monetization",
+      "example": {}
+    }
+  }
+}

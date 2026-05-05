@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-graph-ql-schema-structure.json",
+  "name": "GraphQL Schema",
+  "description": "GraphQLSchema schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "admin--HackerNewsAPI.graphql"
+    },
+    "schemaDefinition": {
+      "type": "string"
+    }
+  }
+}

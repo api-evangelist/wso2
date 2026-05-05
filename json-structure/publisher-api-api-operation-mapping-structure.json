@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-operation-mapping-structure.json",
+  "name": "API Operation Mapping",
+  "description": "APIOperationMapping schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "description": "UUID of the referenced API\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "apiName": {
+      "maxLength": 150,
+      "minLength": 1,
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\[\\]\\/]*$)",
+      "type": "string",
+      "example": "PizzaShackAPI"
+    },
+    "apiVersion": {
+      "maxLength": 30,
+      "minLength": 1,
+      "type": "string",
+      "pattern": "^[^~!@#;:%^*()+={}|\\\\<>\"',&/$\\[\\]\\s+\\/]+$",
+      "example": "1.0.0"
+    },
+    "apiContext": {
+      "maxLength": 232,
+      "minLength": 1,
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "backendOperation": {
+      "$ref": "#/components/schemas/BackendOperation"
+    }
+  }
+}

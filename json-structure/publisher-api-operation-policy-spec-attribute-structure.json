@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-operation-policy-spec-attribute-structure.json",
+  "name": "OperationPolicySpecAttribute",
+  "description": "OperationPolicySpecAttribute schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the attibute",
+      "example": "headerName"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the attibute",
+      "example": "Header Name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the attibute",
+      "example": "Name of the header to be removed"
+    },
+    "validationRegex": {
+      "type": "string",
+      "description": "UI validation regex for the attibute",
+      "example": "/^[a-z\\s]{0,255}$/i"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the attibute",
+      "example": "string"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Is this attibute mandetory for the policy",
+      "example": true
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Default value for the attribute",
+      "example": true
+    },
+    "allowedValues": {
+      "type": "array",
+      "description": "If the attribute type is enum, this array should contain all the possible values for the enum.",
+      "items": {
+        "type": "string",
+        "example": [
+          "GET",
+          "POST",
+          "PUT"
+        ]
+      }
+    }
+  }
+}

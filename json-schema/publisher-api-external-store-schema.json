@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-external-store-schema.json",
+  "title": "External Store",
+  "description": "ExternalStore schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The external store identifier, which is a unique value.\n",
+      "example": "Store123#"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The name of the external API Store that is displayed in the Publisher UI.\n",
+      "example": "UKStore"
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the Store. This can be a WSO2-specific API Store or an external one.\n",
+      "example": "wso2"
+    },
+    "endpoint": {
+      "type": "string",
+      "description": "The endpoint URL of the external store\n",
+      "example": "http://localhost:9764/store"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-model-provider-schema.json",
+  "title": "Model Provider",
+  "description": "ModelProvider schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "name",
+    "models"
+  ],
+  "properties": {
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "gpt-4o"
+      }
+    },
+    "name": {
+      "type": "string",
+      "example": "OpenAI"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-audit-report-structure.json",
+  "name": "Resource for Audit Report",
+  "description": "AuditReport schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "report": {
+      "type": "string",
+      "description": "The API Security Audit Report\n"
+    },
+    "grade": {
+      "type": "string",
+      "description": "The overall grade of the Security Audit\n",
+      "example": "27.95"
+    },
+    "numErrors": {
+      "type": "int32",
+      "description": "The number of errors in the API Definition\n",
+      "example": 20
+    },
+    "externalApiId": {
+      "type": "string",
+      "description": "The External API ID\n",
+      "example": "fd21f9f7-3674-49cf-8a83-dca401f635de"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-llm-provider-request-structure.json",
+  "name": "LLMProvider",
+  "description": "LLMProviderRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "OpenAI"
+    },
+    "apiVersion": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string",
+      "example": "OpenAI LLM"
+    },
+    "configurations": {
+      "type": "string",
+      "description": "LLM Provider configurations"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "OpenAPI specification",
+      "format": "binary"
+    },
+    "modelList": {
+      "type": "string",
+      "description": "List of models supported by the LLM Provider as a stringified JSON array"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-comment-list-structure.json",
+  "name": "Comments List",
+  "description": "CommentList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "readOnly": true,
+      "description": "Number of Comments returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "readOnly": true,
+      "items": {
+        "$ref": "#/components/schemas/Comment"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

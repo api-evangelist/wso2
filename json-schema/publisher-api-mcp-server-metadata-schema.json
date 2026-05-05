@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-mcp-server-metadata-schema.json",
+  "title": "MCP Server Info object with basic minimal details.",
+  "description": "MCPServerMetadata schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "PizzaShackAPI"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "PizzaShack API",
+      "description": "Display name of the MCP Server.\nThis is the name that will be displayed in the Publisher and DevPortal.\nIf not provided, the name will be used as the display name.\n"
+    },
+    "version": {
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n",
+      "example": "admin"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-document-schema.json",
+  "title": "Document",
+  "description": "Document schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "sourceType",
+    "type",
+    "visibility"
+  ],
+  "type": "object",
+  "properties": {
+    "documentId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "PizzaShackDoc"
+    },
+    "type": {
+      "type": "string",
+      "example": "HOWTO",
+      "enum": [
+        "HOWTO",
+        "SAMPLES",
+        "PUBLIC_FORUM",
+        "SUPPORT_FORUM",
+        "API_MESSAGE_FORMAT",
+        "SWAGGER_DOC",
+        "OTHER"
+      ]
+    },
+    "summary": {
+      "maxLength": 32766,
+      "minLength": 1,
+      "type": "string",
+      "example": "Summary of PizzaShackAPI Documentation"
+    },
+    "sourceType": {
+      "type": "string",
+      "example": "INLINE",
+      "enum": [
+        "INLINE",
+        "MARKDOWN",
+        "URL",
+        "FILE"
+      ]
+    },
+    "sourceUrl": {
+      "type": "string",
+      "readOnly": true,
+      "example": ""
+    },
+    "fileName": {
+      "type": "string",
+      "readOnly": true,
+      "example": ""
+    },
+    "inlineContent": {
+      "type": "string",
+      "example": "This is doc content. This can have many lines."
+    },
+    "otherTypeName": {
+      "type": "string",
+      "readOnly": true,
+      "example": ""
+    },
+    "visibility": {
+      "type": "string",
+      "example": "API_LEVEL",
+      "enum": [
+        "OWNER_ONLY",
+        "PRIVATE",
+        "API_LEVEL"
+      ]
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "createdBy": {
+      "type": "string",
+      "example": "admin"
+    },
+    "lastUpdatedTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "lastUpdatedBy": {
+      "type": "string",
+      "readOnly": true,
+      "example": "admin"
+    }
+  }
+}

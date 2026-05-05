@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-security-info-schema.json",
+  "title": "MCP Server Security Information",
+  "description": "Optional security headers to use during URL validation.",
+  "type": "object",
+  "properties": {
+    "isSecure": {
+      "type": "boolean",
+      "description": "Indicates whether the URL is secure (HTTPS) or not (HTTP).",
+      "default": false
+    },
+    "header": {
+      "type": "string",
+      "description": "Header name used for authentication, if required.",
+      "example": "Authorization"
+    },
+    "value": {
+      "type": "string",
+      "description": "Value used for the authentication header.",
+      "example": "Bearer <token>"
+    }
+  }
+}

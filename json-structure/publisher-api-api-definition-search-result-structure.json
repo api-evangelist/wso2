@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-definition-search-result-structure.json",
+  "name": "API Definition Search Result",
+  "description": "APIDefinitionSearchResult schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/SearchResult"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "apiDisplayName": {
+          "description": "Human-friendly name shown in UI for associated API. Length limited to DB column size.",
+          "type": "string",
+          "example": "Pizza Shack API"
+        },
+        "apiName": {
+          "type": "string",
+          "description": "The name of the associated API",
+          "example": "TestAPI"
+        },
+        "apiVersion": {
+          "type": "string",
+          "description": "The version of the associated API",
+          "example": "1.0.0"
+        },
+        "apiContext": {
+          "type": "string",
+          "description": "The context of the associated API",
+          "example": "/test"
+        },
+        "apiUUID": {
+          "type": "string",
+          "description": "The UUID of the associated API"
+        },
+        "apiProvider": {
+          "type": "string",
+          "description": "The provider name of the associated API",
+          "example": "publisher"
+        },
+        "apiType": {
+          "type": "string",
+          "description": "The type of the associated API",
+          "example": "REST"
+        },
+        "associatedType": {
+          "type": "string",
+          "description": "API or APIProduct",
+          "example": "API"
+        },
+        "createdTime": {
+          "type": "string",
+          "description": "Created time as unix timestamp in milliseconds.",
+          "example": 1756199448644
+        },
+        "updatedTime": {
+          "type": "string",
+          "description": "Update time as unix timestamp in milliseconds.",
+          "example": 1756199448644
+        }
+      }
+    }
+  ]
+}

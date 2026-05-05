@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-api-result-schema.json",
+  "title": "ApiResult",
+  "description": "ApiResult schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-label-list-structure.json",
+  "name": "Label List",
+  "description": "LabelList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "Number of labels returned.",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "description": "List of labels.",
+      "items": {
+        "$ref": "#/components/schemas/Label"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

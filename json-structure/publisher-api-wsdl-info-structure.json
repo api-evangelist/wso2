@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-wsdl-info-structure.json",
+  "name": "WSDL information of the API. This is only available if the API is a SOAP API.",
+  "description": "WSDLInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Indicates whether the WSDL is a single WSDL or an archive in ZIP format",
+      "enum": [
+        "WSDL",
+        "ZIP"
+      ]
+    }
+  }
+}

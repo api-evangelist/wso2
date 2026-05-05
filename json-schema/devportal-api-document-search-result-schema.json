@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-document-search-result-schema.json",
+  "title": "Document Result",
+  "description": "DocumentSearchResult schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/SearchResult"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "docType": {
+          "type": "string",
+          "example": "HOWTO",
+          "enum": [
+            "HOWTO",
+            "SAMPLES",
+            "PUBLIC_FORUM",
+            "SUPPORT_FORUM",
+            "API_MESSAGE_FORMAT",
+            "SWAGGER_DOC",
+            "OTHER"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "example": "Summary of Calculator Documentation"
+        },
+        "sourceType": {
+          "type": "string",
+          "example": "INLINE",
+          "enum": [
+            "INLINE",
+            "URL",
+            "FILE",
+            "MARKDOWN"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string",
+          "example": ""
+        },
+        "otherTypeName": {
+          "type": "string",
+          "example": ""
+        },
+        "visibility": {
+          "type": "string",
+          "example": "API_LEVEL",
+          "enum": [
+            "OWNER_ONLY",
+            "PRIVATE",
+            "API_LEVEL"
+          ]
+        },
+        "apiName": {
+          "type": "string",
+          "description": "The name of the associated API",
+          "example": "TestAPI"
+        },
+        "apiDisplayName": {
+          "description": "Human-friendly name shown in UI for associated API. Length limited to DB column size.",
+          "type": "string",
+          "example": "Pizza Shack API"
+        },
+        "apiVersion": {
+          "type": "string",
+          "description": "The version of the associated API",
+          "example": "1.0.0"
+        },
+        "apiProvider": {
+          "type": "string",
+          "example": "admin"
+        },
+        "apiUUID": {
+          "type": "string"
+        },
+        "associatedType": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

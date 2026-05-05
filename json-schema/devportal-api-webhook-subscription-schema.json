@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-webhook-subscription-schema.json",
+  "title": "Webhook Subscription",
+  "description": "WebhookSubscription schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "appId": {
+      "type": "string",
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "topic": {
+      "type": "string",
+      "example": "orderBooks"
+    },
+    "callBackUrl": {
+      "type": "string",
+      "example": "www.orderbooksite.com"
+    },
+    "deliveryTime": {
+      "type": "string",
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "deliveryStatus": {
+      "type": "integer",
+      "example": 1
+    }
+  }
+}

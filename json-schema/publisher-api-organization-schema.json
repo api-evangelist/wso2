@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-organization-schema.json",
+  "title": "Organization",
+  "description": "Organization schema from WSO2 API Manager",
+  "required": [
+    "organizationId"
+  ],
+  "type": "object",
+  "properties": {
+    "organizationId": {
+      "type": "string",
+      "example": "ece92bdc-e1e6-325c-b6f4-656208a041e9",
+      "readOnly": true,
+      "description": "UUID of the organization.\n"
+    },
+    "externalOrganizationId": {
+      "type": "string",
+      "example": "ece92bdc-e1e6-325c-b6f4-656208a041e9",
+      "description": "External id of the organization.\n"
+    },
+    "parentOrganizationId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "ece92bdc-e1e6-325c-b6f4-656208a041e9",
+      "description": "UUID of the parent organization if there is any.\n"
+    },
+    "displayName": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "My Organization"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string",
+      "example": "My Organization Description"
+    }
+  }
+}

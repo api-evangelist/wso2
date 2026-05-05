@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-sample-query-schema.json",
+  "title": "API Chat sample query record",
+  "description": "SampleQuery schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "scenario",
+    "query"
+  ],
+  "properties": {
+    "scenario": {
+      "type": "string",
+      "description": "scenario"
+    },
+    "query": {
+      "type": "string",
+      "description": "generated query"
+    }
+  }
+}

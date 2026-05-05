@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-gateway-list-schema.json",
+  "title": "Gateway List",
+  "description": "GatewayList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of platform gateways returned"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PlatformGatewayResponse"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-search-result-list-structure.json",
+  "name": "Unified Search Result List",
+  "description": "SearchResultList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiResult"
+      }
+    },
+    "count": {
+      "type": "int32",
+      "description": "Number of results returned.\n",
+      "example": 1
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

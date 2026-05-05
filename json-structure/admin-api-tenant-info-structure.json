@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-tenant-info-structure.json",
+  "name": "Tenant information",
+  "description": "The tenant information of the user",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "example": "john"
+    },
+    "tenantDomain": {
+      "type": "string",
+      "example": "carbon.super"
+    },
+    "tenantId": {
+      "type": "int32",
+      "example": -1234
+    }
+  }
+}

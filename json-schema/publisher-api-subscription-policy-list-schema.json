@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-subscription-policy-list-schema.json",
+  "title": "Subscription policy list",
+  "description": "SubscriptionPolicyList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Tiers returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "description": "Array of SubscriptionPolicies\n",
+      "items": {
+        "$ref": "#/components/schemas/SubscriptionPolicy"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

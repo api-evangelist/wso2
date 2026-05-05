@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-label-usage-schema.json",
+  "title": "Label Usage",
+  "description": "LabelUsage schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apis": {
+      "type": "object",
+      "description": "List of APIs associated with the label.\n",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "Number of APIs associated with the label.",
+          "example": 1
+        },
+        "list": {
+          "type": "array",
+          "description": "List of APIs associated with the label.",
+          "items": {
+            "$ref": "#/components/schemas/ApiResult"
+          }
+        }
+      }
+    }
+  }
+}

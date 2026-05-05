@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-subtype-configuration-structure.json",
+  "name": "SubtypeConfiguration",
+  "description": "Configuration settings for the subtype",
+  "type": "object",
+  "properties": {
+    "subtype": {
+      "type": "string",
+      "description": "The designated name of the subtype.",
+      "default": "DEFAULT",
+      "example": "proxy",
+      "readOnly": true
+    },
+    "configuration": {
+      "type": "object",
+      "description": "Specific configuration properties related to the subtype."
+    }
+  }
+}

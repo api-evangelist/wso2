@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-additional-property-structure.json",
+  "name": "Additional Gateway Properties",
+  "description": "AdditionalProperty schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "example": "Organization"
+    },
+    "value": {
+      "type": "string",
+      "example": "wso2"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-apim-governance-policy-schema.json",
+  "title": "APIMGovernancePolicy",
+  "description": "Detailed information about a governance policy.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the governance policy.",
+      "readOnly": true,
+      "example": "987e6543-d21b-34d5-b678-912345678900"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the governance policy.",
+      "maxLength": 256,
+      "example": "API Security Policy"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of the governance policy.",
+      "maxLength": 1024,
+      "example": "Policy for enforcing security standards across all APIs."
+    },
+    "governableStates": {
+      "type": "array",
+      "description": "List of states at which the governance policy should be enforced.",
+      "items": {
+        "type": "string",
+        "description": "The state at which an governance policy should be enforced.",
+        "enum": [
+          "API_CREATE",
+          "API_UPDATE",
+          "API_DEPLOY",
+          "API_PUBLISH"
+        ],
+        "example": "API_DEPLOY",
+        "x-enum-varnames": [
+          "API_CREATE",
+          "API_UPDATE",
+          "API_DEPLOY",
+          "API_PUBLISH"
+        ]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "List of actions taken when the governance policy is violated. An action is defined by the state and rule severity. If an action is not specified to each state and rule severity, the default action is `NOTIFY`.",
+      "items": {
+        "$ref": "#/components/schemas/Action"
+      }
+    },
+    "rulesets": {
+      "type": "array",
+      "description": "List of rulesets associated with the governance policy.",
+      "items": {
+        "type": "string",
+        "example": "94566543-d21b-34d5-b678-912345678900"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "List of labels IDs associated with the governance policy.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "54d5833a-ca86-44bb-bcda-5b9fcdacd79d"
+      ]
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "Identifier of the user who created the governance policy.",
+      "readOnly": true,
+      "example": "admin@wso2.com"
+    },
+    "createdTime": {
+      "type": "string",
+      "description": "Timestamp when the governance policy was created.",
+      "readOnly": true,
+      "example": "2024-08-01T12:00:00Z"
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "Identifier of the user who last updated the governance policy.",
+      "readOnly": true,
+      "example": "admin@wso2.com"
+    },
+    "updatedTime": {
+      "type": "string",
+      "description": "Timestamp when the governance policy was last updated.",
+      "readOnly": true,
+      "example": "2024-08-02T12:00:00Z"
+    }
+  },
+  "required": [
+    "name",
+    "rulesets",
+    "labels",
+    "governableStates",
+    "actions"
+  ]
+}

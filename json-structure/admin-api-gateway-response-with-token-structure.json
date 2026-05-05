@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-gateway-response-with-token-structure.json",
+  "name": "Gateway Response With Token",
+  "description": "Platform gateway response including the one-time registration token (POST create or regenerate-token).",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/PlatformGatewayResponse"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "registrationToken": {
+          "type": "string",
+          "description": "Registration token (returned only once on create or regenerate). Use as api-key when connecting\nthe gateway to the control plane WebSocket. Store e.g. as GATEWAY_REGISTRATION_TOKEN.\n"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-workflow-list-schema.json",
+  "title": "WorkflowList",
+  "description": "WorkflowList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of workflow processes returned.\n",
+      "example": 1
+    },
+    "next": {
+      "type": "string",
+      "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n",
+      "example": "/workflows?limit=1&offset=2&user="
+    },
+    "previous": {
+      "type": "string",
+      "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n",
+      "example": "/workflows?limit=1&offset=0&user="
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/WorkflowInfo"
+      }
+    }
+  }
+}

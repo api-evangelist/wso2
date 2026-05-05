@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-backend-operation-structure.json",
+  "name": "Backend Operation",
+  "description": "BackendOperation schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "target": {
+      "type": "string",
+      "description": "Backend target path",
+      "example": "/order/{orderId}"
+    },
+    "verb": {
+      "type": "string",
+      "description": "Backend target method",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "HEAD",
+        "OPTIONS",
+        "TOOL"
+      ],
+      "example": "POST"
+    }
+  }
+}

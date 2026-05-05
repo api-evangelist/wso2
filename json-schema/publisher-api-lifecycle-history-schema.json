@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-lifecycle-history-schema.json",
+  "title": "Lifecycle history item list",
+  "description": "LifecycleHistory schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LifecycleHistoryItem"
+      }
+    }
+  }
+}

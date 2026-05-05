@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-graph-ql-validation-response-structure.json",
+  "name": "GraphQL API definition validation Response",
+  "description": "GraphQLValidationResponse schema from WSO2 API Manager",
+  "required": [
+    "errorMessage",
+    "isValid"
+  ],
+  "type": "object",
+  "properties": {
+    "isValid": {
+      "type": "boolean",
+      "description": "This attribute declares whether this definition is valid or not.\n",
+      "example": true
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "This attribute declares the validation error message\n"
+    },
+    "graphQLInfo": {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/APIOperations"
+          }
+        },
+        "graphQLSchema": {
+          "$ref": "#/components/schemas/GraphQLSchema"
+        }
+      },
+      "description": "Summary of the GraphQL including the basic information"
+    }
+  }
+}

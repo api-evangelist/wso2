@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-rating-schema.json",
+  "title": "Rating",
+  "description": "Rating schema from WSO2 API Manager",
+  "required": [
+    "rating"
+  ],
+  "type": "object",
+  "properties": {
+    "ratingId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "32acfa7a-77f8-4fe0-bb7f-a902f36546d0"
+    },
+    "apiId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "e93fb282-b456-48fc-8981-003fb89086ae"
+    },
+    "ratedBy": {
+      "maxLength": 50,
+      "type": "string",
+      "readOnly": true,
+      "example": "admin"
+    },
+    "rating": {
+      "type": "integer",
+      "example": 4
+    }
+  }
+}

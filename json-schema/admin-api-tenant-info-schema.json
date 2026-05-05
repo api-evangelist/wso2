@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-tenant-info-schema.json",
+  "title": "Tenant information",
+  "description": "The tenant information of the user",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "example": "john"
+    },
+    "tenantDomain": {
+      "type": "string",
+      "example": "carbon.super"
+    },
+    "tenantId": {
+      "type": "integer",
+      "example": -1234
+    }
+  }
+}

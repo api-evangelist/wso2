@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-application-throttle-policy-structure.json",
+  "name": "Application Throttling Policy",
+  "description": "ApplicationThrottlePolicy schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottlePolicy"
+    },
+    {
+      "required": [
+        "defaultLimit"
+      ],
+      "type": "object",
+      "properties": {
+        "defaultLimit": {
+          "$ref": "#/components/schemas/ThrottleLimit"
+        },
+        "burstLimit": {
+          "$ref": "#/components/schemas/BurstLimit"
+        }
+      }
+    }
+  ]
+}

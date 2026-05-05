@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-key-manager-api-usages-structure.json",
+  "name": "Key Manager API Usages.",
+  "description": "KeyManagerAPIUsages schema from WSO2 API Manager",
+  "required": [
+    "apiCount",
+    "apis"
+  ],
+  "type": "object",
+  "properties": {
+    "apiCount": {
+      "type": "int32",
+      "description": "The total count of APIs."
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/APIInfoKeyManager"
+      }
+    }
+  }
+}

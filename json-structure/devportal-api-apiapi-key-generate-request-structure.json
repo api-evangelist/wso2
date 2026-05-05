@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-apiapi-key-generate-request-structure.json",
+  "name": "API Key generation request object",
+  "description": "APIAPIKeyGenerateRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "keyName": {
+      "type": "string",
+      "description": "API Key name",
+      "example": "Test_Key"
+    },
+    "keyType": {
+      "type": "string",
+      "description": "Type of the API key",
+      "example": "PRODUCTION",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    },
+    "validityPeriod": {
+      "type": "int64",
+      "description": "API key validity period",
+      "example": 3600
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "description": "Additional parameters if Authorization server needs any"
+    }
+  }
+}

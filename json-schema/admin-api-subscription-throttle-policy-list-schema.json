@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-subscription-throttle-policy-list-schema.json",
+  "title": "Subscription Level Throttling Policy List",
+  "description": "SubscriptionThrottlePolicyList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Subscription Throttling Policies returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SubscriptionThrottlePolicy"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devops-api-logging-api-output-list-structure.json",
+  "name": "apis",
+  "description": "LoggingApiOutputList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/LoggingApiOutput"
+      }
+    }
+  }
+}

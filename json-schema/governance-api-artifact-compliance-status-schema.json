@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-artifact-compliance-status-schema.json",
+  "title": "ArtifactComplianceStatus",
+  "description": "Provides compliance status of an artifact.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the API.",
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the API's governance compliance.",
+      "enum": [
+        "COMPLIANT",
+        "NON-COMPLIANT",
+        "NOT-APPLICABLE",
+        "PENDING"
+      ],
+      "example": "COMPLIANT"
+    },
+    "info": {
+      "$ref": "#/components/schemas/ArtifactInfo"
+    },
+    "policyAdherenceSummary": {
+      "$ref": "#/components/schemas/PolicyAdherenceSummary"
+    },
+    "severityBasedRuleViolationSummary": {
+      "type": "array",
+      "description": "Summary of severity based rule violations.",
+      "items": {
+        "$ref": "#/components/schemas/SeverityBasedRuleViolationCount"
+      }
+    }
+  }
+}

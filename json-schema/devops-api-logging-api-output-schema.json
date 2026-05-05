@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devops-api-logging-api-output-schema.json",
+  "title": "API Info object with log details",
+  "description": "LoggingApiOutput schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "context",
+    "logLevel",
+    "apiId"
+  ],
+  "properties": {
+    "context": {
+      "type": "string",
+      "example": "pizashack/v1.0.0"
+    },
+    "logLevel": {
+      "type": "string",
+      "example": "FULL"
+    },
+    "apiId": {
+      "type": "string",
+      "example": "12d6e73c-778d-45ac-b57d-117c6c5092a4"
+    },
+    "resourceMethod": {
+      "type": "string",
+      "example": "GET"
+    },
+    "resourcePath": {
+      "type": "string",
+      "example": "/v1.0.0/pizza"
+    }
+  }
+}

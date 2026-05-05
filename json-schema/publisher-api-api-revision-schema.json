@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-revision-schema.json",
+  "title": "API Info object with basic API details",
+  "description": "APIRevision schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "readOnly": true,
+      "example": "REVISION 1"
+    },
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "c26b2b9b-4632-4ca4-b6f3-521c8863990c"
+    },
+    "description": {
+      "maxLength": 255,
+      "minLength": 0,
+      "type": "string",
+      "example": "removed a post resource"
+    },
+    "createdTime": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "apiInfo": {
+      "$ref": "#/components/schemas/APIRevisionAPIInfo"
+    },
+    "deploymentInfo": {
+      "type": "array",
+      "readOnly": true,
+      "items": {
+        "$ref": "#/components/schemas/APIRevisionDeployment"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-shared-scope-used-api-resource-info-schema.json",
+  "title": "API resource object using shared scope",
+  "description": "SharedScopeUsedAPIResourceInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "target": {
+      "type": "string",
+      "example": "/add"
+    },
+    "verb": {
+      "type": "string",
+      "example": "POST"
+    }
+  }
+}

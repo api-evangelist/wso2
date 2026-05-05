@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-comment-schema.json",
+  "title": "Comment",
+  "description": "Comment schema from WSO2 API Manager",
+  "required": [
+    "content"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "943d3002-000c-42d3-a1b9-d6559f8a4d49"
+    },
+    "content": {
+      "maxLength": 512,
+      "type": "string",
+      "example": "This is a comment"
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": "2021-02-11-09:57:25"
+    },
+    "createdBy": {
+      "type": "string",
+      "readOnly": true,
+      "example": "admin"
+    },
+    "updatedTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": "2021-02-12-19:57:25"
+    },
+    "category": {
+      "type": "string",
+      "readOnly": true,
+      "default": "general",
+      "example": "general"
+    },
+    "parentCommentId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "6f38aea2-f41e-4ac9-b3f2-a9493d00ba97"
+    },
+    "entryPoint": {
+      "type": "string",
+      "readOnly": true,
+      "enum": [
+        "devPortal",
+        "publisher"
+      ]
+    },
+    "commenterInfo": {
+      "$ref": "#/components/schemas/CommenterInfo"
+    },
+    "replies": {
+      "$ref": "#/components/schemas/CommentList"
+    }
+  }
+}

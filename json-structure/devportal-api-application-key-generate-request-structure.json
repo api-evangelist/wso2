@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-key-generate-request-structure.json",
+  "name": "Application key generation request object",
+  "description": "ApplicationKeyGenerateRequest schema from WSO2 API Manager",
+  "required": [
+    "grantTypesToBeSupported",
+    "keyType"
+  ],
+  "type": "object",
+  "properties": {
+    "keyType": {
+      "type": "string",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    },
+    "keyManager": {
+      "type": "string",
+      "description": "key Manager to Generate Keys",
+      "example": "Resident Key Manager"
+    },
+    "grantTypesToBeSupported": {
+      "type": "array",
+      "description": "Grant types that should be supported by the application",
+      "example": [
+        "password",
+        "client_credentials"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "callbackUrl": {
+      "type": "string",
+      "description": "Callback URL",
+      "example": "http://sample.com/callback/url"
+    },
+    "scopes": {
+      "type": "array",
+      "description": "Allowed scopes for the access token",
+      "example": [
+        "am_application_scope",
+        "default"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "validityTime": {
+      "type": "string",
+      "example": "3600"
+    },
+    "clientId": {
+      "type": "string",
+      "description": "Client ID for generating access token.",
+      "readOnly": true,
+      "example": "sZzoeSCI_vL2cjSXZQmsmV8JEyga"
+    },
+    "clientSecret": {
+      "type": "string",
+      "description": "Client secret for generating access token. This is given together with the client Id.",
+      "readOnly": true,
+      "example": "nrs3YAP4htxnz_DqpvGhf9Um04oa"
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "description": "Additional properties needed.",
+      "example": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-claim-schema.json",
+  "title": "Claim",
+  "description": "Claim schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "email"
+    },
+    "URI": {
+      "type": "string",
+      "example": "http://wso2.org/claims/emailaddress"
+    },
+    "value": {
+      "type": "string",
+      "example": "admin@wso2.com"
+    }
+  }
+}

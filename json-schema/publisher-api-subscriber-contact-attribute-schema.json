@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-subscriber-contact-attribute-schema.json",
+  "title": "Subscriber Contact attribute object",
+  "description": "SubscriberContactAttribute schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "recipient": {
+      "type": "string",
+      "description": "recipient type of the email\n"
+    },
+    "delimiter": {
+      "type": "string",
+      "description": "delimiter to seperate the email address\n"
+    }
+  }
+}

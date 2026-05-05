@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-certificates-structure.json",
+  "name": "Certificates",
+  "description": "Representation of a list of certificates",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "example": 1
+    },
+    "certificates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CertMetadata"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

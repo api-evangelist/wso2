@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-scope-settings-schema.json",
+  "title": "Settings",
+  "description": "ScopeSettings schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "apim:subscribe"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-websub-subscription-configuration-schema.json",
+  "title": "WebsubSubscriptionConfiguration",
+  "description": "WebsubSubscriptionConfiguration schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "enable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Toggle enable WebSub subscription configuration"
+    },
+    "secret": {
+      "type": "string",
+      "description": "Secret key to be used for subscription"
+    },
+    "signingAlgorithm": {
+      "type": "string",
+      "description": "The algorithm used for signing"
+    },
+    "signatureHeader": {
+      "type": "string",
+      "description": "The header uses to send the signature"
+    }
+  }
+}

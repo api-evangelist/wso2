@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-graph-ql-schema-type-list-structure.json",
+  "name": "List of types and corresponding fields of the GraphQL Schema",
+  "description": "GraphQLSchemaTypeList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "typeList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GraphQLSchemaType"
+      }
+    }
+  }
+}

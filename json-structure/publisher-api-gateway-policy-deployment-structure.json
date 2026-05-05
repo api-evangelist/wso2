@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-gateway-policy-deployment-structure.json",
+  "name": "Details to map, deploy, undeploy policy mappings to gateways",
+  "description": "GatewayPolicyDeployment schema from WSO2 API Manager",
+  "required": [
+    "gatewayLabel",
+    "gatewayDeployment"
+  ],
+  "type": "object",
+  "properties": {
+    "gatewayLabel": {
+      "type": "string",
+      "example": "gatewayLabel_1"
+    },
+    "gatewayDeployment": {
+      "type": "boolean",
+      "example": true
+    },
+    "mappingUUID": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    }
+  }
+}

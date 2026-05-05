@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-configuration-constraint-schema.json",
+  "title": "Configurable Configuration Constraints",
+  "description": "ConfigurationConstraint schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "application_access_token_expiry_time"
+    },
+    "label": {
+      "type": "string",
+      "example": "Access Token Expiry"
+    },
+    "type": {
+      "type": "string",
+      "example": "input"
+    },
+    "multiple": {
+      "type": "boolean",
+      "example": true
+    },
+    "tooltip": {
+      "type": "string",
+      "example": "Define the valid range for token expiration in seconds."
+    },
+    "constraintType": {
+      "type": "string",
+      "example": "RANGE"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "default": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

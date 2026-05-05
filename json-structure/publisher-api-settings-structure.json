@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-settings-structure.json",
+  "name": "SettingsDTO",
+  "description": "Settings schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "devportalUrl": {
+      "type": "string",
+      "description": "The Developer Portal URL",
+      "example": "https://localhost:9443/devportal"
+    },
+    "environment": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Environment"
+      }
+    },
+    "gatewayTypes": {
+      "type": "array",
+      "example": [
+        "Regular",
+        "APK",
+        "AWS"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GatewayFeatureCatalog": {
+      "name": "Gateway feature Catalog",
+      "type": "object",
+      "properties": {
+        "gatewayFeatures": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "apiTypes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "example": [
+        "apim:api_create",
+        "apim:api_manage",
+        "apim:api_publish"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "monetizationAttributes": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "$ref": "#/components/schemas/MonetizationAttribute"
+      }
+    },
+    "subscriberContactAttributes": {
+      "type": "object",
+      "items": {
+        "$ref": "#/components/schemas/SubscriberContactAttribute"
+      }
+    },
+    "securityAuditProperties": {
+      "type": "object",
+      "properties": {}
+    },
+    "externalStoresEnabled": {
+      "type": "boolean",
+      "description": "Is External Stores configuration enabled\n",
+      "example": true
+    },
+    "docVisibilityEnabled": {
+      "type": "boolean",
+      "description": "Is Document Visibility configuration enabled\n",
+      "example": false
+    },
+    "portalConfigurationOnlyModeEnabled": {
+      "type": "boolean",
+      "description": "Is Portal Configuration Only Mode enabled\n",
+      "example": false,
+      "default": false
+    },
+    "retryCallWithNewOAuthTokenEnabled": {
+      "type": "boolean",
+      "description": "Is Retry Call With New OAuth Token Enabled\n",
+      "example": true,
+      "default": true
+    },
+    "crossTenantSubscriptionEnabled": {
+      "type": "boolean",
+      "description": "Is Cross Tenant Subscriptions Enabled\n",
+      "example": false,
+      "default": false
+    },
+    "defaultAdvancePolicy": {
+      "type": "string",
+      "description": "Default Advance Policy."
+    },
+    "defaultSubscriptionPolicy": {
+      "type": "string",
+      "description": "Default Subscription Policy."
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "description": "Authorization Header",
+      "example": "authorization"
+    },
+    "IsJWTEnabledForLoginTokens": {
+      "type": "boolean",
+      "default": false
+    },
+    "orgAccessControlEnabled": {
+      "type": "boolean",
+      "description": "Is Organization-based access control configuration enabled\n",
+      "example": true
+    },
+    "allowSubscriptionValidationDisabling": {
+      "type": "boolean",
+      "description": "Allow subscription validation disabling for OAuth tokens\n",
+      "default": true
+    },
+    "designAssistantEnabled": {
+      "type": "boolean",
+      "description": "Specifies whether Design Assistant enabled\n",
+      "default": true
+    },
+    "aiAuthTokenProvided": {
+      "type": "boolean",
+      "description": "Checks if the auth token is provided for AI service usage.",
+      "default": false
+    },
+    "isGatewayNotificationEnabled": {
+      "type": "boolean",
+      "description": "Is Gateway Notification Enabled",
+      "default": false
+    },
+    "isMCPSupportEnabled": {
+      "type": "boolean",
+      "description": "This indicates whether the MCP support is enabled or not.",
+      "default": true
+    },
+    "customProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Custom property name\n",
+            "example": "Department"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of custom property",
+            "example": "Relevant Department"
+          },
+          "required": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}

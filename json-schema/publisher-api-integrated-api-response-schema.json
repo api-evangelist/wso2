@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-integrated-api-response-schema.json",
+  "title": "IntegratedAPIResponse",
+  "description": "IntegratedAPIResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string"
+    },
+    "apiName": {
+      "type": "string"
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

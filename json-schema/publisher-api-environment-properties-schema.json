@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-environment-properties-schema.json",
+  "title": "Envionment specific API properties request body",
+  "description": "EnvironmentProperties schema from WSO2 API Manager",
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  },
+  "example": {
+    "productionEndpoint": "https://localhost:9443/pizzashack/v3/api/",
+    "sandboxEndpoint": "https://localhost:9443/pizzashack/v3/api/"
+  }
+}

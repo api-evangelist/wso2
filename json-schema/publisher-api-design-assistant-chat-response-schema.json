@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-design-assistant-chat-response-schema.json",
+  "title": "DesignAssistantChatResponse",
+  "description": "DesignAssistantChatResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "backendResponse": {
+      "type": "string"
+    },
+    "isSuggestions": {
+      "type": "boolean",
+      "example": true
+    },
+    "typeOfApi": {
+      "type": "string",
+      "example": "REST"
+    },
+    "code": {
+      "type": "string"
+    },
+    "paths": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "apiTypeSuggestion": {
+      "type": "string",
+      "example": "This is suitable for CRUD operations in banking. Do you want to proceed?"
+    },
+    "missingValues": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "example": "COMPLETE"
+    }
+  }
+}

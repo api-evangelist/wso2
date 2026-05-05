@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-claim-mapping-entry-structure.json",
+  "name": "Claim Mapping Configuration",
+  "description": "ClaimMappingEntry schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "remoteClaim": {
+      "type": "string",
+      "example": "http://idp.org/username"
+    },
+    "localClaim": {
+      "type": "string",
+      "example": "http://wso2.org/username"
+    }
+  }
+}

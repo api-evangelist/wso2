@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-async-api-specification-validation-response-schema.json",
+  "title": "AsyncAPI Specification Validation Response",
+  "description": "AsyncAPISpecificationValidationResponse schema from WSO2 API Manager",
+  "required": [
+    "isValid"
+  ],
+  "type": "object",
+  "properties": {
+    "isValid": {
+      "type": "boolean",
+      "description": "This attribute declares whether this definition is valid or not.",
+      "example": true
+    },
+    "content": {
+      "type": "string",
+      "description": "AsyncAPI specification content"
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Streetlights"
+        },
+        "version": {
+          "type": "string",
+          "example": "1.0.0"
+        },
+        "context": {
+          "type": "string",
+          "example": "/streetlights"
+        },
+        "description": {
+          "type": "string",
+          "example": "A sample API that uses a streetlights as an example to demonstrate AsyncAPI specifications"
+        },
+        "asyncAPIVersion": {
+          "type": "string",
+          "example": 2.0
+        },
+        "protocol": {
+          "type": "string",
+          "example": "WEBSUB"
+        },
+        "endpoints": {
+          "type": "array",
+          "description": "contains host/servers specified in the AsyncAPI file/URL",
+          "items": {
+            "type": "string",
+            "example": "https://localhost:9443/am/sample/pizzashack/v3/api/"
+          }
+        },
+        "gatewayVendor": {
+          "type": "string",
+          "example": "wso2"
+        },
+        "asyncTransportProtocols": {
+          "type": "array",
+          "description": "contains available transports for an async API",
+          "items": {
+            "type": "string",
+            "example": "http"
+          }
+        }
+      },
+      "description": "API definition information"
+    },
+    "errors": {
+      "type": "array",
+      "description": "If there are more than one error list them out. For example, list out validation error by each field.",
+      "items": {
+        "$ref": "#/components/schemas/ErrorListItem"
+      }
+    }
+  }
+}

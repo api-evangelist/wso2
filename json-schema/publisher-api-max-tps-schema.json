@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-max-tps-schema.json",
+  "title": "MaxTps",
+  "description": "MaxTps schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "production": {
+      "type": "integer",
+      "format": "int64",
+      "example": 1000
+    },
+    "productionTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the production.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    },
+    "sandbox": {
+      "type": "integer",
+      "format": "int64",
+      "example": 1000
+    },
+    "sandboxTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the sandbox.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    }
+  }
+}

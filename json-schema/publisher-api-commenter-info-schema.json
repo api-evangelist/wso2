@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-commenter-info-schema.json",
+  "title": "CommenterInfo",
+  "description": "CommenterInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "example": "John"
+    },
+    "lastName": {
+      "type": "string",
+      "example": "David"
+    },
+    "fullName": {
+      "type": "string",
+      "example": "John David"
+    }
+  }
+}

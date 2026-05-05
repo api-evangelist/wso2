@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-ruleset-info-schema.json",
+  "title": "RulesetInfo",
+  "description": "Detailed information about a ruleset.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the ruleset.",
+      "readOnly": true,
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the ruleset.",
+      "example": "API Security Ruleset"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of the ruleset.",
+      "example": "A ruleset designed to enforce security standards for APIs."
+    },
+    "ruleCategory": {
+      "type": "string",
+      "description": "Category the rules included in ruleset.",
+      "enum": [
+        "SPECTRAL"
+      ],
+      "example": "SPECTRAL"
+    },
+    "ruleType": {
+      "type": "string",
+      "description": "Context or area to which the ruleset applies.",
+      "enum": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ],
+      "example": "API_DEFINITION",
+      "x-enum-varnames": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ]
+    },
+    "artifactType": {
+      "type": "string",
+      "description": "The type of artifact that the ruleset validates.",
+      "enum": [
+        "REST_API",
+        "ASYNC_API",
+        "MCP"
+      ],
+      "example": "REST_API"
+    },
+    "documentationLink": {
+      "type": "string",
+      "description": "URL to the documentation related to the ruleset.",
+      "example": "https://example.com/docs/api-security-ruleset"
+    },
+    "provider": {
+      "type": "string",
+      "description": "Entity or individual providing the ruleset.",
+      "example": "TechWave"
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "Identifier of the user who created the ruleset.",
+      "readOnly": true,
+      "example": "admin@gmail.com"
+    },
+    "createdTime": {
+      "type": "string",
+      "description": "Timestamp when the ruleset was created.",
+      "readOnly": true,
+      "example": "2024-08-01T12:00:00Z"
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "Identifier of the user who last updated the ruleset.",
+      "readOnly": true,
+      "example": "admin@gmail.com"
+    },
+    "updatedTime": {
+      "type": "string",
+      "description": "Timestamp when the ruleset was last updated.",
+      "readOnly": true,
+      "example": "2024-08-02T12:00:00Z"
+    }
+  },
+  "required": [
+    "name",
+    "ruleType",
+    "artifactType",
+    "provider"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-operation-policies-structure.json",
+  "name": "API Operation Level Policies",
+  "description": "APIOperationPolicies schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicy"
+      }
+    },
+    "response": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicy"
+      }
+    },
+    "fault": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicy"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-graph-ql-schema-type-schema.json",
+  "title": "Single type and corresponding fields found within the GraphQL Schema",
+  "description": "GraphQLSchemaType schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type found within the GraphQL Schema\n",
+      "example": "Country"
+    },
+    "fieldList": {
+      "type": "array",
+      "description": "Array of fields under current type\n",
+      "example": [
+        "code",
+        "name"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

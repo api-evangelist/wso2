@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-app-api-key-associate-request-structure.json",
+  "name": "API Key association request object",
+  "description": "AppAPIKeyAssociateRequest schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "keyUUID",
+    "apiUUID"
+  ],
+  "properties": {
+    "apiUUID": {
+      "type": "string",
+      "description": "The unique identifier of the API.",
+      "example": "2962f3bb-8330-438e-baee-0ee1d6434ba4"
+    },
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    }
+  }
+}

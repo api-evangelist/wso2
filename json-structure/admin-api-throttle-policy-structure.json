@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-throttle-policy-structure.json",
+  "name": "Generic Throttling Policy",
+  "description": "ThrottlePolicy schema from WSO2 API Manager",
+  "required": [
+    "policyName"
+  ],
+  "type": "object",
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "description": "Id of policy",
+      "readOnly": true,
+      "example": "0c6439fd-9b16-3c2e-be6e-1086e0b9aa93"
+    },
+    "policyName": {
+      "maxLength": 60,
+      "minLength": 1,
+      "type": "string",
+      "description": "Name of policy",
+      "example": "30PerMin"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the policy",
+      "example": "30PerMin",
+      "maxLength": 512
+    },
+    "description": {
+      "maxLength": 1024,
+      "type": "string",
+      "description": "Description of the policy",
+      "example": "Allows 30 request per minute"
+    },
+    "isDeployed": {
+      "type": "boolean",
+      "description": "Indicates whether the policy is deployed successfully or not.",
+      "default": false
+    },
+    "type": {
+      "type": "string",
+      "description": "Indicates the type of throttle policy"
+    }
+  },
+  "discriminator": {
+    "propertyName": "type"
+  }
+}

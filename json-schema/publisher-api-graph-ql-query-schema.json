@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-graph-ql-query-schema.json",
+  "title": "GraphQL Query",
+  "description": "GraphQLQuery schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "graphQLMaxComplexity": {
+      "type": "integer",
+      "description": "Maximum Complexity of the GraphQL query",
+      "example": 400
+    },
+    "graphQLMaxDepth": {
+      "type": "integer",
+      "description": "Maximum Depth of the GraphQL query",
+      "example": 10
+    }
+  }
+}

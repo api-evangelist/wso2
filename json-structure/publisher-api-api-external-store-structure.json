@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-external-store-structure.json",
+  "name": "API External Store",
+  "description": "APIExternalStore schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The external store identifier, which is a unique value.\n",
+      "example": "Store123#"
+    },
+    "lastUpdatedTime": {
+      "type": "string",
+      "description": "The recent timestamp which a given API is updated in the external store.\n",
+      "example": "2019-09-09T13:57:16.229"
+    }
+  }
+}

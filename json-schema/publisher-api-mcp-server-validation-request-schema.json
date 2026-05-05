@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-mcp-server-validation-request-schema.json",
+  "title": "MCP URL Validation Request",
+  "description": "MCPServerValidationRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The URL to be validated.",
+      "example": "https://example.com/mcp"
+    },
+    "securityInfo": {
+      "$ref": "#/components/schemas/SecurityInfo"
+    }
+  }
+}

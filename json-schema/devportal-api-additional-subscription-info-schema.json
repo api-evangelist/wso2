@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-additional-subscription-info-schema.json",
+  "title": "Additional Information of subscriptions related to an API",
+  "description": "AdditionalSubscriptionInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "subscriptionId": {
+      "type": "string",
+      "description": "The UUID of the subscription",
+      "readOnly": true,
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "applicationId": {
+      "type": "string",
+      "description": "The UUID of the application",
+      "example": "b3ade481-30b0-4b38-9a67-498a40873a6d"
+    },
+    "applicationName": {
+      "type": "string",
+      "description": "The name of the application",
+      "example": "Sample Application"
+    },
+    "apiId": {
+      "type": "string",
+      "description": "The unique identifier of the API.",
+      "example": "2962f3bb-8330-438e-baee-0ee1d6434ba4"
+    },
+    "isSolaceAPI": {
+      "type": "boolean",
+      "example": false
+    },
+    "solaceOrganization": {
+      "type": "string",
+      "example": "SolaceWso2"
+    },
+    "solaceDeployedEnvironments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "environmentName": {
+            "type": "string"
+          },
+          "environmentDisplayName": {
+            "type": "string"
+          },
+          "organizationName": {
+            "type": "string"
+          },
+          "solaceURLs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "protocol": {
+                  "type": "string",
+                  "example": "Defalt"
+                },
+                "endpointURL": {
+                  "type": "string",
+                  "example": "Default"
+                }
+              }
+            }
+          },
+          "SolaceTopicsObject": {
+            "type": "object",
+            "properties": {
+              "defaultSyntax": {
+                "$ref": "#/components/schemas/SolaceTopics"
+              },
+              "mqttSyntax": {
+                "$ref": "#/components/schemas/SolaceTopics"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

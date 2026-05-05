@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-bot-detection-alert-subscription-structure.json",
+  "name": "Bot Detection Alert Subscription",
+  "description": "BotDetectionAlertSubscription schema from WSO2 API Manager",
+  "required": [
+    "email"
+  ],
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "UUID of the subscription",
+      "example": "urn:uuid:1ed6d2de-29df-4fed-a96a-46d2329dce65"
+    },
+    "email": {
+      "type": "string",
+      "description": "email",
+      "example": "abc@gmail.com"
+    }
+  }
+}

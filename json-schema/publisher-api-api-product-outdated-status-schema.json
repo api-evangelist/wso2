@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-product-outdated-status-schema.json",
+  "title": "APIProduct is outdated status",
+  "description": "APIProductOutdatedStatus schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "isOutdated": {
+      "type": "boolean",
+      "description": "Indicates if an API Product is outdated\n",
+      "example": true
+    }
+  }
+}

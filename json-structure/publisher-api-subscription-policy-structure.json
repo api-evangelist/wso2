@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-subscription-policy-structure.json",
+  "name": "Subscription Throttling Policy",
+  "description": "SubscriptionPolicy schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "required": [
+        "defaultLimit"
+      ],
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "int32",
+          "description": "Id of policy",
+          "example": 1
+        },
+        "uuid": {
+          "type": "string",
+          "description": "policy uuid",
+          "example": "0c6439fd-9b16-3c2e-be6e-1086e0b9aa93"
+        },
+        "policyName": {
+          "maxLength": 60,
+          "minLength": 1,
+          "type": "string",
+          "description": "Name of policy",
+          "example": "30PerMin"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the policy",
+          "example": "30PerMin",
+          "maxLength": 512
+        },
+        "description": {
+          "maxLength": 1024,
+          "type": "string",
+          "description": "Description of the policy",
+          "example": "Allows 30 request per minute"
+        },
+        "isDeployed": {
+          "type": "boolean",
+          "description": "Indicates whether the policy is deployed successfully or not.",
+          "default": false
+        },
+        "tenantId": {
+          "type": "int32",
+          "description": "Throttling policy tenant domain id",
+          "example": -1234
+        },
+        "tenantDomain": {
+          "type": "string",
+          "description": "Throttling policy tenant domain",
+          "example": "carbon.super"
+        },
+        "defaultLimit": {
+          "$ref": "#/components/schemas/ThrottleLimit"
+        },
+        "rateLimitCount": {
+          "type": "int32",
+          "description": "Burst control request count",
+          "example": 10
+        },
+        "rateLimitTimeUnit": {
+          "type": "string",
+          "description": "Burst control time unit",
+          "example": "min"
+        },
+        "subscriberCount": {
+          "type": "int32",
+          "description": "Number of subscriptions allowed",
+          "example": 10
+        },
+        "customAttributes": {
+          "type": "array",
+          "description": "Custom attributes added to the Subscription Throttling Policy\n",
+          "example": [],
+          "items": {
+            "$ref": "#/components/schemas/CustomAttribute"
+          }
+        },
+        "stopOnQuotaReach": {
+          "type": "boolean",
+          "description": "This indicates the action to be taken when a user goes beyond the allocated quota. If checked, the user's requests will be dropped. If unchecked, the requests will be allowed to pass through.\n",
+          "default": false
+        },
+        "billingPlan": {
+          "type": "string",
+          "description": "define whether this is Paid or a Free plan. Allowed values are FREE or COMMERCIAL.\n",
+          "example": "FREE"
+        },
+        "permissions": {
+          "$ref": "#/components/schemas/SubscriptionThrottlePolicyPermission"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-scope-schema.json",
+  "title": "Scope Role",
+  "description": "Scope schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "tag": {
+      "type": "string",
+      "description": "Portal name.\n",
+      "example": "publisher"
+    },
+    "name": {
+      "type": "string",
+      "description": "Scope name.\n",
+      "example": "apim:api_publish"
+    },
+    "description": {
+      "type": "string",
+      "description": "About scope.\n",
+      "example": "Publish API"
+    },
+    "roles": {
+      "type": "array",
+      "description": "Roles for the particular scope.\n",
+      "example": [
+        "admin",
+        "Internal/publisher"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-label-schema.json",
+  "title": "Label",
+  "description": "Label schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "d7cf8523-9180-4255-84fa-6cb171c1f779"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "Health"
+    },
+    "description": {
+      "maxLength": 1024,
+      "type": "string",
+      "example": "Health related APIs"
+    }
+  }
+}

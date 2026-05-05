@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/service-catalog-api-verifier-schema.json",
+  "title": "Json array of md5 hash values of Service Catalog Entry objects",
+  "description": "Verifier schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "key",
+    "md5"
+  ],
+  "properties": {
+    "key": {
+      "type": "string",
+      "pattern": "^[^\\*]+$",
+      "example": "petStore-1.0.0"
+    },
+    "md5": {
+      "type": "string",
+      "example": "e27ef979af14c72783b8112dc41c3434c09763ddb230e1a829d5f9134d1abd07"
+    }
+  }
+}

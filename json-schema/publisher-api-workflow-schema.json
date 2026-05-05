@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-workflow-schema.json",
+  "title": "workflow",
+  "description": "Workflow schema from WSO2 API Manager",
+  "required": [
+    "status"
+  ],
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "This attribute declares whether this workflow task is approved or rejected.\n",
+      "example": "APPROVED",
+      "enum": [
+        "APPROVED",
+        "REJECTED"
+      ]
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom attributes to complete the workflow task\n",
+      "example": {}
+    },
+    "description": {
+      "type": "string",
+      "example": "Approve workflow request."
+    }
+  }
+}

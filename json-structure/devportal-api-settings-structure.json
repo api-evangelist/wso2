@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-settings-structure.json",
+  "name": "Settings",
+  "description": "Settings schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "grantTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "refresh_token",
+        "urn:ietf:params:oauth:grant-type:saml2-bearer",
+        "password",
+        "client_credentials",
+        "iwa:ntlm",
+        "authorization_code",
+        "urn:ietf:params:oauth:grant-type:jwt-bearer"
+      ]
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "apim:api_key",
+        "apim:app_import_export",
+        "apim:app_manage",
+        "apim:store_settings",
+        "apim:sub_alert_manage",
+        "apim:sub_manage",
+        "apim:subscribe",
+        "openid"
+      ]
+    },
+    "applicationSharingEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "IsLegacyApiKeysEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "mapExistingAuthApps": {
+      "type": "boolean",
+      "default": false
+    },
+    "apiGatewayEndpoint": {
+      "type": "string"
+    },
+    "monetizationEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "recommendationEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "IsUnlimitedTierPaid": {
+      "type": "boolean",
+      "default": false
+    },
+    "identityProvider": {
+      "type": "object",
+      "properties": {
+        "external": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "IsAnonymousModeEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "IsPasswordChangeEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "IsJWTEnabledForLoginTokens": {
+      "type": "boolean",
+      "default": false
+    },
+    "orgAccessControlEnabled": {
+      "type": "boolean",
+      "description": "Is Organization-based access control configuration enabled\n",
+      "example": true
+    },
+    "userStorePasswordPattern": {
+      "type": "string",
+      "description": "The 'PasswordJavaRegEx' cofigured in the UserStoreManager",
+      "example": "^[\\S]{5,30}$"
+    },
+    "passwordPolicyPattern": {
+      "type": "string",
+      "description": "The regex configured in the Password Policy property 'passwordPolicy.pattern'",
+      "example": "^[\\S]{5,30}$"
+    },
+    "passwordPolicyMinLength": {
+      "type": "int32",
+      "description": "If Password Policy Feature is enabled, the property 'passwordPolicy.min.length' is returned as the 'passwordPolicyMinLength'. If password policy is not enabled, default value -1 will be returned. And it should be noted that the regex pattern(s) returned in 'passwordPolicyPattern' and 'userStorePasswordPattern' properties too will affect the minimum password length allowed and an intersection of all conditions will be considered finally to validate the password."
+    },
+    "passwordPolicyMaxLength": {
+      "type": "int32",
+      "description": "If Password Policy Feature is enabled, the property 'passwordPolicy.max.length' is returned as the 'passwordPolicyMaxLength'. If password policy is not enabled, default value -1 will be returned. And it should be noted that the regex pattern(s) returned in 'passwordPolicyPattern' and 'userStorePasswordPattern' properties too will affect the maximum password length allowed and an intersection of all conditions will be considered finally to validate the password."
+    },
+    "apiChatEnabled": {
+      "type": "boolean",
+      "description": "Specifies whether API Chat feature is enabled.",
+      "default": true
+    },
+    "aiAuthTokenProvided": {
+      "type": "boolean",
+      "description": "Checks if the auth token is provided for AI service usage.",
+      "default": false
+    },
+    "marketplaceAssistantEnabled": {
+      "type": "boolean",
+      "description": "Specifies whether Marketplace Assistant feature is enabled.",
+      "default": true
+    },
+    "orgWideAppUpdateEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "devportalMode": {
+      "type": "string",
+      "description": "This indicates the mode of the Developer Portal. Possible values are: - HYBRID: Both MCP and API portals are enabled. - MCP_ONLY: Only the MCP portal is enabled. - API_ONLY: Only the API portal is enabled.\n",
+      "enum": [
+        "HYBRID",
+        "MCP_ONLY",
+        "API_ONLY"
+      ],
+      "default": "HYBRID"
+    }
+  }
+}

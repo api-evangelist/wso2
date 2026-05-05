@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/governance-api-ruleset-validation-result-without-rules-structure.json",
+  "name": "RulesetValidationResultWithoutRules",
+  "description": "Result of the ruleset validation.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the ruleset.",
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the ruleset.",
+      "example": "API Security Ruleset"
+    },
+    "ruleType": {
+      "type": "string",
+      "description": "Context or area to which the ruleset applies.",
+      "enum": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ],
+      "example": "API_DEFINITION",
+      "x-enum-varnames": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the ruleset validation.",
+      "enum": [
+        "PASSED",
+        "FAILED",
+        "UNAPPLIED"
+      ],
+      "example": "PASSED"
+    }
+  }
+}

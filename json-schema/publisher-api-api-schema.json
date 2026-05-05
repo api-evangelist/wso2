@@ -1,0 +1,587 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-schema.json",
+  "title": "API object",
+  "description": "API schema from WSO2 API Manager",
+  "required": [
+    "context",
+    "name",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the api registry artifact\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "minLength": 1,
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\[\\]\\/]*$)",
+      "type": "string",
+      "example": "PizzaShackAPI"
+    },
+    "displayName": {
+      "description": "Human-friendly name shown in UI. Length limited to DB column size.",
+      "type": "string",
+      "example": "Pizza Shack API"
+    },
+    "description": {
+      "maxLength": 32766,
+      "type": "string",
+      "example": "This is a simple API for Pizza Shack online pizza delivery store."
+    },
+    "context": {
+      "maxLength": 232,
+      "minLength": 1,
+      "type": "string",
+      "example": "pizza"
+    },
+    "version": {
+      "maxLength": 30,
+      "minLength": 1,
+      "type": "string",
+      "pattern": "^[^~!@#;:%^*()+={}|\\\\<>\"',&/$\\[\\]\\s+\\/]+$",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "maxLength": 200,
+      "type": "string",
+      "description": "If the provider value is not given user invoking the api will be used as the provider.\n",
+      "example": "admin"
+    },
+    "lifeCycleStatus": {
+      "type": "string",
+      "example": "CREATED",
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "wsdlInfo": {
+      "$ref": "#/components/schemas/WSDLInfo"
+    },
+    "wsdlUrl": {
+      "type": "string",
+      "readOnly": true,
+      "example": "/apimgt/applicationdata/wsdls/admin--soap1.wsdl"
+    },
+    "responseCachingEnabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "cacheTimeout": {
+      "type": "integer",
+      "example": 300
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "example": false
+    },
+    "isDefaultVersion": {
+      "type": "boolean",
+      "example": false
+    },
+    "isRevision": {
+      "type": "boolean",
+      "example": false
+    },
+    "revisionedApiId": {
+      "type": "string",
+      "description": "UUID of the api registry artifact\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "revisionId": {
+      "type": "integer",
+      "example": 1
+    },
+    "enableSchemaValidation": {
+      "type": "boolean",
+      "example": false
+    },
+    "enableSubscriberVerification": {
+      "type": "boolean",
+      "example": false
+    },
+    "type": {
+      "type": "string",
+      "description": "The api creation type to be used. Accepted values are HTTP, WS, SOAPTOREST, GRAPHQL, WEBSUB, SSE, WEBHOOK, ASYNC",
+      "example": "HTTP",
+      "default": "HTTP",
+      "enum": [
+        "HTTP",
+        "WS",
+        "SOAPTOREST",
+        "SOAP",
+        "GRAPHQL",
+        "WEBSUB",
+        "SSE",
+        "WEBHOOK",
+        "ASYNC"
+      ]
+    },
+    "audience": {
+      "type": "string",
+      "description": "The audience of the API. Accepted values are PUBLIC, SINGLE",
+      "example": "PUBLIC",
+      "enum": [
+        "PUBLIC",
+        "SINGLE"
+      ]
+    },
+    "audiences": {
+      "type": "array",
+      "description": "The audiences of the API for jwt validation. Accepted values are any String values",
+      "items": {
+        "type": "string",
+        "example": [
+          "aud1",
+          "aud2",
+          "aud3"
+        ]
+      }
+    },
+    "transport": {
+      "type": "array",
+      "description": "Supported transports for the API (http and/or https).\n",
+      "example": [
+        "http",
+        "https"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "example": [
+        "pizza",
+        "food"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "policies": {
+      "type": "array",
+      "example": [
+        "Unlimited"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "organizationPolicies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OrganizationPolicies"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "apiThrottlingPolicy": {
+      "type": "string",
+      "description": "The API level throttling policy selected for the particular API",
+      "example": "Unlimited",
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\s+]*$)",
+      "description": "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used.\n",
+      "example": "Authorization"
+    },
+    "apiKeyHeader": {
+      "type": "string",
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\s+]*$)",
+      "description": "Name of the API key header used for invoking the API. If it is not set, default value `apiKey` will be used.\n",
+      "example": "apiKey"
+    },
+    "securityScheme": {
+      "type": "array",
+      "description": "Types of API security, the current API secured with. It can be either OAuth2 or mutual SSL or both. If\nit is not set OAuth2 will be set as the security for the current API.\n",
+      "example": [
+        "oauth2"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "maxTps": {
+      "$ref": "#/components/schemas/APIMaxTps"
+    },
+    "visibility": {
+      "type": "string",
+      "description": "The visibility level of the API. Accepts one of the following. PUBLIC, PRIVATE, RESTRICTED.",
+      "example": "PUBLIC",
+      "default": "PUBLIC",
+      "enum": [
+        "PUBLIC",
+        "PRIVATE",
+        "RESTRICTED"
+      ],
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "visibleRoles": {
+      "type": "array",
+      "description": "The user roles that are able to access the API in Developer Portal",
+      "example": [],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "visibleTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "visibleOrganizations": {
+      "type": "array",
+      "description": "The organizations that are able to access the API in Developer Portal",
+      "example": [],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "mediationPolicies": {
+      "type": "array",
+      "example": [
+        {
+          "name": "json_to_xml_in_message",
+          "type": "in"
+        },
+        {
+          "name": "xml_to_json_out_message",
+          "type": "out"
+        },
+        {
+          "name": "json_fault",
+          "type": "fault"
+        }
+      ],
+      "items": {
+        "$ref": "#/components/schemas/MediationPolicy"
+      }
+    },
+    "apiPolicies": {
+      "$ref": "#/components/schemas/APIOperationPolicies"
+    },
+    "apiHubPolicies": {
+      "type": "array",
+      "description": "Policy Hub policies at API level (sibling to apiPolicies; not persisted to operation policy mapping).",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicy"
+      }
+    },
+    "subscriptionAvailability": {
+      "type": "string",
+      "description": "The subscription availability. Accepts one of the following. CURRENT_TENANT, ALL_TENANTS or SPECIFIC_TENANTS.",
+      "example": "CURRENT_TENANT",
+      "default": "CURRENT_TENANT",
+      "enum": [
+        "CURRENT_TENANT",
+        "ALL_TENANTS",
+        "SPECIFIC_TENANTS"
+      ],
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "subscriptionAvailableTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": {
+      "type": "array",
+      "description": "Map of custom properties of API",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean"
+          }
+        }
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "additionalPropertiesMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "monetization": {
+      "$ref": "#/components/schemas/APIMonetizationInfo"
+    },
+    "accessControl": {
+      "type": "string",
+      "description": "Is the API is restricted to certain set of publishers or creators or is it visible to all the\npublishers and creators. If the accessControl restriction is none, this API can be modified by all the\npublishers and creators, if not it can only be viewable/modifiable by certain set of publishers and creators,\n based on the restriction.\n",
+      "default": "NONE",
+      "enum": [
+        "NONE",
+        "RESTRICTED"
+      ]
+    },
+    "accessControlRoles": {
+      "type": "array",
+      "description": "The user roles that are able to view/modify as API publisher or creator.",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "businessInformation": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/APIBusinessInformation"
+        }
+      ],
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "corsConfiguration": {
+      "$ref": "#/components/schemas/APICorsConfiguration"
+    },
+    "websubSubscriptionConfiguration": {
+      "$ref": "#/components/schemas/WebsubSubscriptionConfiguration"
+    },
+    "workflowStatus": {
+      "type": "string",
+      "example": "APPROVED"
+    },
+    "createdTime": {
+      "type": "string"
+    },
+    "lastUpdatedTimestamp": {
+      "type": "string"
+    },
+    "lastUpdatedTime": {
+      "type": "string",
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "endpointConfig": {
+      "type": "object",
+      "properties": {},
+      "description": "Endpoint configuration of the API. This can be used to provide different types of endpoints including Simple REST Endpoints, Loadbalanced and Failover.\n\n`Simple REST Endpoint`\n\n  {\n    \"endpoint_type\": \"http\",\n    \"sandbox_endpoints\":       {\n       \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/\"\n    },\n    \"production_endpoints\":       {\n       \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/\"\n    }\n  }\n\n`Loadbalanced Endpoint`\n\n  {\n    \"endpoint_type\": \"load_balance\",\n    \"algoCombo\": \"org.apache.synapse.endpoints.algorithms.RoundRobin\",\n    \"sessionManagement\": \"\",\n    \"sandbox_endpoints\":       [\n                {\n          \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/1\"\n       },\n                {\n          \"endpoint_type\": \"http\",\n          \"template_not_supported\": false,\n          \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/2\"\n       }\n    ],\n    \"production_endpoints\":       [\n                {\n          \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/3\"\n       },\n                {\n          \"endpoint_type\": \"http\",\n          \"template_not_supported\": false,\n          \"url\": \"https://localhost:9443/am/sample/pizzashack/v3/api/4\"\n       }\n    ],\n    \"sessionTimeOut\": \"\",\n    \"algoClassName\": \"org.apache.synapse.endpoints.algorithms.RoundRobin\"\n  }\n\n`Failover Endpoint`\n\n  {\n    \"production_failovers\":[\n       {\n          \"endpoint_type\":\"http\",\n          \"template_not_supported\":false,\n          \"url\":\"https://localhost:9443/am/sample/pizzashack/v3/api/1\"\n       }\n    ],\n    \"endpoint_type\":\"failover\",\n    \"sandbox_endpoints\":{\n       \"url\":\"https://localhost:9443/am/sample/pizzashack/v3/api/2\"\n    },\n    \"production_endpoints\":{\n       \"url\":\"https://localhost:9443/am/sample/pizzashack/v3/api/3\"\n    },\n    \"sandbox_failovers\":[\n       {\n          \"endpoint_type\":\"http\",\n          \"template_not_supported\":false,\n          \"url\":\"https://localhost:9443/am/sample/pizzashack/v3/api/4\"\n       }\n    ]\n  }\n\n`Default Endpoint`\n\n  {\n    \"endpoint_type\":\"default\",\n    \"sandbox_endpoints\":{\n       \"url\":\"default\"\n    },\n    \"production_endpoints\":{\n       \"url\":\"default\"\n    }\n  }\n\n`Endpoint from Endpoint Registry`\n\n  {\n    \"endpoint_type\": \"Registry\",\n    \"endpoint_id\": \"{registry-name:entry-name:version}\",\n  }\n\n`AWS Lambda as Endpoint`\n\n  {\n    \"endpoint_type\":\"awslambda\",\n    \"access_method\":\"role-supplied|stored\",\n    \"assume_role\":true|false,\n    \"amznAccessKey\":\"access_method==stored?<accessKey>:<empty>\",\n    \"amznSecretKey\":\"access_method==stored?<secretKey>:<empty>\",\n    \"amznRegion\":\"access_method==stored?<region>:<empty>\",\n    \"amznRoleArn\":\"assume_role==true?<roleArn>:<empty>\",\n    \"amznRoleSessionName\":\"assume_role==true?<roleSessionName>:<empty>\",\n    \"amznRoleRegion\":\"assume_role==true?<roleRegion>:<empty>\"\n  }\n",
+      "example": {
+        "endpoint_type": "http",
+        "sandbox_endpoints": {
+          "url": "https://localhost:9443/am/sample/pizzashack/v3/api/"
+        },
+        "production_endpoints": {
+          "url": "https://localhost:9443/am/sample/pizzashack/v3/api/"
+        }
+      }
+    },
+    "primaryProductionEndpointId": {
+      "type": "string",
+      "example": "13092607-ed01-4fa1-bc64-5da0e2abe92c"
+    },
+    "primarySandboxEndpointId": {
+      "type": "string",
+      "example": "13092607-ed01-4fa1-bc64-5da0e2abe92c"
+    },
+    "endpointImplementationType": {
+      "type": "string",
+      "example": "INLINE",
+      "default": "ENDPOINT",
+      "enum": [
+        "INLINE",
+        "ENDPOINT",
+        "MOCKED_OAS"
+      ]
+    },
+    "subtypeConfiguration": {
+      "$ref": "#/components/schemas/SubtypeConfiguration"
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/APIScope"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "example": [
+        {
+          "target": "/order/{orderId}",
+          "verb": "POST",
+          "authType": "Application & Application User",
+          "throttlingPolicy": "Unlimited"
+        },
+        {
+          "target": "/menu",
+          "verb": "GET",
+          "authType": "Application & Application User",
+          "throttlingPolicy": "Unlimited"
+        }
+      ],
+      "items": {
+        "$ref": "#/components/schemas/APIOperations"
+      }
+    },
+    "threatProtectionPolicies": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "policyId": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "API categories\n",
+      "items": {
+        "type": "string",
+        "example": ""
+      },
+      "x-otherScopes": [
+        "apim:api_publish"
+      ]
+    },
+    "keyManagers": {
+      "type": "object",
+      "properties": {},
+      "description": "API Key Managers\n",
+      "readOnly": true
+    },
+    "serviceInfo": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "example": "PetStore-1.0.0"
+        },
+        "name": {
+          "type": "string",
+          "example": "PetStore"
+        },
+        "version": {
+          "type": "string",
+          "example": "1.0.0"
+        },
+        "outdated": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "advertiseInfo": {
+      "$ref": "#/components/schemas/AdvertiseInfo"
+    },
+    "gatewayVendor": {
+      "title": "field to identify gateway vendor",
+      "type": "string",
+      "example": "wso2 external"
+    },
+    "gatewayType": {
+      "title": "Field to identify gateway type.",
+      "type": "string",
+      "description": "The gateway type selected for the API policies. Accepts one of the following. wso2/synapse, wso2/apk.",
+      "example": "wso2/synapse wso2/apk AWS",
+      "default": "wso2/synapse"
+    },
+    "initiatedFromGateway": {
+      "type": "boolean",
+      "description": "Whether the API is initiated from the gateway or not. This is used to identify\nwhether the API is created from the publisher or discovered from the gateway.\n",
+      "example": false,
+      "default": false,
+      "readOnly": true
+    },
+    "asyncTransportProtocols": {
+      "type": "array",
+      "description": "Supported transports for the async API (http and/or https).\n",
+      "example": [
+        "http",
+        "https"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "egress": {
+      "type": "boolean",
+      "description": "Whether the API is EGRESS or not",
+      "default": false,
+      "example": true
+    }
+  },
+  "x-scopes": [
+    "apim:api_create",
+    "apim:api_import_export",
+    "apim:api_manage"
+  ]
+}

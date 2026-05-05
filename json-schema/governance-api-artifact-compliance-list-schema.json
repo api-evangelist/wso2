@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-artifact-compliance-list-schema.json",
+  "title": "ArtifactComplianceList",
+  "description": "Compliance status of a list of artifacts.",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of artifact returned.",
+      "example": 10
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ArtifactComplianceStatus"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

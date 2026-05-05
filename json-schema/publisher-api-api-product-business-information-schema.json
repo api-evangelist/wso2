@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-product-business-information-schema.json",
+  "title": "APIProductBusinessInformation",
+  "description": "APIProductBusinessInformation schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "businessOwner": {
+      "maxLength": 120,
+      "type": "string",
+      "example": "businessowner"
+    },
+    "businessOwnerEmail": {
+      "type": "string",
+      "example": "businessowner@wso2.com"
+    },
+    "technicalOwner": {
+      "maxLength": 120,
+      "type": "string",
+      "example": "technicalowner"
+    },
+    "technicalOwnerEmail": {
+      "type": "string",
+      "example": "technicalowner@wso2.com"
+    }
+  }
+}

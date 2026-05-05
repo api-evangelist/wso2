@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-certificate-validity-schema.json",
+  "title": "Certificate Valid period",
+  "description": "CertificateValidity schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "example": "12-12-2017"
+    },
+    "to": {
+      "type": "string",
+      "example": "01-01-2019"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-gateway-environment-protocol-uri-structure.json",
+  "name": "Gateway Environment protocols and URIs",
+  "description": "GatewayEnvironmentProtocolURI schema from WSO2 API Manager",
+  "required": [
+    "protocol",
+    "endpointURI"
+  ],
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "example": "default"
+    },
+    "endpointURI": {
+      "type": "string",
+      "example": "default"
+    }
+  }
+}

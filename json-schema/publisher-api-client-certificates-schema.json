@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-client-certificates-schema.json",
+  "title": "Client Certificates",
+  "description": "Representation of a list of client certificates",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "example": 1
+    },
+    "certificates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClientCertMetadata"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

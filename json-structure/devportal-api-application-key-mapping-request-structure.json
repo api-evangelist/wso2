@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-key-mapping-request-structure.json",
+  "name": "Application key provision request object",
+  "description": "ApplicationKeyMappingRequest schema from WSO2 API Manager",
+  "required": [
+    "consumerKey",
+    "keyType"
+  ],
+  "type": "object",
+  "properties": {
+    "consumerKey": {
+      "type": "string",
+      "description": "Consumer key of the application",
+      "example": "oYhwZu4P2ThDmiDprBk6c0YfjR8a"
+    },
+    "consumerSecret": {
+      "type": "string",
+      "description": "Consumer secret of the application",
+      "example": "ondWGtFTCOVM4sfPyOfZ7fel610a"
+    },
+    "keyManager": {
+      "type": "string",
+      "description": "Key Manager Name",
+      "example": "Resident Key Manager"
+    },
+    "keyType": {
+      "type": "string",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    }
+  }
+}

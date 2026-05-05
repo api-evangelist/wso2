@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-graph-ql-query-structure.json",
+  "name": "GraphQL Query",
+  "description": "GraphQLQuery schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "graphQLMaxComplexity": {
+      "type": "int32",
+      "description": "Maximum Complexity of the GraphQL query",
+      "example": 400
+    },
+    "graphQLMaxDepth": {
+      "type": "int32",
+      "description": "Maximum Depth of the GraphQL query",
+      "example": 10
+    }
+  }
+}

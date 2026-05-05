@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/governance-api-ruleset-input-structure.json",
+  "name": "RulesetInput",
+  "description": "Detailed information about a ruleset.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Name of the ruleset.",
+      "example": "API Security Ruleset"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "A brief description of the ruleset.",
+      "example": "A ruleset designed to enforce security standards for APIs."
+    },
+    "rulesetContent": {
+      "type": "string",
+      "description": "The content of the ruleset file (YAML or JSON).",
+      "format": "binary",
+      "example": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n"
+    },
+    "ruleCategory": {
+      "type": "string",
+      "description": "Category the rules included in ruleset.",
+      "enum": [
+        "SPECTRAL"
+      ],
+      "example": "SPECTRAL",
+      "default": "SPECTRAL"
+    },
+    "ruleType": {
+      "type": "string",
+      "description": "Context or area to which the ruleset applies.",
+      "enum": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ],
+      "example": "API_DEFINITION",
+      "x-enum-varnames": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ]
+    },
+    "artifactType": {
+      "type": "string",
+      "description": "The type of artifact that the ruleset validates.",
+      "enum": [
+        "REST_API",
+        "ASYNC_API",
+        "MCP"
+      ],
+      "example": "REST_API"
+    },
+    "documentationLink": {
+      "type": "string",
+      "description": "URL to the documentation related to the ruleset.",
+      "example": "https://example.com/docs/api-security-ruleset"
+    },
+    "provider": {
+      "type": "string",
+      "description": "Entity or individual providing the ruleset.",
+      "example": "TechWave"
+    }
+  },
+  "required": [
+    "name",
+    "rulesetContent",
+    "ruleType",
+    "artifactType"
+  ]
+}

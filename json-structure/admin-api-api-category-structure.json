@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-api-category-structure.json",
+  "name": "API Category",
+  "description": "APICategory schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "Finance"
+    },
+    "description": {
+      "maxLength": 1024,
+      "type": "string",
+      "example": "Finance related APIs"
+    },
+    "numberOfAPIs": {
+      "type": "int32",
+      "readOnly": true,
+      "example": 1
+    }
+  }
+}

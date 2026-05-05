@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-resource-policy-info-schema.json",
+  "title": "Resource policy Info object with conversion policy resource details.",
+  "description": "ResourcePolicyInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the resource policy registry artifact\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "httpVerb": {
+      "type": "string",
+      "description": "HTTP verb used for the resource path",
+      "example": "get"
+    },
+    "resourcePath": {
+      "type": "string",
+      "description": "A string that represents the resource path of the api for the related resource policy",
+      "example": "checkPhoneNumber"
+    },
+    "content": {
+      "type": "string",
+      "description": "The resource policy content",
+      "example": "<header description=\"SOAPAction\" name=\"SOAPAction\" scope=\"transport\" value=\"http://ws.cdyne.com/PhoneVerify/query/CheckPhoneNumber\"/>"
+    }
+  }
+}

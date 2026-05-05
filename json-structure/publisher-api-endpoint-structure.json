@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-endpoint-structure.json",
+  "name": "Endpoints",
+  "description": "Endpoint schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the Endpoint entry\n",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the Endpoint entry\n",
+      "example": "Endpoint 1"
+    },
+    "endpointConfig": {
+      "type": "object",
+      "properties": {
+        "endpointType": {
+          "type": "string",
+          "example": "FAIL_OVER",
+          "enum": [
+            "SINGLE",
+            "LOAD_BALANCED",
+            "FAIL_OVER"
+          ]
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/EndpointConfig"
+          }
+        }
+      }
+    },
+    "endpointSecurity": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "example": false
+        },
+        "type": {
+          "type": "string",
+          "example": "basic"
+        },
+        "username": {
+          "type": "string",
+          "example": "basic"
+        },
+        "password": {
+          "type": "string",
+          "example": "basic"
+        }
+      }
+    },
+    "maxTps": {
+      "type": "int64",
+      "description": "Endpoint max tps",
+      "example": 1000
+    },
+    "type": {
+      "type": "string",
+      "example": "http"
+    }
+  }
+}

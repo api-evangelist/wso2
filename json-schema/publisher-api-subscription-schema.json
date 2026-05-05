@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-subscription-schema.json",
+  "title": "Subscription",
+  "description": "Subscription schema from WSO2 API Manager",
+  "required": [
+    "applicationInfo",
+    "subscriptionId",
+    "subscriptionStatus",
+    "throttlingPolicy"
+  ],
+  "type": "object",
+  "properties": {
+    "subscriptionId": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "applicationInfo": {
+      "$ref": "#/components/schemas/ApplicationInfo"
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "subscriptionStatus": {
+      "type": "string",
+      "example": "BLOCKED",
+      "enum": [
+        "BLOCKED",
+        "PROD_ONLY_BLOCKED",
+        "UNBLOCKED",
+        "ON_HOLD",
+        "REJECTED",
+        "TIER_UPDATE_PENDING",
+        "DELETE_PENDING"
+      ]
+    }
+  }
+}

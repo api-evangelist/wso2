@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-policy-adherence-summary-schema.json",
+  "title": "PolicyAdherenceSummary",
+  "description": "Summary of governance policy adherence in the organization.",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "integer",
+      "description": "Total number of policies.",
+      "example": 10
+    },
+    "followed": {
+      "type": "integer",
+      "description": "Number of policies followed to.",
+      "example": 6
+    },
+    "violated": {
+      "type": "integer",
+      "description": "Number of policies violated.",
+      "example": 4
+    },
+    "unApplied": {
+      "type": "integer",
+      "description": "Number of policies unApplied.",
+      "example": 0
+    }
+  }
+}

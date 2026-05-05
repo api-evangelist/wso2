@@ -1,0 +1,405 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-mcp-server-structure.json",
+  "name": "MCP Server object",
+  "description": "MCPServer schema from WSO2 API Manager",
+  "required": [
+    "context",
+    "name",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the MCP Server",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\[\\]\\/]*$)",
+      "example": "ReadingList"
+    },
+    "displayName": {
+      "description": "Human-friendly name shown in UI. Length limited to DB column size.",
+      "type": "string",
+      "example": "Reading List"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 32766,
+      "example": "This is a simple MCP server for a book store."
+    },
+    "context": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 232,
+      "example": "books"
+    },
+    "endpointConfig": {
+      "type": "object",
+      "properties": {},
+      "description": "Endpoint configuration of the backend.\n"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "pattern": "^[^~!@#;:%^*()+={}|\\\\<>\"',&/$\\[\\]\\s+\\/]+$",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "If the provider value is not given user invoking the MCP Server will be used as the provider.",
+      "example": "admin"
+    },
+    "lifeCycleStatus": {
+      "type": "string",
+      "example": "CREATED",
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "example": false
+    },
+    "isDefaultVersion": {
+      "type": "boolean",
+      "example": false
+    },
+    "isRevision": {
+      "type": "boolean",
+      "example": false
+    },
+    "revisionedMCPServerId": {
+      "type": "string",
+      "description": "UUID of the artifact",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "revisionId": {
+      "type": "int32",
+      "example": 1
+    },
+    "enableSchemaValidation": {
+      "type": "boolean",
+      "example": false
+    },
+    "audiences": {
+      "type": "array",
+      "description": "The audiences of the MCP Server for jwt validation. Accepted values are any String values",
+      "items": {
+        "type": "string",
+        "example": [
+          "aud1",
+          "aud2",
+          "aud3"
+        ]
+      }
+    },
+    "transport": {
+      "type": "array",
+      "description": "Supported transports for the MCP Server (http and/or https).",
+      "example": [
+        "http",
+        "https"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "example": [
+        "pizza",
+        "food"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "policies": {
+      "type": "array",
+      "example": [
+        "Unlimited"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "organizationPolicies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OrganizationPolicies"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "description": "The MCP Server level throttling policy selected.",
+      "example": "Unlimited",
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\s+]*$)",
+      "description": "Name of the Authorization header used for invoking the MCP Server. If it is not set, \nAuthorization header name specified in tenant or system level will be used.\n",
+      "example": "Authorization"
+    },
+    "apiKeyHeader": {
+      "type": "string",
+      "pattern": "(^[^~!@#;:%^*()+={}|\\\\<>\"',&$\\s+]*$)",
+      "description": "Name of the API key header used for invoking the MCP Server. If it is not set, default value`apiKey` \nwill be used.\n",
+      "example": "apiKey"
+    },
+    "securityScheme": {
+      "type": "array",
+      "description": "Types of API security, the current MCP Server secured with. It can be either OAuth2 or mutual SSLor both.\nIf it is not set OAuth2 will be set as the security.\n",
+      "example": [
+        "oauth2"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "maxTps": {
+      "$ref": "#/components/schemas/MaxTps"
+    },
+    "visibility": {
+      "type": "string",
+      "description": "The visibility level of the MCP Server. Accepts one of the following: PUBLIC, PRIVATE, RESTRICTED.\n",
+      "example": "PUBLIC",
+      "default": "PUBLIC",
+      "enum": [
+        "PUBLIC",
+        "PRIVATE",
+        "RESTRICTED"
+      ],
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "visibleRoles": {
+      "type": "array",
+      "description": "The user roles that are able to access the MCP Server in Developer Portal",
+      "example": [],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "visibleTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "visibleOrganizations": {
+      "type": "array",
+      "description": "The organizations that are able to access the MCP server in Developer Portal",
+      "example": [],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "mcpServerPolicies": {
+      "$ref": "#/components/schemas/MCPServerOperationPolicies"
+    },
+    "subscriptionAvailability": {
+      "type": "string",
+      "description": "The subscription availability. Accepts one of the following: CURRENT_TENANT, ALL_TENANTS, or \nSPECIFIC_TENANTS.\n",
+      "example": "CURRENT_TENANT",
+      "default": "CURRENT_TENANT",
+      "enum": [
+        "CURRENT_TENANT",
+        "ALL_TENANTS",
+        "SPECIFIC_TENANTS"
+      ],
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "subscriptionAvailableTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "additionalPropertiesMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "monetization": {
+      "$ref": "#/components/schemas/APIMonetizationInfo"
+    },
+    "accessControl": {
+      "type": "string",
+      "description": "Is the MCP server restricted to certain publishers or creators or is it visible to all publishers and \ncreators. If the accessControl restriction is NONE, this can be modified by all publishers and creators.\nOtherwise, it can only be viewable/modifiable by a specific set of users based on the restriction.\n",
+      "default": "NONE",
+      "enum": [
+        "NONE",
+        "RESTRICTED"
+      ]
+    },
+    "accessControlRoles": {
+      "type": "array",
+      "description": "The user roles that are able to view/modify as publisher or creator.",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "businessInformation": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/APIBusinessInformation"
+        }
+      ],
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "corsConfiguration": {
+      "$ref": "#/components/schemas/APICorsConfiguration"
+    },
+    "workflowStatus": {
+      "type": "string",
+      "example": "APPROVED"
+    },
+    "protocolVersion": {
+      "type": "string"
+    },
+    "createdTime": {
+      "type": "string"
+    },
+    "lastUpdatedTimestamp": {
+      "type": "string"
+    },
+    "lastUpdatedTime": {
+      "type": "string",
+      "x-otherScopes": [
+        "apim:mcp_server_publish",
+        "apim:mcp_server_manage"
+      ]
+    },
+    "subtypeConfiguration": {
+      "$ref": "#/components/schemas/SubtypeConfiguration"
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MCPServerScope"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "example": [
+        {
+          "target": "listBooks",
+          "feature": "TOOL",
+          "authType": "Application & Application User",
+          "throttlingPolicy": "Unlimited"
+        },
+        {
+          "target": "addBook",
+          "feature": "TOOL",
+          "authType": "Application & Application User",
+          "throttlingPolicy": "Unlimited"
+        }
+      ],
+      "items": {
+        "$ref": "#/components/schemas/MCPServerOperation"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "MCP Server categories",
+      "items": {
+        "type": "string",
+        "example": ""
+      },
+      "x-otherScopes": [
+        "apim:mcp_server_publish"
+      ]
+    },
+    "keyManagers": {
+      "type": "object",
+      "properties": {},
+      "description": "Key Managers",
+      "readOnly": true
+    },
+    "gatewayVendor": {
+      "name": "field to identify gateway vendor",
+      "type": "string",
+      "example": "wso2 external"
+    },
+    "gatewayType": {
+      "name": "Field to identify gateway type.",
+      "type": "string",
+      "description": "The gateway type selected for the policies. Accepts one of the following: wso2/synapse, wso2/apk, AWS.\n",
+      "example": "wso2/synapse wso2/apk AWS",
+      "default": "wso2/synapse"
+    },
+    "initiatedFromGateway": {
+      "type": "boolean",
+      "description": "Whether the MCP Server is initiated from the gateway or not. This is used to identify\nwhether the MCP Server is created from the publisher or discovered from the gateway.\n",
+      "example": false,
+      "default": false,
+      "readOnly": true
+    }
+  },
+  "x-scopes": [
+    "apim:mcp_server_create",
+    "apim:mcp_server_import_export",
+    "apim:mcp_server_manage"
+  ]
+}

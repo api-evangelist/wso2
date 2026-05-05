@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devops-api-correlation-component-property-structure.json",
+  "name": "Properties for correlation components",
+  "description": "CorrelationComponentProperty schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "deniedThreads"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "MessageDeliveryTaskPool"
+      }
+    }
+  }
+}

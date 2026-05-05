@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-application-update-request-schema.json",
+  "title": "ApplicationUpdateRequest",
+  "description": "Request body to update application attributes",
+  "type": "object",
+  "properties": {
+    "owner": {
+      "type": "string",
+      "description": "The new owner of the application"
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "The type of token for the application (e.g., JWT)",
+      "enum": [
+        "JWT"
+      ]
+    }
+  }
+}

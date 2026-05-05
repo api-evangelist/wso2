@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-application-info-schema.json",
+  "title": "Application info object with basic application details",
+  "description": "ApplicationInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "CalculatorApp"
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "description": {
+      "type": "string",
+      "example": "Sample calculator application"
+    },
+    "status": {
+      "type": "string",
+      "example": "APPROVED",
+      "default": ""
+    },
+    "groups": {
+      "type": "array",
+      "example": "",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscriptionCount": {
+      "type": "integer"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {},
+      "example": "External Reference ID, Billing Tier"
+    },
+    "owner": {
+      "type": "string",
+      "example": "admin"
+    },
+    "tokenType": {
+      "type": "string",
+      "example": "JWT"
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": 1651555310208
+    },
+    "updatedTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": 1651555310208
+    }
+  }
+}

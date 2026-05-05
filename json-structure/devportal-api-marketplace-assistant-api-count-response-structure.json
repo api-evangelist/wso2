@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-marketplace-assistant-api-count-response-structure.json",
+  "name": "MarketplaceAssistantApiCountResponse",
+  "description": "MarketplaceAssistantApiCountResponse schema from WSO2 API Manager",
+  "required": [
+    "count",
+    "limit"
+  ],
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "no of apis stored in the vectordb.",
+      "example": "100"
+    },
+    "limit": {
+      "type": "int32",
+      "description": "maximum no of apis allowed for an org.",
+      "example": "1000"
+    }
+  }
+}

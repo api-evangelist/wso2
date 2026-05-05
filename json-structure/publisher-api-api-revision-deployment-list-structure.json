@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-revision-deployment-list-structure.json",
+  "name": "API Revision to Deployment mapped object with basic API deployment details",
+  "description": "APIRevisionDeploymentList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/APIRevisionDeployment"
+      }
+    }
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-schema.json",
+  "title": "API object",
+  "description": "API schema from WSO2 API Manager",
+  "required": [
+    "context",
+    "lifeCycleStatus",
+    "name",
+    "provider",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the api\n",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the API",
+      "example": "CalculatorAPI"
+    },
+    "displayName": {
+      "description": "Human-friendly name shown in UI. Length limited to DB column size.",
+      "type": "string",
+      "example": "Pizza Shack API"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description about the API",
+      "example": "A calculator API that supports basic operations"
+    },
+    "context": {
+      "type": "string",
+      "description": "A string that represents thecontext of the user's request",
+      "example": "CalculatorAPI"
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of the API",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "description": "If the provider value is not given user invoking the api will be used as the provider.\n",
+      "example": "admin"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "Swagger definition of the API which contains details about URI templates and scopes\n",
+      "example": "{\"paths\":{\"\\/substract\":{\"get\":{\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"parameters\":[{\"name\":\"x\",\"required\":true,\"type\":\"string\",\"in\":\"query\"},{\"name\":\"y\",\"required\":true,\"type\":\"string\",\"in\":\"query\"}],\"responses\":{\"200\":{}}}},\"\\/add\":{\"get\":{\"x-auth-type\":\"Application & Application User\",\"x-throttling-tier\":\"Unlimited\",\"parameters\":[{\"name\":\"x\",\"required\":true,\"type\":\"string\",\"in\":\"query\"},{\"name\":\"y\",\"required\":true,\"type\":\"string\",\"in\":\"query\"}],\"responses\":{\"200\":{}}}}},\"swagger\":\"2.0\",\"info\":{\"title\":\"CalculatorAPI\",\"version\":\"1.0.0\"}}"
+    },
+    "wsdlUri": {
+      "type": "string",
+      "description": "WSDL URL if the API is based on a WSDL endpoint\n",
+      "example": "http://www.webservicex.com/globalweather.asmx?wsdl"
+    },
+    "lifeCycleStatus": {
+      "type": "string",
+      "description": "This describes in which status of the lifecycle the API is.",
+      "example": "PUBLISHED"
+    },
+    "isDefaultVersion": {
+      "type": "boolean",
+      "example": false
+    },
+    "type": {
+      "type": "string",
+      "description": "This describes the transport type of the API",
+      "example": "HTTP"
+    },
+    "transport": {
+      "type": "array",
+      "example": [
+        "http",
+        "https"
+      ],
+      "items": {
+        "type": "string",
+        "description": "Supported transports for the API (http and/or https).\n"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "$ref": "#/components/schemas/APIOperations"
+      }
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "description": "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used.\n",
+      "example": "Authorization"
+    },
+    "apiKeyHeader": {
+      "type": "string",
+      "description": "Name of the API key header used for invoking the API. If it is not set, default value `apiKey` will be used.\n",
+      "example": "ApiKey"
+    },
+    "securityScheme": {
+      "type": "array",
+      "description": "Types of API security, the current API secured with. It can be either OAuth2 or mutual SSL or both. If\nit is not set OAuth2 will be set as the security for the current API.\n",
+      "example": [
+        "oauth2",
+        "oauth_basic_auth_api_key_mandatory"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Search keywords related to the API",
+      "example": [
+        "substract",
+        "add"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tiers": {
+      "type": "array",
+      "description": "The subscription tiers selected for the particular API",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tierName": {
+            "type": "string",
+            "example": "Gold"
+          },
+          "tierPlan": {
+            "type": "string",
+            "example": "COMMERCIAL"
+          },
+          "monetizationAttributes": {
+            "type": "object",
+            "properties": {
+              "fixedPrice": {
+                "type": "string",
+                "example": "10"
+              },
+              "pricePerRequest": {
+                "type": "string",
+                "example": "1"
+              },
+              "currencyType": {
+                "type": "string",
+                "example": "USD"
+              },
+              "billingCycle": {
+                "type": "string",
+                "example": "month"
+              }
+            }
+          }
+        }
+      }
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "example": true,
+      "default": false
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Custom(user defined) properties of API\n",
+      "example": {}
+    },
+    "monetization": {
+      "$ref": "#/components/schemas/APIMonetizationInfo"
+    },
+    "endpointURLs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "environmentName": {
+            "type": "string",
+            "example": "Default"
+          },
+          "environmentDisplayName": {
+            "type": "string",
+            "example": "Default"
+          },
+          "environmentType": {
+            "type": "string",
+            "example": "hybrid"
+          },
+          "URLs": {
+            "type": "object",
+            "properties": {
+              "http": {
+                "type": "string",
+                "description": "HTTP environment URL",
+                "example": "http://localhost:8280/phoneverify/1.0.0"
+              },
+              "https": {
+                "type": "string",
+                "description": "HTTPS environment URL",
+                "example": "https://localhost:8243/phoneverify/1.0.0"
+              },
+              "ws": {
+                "type": "string",
+                "description": "WS environment URL",
+                "example": "ws://localhost:9099/phoneverify/1.0.0"
+              },
+              "wss": {
+                "type": "string",
+                "description": "WSS environment URL",
+                "example": "wss://localhost:9099/phoneverify/1.0.0"
+              }
+            }
+          },
+          "defaultVersionURLs": {
+            "type": "object",
+            "properties": {
+              "http": {
+                "type": "string",
+                "description": "HTTP environment default URL",
+                "example": "http://localhost:8280/phoneverify/"
+              },
+              "https": {
+                "type": "string",
+                "description": "HTTPS environment default URL",
+                "example": "https://localhost:8243/phoneverify/"
+              },
+              "ws": {
+                "type": "string",
+                "description": "WS environment default URL",
+                "example": "ws://localhost:9099/phoneverify/"
+              },
+              "wss": {
+                "type": "string",
+                "description": "WSS environment default URL",
+                "example": "wss://localhost:9099/phoneverify/"
+              }
+            }
+          }
+        }
+      }
+    },
+    "businessInformation": {
+      "$ref": "#/components/schemas/APIBusinessInformation"
+    },
+    "environmentList": {
+      "type": "array",
+      "description": "The environment list configured with non empty endpoint URLs for the particular API.",
+      "example": [
+        "PRODUCTION",
+        "SANDBOX"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeInfo"
+      }
+    },
+    "avgRating": {
+      "type": "string",
+      "description": "The average rating of the API",
+      "example": "4.5"
+    },
+    "subscriptions": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of subscriptions for the API",
+      "example": 10
+    },
+    "advertiseInfo": {
+      "$ref": "#/components/schemas/AdvertiseInfo"
+    },
+    "isSubscriptionAvailable": {
+      "type": "boolean",
+      "example": false
+    },
+    "initiatedFromGateway": {
+      "type": "boolean",
+      "description": "Flag indicating this API was discovered/initiated via the gateway (federated discovery) rather than created in the Control Plane.",
+      "example": false
+    },
+    "categories": {
+      "type": "array",
+      "description": "API categories\n",
+      "items": {
+        "type": "string",
+        "example": "Marketing"
+      }
+    },
+    "keyManagers": {
+      "type": "object",
+      "properties": {},
+      "description": "API Key Managers\n",
+      "example": [
+        "all"
+      ]
+    },
+    "createdTime": {
+      "type": "string",
+      "example": "2020-10-31T13:57:16.229"
+    },
+    "lastUpdatedTime": {
+      "type": "string",
+      "example": "2020-10-31T13:57:16.229"
+    },
+    "gatewayType": {
+      "title": "Gateway type of the API",
+      "type": "string",
+      "example": "solace"
+    },
+    "gatewayVendor": {
+      "title": "Gateway vendor of the API",
+      "type": "string",
+      "example": "wso2"
+    },
+    "asyncTransportProtocols": {
+      "type": "array",
+      "description": "Supported transports for the aync API.\n",
+      "example": [
+        "http",
+        "mqtt"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "egress": {
+      "type": "boolean",
+      "description": "Whether the API is egress or not",
+      "default": false,
+      "example": true
+    },
+    "subtype": {
+      "type": "string",
+      "description": "Subtype of the API.",
+      "default": "DEFAULT",
+      "example": "AIAPI",
+      "readOnly": true
+    }
+  }
+}

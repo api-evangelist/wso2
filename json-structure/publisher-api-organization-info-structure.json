@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-organization-info-structure.json",
+  "name": "Organization Info",
+  "description": "OrganizationInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "organizationId": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "My Organization"
+    }
+  }
+}

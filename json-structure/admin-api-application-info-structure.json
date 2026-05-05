@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-application-info-structure.json",
+  "name": "Application info object with basic application details",
+  "description": "ApplicationInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "CalculatorApp"
+    },
+    "owner": {
+      "type": "string",
+      "example": "admin"
+    },
+    "tokenType": {
+      "type": "string",
+      "enum": [
+        "OAUTH",
+        "JWT"
+      ]
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": "1651555310208"
+    },
+    "keyManagers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/KeyManagerInfo"
+      }
+    },
+    "status": {
+      "type": "string",
+      "example": "APPROVED"
+    },
+    "groupId": {
+      "type": "string",
+      "example": ""
+    }
+  }
+}

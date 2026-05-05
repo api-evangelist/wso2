@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-endpoint-schema.json",
+  "title": "Endpoint",
+  "description": "APIEndpoint schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "57a380b7-d852-4f56-bb23-db172722e9d4"
+    },
+    "name": {
+      "type": "string",
+      "example": "Endpoint1"
+    },
+    "deploymentStage": {
+      "type": "string",
+      "example": "PRODUCTION or SANDBOX"
+    },
+    "endpointConfig": {
+      "type": "object",
+      "properties": {},
+      "description": "Endpoint configuration of the API. This can be used to provide different types of endpoints including \nSimple REST Endpoints, Loadbalanced and Failover.\n"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "OpenAPI specification of the backend endpoint"
+    }
+  }
+}

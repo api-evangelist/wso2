@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-tenant-schema.json",
+  "title": "Tenant",
+  "description": "Tenant schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "tenant domain",
+      "example": "wso2.com"
+    },
+    "status": {
+      "type": "string",
+      "description": "current status of the tenant active/inactive",
+      "example": "active"
+    }
+  }
+}

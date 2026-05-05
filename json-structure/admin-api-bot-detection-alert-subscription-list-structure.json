@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-bot-detection-alert-subscription-list-structure.json",
+  "name": "Bot Detection Alert Subscription List",
+  "description": "BotDetectionAlertSubscriptionList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "Number of Bot Detection Alert Subscriptions returned.\n",
+      "example": 3
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BotDetectionAlertSubscription"
+      }
+    }
+  }
+}

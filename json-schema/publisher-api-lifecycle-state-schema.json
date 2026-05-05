@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-lifecycle-state-schema.json",
+  "title": "Lifecycle State",
+  "description": "LifecycleState schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "state": {
+      "type": "string",
+      "example": "Created"
+    },
+    "checkItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Deprecate old versions after publishing the API"
+          },
+          "value": {
+            "type": "boolean",
+            "example": false
+          },
+          "requiredStates": {
+            "type": "array",
+            "example": [],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "availableTransitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string",
+            "example": "Publish"
+          },
+          "targetState": {
+            "type": "string",
+            "example": "Published"
+          }
+        }
+      }
+    }
+  }
+}

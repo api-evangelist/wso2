@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-request-label-list-structure.json",
+  "name": "Label ID List for Request",
+  "description": "RequestLabelList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "labels": {
+      "type": "array",
+      "description": "List of label IDs.",
+      "items": {
+        "type": "string",
+        "example": "d7cf8523-9180-4255-84fa-6cb171c1f779"
+      }
+    }
+  }
+}

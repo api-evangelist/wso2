@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-cert-metadata-schema.json",
+  "title": "Certificate",
+  "description": "Representation of the details of a certificate",
+  "type": "object",
+  "properties": {
+    "alias": {
+      "type": "string",
+      "example": "wso2carbon"
+    },
+    "endpoint": {
+      "type": "string",
+      "example": "www.abc.com"
+    }
+  }
+}

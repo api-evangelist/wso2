@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-ai-service-provider-endpoint-authentication-configuration-structure.json",
+  "name": "AIServiceProviderEndpointAuthenticationConfiguration",
+  "description": "AIServiceProviderEndpointAuthenticationConfiguration schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the authentication configuration is enabled or not",
+      "default": false
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the authentication configuration",
+      "example": "apiKey"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Parameters required for the authentication configuration. The parameters are different based on the type of the authentication configuration.\n",
+      "example": {
+        "headerEnabled": true,
+        "headerName": "Authorization"
+      }
+    }
+  }
+}

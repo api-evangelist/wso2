@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-throttle-limit-base-structure.json",
+  "name": "Throttle Limit Base",
+  "description": "ThrottleLimitBase schema from WSO2 API Manager",
+  "required": [
+    "timeUnit",
+    "unitTime"
+  ],
+  "type": "object",
+  "properties": {
+    "timeUnit": {
+      "type": "string",
+      "description": "Unit of the time. Allowed values are \"sec\", \"min\", \"hour\", \"day\"",
+      "example": "min"
+    },
+    "unitTime": {
+      "type": "int32",
+      "description": "Time limit that the throttling limit applies.",
+      "example": 10
+    }
+  }
+}

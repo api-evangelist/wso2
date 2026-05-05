@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-operation-policy-schema.json",
+  "title": "API Operation Policy",
+  "description": "OperationPolicy schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "policyName"
+  ],
+  "properties": {
+    "policyName": {
+      "type": "string"
+    },
+    "policyVersion": {
+      "type": "string",
+      "default": "v1"
+    },
+    "policyType": {
+      "type": "string"
+    },
+    "policyId": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-shared-scope-usage-structure.json",
+  "name": "SharedScopeUsage",
+  "description": "SharedScopeUsage schema from WSO2 API Manager",
+  "required": [
+    "id",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the Scope. Valid only for shared scopes.\n",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of Scope\n",
+      "example": "apim:api_view"
+    },
+    "usedApiList": {
+      "deprecated": true,
+      "type": "array",
+      "description": "API list which have used the shared scope. [DEPRECATED] Use `usages` instead. \nRetained only for backward compatibility.\n",
+      "items": {
+        "$ref": "#/components/schemas/SharedScopeUsedAPIInfo"
+      }
+    },
+    "usages": {
+      "type": "array",
+      "description": "List of entities which have used the shared scope\n",
+      "items": {
+        "$ref": "#/components/schemas/SharedScopeUsageEntity"
+      }
+    }
+  }
+}

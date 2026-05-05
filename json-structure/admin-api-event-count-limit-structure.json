@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-event-count-limit-structure.json",
+  "name": "Event Count Limit object",
+  "description": "EventCountLimit schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottleLimitBase"
+    },
+    {
+      "required": [
+        "eventCount"
+      ],
+      "type": "object",
+      "properties": {
+        "eventCount": {
+          "type": "int64",
+          "description": "Maximum number of events allowed",
+          "example": 3000
+        }
+      }
+    }
+  ]
+}

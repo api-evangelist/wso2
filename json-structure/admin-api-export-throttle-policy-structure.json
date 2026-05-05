@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-export-throttle-policy-structure.json",
+  "name": "Export Throttling Policy",
+  "description": "ExportThrottlePolicy schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object"
+    }
+  }
+}

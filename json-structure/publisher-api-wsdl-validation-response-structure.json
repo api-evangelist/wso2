@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-wsdl-validation-response-structure.json",
+  "name": "WSDL Definition Validation Response",
+  "description": "WSDLValidationResponse schema from WSO2 API Manager",
+  "required": [
+    "isValid"
+  ],
+  "type": "object",
+  "properties": {
+    "isValid": {
+      "type": "boolean",
+      "description": "This attribute declares whether this definition is valid or not.\n",
+      "example": true
+    },
+    "errors": {
+      "type": "array",
+      "description": "If there are more than one error list them out.\nFor example, list out validation errors by each field.\n",
+      "items": {
+        "$ref": "#/components/schemas/ErrorListItem"
+      }
+    },
+    "wsdlInfo": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "WSDL version\n",
+          "example": "1.1"
+        },
+        "endpoints": {
+          "type": "array",
+          "description": "A list of endpoints the service exposes\n",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the endpoint",
+                "example": "StockQuoteSoap"
+              },
+              "location": {
+                "type": "string",
+                "description": "Endpoint URL",
+                "example": "http://www.webservicex.net/stockquote.asmx"
+              }
+            }
+          }
+        }
+      },
+      "description": "Summary of the WSDL including the basic information"
+    }
+  }
+}

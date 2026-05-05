@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-subscribed-api-with-api-key-list-structure.json",
+  "name": "Subscribed APIs with non-associated API keys",
+  "description": "SubscribedAPIWithApiKeyList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "Number of subscribed APIs with API keys returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/APIWithKeyInfo"
+      }
+    }
+  }
+}

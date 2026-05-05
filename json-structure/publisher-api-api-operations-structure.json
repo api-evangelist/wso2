@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-operations-structure.json",
+  "name": "Operation",
+  "description": "APIOperations schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "postapiresource"
+    },
+    "target": {
+      "type": "string",
+      "example": "/order/{orderId}"
+    },
+    "verb": {
+      "type": "string",
+      "example": "POST"
+    },
+    "authType": {
+      "type": "string",
+      "example": "Application & Application User",
+      "default": "Any"
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "scopes": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "usedProductIds": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "amznResourceName": {
+      "type": "string",
+      "example": ""
+    },
+    "amznResourceTimeout": {
+      "type": "int32"
+    },
+    "amznResourceContentEncode": {
+      "type": "boolean"
+    },
+    "payloadSchema": {
+      "type": "string",
+      "example": ""
+    },
+    "uriMapping": {
+      "type": "string",
+      "example": ""
+    },
+    "operationPolicies": {
+      "$ref": "#/components/schemas/APIOperationPolicies"
+    },
+    "operationHubPolicies": {
+      "type": "array",
+      "description": "Policy Hub policies at resource/operation level (sibling to operationPolicies).",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicy"
+      }
+    }
+  }
+}

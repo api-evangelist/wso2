@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-subscription-throttle-policy-permission-schema.json",
+  "title": "SubscriptionThrottlePolicyPermission",
+  "description": "SubscriptionThrottlePolicyPermission schema from WSO2 API Manager",
+  "required": [
+    "permissionType",
+    "roles"
+  ],
+  "type": "object",
+  "properties": {
+    "permissionType": {
+      "type": "string",
+      "example": "deny",
+      "enum": [
+        "ALLOW",
+        "DENY"
+      ]
+    },
+    "roles": {
+      "type": "array",
+      "example": [
+        "Internal/everyone"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

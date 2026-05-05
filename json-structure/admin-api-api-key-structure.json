@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-api-key-structure.json",
+  "name": "API Key details to invoke APIs",
+  "description": "APIKey schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    },
+    "keyName": {
+      "type": "string",
+      "description": "API Key name",
+      "example": "Test_Key"
+    },
+    "apiName": {
+      "type": "string",
+      "description": "API Name",
+      "example": "NotificationsAPI"
+    },
+    "applicationName": {
+      "type": "string",
+      "description": "Application Name",
+      "example": "DefaultApplication"
+    },
+    "keyType": {
+      "type": "string",
+      "description": "Application Key Type",
+      "example": "PRODUCTION",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    },
+    "user": {
+      "type": "string",
+      "description": "Owner of the Application",
+      "example": "Bob"
+    },
+    "issuedOn": {
+      "type": "int64",
+      "description": "Created time in Unix epoch milliseconds",
+      "example": 1599196134000
+    },
+    "validityPeriod": {
+      "type": "int64",
+      "example": 3600
+    },
+    "lastUsed": {
+      "type": "int64",
+      "nullable": true,
+      "description": "Last used time in Unix epoch milliseconds",
+      "example": 1599196134000
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-token-structure.json",
+  "name": "Application token details to invoke APIs",
+  "description": "ApplicationToken schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "accessToken": {
+      "type": "string",
+      "description": "Access token",
+      "example": "1.2345678901234568E30"
+    },
+    "tokenScopes": {
+      "type": "array",
+      "description": "Valid comma seperated scopes for the access token",
+      "example": [
+        "default",
+        "read_api",
+        "write_api"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "validityTime": {
+      "type": "int64",
+      "description": "Maximum validity time for the access token",
+      "example": 3600
+    }
+  }
+}

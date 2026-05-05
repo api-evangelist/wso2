@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-resource-path-structure.json",
+  "name": "ResourcePath",
+  "description": "ResourcePath schema from WSO2 API Manager",
+  "required": [
+    "id"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "int32",
+      "example": 1
+    },
+    "resourcePath": {
+      "type": "string",
+      "example": "/menu"
+    },
+    "httpVerb": {
+      "type": "string",
+      "example": "GET"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-comment-request-schema.json",
+  "title": "Comment request body",
+  "description": "CommentRequest schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string",
+      "maxLength": 512,
+      "description": "Content of the comment\n",
+      "example": "This is a comment"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the comment\n",
+      "example": "general"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

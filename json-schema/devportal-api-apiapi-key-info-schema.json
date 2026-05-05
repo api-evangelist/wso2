@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-apiapi-key-info-schema.json",
+  "title": "API Key details to invoke APIs",
+  "description": "APIAPIKeyInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    },
+    "keyName": {
+      "type": "string",
+      "description": "API Key name",
+      "example": "Test_Key"
+    },
+    "associatedApp": {
+      "type": "string",
+      "description": "Associated application",
+      "example": "DefaultApplication"
+    },
+    "issuedOn": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Created Time",
+      "example": "2026-02-06 23:45:07"
+    },
+    "validityPeriod": {
+      "type": "integer",
+      "format": "int64",
+      "example": 3600
+    },
+    "lastUsed": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Last used time as epoch milliseconds.",
+      "example": "2026-02-06 23:45:07"
+    }
+  }
+}

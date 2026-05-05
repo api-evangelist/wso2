@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-severity-based-rule-violation-count-schema.json",
+  "title": "SeverityBasedRuleViolationCount",
+  "description": "List of rules violated by the artifact under each severity.",
+  "type": "object",
+  "properties": {
+    "severity": {
+      "type": "string",
+      "description": "Severity level of the rule violation.",
+      "enum": [
+        "ERROR",
+        "WARN",
+        "INFO"
+      ],
+      "example": "WARN"
+    },
+    "violatedRulesCount": {
+      "type": "integer",
+      "description": "Number of rules violated by the artifact under each severity.",
+      "example": 1
+    }
+  }
+}

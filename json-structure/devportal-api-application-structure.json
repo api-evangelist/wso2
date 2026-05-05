@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-structure.json",
+  "name": "Application",
+  "description": "Application schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "throttlingPolicy"
+  ],
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string",
+      "example": "CalculatorApp"
+    },
+    "throttlingPolicy": {
+      "minLength": 1,
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "description": {
+      "maxLength": 512,
+      "type": "string",
+      "example": "Sample calculator application"
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "Type of the access token generated for this application.\n\n**OAUTH:** A UUID based access token\n**JWT:** A self-contained, signed JWT based access token which is issued by default.\n",
+      "example": "JWT",
+      "default": "JWT",
+      "enum": [
+        "OAUTH",
+        "JWT"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "readOnly": true,
+      "example": "APPROVED",
+      "default": ""
+    },
+    "groups": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscriptionCount": {
+      "type": "int32",
+      "readOnly": true
+    },
+    "keys": {
+      "type": "array",
+      "readOnly": true,
+      "example": [],
+      "items": {
+        "$ref": "#/components/schemas/ApplicationKey"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "example": {}
+    },
+    "subscriptionScopes": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "$ref": "#/components/schemas/ScopeInfo"
+      }
+    },
+    "owner": {
+      "type": "string",
+      "description": "Application created user\n",
+      "readOnly": true,
+      "example": "admin"
+    },
+    "hashEnabled": {
+      "type": "boolean",
+      "readOnly": true,
+      "example": false
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": 1651555310208
+    },
+    "updatedTime": {
+      "type": "string",
+      "readOnly": true,
+      "example": 1651555310208
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "PRIVATE",
+        "SHARED_WITH_ORG"
+      ]
+    }
+  }
+}

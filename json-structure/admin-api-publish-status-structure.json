@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-publish-status-structure.json",
+  "name": "Usage publish status",
+  "description": "PublishStatus schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Status of the usage publish request",
+      "example": "successfull"
+    },
+    "message": {
+      "type": "string",
+      "description": "detailed message of the status",
+      "example": "Records published successfully"
+    }
+  }
+}

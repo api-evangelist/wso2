@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-throttling-policy-schema.json",
+  "title": "Throttling Policy",
+  "description": "ThrottlingPolicy schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "requestCount",
+    "stopOnQuotaReach",
+    "tierPlan",
+    "unitTime"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "Platinum"
+    },
+    "description": {
+      "type": "string",
+      "example": "Allows 50 request(s) per minute."
+    },
+    "policyLevel": {
+      "type": "string",
+      "example": "subscription",
+      "enum": [
+        "application",
+        "subscription"
+      ]
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Custom attributes added to the throttling policy\n",
+      "example": {}
+    },
+    "requestCount": {
+      "type": "integer",
+      "description": "Maximum number of requests which can be sent within a provided unit time\n",
+      "format": "int64",
+      "example": 50
+    },
+    "dataUnit": {
+      "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"\n",
+      "type": "string",
+      "example": "KB"
+    },
+    "unitTime": {
+      "type": "integer",
+      "format": "int64",
+      "example": 60000
+    },
+    "timeUnit": {
+      "type": "string",
+      "example": "min"
+    },
+    "rateLimitCount": {
+      "type": "integer",
+      "default": 0,
+      "description": "Burst control request count",
+      "example": 10
+    },
+    "rateLimitTimeUnit": {
+      "type": "string",
+      "description": "Burst control time unit",
+      "example": "min"
+    },
+    "quotaPolicyType": {
+      "type": "string",
+      "description": "Default quota limit type",
+      "enum": [
+        "REQUESTCOUNT",
+        "BANDWIDTHVOLUME"
+      ],
+      "example": "REQUESTCOUNT"
+    },
+    "tierPlan": {
+      "type": "string",
+      "description": "This attribute declares whether this tier is available under commercial or free\n",
+      "example": "FREE",
+      "enum": [
+        "FREE",
+        "COMMERCIAL"
+      ]
+    },
+    "stopOnQuotaReach": {
+      "type": "boolean",
+      "description": "If this attribute is set to false, you are capabale of sending requests\neven if the request count exceeded within a unit time\n",
+      "example": true
+    },
+    "monetizationAttributes": {
+      "$ref": "#/components/schemas/MonetizationInfo"
+    },
+    "throttlingPolicyPermissions": {
+      "$ref": "#/components/schemas/ThrottlingPolicyPermissionInfo"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-workflow-response-schema.json",
+  "title": "workflow Response",
+  "description": "WorkflowResponse schema from WSO2 API Manager",
+  "required": [
+    "workflowStatus"
+  ],
+  "type": "object",
+  "properties": {
+    "workflowStatus": {
+      "type": "string",
+      "description": "This attribute declares whether this workflow task is approved or rejected.\n",
+      "example": "APPROVED",
+      "enum": [
+        "CREATED",
+        "APPROVED",
+        "REJECTED",
+        "REGISTERED"
+      ]
+    },
+    "jsonPayload": {
+      "type": "string",
+      "description": "Attributes that returned after the workflow execution\n"
+    }
+  }
+}

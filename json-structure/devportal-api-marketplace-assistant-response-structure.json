@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-marketplace-assistant-response-structure.json",
+  "name": "MarketplaceAssistantResponse",
+  "description": "MarketplaceAssistantResponse schema from WSO2 API Manager",
+  "required": [
+    "response"
+  ],
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "string",
+      "description": "natural language response by the llm.",
+      "example": "Hi, How can I help you?"
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MarketplaceAssistantApi"
+      }
+    }
+  }
+}

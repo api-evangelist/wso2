@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-subscription-throttle-policy-schema.json",
+  "title": "Subscription Throttling Policy",
+  "description": "SubscriptionThrottlePolicy schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottlePolicy"
+    },
+    {
+      "$ref": "#/components/schemas/GraphQLQuery"
+    },
+    {
+      "required": [
+        "defaultLimit"
+      ],
+      "type": "object",
+      "properties": {
+        "defaultLimit": {
+          "$ref": "#/components/schemas/ThrottleLimit"
+        },
+        "monetization": {
+          "$ref": "#/components/schemas/MonetizationInfo"
+        },
+        "rateLimitCount": {
+          "type": "integer",
+          "description": "Burst control request count",
+          "example": 10
+        },
+        "rateLimitTimeUnit": {
+          "type": "string",
+          "description": "Burst control time unit",
+          "example": "min"
+        },
+        "subscriberCount": {
+          "type": "integer",
+          "description": "Number of subscriptions allowed",
+          "example": 10
+        },
+        "customAttributes": {
+          "type": "array",
+          "description": "Custom attributes added to the Subscription Throttling Policy\n",
+          "example": [],
+          "items": {
+            "$ref": "#/components/schemas/CustomAttribute"
+          }
+        },
+        "stopOnQuotaReach": {
+          "type": "boolean",
+          "description": "This indicates the action to be taken when a user goes beyond the allocated quota. If checked, the user's requests will be dropped. If unchecked, the requests will be allowed to pass through.\n",
+          "default": false
+        },
+        "billingPlan": {
+          "type": "string",
+          "description": "define whether this is Paid or a Free plan. Allowed values are FREE or COMMERCIAL.\n",
+          "example": "FREE"
+        },
+        "permissions": {
+          "$ref": "#/components/schemas/SubscriptionThrottlePolicyPermission"
+        }
+      }
+    }
+  ]
+}

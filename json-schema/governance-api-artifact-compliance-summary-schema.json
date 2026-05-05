@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-artifact-compliance-summary-schema.json",
+  "title": "ArtifactComplianceSummary",
+  "description": "Summary of compliance of certain artifact in the organization.",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "integer",
+      "description": "Total number of artifacts.",
+      "example": 10
+    },
+    "compliant": {
+      "type": "integer",
+      "description": "Number of compliant artifacts.",
+      "example": 6
+    },
+    "nonCompliant": {
+      "type": "integer",
+      "description": "Number of non-compliant artifacts.",
+      "example": 4
+    },
+    "pending": {
+      "type": "integer",
+      "description": "Number of artifacts pending for compliance.",
+      "example": 0
+    },
+    "notApplicable": {
+      "type": "integer",
+      "description": "Number of artifacts not applicable for compliance yet.",
+      "example": 0
+    }
+  }
+}

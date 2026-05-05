@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-shared-scope-used-api-resource-info-structure.json",
+  "name": "API resource object using shared scope",
+  "description": "SharedScopeUsedAPIResourceInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "target": {
+      "type": "string",
+      "example": "/add"
+    },
+    "verb": {
+      "type": "string",
+      "example": "POST"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-key-manager-app-usages-structure.json",
+  "name": "Key Manager Application Usages.",
+  "description": "KeyManagerAppUsages schema from WSO2 API Manager",
+  "required": [
+    "applicationCount",
+    "applications"
+  ],
+  "type": "object",
+  "properties": {
+    "applicationCount": {
+      "type": "int32",
+      "description": "The total count of applications."
+    },
+    "applications": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApplicationInfoKeyManager"
+      }
+    }
+  }
+}

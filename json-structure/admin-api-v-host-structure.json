@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-v-host-structure.json",
+  "name": "Virtual Host",
+  "description": "VHost schema from WSO2 API Manager",
+  "required": [
+    "host"
+  ],
+  "type": "object",
+  "properties": {
+    "host": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "httpContext": {
+      "maxLength": 255,
+      "minLength": 0,
+      "pattern": "^\\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])*$",
+      "type": "string",
+      "example": "pets"
+    },
+    "httpPort": {
+      "type": "int32",
+      "example": 80
+    },
+    "httpsPort": {
+      "type": "int32",
+      "example": 443
+    },
+    "wsPort": {
+      "type": "int32",
+      "example": 9099
+    },
+    "wsHost": {
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "wssPort": {
+      "type": "int32",
+      "example": 8099
+    },
+    "wssHost": {
+      "type": "string",
+      "example": "mg.wso2.com"
+    }
+  }
+}

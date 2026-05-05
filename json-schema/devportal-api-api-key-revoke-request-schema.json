@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-key-revoke-request-schema.json",
+  "title": "API Key revoke request object",
+  "description": "APIKeyRevokeRequest schema from WSO2 API Manager",
+  "type": "object",
+  "oneOf": [
+    {
+      "required": [
+        "apikey"
+      ]
+    },
+    {
+      "required": [
+        "keyUUID"
+      ]
+    }
+  ],
+  "properties": {
+    "apikey": {
+      "type": "string",
+      "description": "API Key to revoke",
+      "example": "eyJoZWxsbyI6IndvcmxkIn0=.eyJ3c28yIjoiYXBpbSJ9.eyJ3c28yIjoic2lnbmF0dXJlIn0="
+    },
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    }
+  }
+}

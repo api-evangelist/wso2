@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-artifact-compliance-details-schema.json",
+  "title": "ArtifactComplianceDetails",
+  "description": "Provides compliance details of an artifact.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the artifact.",
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the artifact's governance compliance.",
+      "enum": [
+        "COMPLIANT",
+        "NON-COMPLIANT",
+        "NOT-APPLICABLE",
+        "PENDING"
+      ],
+      "example": "COMPLIANT"
+    },
+    "info": {
+      "$ref": "#/components/schemas/ArtifactInfo"
+    },
+    "governedPolicies": {
+      "type": "array",
+      "description": "List of policies under which the artifact was governed.",
+      "items": {
+        "$ref": "#/components/schemas/PolicyAdherenceWithRulesets"
+      }
+    }
+  }
+}

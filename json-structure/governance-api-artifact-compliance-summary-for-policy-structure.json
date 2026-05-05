@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/governance-api-artifact-compliance-summary-for-policy-structure.json",
+  "name": "ArtifactComplianceSummaryForPolicy",
+  "description": "Summary of compliance of artifacts evaluated against a specific policy.",
+  "type": "object",
+  "properties": {
+    "compliant": {
+      "type": "int32",
+      "description": "Number of compliant artifacts.",
+      "example": 6
+    },
+    "nonCompliant": {
+      "type": "int32",
+      "description": "Number of non-compliant artifacts.",
+      "example": 4
+    }
+  }
+}

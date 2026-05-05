@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-configuration-constraint-structure.json",
+  "name": "Application Configuration Constraint",
+  "description": "ApplicationConfigurationConstraint schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "example": "RANGE"
+    },
+    "value": {
+      "type": "object",
+      "properties": {},
+      "example": "{ \"min\": 60, \"max\": 3600 }"
+    }
+  }
+}

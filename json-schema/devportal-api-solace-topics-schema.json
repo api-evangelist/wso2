@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-solace-topics-schema.json",
+  "title": "SolaceTopics",
+  "description": "SolaceTopics schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "publishTopics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscribeTopics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

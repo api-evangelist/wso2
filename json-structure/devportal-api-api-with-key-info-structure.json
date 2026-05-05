@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-api-with-key-info-structure.json",
+  "name": "API with API Key",
+  "description": "APIWithKeyInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "keyName": {
+      "type": "string",
+      "description": "API Key name",
+      "example": "Test_Key"
+    },
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    },
+    "apiName": {
+      "type": "string",
+      "description": "API name",
+      "example": "NotificationAPI"
+    },
+    "apiUUID": {
+      "type": "string",
+      "description": "The UUID of the associated API"
+    }
+  }
+}

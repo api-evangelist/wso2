@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-key-manager-structure.json",
+  "name": "Key Manager",
+  "description": "KeyManager schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string",
+      "example": "WSO2 Identity Server"
+    },
+    "displayName": {
+      "maxLength": 100,
+      "type": "string",
+      "description": "display name of Key Manager to  show in UI\n",
+      "example": "WSO2 Identity Server"
+    },
+    "type": {
+      "maxLength": 45,
+      "minLength": 1,
+      "type": "string",
+      "example": "WSO2-IS"
+    },
+    "description": {
+      "maxLength": 256,
+      "type": "string",
+      "example": "This is a key manager for Developers"
+    },
+    "wellKnownEndpoint": {
+      "type": "string",
+      "description": "Well-Known Endpoint of Identity Provider.\n",
+      "example": ""
+    },
+    "introspectionEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/introspect",
+      "deprecated": true
+    },
+    "clientRegistrationEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/keymanager-operations/dcr/register",
+      "deprecated": true
+    },
+    "tokenEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/token",
+      "deprecated": true
+    },
+    "displayTokenEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/token",
+      "deprecated": true
+    },
+    "revokeEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/revoke",
+      "deprecated": true
+    },
+    "displayRevokeEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/revoke",
+      "deprecated": true
+    },
+    "userInfoEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/userinfo?schema=openid",
+      "deprecated": true
+    },
+    "authorizeEndpoint": {
+      "type": "string",
+      "example": "https://localhost:9444/oauth2/authorize",
+      "deprecated": true
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/KeyManagerEndpoint"
+      }
+    },
+    "certificates": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "JWKS",
+            "PEM"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "issuer": {
+      "type": "string",
+      "example": "https://localhost:9444/services"
+    },
+    "alias": {
+      "type": "string",
+      "description": "The alias of Identity Provider.\nIf the tokenType is EXCHANGED, the alias value should be inclusive in the audience values of the JWT token\n",
+      "example": "https://localhost:9443/oauth2/token"
+    },
+    "scopeManagementEndpoint": {
+      "type": "string",
+      "example": "https://wso2is.com:9444/api/identity/oauth2/v1.0/scopes",
+      "deprecated": true
+    },
+    "availableGrantTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "client_credentials"
+      }
+    },
+    "enableTokenGeneration": {
+      "type": "boolean",
+      "example": true
+    },
+    "enableTokenEncryption": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableTokenHashing": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableMapOAuthConsumerApps": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableOAuthAppCreation": {
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "enableSelfValidationJWT": {
+      "type": "boolean",
+      "example": true,
+      "default": true
+    },
+    "claimMapping": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ClaimMappingEntry"
+      }
+    },
+    "consumerKeyClaim": {
+      "type": "string",
+      "example": "azp"
+    },
+    "scopesClaim": {
+      "type": "string",
+      "example": "scp"
+    },
+    "tokenValidation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenValidation"
+      }
+    },
+    "enabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "global": {
+      "type": "boolean",
+      "example": true
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "example": {
+        "self_validate_jwt": true,
+        "Username": "admin",
+        "Password": "admin"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "permissionType": {
+          "type": "string",
+          "example": "ALLOW",
+          "default": "PUBLIC",
+          "enum": [
+            "PUBLIC",
+            "ALLOW",
+            "DENY"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Internal/subscriber"
+          }
+        }
+      }
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.",
+      "example": "EXCHANGED",
+      "default": "DIRECT",
+      "enum": [
+        "EXCHANGED",
+        "DIRECT",
+        "BOTH"
+      ]
+    },
+    "allowedOrganizations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

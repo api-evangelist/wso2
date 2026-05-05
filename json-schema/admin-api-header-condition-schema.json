@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-header-condition-schema.json",
+  "title": "HTTP Header based throttling condition",
+  "description": "HeaderCondition schema from WSO2 API Manager",
+  "required": [
+    "headerName",
+    "headerValue"
+  ],
+  "type": "object",
+  "properties": {
+    "headerName": {
+      "type": "string",
+      "description": "Name of the header"
+    },
+    "headerValue": {
+      "type": "string",
+      "description": "Value of the header"
+    }
+  }
+}

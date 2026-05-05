@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-marketplace-assistant-request-structure.json",
+  "name": "MarketplaceAssistantRequest",
+  "description": "MarketplaceAssistantRequest schema from WSO2 API Manager",
+  "required": [
+    "query",
+    "history"
+  ],
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "natural langugae query given by the user.",
+      "example": "Hi"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ChatMessage"
+      }
+    }
+  }
+}

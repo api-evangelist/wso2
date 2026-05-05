@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-create-platform-gateway-request-structure.json",
+  "name": "Create Platform Gateway Request",
+  "description": "Request body for creating a platform gateway (name, displayName, vhost as URL, optional properties). Same property name as platform API; type is URL.",
+  "required": [
+    "name",
+    "displayName",
+    "vhost"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "URL-friendly gateway identifier (lowercase alphanumeric with hyphens, unique per organization)",
+      "example": "prod-gateway-01"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Human-readable gateway name",
+      "example": "Production Gateway 01"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1023,
+      "description": "Optional description"
+    },
+    "vhost": {
+      "type": "uri",
+      "description": "Gateway URL (e.g. https://mg.example.com:9443). Same name as platform API; type is URL. Server persists host internally.",
+      "example": "https://mg.wso2.com"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom key-value properties for the gateway",
+      "example": {
+        "region": "us-west",
+        "tier": "premium"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Gateway visibility permissions configuration",
+      "properties": {
+        "permissionType": {
+          "type": "string",
+          "enum": [
+            "PUBLIC",
+            "ALLOW",
+            "DENY"
+          ],
+          "default": "PUBLIC",
+          "description": "Permission type for gateway visibility:\n- PUBLIC: Gateway is visible to all users\n- ALLOW: Gateway is visible only to specified roles\n- DENY: Gateway is hidden from specified roles\n"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of roles for ALLOW/DENY permission types",
+          "example": [
+            "admin",
+            "publisher"
+          ]
+        }
+      },
+      "example": {
+        "permissionType": "ALLOW",
+        "roles": [
+          "admin",
+          "publisher"
+        ]
+      }
+    }
+  }
+}

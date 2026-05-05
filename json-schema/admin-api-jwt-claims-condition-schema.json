@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-jwt-claims-condition-schema.json",
+  "title": "JWT claim attibute based throttling condition",
+  "description": "JWTClaimsCondition schema from WSO2 API Manager",
+  "required": [
+    "attribute",
+    "claimUrl"
+  ],
+  "type": "object",
+  "properties": {
+    "claimUrl": {
+      "type": "string",
+      "description": "JWT claim URL"
+    },
+    "attribute": {
+      "type": "string",
+      "description": "Attribute to be matched"
+    }
+  }
+}

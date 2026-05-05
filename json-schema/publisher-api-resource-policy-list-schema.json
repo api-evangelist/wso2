@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-resource-policy-list-schema.json",
+  "title": "Resource policy List",
+  "description": "ResourcePolicyList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ResourcePolicyInfo"
+      }
+    },
+    "count": {
+      "type": "integer",
+      "description": "Number of policy resources returned.\n",
+      "example": 1
+    }
+  }
+}

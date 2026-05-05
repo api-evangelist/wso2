@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/service-catalog-api-settings-structure.json",
+  "name": "SettingsDTO",
+  "description": "Settings schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "service_catalog:service_view"
+      }
+    }
+  }
+}

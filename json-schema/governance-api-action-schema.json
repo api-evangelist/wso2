@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-action-schema.json",
+  "title": "Action",
+  "description": "Action to be taken when a governance policy is violated.",
+  "type": "object",
+  "properties": {
+    "state": {
+      "type": "string",
+      "description": "The state of the artifact to which the action is linked to.",
+      "enum": [
+        "API_CREATE",
+        "API_UPDATE",
+        "API_DEPLOY",
+        "API_PUBLISH"
+      ],
+      "example": "API_DEPLOY",
+      "x-enum-varnames": [
+        "API_CREATE",
+        "API_UPDATE",
+        "API_DEPLOY",
+        "API_PUBLISH"
+      ]
+    },
+    "ruleSeverity": {
+      "type": "string",
+      "description": "The severity of the rule to which the action is linked to.",
+      "enum": [
+        "ERROR",
+        "WARN",
+        "INFO"
+      ],
+      "example": "ERROR"
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of action to be taken when a governance policy is violated in the given state withe given rule severity.",
+      "enum": [
+        "BLOCK",
+        "NOTIFY"
+      ],
+      "example": "BLOCK"
+    }
+  }
+}

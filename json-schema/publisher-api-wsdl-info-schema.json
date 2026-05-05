@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-wsdl-info-schema.json",
+  "title": "WSDL information of the API. This is only available if the API is a SOAP API.",
+  "description": "WSDLInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Indicates whether the WSDL is a single WSDL or an archive in ZIP format",
+      "enum": [
+        "WSDL",
+        "ZIP"
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-key-manager-application-configuration-schema.json",
+  "title": "Key Manager application Configuration",
+  "description": "KeyManagerApplicationConfiguration schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "consumer_key"
+    },
+    "label": {
+      "type": "string",
+      "example": "Consumer Key"
+    },
+    "type": {
+      "type": "string",
+      "example": "select"
+    },
+    "required": {
+      "type": "boolean",
+      "example": true
+    },
+    "mask": {
+      "type": "boolean",
+      "example": true
+    },
+    "multiple": {
+      "type": "boolean",
+      "example": true
+    },
+    "tooltip": {
+      "type": "string",
+      "example": "Enter username to connect to key manager"
+    },
+    "default": {
+      "type": "object",
+      "properties": {},
+      "example": "admin"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "constraint": {
+      "$ref": "#/components/schemas/ApplicationConfigurationConstraint"
+    }
+  }
+}

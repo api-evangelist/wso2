@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-query-parameter-condition-schema.json",
+  "title": "Query parameter based throttling condition",
+  "description": "QueryParameterCondition schema from WSO2 API Manager",
+  "required": [
+    "parameterName",
+    "parameterValue"
+  ],
+  "type": "object",
+  "properties": {
+    "parameterName": {
+      "type": "string",
+      "description": "Name of the query parameter"
+    },
+    "parameterValue": {
+      "type": "string",
+      "description": "Value of the query parameter to be matched"
+    }
+  }
+}

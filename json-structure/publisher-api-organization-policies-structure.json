@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-organization-policies-structure.json",
+  "name": "Organization based Subscription Policies",
+  "description": "OrganizationPolicies schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "organizationID"
+  ],
+  "properties": {
+    "organizationID": {
+      "type": "string",
+      "example": "36c87e00-57f0-4000-9f97-b379acc4e577"
+    },
+    "policies": {
+      "type": "array",
+      "example": [
+        "Silver",
+        "Gold",
+        "Unlimited"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

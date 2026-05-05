@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-role-alias-schema.json",
+  "title": "Role alias",
+  "description": "RoleAlias schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "The original role",
+      "example": "Internal/subscriber"
+    },
+    "aliases": {
+      "type": "array",
+      "description": "The role mapping for role alias",
+      "example": [
+        "Subscriber",
+        "Internal/subscriber"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

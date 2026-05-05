@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-scope-structure.json",
+  "name": "Scope",
+  "description": "Scope schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the Scope. Valid only for shared scopes.\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "description": "name of Scope\n",
+      "example": "apim:api_view"
+    },
+    "displayName": {
+      "maxLength": 255,
+      "type": "string",
+      "description": "display name of Scope\n",
+      "example": "api_view"
+    },
+    "description": {
+      "maxLength": 512,
+      "type": "string",
+      "description": "description of Scope\n",
+      "example": "This Scope can used to view Apis"
+    },
+    "bindings": {
+      "type": "array",
+      "description": "role bindings list of the Scope\n",
+      "example": [
+        "admin",
+        "Internal/creator",
+        "Internal/publisher"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "usageCount": {
+      "type": "int32",
+      "description": "usage count of Scope\n",
+      "readOnly": true,
+      "example": 3
+    }
+  }
+}

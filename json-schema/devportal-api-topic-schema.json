@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-topic-schema.json",
+  "title": "Topic",
+  "description": "Topic schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "name": {
+      "type": "string",
+      "example": "orderBooks"
+    },
+    "type": {
+      "type": "string",
+      "example": "publisher"
+    }
+  }
+}

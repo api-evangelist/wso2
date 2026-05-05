@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-tag-structure.json",
+  "name": "Tag",
+  "description": "Tag schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "example": "tag1"
+    },
+    "count": {
+      "type": "int32",
+      "example": 5
+    }
+  }
+}

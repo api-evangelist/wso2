@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-scope-info-schema.json",
+  "title": "API Scope info object with scope details",
+  "description": "ScopeInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "example": "admin_scope"
+    },
+    "name": {
+      "type": "string",
+      "example": "admin scope"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Allowed roles for the scope",
+      "example": [
+        "manager",
+        "developer"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the scope"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devops-api-correlation-component-structure.json",
+  "name": "Correlation Component INFO object",
+  "description": "CorrelationComponent schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "http"
+    },
+    "enabled": {
+      "type": "string",
+      "example": true
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CorrelationComponentProperty"
+      }
+    }
+  }
+}

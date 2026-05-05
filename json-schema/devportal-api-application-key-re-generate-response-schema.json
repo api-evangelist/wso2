@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-application-key-re-generate-response-schema.json",
+  "title": "Application key details after re generating consumer secret",
+  "description": "ApplicationKeyReGenerateResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "consumerKey": {
+      "type": "string",
+      "description": "The consumer key associated with the application, used to indetify the client",
+      "example": "vYDoc9s7IgAFdkSyNDaswBX7ejoa"
+    },
+    "consumerSecret": {
+      "type": "string",
+      "description": "The client secret that is used to authenticate the client with the authentication server",
+      "example": "TIDlOFkpzB7WjufO3OJUhy1fsvAa"
+    }
+  }
+}

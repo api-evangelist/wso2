@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-api-info-structure.json",
+  "name": "API info object with basic API details",
+  "description": "APIInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the API.",
+      "example": "PizzaShackAPI"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "PizzaShack API",
+      "description": "Display name of the API.\nThis is the name that will be displayed in the Publisher and DevPortal.\nIf not provided, the name will be used as the display name.\n"
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of the API",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "description": "The provider of the API",
+      "example": "admin"
+    }
+  }
+}

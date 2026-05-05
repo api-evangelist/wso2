@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-graph-ql-query-complexity-info-schema.json",
+  "title": "GraphQL Query Complexity Info",
+  "description": "GraphQLQueryComplexityInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GraphQLCustomComplexityInfo"
+      }
+    }
+  }
+}

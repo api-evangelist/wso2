@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-chat-message-structure.json",
+  "name": "ChatMessage",
+  "description": "ChatMessage schema from WSO2 API Manager",
+  "required": [
+    "content",
+    "role"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "user or assistant role of a chat message.",
+      "example": "assistant"
+    },
+    "content": {
+      "type": "string",
+      "description": "content of the message.",
+      "example": "Hi, How can I help you?"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-gateway-policy-mapping-info-structure.json",
+  "name": "Gateway Policy Mapping Information",
+  "description": "GatewayPolicyMappingInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "121223q41-24141-124124124-12414"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description about the policy mapping",
+      "example": "Set header value to the request with item type and response header set with served server name"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Meaningful name to identify the policy mapping",
+      "example": "item_type_setter"
+    }
+  }
+}

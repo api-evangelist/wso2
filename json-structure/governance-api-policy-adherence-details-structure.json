@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/governance-api-policy-adherence-details-structure.json",
+  "name": "PolicyAdherenceDetails",
+  "description": "Provides adherence details of a policy.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the policy.",
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the policy.",
+      "example": "Policy1"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the policy's governance compliance.",
+      "enum": [
+        "FOLLOWED",
+        "VIOLATED",
+        "UNAPPLIED"
+      ],
+      "example": "FOLLOWED"
+    },
+    "evaluatedArtifacts": {
+      "type": "array",
+      "description": "Compliance status of the artifacts evaluated against the policy.",
+      "items": {
+        "$ref": "#/components/schemas/ArtifactComplianceForPolicy"
+      }
+    }
+  }
+}

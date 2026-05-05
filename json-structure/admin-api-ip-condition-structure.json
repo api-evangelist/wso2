@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-ip-condition-structure.json",
+  "name": "IP based throttling condition",
+  "description": "IPCondition schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "ipConditionType": {
+      "type": "string",
+      "description": "Type of the IP condition. Allowed values are \"IPRANGE\" and \"IPSPECIFIC\"",
+      "enum": [
+        "IPRANGE",
+        "IPSPECIFIC"
+      ]
+    },
+    "specificIP": {
+      "type": "string",
+      "description": "Specific IP when \"IPSPECIFIC\" is used as the ipConditionType"
+    },
+    "startingIP": {
+      "type": "string",
+      "description": "Staring IP when \"IPRANGE\" is used as the ipConditionType"
+    },
+    "endingIP": {
+      "type": "string",
+      "description": "Ending IP when \"IPRANGE\" is used as the ipConditionType"
+    }
+  }
+}

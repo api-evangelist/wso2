@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-design-assistant-api-payload-response-structure.json",
+  "name": "DesignAssistantAPIPayloadResponse",
+  "description": "DesignAssistantAPIPayloadResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "generated_payload": {
+      "type": "string"
+    }
+  }
+}

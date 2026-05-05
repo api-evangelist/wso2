@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-key-manager-well-known-response-structure.json",
+  "name": "Key Manager Well-Known Response.",
+  "description": "KeyManagerWellKnownResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "valid": {
+      "type": "boolean",
+      "example": true,
+      "default": false
+    },
+    "value": {
+      "$ref": "#/components/schemas/KeyManager"
+    }
+  }
+}

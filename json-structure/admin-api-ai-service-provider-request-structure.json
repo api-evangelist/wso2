@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-ai-service-provider-request-structure.json",
+  "name": "AIServiceProvider",
+  "description": "AIServiceProviderRequest schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "apiVersion",
+    "configurations",
+    "apiDefinition"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "OpenAI"
+    },
+    "apiVersion": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string",
+      "example": "OpenAI LLM"
+    },
+    "multipleModelProviderSupport": {
+      "type": "string",
+      "description": "Indicates whether the AI Service Provider supports multiple model providers.\nIf true, the AI Service Provider can support multiple model providers.\nIf false, the AI Service Provider supports only one model provider.\n",
+      "default": "false"
+    },
+    "configurations": {
+      "type": "string",
+      "description": "LLM Provider configurations"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "OpenAPI specification",
+      "format": "binary"
+    },
+    "modelProviders": {
+      "type": "string"
+    }
+  }
+}

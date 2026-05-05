@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-content-publish-status-response-schema.json",
+  "title": "ContentPublishStatusResponse",
+  "description": "ContentPublishStatusResponse schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the org-theme"
+    },
+    "published": {
+      "type": "boolean",
+      "description": "Publish status of the org-theme"
+    }
+  }
+}

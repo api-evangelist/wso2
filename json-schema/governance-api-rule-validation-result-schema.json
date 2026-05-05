@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-rule-validation-result-schema.json",
+  "title": "RuleValidationResult",
+  "description": "Result of the rule validation.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the rule.",
+      "example": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the rule.",
+      "example": "API Name Rule"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the rule validation.",
+      "enum": [
+        "PASSED",
+        "FAILED"
+      ],
+      "example": "FAILED"
+    },
+    "severity": {
+      "type": "string",
+      "description": "Severity level of the rule violation.",
+      "enum": [
+        "ERROR",
+        "WARN",
+        "INFO"
+      ],
+      "example": "WARN"
+    },
+    "violatedPath": {
+      "type": "object",
+      "description": "Path in the artifact where the rule is violated.",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path in the artifact where the rule is violated.",
+          "example": "info.title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the path.",
+          "example": "API name"
+        }
+      }
+    },
+    "message": {
+      "type": "string",
+      "description": "Message to be displayed when the rule is violated.",
+      "example": "API name can not be too long or short"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the rule.",
+      "example": "API name should be between 5 to 50 characters"
+    }
+  }
+}

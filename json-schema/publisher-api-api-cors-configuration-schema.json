@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-cors-configuration-schema.json",
+  "title": "APICorsConfiguration",
+  "description": "CORS configuration for the API\n",
+  "type": "object",
+  "properties": {
+    "corsConfigurationEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "accessControlAllowOrigins": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessControlAllowCredentials": {
+      "type": "boolean",
+      "default": false
+    },
+    "accessControlAllowHeaders": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessControlAllowMethods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

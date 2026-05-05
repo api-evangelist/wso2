@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/service-catalog-api-service-list-structure.json",
+  "name": "Paginated List of Services in Service Catalog",
+  "description": "ServiceList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "name": "List of Services in Service Catalog",
+      "items": {
+        "$ref": "#/components/schemas/Service"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

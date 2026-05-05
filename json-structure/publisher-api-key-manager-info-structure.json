@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-key-manager-info-structure.json",
+  "name": "Key Manager Info",
+  "description": "KeyManagerInfo schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "WSO2 IS"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "display name of Keymanager\n",
+      "example": "Keymanager1"
+    },
+    "type": {
+      "type": "string",
+      "example": "IS"
+    },
+    "description": {
+      "type": "string",
+      "example": "This is a key manager for Developers"
+    },
+    "enabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

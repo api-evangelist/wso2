@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-api-operations-structure.json",
+  "name": "Operation",
+  "description": "APIOperations schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "apioperation"
+    },
+    "target": {
+      "type": "string"
+    },
+    "verb": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-custom-url-info-structure.json",
+  "name": "Custom url information",
+  "description": "The custom url information of the tenant domain",
+  "type": "object",
+  "properties": {
+    "tenantDomain": {
+      "type": "string",
+      "example": "carbon.super"
+    },
+    "tenantAdminUsername": {
+      "type": "string",
+      "example": "john@foo.com"
+    },
+    "enabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "devPortal": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "example": "http://example.com"
+        }
+      }
+    }
+  }
+}

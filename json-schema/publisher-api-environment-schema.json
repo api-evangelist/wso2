@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-environment-schema.json",
+  "title": "Environment",
+  "description": "Environment schema from WSO2 API Manager",
+  "required": [
+    "id",
+    "name",
+    "serverUrl",
+    "showInApiConsole",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "example": "default"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "Default"
+    },
+    "type": {
+      "type": "string",
+      "default": "hybrid",
+      "example": "hybrid"
+    },
+    "gatewayType": {
+      "type": "string",
+      "example": "Regular",
+      "default": "Regular"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "READ_ONLY",
+        "READ_WRITE",
+        "WRITE_ONLY"
+      ],
+      "example": "READ_WRITE",
+      "default": "WRITE_ONLY",
+      "description": "The mode of the environment. This indicates whether the environment is in read-only or read-write mode.\n**READ_ONLY:** The environment is in read-only mode. API cannot be deployed, only discovery is possible.\n**READ_WRITE:** The environment is in read-write mode. APIs can be deployed and discovered.\n**WRITE_ONLY:** The environment is in write-only mode/ APIs only can be deployed.\n"
+    },
+    "serverUrl": {
+      "type": "string",
+      "example": "https://localhost:9443/services/"
+    },
+    "provider": {
+      "type": "string",
+      "example": "wso2"
+    },
+    "showInApiConsole": {
+      "type": "boolean",
+      "example": true
+    },
+    "vhosts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/VHost"
+      }
+    },
+    "endpointURIs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/GatewayEnvironmentProtocolURI"
+      }
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AdditionalProperty"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "permissionType": {
+          "type": "string",
+          "example": "ALLOW",
+          "default": "PUBLIC",
+          "enum": [
+            "PUBLIC",
+            "ALLOW",
+            "DENY"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Internal/everyone"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-v-host-schema.json",
+  "title": "Virtual Host",
+  "description": "VHost schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "host": {
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "httpContext": {
+      "type": "string",
+      "example": "pets"
+    },
+    "httpPort": {
+      "type": "integer",
+      "example": 80
+    },
+    "httpsPort": {
+      "type": "integer",
+      "example": 443
+    },
+    "wsPort": {
+      "type": "integer",
+      "example": 9099
+    },
+    "wsHost": {
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "wssPort": {
+      "type": "integer",
+      "example": 8099
+    },
+    "wssHost": {
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "websubHttpPort": {
+      "type": "integer",
+      "example": 9021
+    },
+    "websubHttpsPort": {
+      "type": "integer",
+      "example": 8021
+    }
+  }
+}

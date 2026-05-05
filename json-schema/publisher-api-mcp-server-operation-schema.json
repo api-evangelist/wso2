@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-mcp-server-operation-schema.json",
+  "title": "MCPServerOperation",
+  "description": "MCPServerOperation schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "postapiresource"
+    },
+    "target": {
+      "type": "string",
+      "example": "listBooks"
+    },
+    "feature": {
+      "type": "string",
+      "description": "Operation type for MCP Server (e.g., TOOL)",
+      "enum": [
+        "TOOL"
+      ]
+    },
+    "authType": {
+      "type": "string",
+      "example": "Application & Application User",
+      "default": "Any"
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "scopes": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "payloadSchema": {
+      "type": "string",
+      "example": ""
+    },
+    "uriMapping": {
+      "type": "string",
+      "example": ""
+    },
+    "schemaDefinition": {
+      "type": "string",
+      "example": ""
+    },
+    "description": {
+      "type": "string",
+      "example": "this is an operation of get orderId"
+    },
+    "operationPolicies": {
+      "$ref": "#/components/schemas/APIOperationPolicies"
+    },
+    "backendOperationMapping": {
+      "$ref": "#/components/schemas/BackendOperationMapping"
+    },
+    "apiOperationMapping": {
+      "$ref": "#/components/schemas/APIOperationMapping"
+    }
+  }
+}

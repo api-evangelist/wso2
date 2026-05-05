@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-commenter-info-structure.json",
+  "name": "CommenterInfo",
+  "description": "CommenterInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "example": "John"
+    },
+    "lastName": {
+      "type": "string",
+      "example": "David"
+    },
+    "fullName": {
+      "type": "string",
+      "example": "John David"
+    }
+  }
+}

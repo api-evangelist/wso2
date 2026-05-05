@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-content-publish-status-structure.json",
+  "name": "ContentPublishStatus",
+  "description": "ContentPublishStatus schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "PUBLISH",
+        "UNPUBLISH"
+      ]
+    }
+  },
+  "example": {
+    "action": "PUBLISH"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-custom-attribute-schema.json",
+  "title": "Name-Value pair",
+  "description": "CustomAttribute schema from WSO2 API Manager",
+  "required": [
+    "name",
+    "value"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the custom attribute",
+      "example": "customAttr1"
+    },
+    "value": {
+      "type": "string",
+      "description": "Value of the custom attribute",
+      "example": "value1"
+    }
+  }
+}

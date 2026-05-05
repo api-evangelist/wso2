@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-throttle-limit-schema.json",
+  "title": "Throttle Limit",
+  "description": "ThrottleLimit schema from WSO2 API Manager",
+  "required": [
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of the throttling limit. Allowed values are \"REQUESTCOUNTLIMIT\", \"BANDWIDTHLIMIT\", \"EVENTCOUNTLIMIT\"\nand \"AIAPIQUOTALIMIT\".\nPlease see schemas of \"RequestCountLimit\", \"BandwidthLimit\", \"EventCountLimit\" and \"AIAPIQuotaLimit\" \nthrottling limit types in Definitions section.\n",
+      "example": "REQUESTCOUNTLIMIT",
+      "enum": [
+        "REQUESTCOUNTLIMIT",
+        "BANDWIDTHLIMIT",
+        "EVENTCOUNTLIMIT",
+        "AIAPIQUOTALIMIT"
+      ]
+    },
+    "requestCount": {
+      "$ref": "#/components/schemas/RequestCountLimit"
+    },
+    "bandwidth": {
+      "$ref": "#/components/schemas/BandwidthLimit"
+    },
+    "eventCount": {
+      "$ref": "#/components/schemas/EventCountLimit"
+    },
+    "aiApiQuota": {
+      "$ref": "#/components/schemas/AIAPIQuotaLimit"
+    }
+  }
+}

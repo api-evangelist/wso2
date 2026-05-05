@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-gateway-instance-schema.json",
+  "title": "Gateway instance in the gateway environment",
+  "description": "GatewayInstance schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "gatewayId"
+  ],
+  "properties": {
+    "gatewayId": {
+      "type": "string",
+      "example": "Env1_1372344"
+    },
+    "lastActive": {
+      "type": "string",
+      "example": "2025-06-26T06:47:50Z"
+    },
+    "status": {
+      "type": "string",
+      "example": "ACTIVE",
+      "default": "ACTIVE",
+      "enum": [
+        "ACTIVE",
+        "EXPIRED"
+      ]
+    }
+  }
+}

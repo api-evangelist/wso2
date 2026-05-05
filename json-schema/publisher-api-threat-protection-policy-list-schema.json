@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-threat-protection-policy-list-schema.json",
+  "title": "Threat Protection Policy List",
+  "description": "ThreatProtectionPolicyList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ThreatProtectionPolicy"
+      }
+    }
+  }
+}

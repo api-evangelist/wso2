@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-monetization-info-schema.json",
+  "title": "API monetization object",
+  "description": "APIMonetizationInfo schema from WSO2 API Manager",
+  "required": [
+    "enabled"
+  ],
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Flag to indicate the monetization status",
+      "example": true
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Map of custom properties related to monetization"
+    }
+  }
+}

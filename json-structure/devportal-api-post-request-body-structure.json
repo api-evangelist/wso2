@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-post-request-body-structure.json",
+  "name": "Post request body",
+  "description": "PostRequestBody schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string",
+      "maxLength": 512,
+      "description": "Content of the comment\n",
+      "example": "This is a comment"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the comment\n",
+      "example": "general"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

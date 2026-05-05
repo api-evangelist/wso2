@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/service-catalog-api-service-schema-structure.json",
+  "name": "The Service Schema object",
+  "description": "ServiceSchema schema from WSO2 API Manager",
+  "type": "object",
+  "required": [
+    "serviceMetadata"
+  ],
+  "properties": {
+    "serviceMetadata": {
+      "$ref": "#/components/schemas/Service"
+    },
+    "definitionFile": {
+      "type": "string",
+      "format": "binary"
+    },
+    "inlineContent": {
+      "type": "string",
+      "description": "Inline content of the document"
+    }
+  }
+}

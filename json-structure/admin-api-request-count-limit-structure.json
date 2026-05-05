@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-request-count-limit-structure.json",
+  "name": "Request Count Limit object",
+  "description": "RequestCountLimit schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottleLimitBase"
+    },
+    {
+      "required": [
+        "requestCount"
+      ],
+      "type": "object",
+      "properties": {
+        "requestCount": {
+          "type": "int64",
+          "description": "Maximum number of requests allowed",
+          "example": 30
+        }
+      }
+    }
+  ]
+}

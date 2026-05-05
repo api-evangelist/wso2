@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-workflow-info-schema.json",
+  "title": "Workflow info object with basic workflow details",
+  "description": "WorkflowInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "workflowType": {
+      "type": "string",
+      "description": "Type of the Workflow Request. It shows which type of request is it.\n",
+      "example": "APPLICATION_CREATION",
+      "enum": [
+        "APPLICATION_CREATION",
+        "SUBSCRIPTION_CREATION",
+        "USER_SIGNUP",
+        "APPLICATION_REGISTRATION_PRODUCTION",
+        "APPLICATION_REGISTRATION_SANDBOX",
+        "APPLICATION_DELETION",
+        "API_STATE",
+        "API_PRODUCT_STATE",
+        "SUBSCRIPTION_DELETION",
+        "SUBSCRIPTION_UPDATE",
+        "REVISION_DEPLOYMENT",
+        "APPLICATION_UPDATE"
+      ]
+    },
+    "workflowStatus": {
+      "type": "string",
+      "description": "Show the Status of the the workflow request whether it is approved or created.\n",
+      "example": "APPROVED",
+      "enum": [
+        "APPROVED",
+        "CREATED"
+      ]
+    },
+    "createdTime": {
+      "type": "string",
+      "description": "Time of the the workflow request created.\n",
+      "example": "2020-02-10 10:10:19.704"
+    },
+    "updatedTime": {
+      "type": "string",
+      "description": "Time of the the workflow request updated.\n",
+      "example": "2020-02-10 10:10:19.704"
+    },
+    "referenceId": {
+      "type": "string",
+      "description": "Workflow external reference is used to identify the workflow requests uniquely.\n",
+      "example": "5871244b-d6f3-466e-8995-8accd1e64303"
+    },
+    "properties": {
+      "type": "object",
+      "properties": {}
+    },
+    "description": {
+      "type": "string",
+      "description": "description is a message with basic details about the workflow request.\n",
+      "example": "Approve application [APP1] creation request from application creator - admin with throttling tier - 10MinPer"
+    }
+  }
+}

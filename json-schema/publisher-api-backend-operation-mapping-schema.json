@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-backend-operation-mapping-schema.json",
+  "title": "API Operation Backend Mapping",
+  "description": "BackendOperationMapping schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "backendId": {
+      "type": "string",
+      "description": "Backend API UUID",
+      "example": "a29ff7d8-8057-4e88-94a4-f583dd968c6a"
+    },
+    "backendOperation": {
+      "$ref": "#/components/schemas/BackendOperation"
+    }
+  }
+}

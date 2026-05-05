@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-api-max-tps-structure.json",
+  "name": "APIMaxTps",
+  "description": "APIMaxTps schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "production": {
+      "type": "int64",
+      "example": 1000
+    },
+    "productionTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the production.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    },
+    "sandbox": {
+      "type": "int64",
+      "example": 1000
+    },
+    "sandboxTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the sandbox.",
+      "default": "SECOND",
+      "enum": [
+        "SECOND",
+        "MINUTE",
+        "HOUR"
+      ]
+    },
+    "tokenBasedThrottlingConfiguration": {
+      "type": "object",
+      "required": [
+        "isTokenBasedThrottlingEnabled"
+      ],
+      "properties": {
+        "productionMaxPromptTokenCount": {
+          "type": "int64",
+          "description": "Maximum prompt token count for production"
+        },
+        "productionMaxCompletionTokenCount": {
+          "type": "int64",
+          "description": "Maximum completion token count for production"
+        },
+        "productionMaxTotalTokenCount": {
+          "type": "int64",
+          "description": "Maximum total token count for production"
+        },
+        "sandboxMaxPromptTokenCount": {
+          "type": "int64",
+          "description": "Maximum prompt token count for sandbox"
+        },
+        "sandboxMaxCompletionTokenCount": {
+          "type": "int64",
+          "description": "Maximum completion token count for sandbox"
+        },
+        "sandboxMaxTotalTokenCount": {
+          "type": "int64",
+          "description": "Maximum total token count for sandbox"
+        },
+        "isTokenBasedThrottlingEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether token-based throttling is enabled"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/dcr-api-dcr-result-schema.json",
+  "title": "DCRResult",
+  "description": "DCRResult schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "callbackUrl": {
+      "type": "string",
+      "readOnly": true,
+      "example": "www.example.com"
+    },
+    "clientName": {
+      "type": "string",
+      "readOnly": true,
+      "example": "rest_api_publisher"
+    },
+    "clientId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "fosJTsHQyluahdppkJMFUm6cm3ca"
+    },
+    "clientSecret": {
+      "type": "string",
+      "readOnly": true,
+      "example": "aSF_ljQZ1e7qxiJ9YraG_NGJ9Iwa"
+    },
+    "isSaasApplication": {
+      "type": "string",
+      "readOnly": true,
+      "example": true
+    },
+    "appOwner": {
+      "type": "string",
+      "readOnly": true,
+      "example": "admin"
+    },
+    "jsonString": {
+      "type": "string",
+      "readOnly": true
+    },
+    "jsonAppAttribute": {
+      "type": "string",
+      "readOnly": true
+    },
+    "applicationUUID": {
+      "type": "string",
+      "readOnly": true
+    },
+    "tokenType": {
+      "type": "string",
+      "readOnly": true,
+      "example": "JWT"
+    }
+  }
+}

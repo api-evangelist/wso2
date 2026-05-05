@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/dcr-api-dcr-schema.json",
+  "title": "DCR",
+  "description": "DCR schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "callbackUrl": {
+      "type": "string",
+      "readOnly": true,
+      "example": "www.example.com"
+    },
+    "clientName": {
+      "type": "string",
+      "readOnly": true,
+      "example": "rest_api_publisher"
+    },
+    "owner": {
+      "type": "string",
+      "readOnly": true,
+      "example": "admin"
+    },
+    "grantType": {
+      "type": "string",
+      "readOnly": true,
+      "example": "client_credentials password refresh_token"
+    },
+    "saasApp": {
+      "type": "string",
+      "readOnly": true,
+      "example": true
+    },
+    "tokenType": {
+      "type": "string",
+      "readOnly": true,
+      "example": "JWT"
+    },
+    "userstoreDomainInSubject": {
+      "type": "string",
+      "readOnly": true,
+      "example": true
+    }
+  }
+}

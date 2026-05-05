@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-token-validation-schema.json",
+  "title": "Token handling Configuration",
+  "description": "TokenValidation schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "enable": {
+      "type": "boolean",
+      "example": false,
+      "default": true
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "REFERENCE",
+        "JWT",
+        "CUSTOM"
+      ]
+    },
+    "value": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

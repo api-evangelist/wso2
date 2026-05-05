@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-alerts-subscription-structure.json",
+  "name": "Alerts Subscription",
+  "description": "AlertsSubscription schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "alerts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AlertType"
+      }
+    },
+    "emailList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email",
+        "example": "admin@wso2.com"
+      }
+    }
+  }
+}

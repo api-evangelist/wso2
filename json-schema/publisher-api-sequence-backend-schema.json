@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-sequence-backend-schema.json",
+  "title": "Sequence Backend",
+  "description": "SequenceBackend schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "sequenceId": {
+      "type": "string",
+      "readOnly": true,
+      "example": "943d3002-000c-42d3-a1b9-d6559f8a4d49"
+    },
+    "sequenceName": {
+      "type": "string",
+      "readOnly": true,
+      "example": "943d3002-000c-42d3-a1b9-d6559f8a4d49-SANDBOX"
+    },
+    "sequenceType": {
+      "type": "string",
+      "readOnly": true,
+      "example": "SANDBOX"
+    },
+    "sequence": {
+      "type": "string",
+      "format": "binary",
+      "readOnly": true
+    }
+  }
+}

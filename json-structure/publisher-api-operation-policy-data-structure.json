@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-operation-policy-data-structure.json",
+  "name": "Operation Policy Data",
+  "description": "OperationPolicyData schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "example": "Mediation"
+    },
+    "id": {
+      "type": "string",
+      "example": "121223q41-24141-124124124-12414"
+    },
+    "name": {
+      "type": "string",
+      "example": "removeHeaderPolicy"
+    },
+    "version": {
+      "type": "string",
+      "example": "v1",
+      "default": "v1"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "Remove Header Policy"
+    },
+    "description": {
+      "type": "string",
+      "example": "With this policy, user can add a new header to the request"
+    },
+    "applicableFlows": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "in"
+      }
+    },
+    "supportedGateways": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "Synapse"
+      }
+    },
+    "supportedApiTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      },
+      "description": "Supported API types as an array of strings, or an array of maps\n[HTTP, SOAP] \n[{apiType: HTTP, subType: AI}, {apiType: SOAP}]\n",
+      "example": [
+        "HTTP",
+        "SOAP"
+      ]
+    },
+    "isAPISpecific": {
+      "type": "boolean",
+      "example": true
+    },
+    "md5": {
+      "type": "string",
+      "example": "121223q41-24141-124124124-12414"
+    },
+    "policyAttributes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OperationPolicySpecAttribute"
+      }
+    }
+  }
+}

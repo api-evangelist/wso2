@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-apim-governance-policy-list-schema.json",
+  "title": "APIMGovernancePolicyList",
+  "description": "A list of governance policies.",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of governance policies returned.",
+      "example": 10
+    },
+    "list": {
+      "type": "array",
+      "description": "List of governance policies.",
+      "items": {
+        "$ref": "#/components/schemas/APIMGovernancePolicy"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

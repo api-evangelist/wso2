@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-monetization-usage-publish-info-schema.json",
+  "title": "Usage publish status",
+  "description": "MonetizationUsagePublishInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "state": {
+      "type": "string",
+      "description": "State of usage publish job",
+      "example": "RUNNING"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of usage publish job",
+      "example": "SUCCESSFULL"
+    },
+    "startedTime": {
+      "type": "string",
+      "description": "Timestamp of the started time of the Job",
+      "example": "1599196134000"
+    },
+    "lastPublsihedTime": {
+      "type": "string",
+      "description": "Timestamp of the last published time",
+      "example": "1599196134000"
+    }
+  }
+}

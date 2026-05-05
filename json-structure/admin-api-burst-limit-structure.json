@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-burst-limit-structure.json",
+  "name": "Burst Limit object",
+  "description": "BurstLimit schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "rateLimitCount": {
+      "type": "int32",
+      "description": "Burst control request count",
+      "example": 10
+    },
+    "rateLimitTimeUnit": {
+      "type": "string",
+      "description": "Burst control time unit",
+      "example": "min"
+    }
+  }
+}

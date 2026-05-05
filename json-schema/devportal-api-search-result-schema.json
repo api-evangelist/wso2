@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-search-result-schema.json",
+  "title": "Search Result",
+  "description": "SearchResult schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "TestAPI"
+    },
+    "type": {
+      "type": "string",
+      "example": "API",
+      "enum": [
+        "DOC",
+        "API",
+        "APIProduct",
+        "DEFINITION",
+        "MCP"
+      ]
+    },
+    "transportType": {
+      "type": "string",
+      "description": "Accepted values are HTTP, WS, SOAPTOREST, GRAPHQL"
+    }
+  },
+  "discriminator": {
+    "propertyName": "name"
+  }
+}

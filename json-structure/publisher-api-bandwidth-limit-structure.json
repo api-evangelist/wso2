@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-bandwidth-limit-structure.json",
+  "name": "Bandwidth Limit object",
+  "description": "BandwidthLimit schema from WSO2 API Manager",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ThrottleLimitBase"
+    },
+    {
+      "required": [
+        "dataAmount",
+        "dataUnit"
+      ],
+      "type": "object",
+      "properties": {
+        "dataAmount": {
+          "type": "int64",
+          "description": "Amount of data allowed to be transfered",
+          "example": 1000
+        },
+        "dataUnit": {
+          "type": "string",
+          "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"",
+          "example": "KB"
+        }
+      }
+    }
+  ]
+}

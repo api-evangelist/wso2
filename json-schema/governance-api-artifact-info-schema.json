@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/governance-api-artifact-info-schema.json",
+  "title": "ArtifactInfo",
+  "description": "Detailed information about an artifact.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the artifact.",
+      "example": "Test API"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the artifact.",
+      "enum": [
+        "API"
+      ],
+      "example": "API"
+    },
+    "extendedType": {
+      "type": "string",
+      "description": "Extended type of the artifact.",
+      "enum": [
+        "REST_API",
+        "ASYNC_API",
+        "MCP"
+      ],
+      "example": "REST_API"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the artifact.",
+      "example": "1.0.0"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owner of the artifact.",
+      "example": "admin"
+    }
+  }
+}

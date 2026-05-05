@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-mock-response-payload-list-structure.json",
+  "name": "Mock Response Payload list",
+  "description": "MockResponsePayloadList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MockResponsePayloadInfo"
+      }
+    }
+  }
+}

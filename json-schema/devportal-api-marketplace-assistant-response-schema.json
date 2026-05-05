@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-marketplace-assistant-response-schema.json",
+  "title": "MarketplaceAssistantResponse",
+  "description": "MarketplaceAssistantResponse schema from WSO2 API Manager",
+  "required": [
+    "response"
+  ],
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "string",
+      "description": "natural language response by the llm.",
+      "example": "Hi, How can I help you?"
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MarketplaceAssistantApi"
+      }
+    }
+  }
+}

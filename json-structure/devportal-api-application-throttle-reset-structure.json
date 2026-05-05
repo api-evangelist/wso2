@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-application-throttle-reset-structure.json",
+  "name": "Reset application level throttling",
+  "description": "ApplicationThrottleReset schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "userName": {
+      "type": "string",
+      "description": "The username for which the throttle policy needs to be reset",
+      "example": "admin"
+    }
+  }
+}

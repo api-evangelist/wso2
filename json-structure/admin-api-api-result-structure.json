@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-api-result-structure.json",
+  "name": "ApiResult",
+  "description": "ApiResult schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    }
+  }
+}

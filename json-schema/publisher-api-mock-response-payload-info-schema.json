@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-mock-response-payload-info-schema.json",
+  "title": "Mock Response Payload info object",
+  "description": "MockResponsePayloadInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "path of the resource",
+      "example": "/menu"
+    },
+    "content": {
+      "type": "string",
+      "description": "new modified code",
+      "example": "var accept = \"\\\"\"+mc.getProperty('AcceptHeader')+\"\\\"\";\nvar responseCode = mc.getProperty('query.param.responseCode');\nvar responseCodeStr = \"\\\"\"+responseCode+\"\\\"\";\nvar responses = [];\n\nif (!responses[200]) {\n responses [200] = [];\n}\nresponses[200][\"application/json\"] = \n[ {\n  \"price\" : \"string\",\n  \"description\" : \"string\",\n  \"name\" : \"string\",\n  \"image\" : \"string\"\n} ]\n\n/*if (!responses[304]) {\n  responses[304] = [];\n}\nresponses[304][\"application/(json or xml)\"] = {}/<>*/\n\nif (!responses[406]) {\n responses [406] = [];\n}\nresponses[406][\"application/json\"] = \n{\n  \"message\" : \"string\",\n  \"error\" : [ {\n    \"message\" : \"string\",\n    \"code\" : 0\n  } ],\n  \"description\" : \"string\",\n  \"code\" : 0,\n  \"moreInfo\" : \"string\"\n}\n\nresponses[501] = [];\nresponses[501][\"application/json\"] = {\n\"code\" : 501,\n\"description\" : \"Not Implemented\"}\nresponses[501][\"application/xml\"] = <response><code>501</code><description>Not Implemented</description></response>;\n\nif (!responses[responseCode]) {\n responseCode = 501;\n}\n\nif (responseCode == null) {\n responseCode = 200;\n responseCodeStr = \"200\";\n}\n\nif (accept == null || !responses[responseCode][accept]) {\n accept = \"application/json\";\n}\n\nif (accept === \"application/json\") {\n mc.setProperty('CONTENT_TYPE', 'application/json');\n mc.setProperty('HTTP_SC', responseCodeStr);\n mc.setPayloadJSON(responses[responseCode][\"application/json\"]);\n} else if (accept === \"application/xml\") {\n mc.setProperty('CONTENT_TYPE', 'application/xml');\n mc.setProperty('HTTP_SC', responseCodeStr);\n mc.setPayloadXML(responses[responseCode][\"application/xml\"]);\n}"
+    },
+    "verb": {
+      "type": "string",
+      "example": "POST"
+    }
+  }
+}

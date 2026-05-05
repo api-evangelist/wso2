@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/admin-api-blocking-condition-status-schema.json",
+  "title": "Blocking Conditions Status",
+  "description": "Blocking Conditions Status",
+  "required": [
+    "conditionStatus"
+  ],
+  "type": "object",
+  "properties": {
+    "conditionId": {
+      "type": "string",
+      "description": "Id of the blocking condition",
+      "example": "b513eb68-69e8-4c32-92cf-852c101363cf"
+    },
+    "conditionStatus": {
+      "type": "boolean",
+      "description": "Status of the blocking condition",
+      "example": true
+    }
+  }
+}

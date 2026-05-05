@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/admin-api-scope-list-structure.json",
+  "name": "Scope Role Mapping List",
+  "description": "ScopeList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "int32",
+      "description": "Number of scopes available for tenant.\n",
+      "readOnly": true,
+      "example": 60
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Scope"
+      }
+    }
+  }
+}

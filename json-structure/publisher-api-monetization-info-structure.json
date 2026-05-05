@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/publisher-api-monetization-info-structure.json",
+  "name": "API monetization details object",
+  "description": "MonetizationInfo schema from WSO2 API Manager",
+  "required": [
+    "monetizationPlan",
+    "properties"
+  ],
+  "type": "object",
+  "properties": {
+    "monetizationPlan": {
+      "type": "string",
+      "description": "Flag to indicate the monetization plan",
+      "example": "FixedRate",
+      "enum": [
+        "FIXEDRATE",
+        "DYNAMICRATE"
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Map of custom properties related to each monetization plan"
+    }
+  }
+}

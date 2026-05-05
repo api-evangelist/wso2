@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-additional-property-schema.json",
+  "title": "Additional Gateway Properties",
+  "description": "AdditionalProperty schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "example": "Organization"
+    },
+    "value": {
+      "type": "string",
+      "example": "wso2"
+    }
+  }
+}

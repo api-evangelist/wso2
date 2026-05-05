@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-subscription-schema.json",
+  "title": "Subscription",
+  "description": "Subscription schema from WSO2 API Manager",
+  "required": [
+    "applicationId",
+    "throttlingPolicy"
+  ],
+  "type": "object",
+  "properties": {
+    "subscriptionId": {
+      "type": "string",
+      "description": "The UUID of the subscription",
+      "readOnly": true,
+      "example": "faae5fcc-cbae-40c4-bf43-89931630d313"
+    },
+    "applicationId": {
+      "type": "string",
+      "description": "The UUID of the application",
+      "example": "b3ade481-30b0-4b38-9a67-498a40873a6d"
+    },
+    "apiId": {
+      "type": "string",
+      "description": "The unique identifier of the API.",
+      "example": "2962f3bb-8330-438e-baee-0ee1d6434ba4"
+    },
+    "apiInfo": {
+      "$ref": "#/components/schemas/APIInfo"
+    },
+    "applicationInfo": {
+      "$ref": "#/components/schemas/ApplicationInfo"
+    },
+    "throttlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "requestedThrottlingPolicy": {
+      "type": "string",
+      "example": "Unlimited"
+    },
+    "status": {
+      "type": "string",
+      "example": "UNBLOCKED",
+      "enum": [
+        "BLOCKED",
+        "PROD_ONLY_BLOCKED",
+        "UNBLOCKED",
+        "ON_HOLD",
+        "REJECTED",
+        "TIER_UPDATE_PENDING",
+        "DELETE_PENDING"
+      ]
+    },
+    "redirectionParams": {
+      "type": "string",
+      "description": "A url and other parameters the subscriber can be redirected.",
+      "readOnly": true,
+      "example": ""
+    }
+  }
+}

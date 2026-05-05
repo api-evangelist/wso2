@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-operations-schema.json",
+  "title": "Operation",
+  "description": "APIOperations schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "apioperation"
+    },
+    "target": {
+      "type": "string"
+    },
+    "verb": {
+      "type": "string"
+    }
+  }
+}

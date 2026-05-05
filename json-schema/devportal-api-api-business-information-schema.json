@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/devportal-api-api-business-information-schema.json",
+  "title": "APIBusinessInformation",
+  "description": "APIBusinessInformation schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "businessOwner": {
+      "type": "string",
+      "example": "businessowner"
+    },
+    "businessOwnerEmail": {
+      "type": "string",
+      "example": "businessowner@wso2.com"
+    },
+    "technicalOwner": {
+      "type": "string",
+      "example": "technicalowner"
+    },
+    "technicalOwnerEmail": {
+      "type": "string",
+      "example": "technicalowner@wso2.com"
+    }
+  }
+}

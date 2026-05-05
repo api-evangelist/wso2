@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-revision-deployment-schema.json",
+  "title": "APIRevisionDeployment Info object with basic API deployment details",
+  "description": "APIRevisionDeployment schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "revisionUuid": {
+      "maxLength": 255,
+      "minLength": 0,
+      "type": "string",
+      "example": "c26b2b9b-4632-4ca4-b6f3-521c8863990c"
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string",
+      "example": "Default"
+    },
+    "status": {
+      "type": "string",
+      "example": "CREATED",
+      "default": "CREATED",
+      "enum": [
+        "CREATED",
+        "APPROVED",
+        "REJECTED"
+      ]
+    },
+    "vhost": {
+      "maxLength": 255,
+      "minLength": 1,
+      "pattern": "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$",
+      "type": "string",
+      "example": "mg.wso2.com"
+    },
+    "displayOnDevportal": {
+      "type": "boolean",
+      "example": true,
+      "default": true
+    },
+    "deployedTime": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "successDeployedTime": {
+      "readOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "liveGatewayCount": {
+      "readOnly": true,
+      "type": "integer",
+      "description": "The number of gateways that are currently live in the gateway environment\n",
+      "example": 1
+    },
+    "deployedGatewayCount": {
+      "readOnly": true,
+      "type": "integer",
+      "description": "The number of gateways in which the API revision is deployed successfully\n",
+      "example": 1
+    },
+    "failedGatewayCount": {
+      "readOnly": true,
+      "type": "integer",
+      "description": "The number of gateways where the API revision deployment has failed\n",
+      "example": 1
+    }
+  }
+}

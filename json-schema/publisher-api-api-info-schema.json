@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-info-schema.json",
+  "title": "API Info object with basic API details.",
+  "description": "APIInfo schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "type": "string",
+      "example": "CalculatorAPI"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "Calculator API",
+      "description": "Display name of the API.\nThis is the name that will be displayed in the Publisher and DevPortal.\nIf not provided, the name will be used as the display name.\n"
+    },
+    "description": {
+      "type": "string",
+      "example": "A calculator API that supports basic operations"
+    },
+    "context": {
+      "type": "string",
+      "example": "CalculatorAPI"
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Map of custom properties of API"
+    },
+    "additionalPropertiesMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "provider": {
+      "type": "string",
+      "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n",
+      "example": "admin"
+    },
+    "type": {
+      "type": "string",
+      "example": "HTTP"
+    },
+    "subtype": {
+      "type": "string",
+      "description": "Subtype of the API.",
+      "default": "DEFAULT",
+      "example": "AIAPI",
+      "readOnly": true
+    },
+    "audience": {
+      "type": "string",
+      "description": "The audience of the API. Accepted values are PUBLIC, SINGLE",
+      "example": "PUBLIC",
+      "enum": [
+        "PUBLIC",
+        "SINGLE"
+      ]
+    },
+    "audiences": {
+      "type": "array",
+      "description": "The audiences of the API for jwt validation. Accepted values are any String values",
+      "items": {
+        "type": "string",
+        "example": [
+          "aud1",
+          "aud2",
+          "aud3"
+        ]
+      }
+    },
+    "lifeCycleStatus": {
+      "type": "string",
+      "example": "CREATED"
+    },
+    "workflowStatus": {
+      "type": "string",
+      "example": "APPROVED"
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "example": true
+    },
+    "securityScheme": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdTime": {
+      "type": "string",
+      "example": "2021-02-11 09:57:25"
+    },
+    "updatedTime": {
+      "type": "string",
+      "example": "2021-02-11 09:57:25"
+    },
+    "updatedBy": {
+      "type": "string",
+      "example": "wso2.system.user"
+    },
+    "gatewayVendor": {
+      "type": "string",
+      "example": "wso2"
+    },
+    "gatewayType": {
+      "title": "Field to identify gateway type.",
+      "type": "string",
+      "description": "Accepts one of the following. wso2/synapse, wso2/apk.",
+      "example": "wso2/synapse",
+      "default": "wso2/synapse"
+    },
+    "advertiseOnly": {
+      "type": "boolean",
+      "example": true
+    },
+    "monetizedInfo": {
+      "type": "boolean",
+      "example": true
+    },
+    "businessOwner": {
+      "type": "string",
+      "example": "Business Owner"
+    },
+    "businessOwnerEmail": {
+      "type": "string",
+      "example": "businessowner@abc.com"
+    },
+    "TechnicalOwner": {
+      "type": "string",
+      "example": "Technical Owner"
+    },
+    "TechnicalOwnerEmail": {
+      "type": "string",
+      "example": "technicalowner@abc.com"
+    },
+    "egress": {
+      "type": "boolean",
+      "description": "Whether the API is EGRESS or not",
+      "default": false,
+      "example": true
+    },
+    "initiatedFromGateway": {
+      "type": "boolean",
+      "description": "Whether the API is initiated from the gateway or not.\nThis is used to identify whether the API is created from the Publisher or from the Gateway.\n",
+      "default": false,
+      "example": true
+    }
+  }
+}

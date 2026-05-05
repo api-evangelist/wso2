@@ -1,0 +1,347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-api-product-schema.json",
+  "title": "API Product object",
+  "description": "APIProduct schema from WSO2 API Manager",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the api product\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "name": {
+      "maxLength": 50,
+      "minLength": 1,
+      "type": "string",
+      "description": "Name of the API Product",
+      "example": "PizzaShackAPIProduct"
+    },
+    "displayName": {
+      "description": "Human-friendly name shown in UI. Length limited to DB column size.",
+      "type": "string",
+      "example": "Pizza Shack API Product"
+    },
+    "context": {
+      "maxLength": 60,
+      "minLength": 1,
+      "type": "string",
+      "example": "pizzaproduct"
+    },
+    "version": {
+      "maxLength": 30,
+      "minLength": 1,
+      "type": "string",
+      "pattern": "^[^~!@#;:%^*()+={}|\\\\<>\"',&/$\\[\\]\\s+\\/]+$",
+      "example": "1.0.0"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description about the API",
+      "example": "This is a simple API for Pizza Shack online pizza delivery store"
+    },
+    "provider": {
+      "maxLength": 50,
+      "type": "string",
+      "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n",
+      "example": "admin"
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "example": false
+    },
+    "state": {
+      "type": "string",
+      "example": "CREATED",
+      "description": "State of the API product. Only published API products are visible on the Developer Portal\n",
+      "default": "CREATED"
+    },
+    "enableSchemaValidation": {
+      "type": "boolean",
+      "example": false
+    },
+    "isDefaultVersion": {
+      "type": "boolean",
+      "example": false
+    },
+    "isRevision": {
+      "type": "boolean",
+      "example": false
+    },
+    "revisionedApiProductId": {
+      "type": "string",
+      "description": "UUID of the api product registry artifact\n",
+      "readOnly": true,
+      "example": "01234567-0123-0123-0123-012345678901"
+    },
+    "revisionId": {
+      "type": "integer",
+      "example": 1
+    },
+    "responseCachingEnabled": {
+      "type": "boolean",
+      "example": true
+    },
+    "cacheTimeout": {
+      "type": "integer",
+      "example": 300
+    },
+    "visibility": {
+      "type": "string",
+      "description": "The visibility level of the API. Accepts one of the following. PUBLIC, PRIVATE, RESTRICTED.",
+      "example": "PUBLIC",
+      "default": "PUBLIC",
+      "enum": [
+        "PUBLIC",
+        "PRIVATE",
+        "RESTRICTED"
+      ]
+    },
+    "visibleRoles": {
+      "type": "array",
+      "description": "The user roles that are able to access the API",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "visibleTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessControl": {
+      "type": "string",
+      "description": "Defines whether the API Product is restricted to certain set of publishers or creators or is it visible to all the\npublishers and creators. If the accessControl restriction is none, this API Product can be modified by all the\npublishers and creators, if not it can only be viewable/modifiable by certain set of publishers and creators,\nbased on the restriction.\n",
+      "default": "NONE",
+      "enum": [
+        "NONE",
+        "RESTRICTED"
+      ]
+    },
+    "accessControlRoles": {
+      "type": "array",
+      "description": "The user roles that are able to view/modify as API Product publisher or creator.",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "apiType": {
+      "type": "string",
+      "description": "The API type to be used. Accepted values are API, APIPRODUCT",
+      "example": "APIPRODUCT",
+      "enum": [
+        "API",
+        "APIPRODUCT"
+      ]
+    },
+    "transport": {
+      "type": "array",
+      "description": "Supported transports for the API (http and/or https).\n",
+      "example": [
+        "http",
+        "https"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "example": [
+        "pizza",
+        "food"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "policies": {
+      "type": "array",
+      "example": [
+        "Unlimited"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "apiThrottlingPolicy": {
+      "type": "string",
+      "description": "The API level throttling policy selected for the particular API Product",
+      "example": "Unlimited"
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "description": "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used.\n",
+      "example": "Authorization"
+    },
+    "apiKeyHeader": {
+      "type": "string",
+      "description": "Name of the API key header used for invoking the API. If it is not set, default value `apiKey` will be used.\n",
+      "example": "ApiKey"
+    },
+    "securityScheme": {
+      "type": "array",
+      "description": "Types of API security, the current API secured with. It can be either OAuth2 or mutual SSL or both. If\nit is not set OAuth2 will be set as the security for the current API.\n",
+      "example": [
+        "oauth2"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscriptionAvailability": {
+      "type": "string",
+      "description": "The subscription availability. Accepts one of the following. CURRENT_TENANT, ALL_TENANTS or SPECIFIC_TENANTS.",
+      "example": "CURRENT_TENANT",
+      "default": "ALL_TENANTS",
+      "enum": [
+        "CURRENT_TENANT",
+        "ALL_TENANTS",
+        "SPECIFIC_TENANTS"
+      ]
+    },
+    "subscriptionAvailableTenants": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "type": "string"
+      },
+      "x-otherScopes": [
+        "apim:api_publish",
+        "apim:api_manage"
+      ]
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Map of custom properties of API"
+    },
+    "additionalPropertiesMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "monetization": {
+      "$ref": "#/components/schemas/APIMonetizationInfo"
+    },
+    "businessInformation": {
+      "$ref": "#/components/schemas/APIProductBusinessInformation"
+    },
+    "corsConfiguration": {
+      "$ref": "#/components/schemas/APICorsConfiguration"
+    },
+    "createdTime": {
+      "type": "string"
+    },
+    "lastUpdatedTime": {
+      "type": "string"
+    },
+    "lastUpdatedTimestamp": {
+      "type": "string"
+    },
+    "gatewayVendor": {
+      "title": "field to identify gateway vendor",
+      "type": "string",
+      "example": "wso2"
+    },
+    "apis": {
+      "type": "array",
+      "description": "APIs and resources in the API Product.\n",
+      "example": [
+        {
+          "name": "PizzaShackAPI",
+          "apiId": "01234567-0123-0123-0123-012345678901",
+          "version": "1.0",
+          "operations": [
+            {
+              "target": "/order/{orderId}",
+              "verb": "POST",
+              "authType": "Application & Application User",
+              "throttlingPolicy": "Unlimited"
+            },
+            {
+              "target": "/menu",
+              "verb": "GET",
+              "authType": "Application & Application User",
+              "throttlingPolicy": "Unlimited"
+            }
+          ]
+        }
+      ],
+      "items": {
+        "$ref": "#/components/schemas/ProductAPI"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "example": [],
+      "items": {
+        "$ref": "#/components/schemas/APIScope"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "API categories\n",
+      "example": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "workflowStatus": {
+      "type": "string",
+      "example": "APPROVED"
+    },
+    "audiences": {
+      "type": "array",
+      "description": "The audiences of the API for jwt validation. Accepted values are any String values",
+      "items": {
+        "type": "string",
+        "example": [
+          "aud1",
+          "aud2",
+          "aud3"
+        ]
+      }
+    },
+    "egress": {
+      "type": "boolean",
+      "description": "Whether the APIProduct is EGRESS or not",
+      "default": false,
+      "example": true
+    }
+  }
+}

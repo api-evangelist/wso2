@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-schema/publisher-api-pagination-schema.json",
+  "title": "Pagination",
+  "description": "Pagination schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "offset": {
+      "type": "integer",
+      "example": 0
+    },
+    "limit": {
+      "type": "integer",
+      "example": 1
+    },
+    "total": {
+      "type": "integer",
+      "example": 10
+    },
+    "next": {
+      "type": "string",
+      "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+    },
+    "previous": {
+      "type": "string",
+      "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+    }
+  }
+}

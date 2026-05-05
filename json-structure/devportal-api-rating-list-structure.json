@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/json-structure/devportal-api-rating-list-structure.json",
+  "name": "Rating List",
+  "description": "RatingList schema from WSO2 API Manager",
+  "type": "object",
+  "properties": {
+    "avgRating": {
+      "type": "string",
+      "description": "Average Rating of the API\n",
+      "example": "4"
+    },
+    "userRating": {
+      "type": "int32",
+      "description": "Rating given by the user\n",
+      "example": 4
+    },
+    "count": {
+      "type": "int32",
+      "description": "Number of Subscriber Ratings returned.\n",
+      "example": 1
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Rating"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}
