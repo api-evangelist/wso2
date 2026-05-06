@@ -4,112 +4,44 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: WSO2
 providerId: wso2
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - API Management
   - Gateways
   - Open Source
   - API Lifecycle
-  - GraphQL
-  - SOAP
-  - REST
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+  - Identity
+description: WSO2 ships its API Manager, Identity Server, and Micro Integrator as Apache 2.0 open
+  source software (free to download and run). Commercial revenue comes from (1) per-quote
+  enterprise subscription support for the on-prem stack, (2) WSO2 Choreo, a managed developer
+  platform sold by component-month with infrastructure quotas and resource credits, and (3) WSO2
+  Asgardeo, identity-as-a-service priced per monthly active user across B2C / B2B / B2E flavors.
+  The Publisher / Developer Portal / Admin / Gateway / Service Catalog / DevOps / DCR / Governance
+  APIs themselves are administrative interfaces of the on-prem product and are not separately
+  metered.
+sources:
+  - https://wso2.com/choreo/pricing/
+  - https://wso2.com/asgardeo/pricing/
 plans:
-  - id: wso2-free
-    name: Free
+  - id: wso2-api-manager-open-source
+    name: WSO2 API Manager (Open Source)
     type: freemium
-    description: Free entry tier for the WSO2 API surface. Intended for evaluation, prototyping, and low-volume
-      integrations. Real limits and pricing must be reconciled with the provider's published plan documentation.
+    description: WSO2 API Manager is licensed under Apache 2.0 and free to self-host. The
+      Publisher, Developer Portal, Admin Portal, Gateway, Service Catalog, DevOps, DCR, and
+      Governance APIs are exposed by the product itself and have no per-call list price.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://apis.wso2.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://apis.wso2.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: WSO2 Publisher API
-      - name: WSO2 Developer Portal API
-      - name: WSO2 Admin Portal API
-      - name: WSO2 Gateway API
-      - name: WSO2 Service Catalog API
-      - name: WSO2 DevOps API
-      - name: WSO2 DCR API
-      - name: WSO2 Governance API
-  - id: wso2-pro
-    name: Professional
-    type: paid
-    description: Production tier for WSO2. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://apis.wso2.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://apis.wso2.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
+      - label: Software license
+        name: software_license
+        type: flat
+        metric: month
         limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://apis.wso2.com
-        unit: 1000
-        price: TBD
+        unit: 1
+        price: $0 (Apache 2.0)
         userMultiplied: false
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
       - name: WSO2 Publisher API
       - name: WSO2 Developer Portal API
       - name: WSO2 Admin Portal API
@@ -118,53 +50,339 @@ plans:
       - name: WSO2 DevOps API
       - name: WSO2 DCR API
       - name: WSO2 Governance API
-  - id: wso2-enterprise
-    name: Enterprise
+  - id: wso2-enterprise-subscription
+    name: WSO2 Enterprise Subscription
     type: enterprise
-    description: Custom-negotiated tier for WSO2. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    description: Quote-based commercial subscription that adds 24/7 support, security patches,
+      and certified updates to the open-source WSO2 stack. Priced per production environment with
+      annual-commit discounts; not published as a list price.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: varies
         limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://apis.wso2.com
+        timeFrame: year
+        geo: global
         unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://apis.wso2.com
-        unit: 1
-        price: custom
+        price: contact sales
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: WSO2 Publisher API
-      - name: WSO2 Developer Portal API
-      - name: WSO2 Admin Portal API
-      - name: WSO2 Gateway API
-      - name: WSO2 Service Catalog API
-      - name: WSO2 DevOps API
-      - name: WSO2 DCR API
-      - name: WSO2 Governance API
+      - name: 24/7 production support
+      - name: Certified updates and security patches
+      - name: Architectural review
+  - id: wso2-choreo-developer
+    name: Choreo Developer
+    type: freemium
+    description: Free Choreo tier - up to 5 components, $100/month resource credits included,
+      100 builds and 100 deployments per month, CPU 5 / RAM 16GB / Storage 100GB / Network 100GB
+      infrastructure quota, up to 2M API requests/month. Auto-scales to zero, max 1 pod.
+    entries:
+      - label: Components included
+        name: components
+        type: quota
+        metric: component
+        limit: 5
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Resource credits
+        name: resource_credits
+        type: quota
+        metric: usd
+        limit: 100
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Builds
+        name: builds
+        type: quota
+        metric: build
+        limit: 100
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Deployments
+        name: deployments
+        type: quota
+        metric: deployment
+        limit: 100
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API requests
+        name: api_requests
+        type: quota
+        metric: request
+        limit: 2000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: 5 components free
+      - name: $100/month resource credits
+      - name: Auto-scale to zero
+      - name: Max 1 pod
+  - id: wso2-choreo-team
+    name: Choreo Team
+    type: subscription
+    description: Paid Choreo tier at $150 per component per month. Includes 500 builds and 500
+      deployments per month, CPU 25 / RAM 128GB / Storage 500GB / Network 500GB infrastructure
+      quota, up to 5M API requests/month, and unlimited scaling. Business email signups receive
+      5 components free for 6 months and $1,000 in resource credits for 6 months.
+    entries:
+      - label: Per component / month
+        name: per_component_month
+        type: subscription
+        metric: component
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $150/component/month
+        userMultiplied: false
+      - label: Builds
+        name: builds
+        type: quota
+        metric: build
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Deployments
+        name: deployments
+        type: quota
+        metric: deployment
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API requests
+        name: api_requests
+        type: quota
+        metric: request
+        limit: 5000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Unlimited scaling
+      - name: Business-email sign-up incentive (5 components free for 6 months)
+      - name: $1,000 resource credits for 6 months (with business email)
+  - id: wso2-choreo-enterprise
+    name: Choreo Enterprise
+    type: enterprise
+    description: Custom-priced Choreo tier with unlimited builds, deployments, infrastructure,
+      and API requests; pass-through actual infrastructure costs or direct enterprise billing,
+      with discounts for annual commitments.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: varies
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+    elements:
+      - name: Unlimited builds and deployments
+      - name: Unlimited infrastructure quota
+      - name: Unlimited API requests
+      - name: Annual-commit discounts
+  - id: wso2-asgardeo-b2c-free
+    name: Asgardeo B2C Free
+    type: freemium
+    description: Free Asgardeo Customer (B2C) identity tier - up to 7,500 consumer monthly active
+      users, social and passwordless login, basic MFA, community support.
+    entries:
+      - label: Monthly active users
+        name: mau
+        type: quota
+        metric: mau
+        limit: 7500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+    elements:
+      - name: Social and passwordless login
+      - name: Basic MFA
+      - name: Community support
+  - id: wso2-asgardeo-b2c-essentials
+    name: Asgardeo B2C Essentials
+    type: usage-based
+    description: Pay-as-you-go Asgardeo Customer tier at $16 per 1,000 monthly active users.
+      Custom domain support and optional basic support add-on.
+    entries:
+      - label: Per 1,000 MAUs / month
+        name: per_1k_mau_month
+        type: metered
+        metric: mau
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1000
+        price: $16 per 1,000 MAUs/month
+        userMultiplied: false
+    elements:
+      - name: Custom domain support
+      - name: Pay-as-you-go billing
+  - id: wso2-asgardeo-b2c-professional
+    name: Asgardeo B2C Professional
+    type: usage-based
+    description: Mid-market Asgardeo Customer tier at $160 per 1,000 monthly active users with
+      customizable branding, enterprise logins, unlimited and adaptive MFA, and remote user store
+      connections.
+    entries:
+      - label: Per 1,000 MAUs / month
+        name: per_1k_mau_month
+        type: metered
+        metric: mau
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1000
+        price: $160 per 1,000 MAUs/month
+        userMultiplied: false
+    elements:
+      - name: Customizable branding
+      - name: Enterprise logins
+      - name: Unlimited / adaptive MFA
+      - name: Remote user store connections
+  - id: wso2-asgardeo-b2c-enterprise
+    name: Asgardeo B2C Enterprise
+    type: enterprise
+    description: Custom-priced Asgardeo Customer tier with 99.99% SLA, unlimited administrators,
+      applications, logins, and unrestricted suborganization levels.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: varies
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+    elements:
+      - name: 99.99% SLA
+      - name: Unlimited administrators, applications, logins
+      - name: Unrestricted suborganization levels
+  - id: wso2-asgardeo-b2b-free
+    name: Asgardeo B2B Free
+    type: freemium
+    description: Free Asgardeo B2B identity tier - up to 250 B2B monthly active users and 3
+      sub-organizations with basic authentication features.
+    entries:
+      - label: Monthly active users
+        name: mau
+        type: quota
+        metric: mau
+        limit: 250
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+    elements:
+      - name: Up to 3 sub-organizations
+      - name: Basic authentication
+  - id: wso2-asgardeo-b2b-professional
+    name: Asgardeo B2B Professional
+    type: subscription
+    description: Asgardeo B2B Professional tier at $425 per month for 500 monthly active users.
+      Unlimited sub-organizations and advanced customization options.
+    entries:
+      - label: Monthly subscription (500 MAUs)
+        name: per_500_mau_month
+        type: subscription
+        metric: mau
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 500
+        price: $425/month for 500 MAUs
+        userMultiplied: false
+    elements:
+      - name: Unlimited sub-organizations
+      - name: Advanced customization
+      - name: Enhanced support tiers available
+  - id: wso2-asgardeo-b2b-enterprise
+    name: Asgardeo B2B Enterprise
+    type: enterprise
+    description: Custom-priced Asgardeo B2B tier with the full feature set and SLA protections.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: varies
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+    elements:
+      - name: Full feature set
+      - name: SLA protections
+  - id: wso2-asgardeo-b2e-free
+    name: Asgardeo B2E Free
+    type: freemium
+    description: Free Asgardeo Workforce (B2E) tier - up to 50 employee monthly active users.
+    entries:
+      - label: Monthly active users
+        name: mau
+        type: quota
+        metric: mau
+        limit: 50
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+    elements:
+      - name: Workforce identity
+  - id: wso2-asgardeo-b2e-enterprise
+    name: Asgardeo B2E Enterprise
+    type: enterprise
+    description: Asgardeo Workforce Enterprise tier at $2.50 per MAU with volume discounts as
+      MAUs scale; 99.99% SLA and unlimited resources.
+    entries:
+      - label: Per MAU / month
+        name: per_mau_month
+        type: metered
+        metric: mau
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: $2.50 per MAU (scales down with volume)
+        userMultiplied: false
+    elements:
+      - name: 99.99% SLA
+      - name: Unlimited resources
+      - name: Volume discounts as MAUs increase
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://apievangelist.com
