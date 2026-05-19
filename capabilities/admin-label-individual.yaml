@@ -1,0 +1,179 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Label (Individual)
+  description: 'WSO2 API Manager - Admin — Label (Individual). 4 operations. Lead operation: Add a new Label. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Label (Individual)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-label-individual
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Label (Individual) business capability. Self-contained, no shared references.
+    resources:
+    - name: labels
+      path: /labels
+      operations:
+      - name: createlabel
+        method: POST
+        description: Add a new Label
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: labels-labelId
+      path: /labels/{labelId}
+      operations:
+      - name: updatelabel
+        method: PUT
+        description: Update a Label
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletelabel
+        method: DELETE
+        description: Delete a Label
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: labels-labelId-usage
+      path: /labels/{labelId}/usage
+      operations:
+      - name: getlabelusage
+        method: GET
+        description: Get a Label Usage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-label-individual-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Label (Individual). One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/labels
+      name: labels
+      description: REST surface for labels.
+      operations:
+      - method: POST
+        name: createlabel
+        description: Add a new Label
+        call: admin-label-individual.createlabel
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/labels/{labelid}
+      name: labels-labelid
+      description: REST surface for labels-labelId.
+      operations:
+      - method: PUT
+        name: updatelabel
+        description: Update a Label
+        call: admin-label-individual.updatelabel
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletelabel
+        description: Delete a Label
+        call: admin-label-individual.deletelabel
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/labels/{labelid}/usage
+      name: labels-labelid-usage
+      description: REST surface for labels-labelId-usage.
+      operations:
+      - method: GET
+        name: getlabelusage
+        description: Get a Label Usage
+        call: admin-label-individual.getlabelusage
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-label-individual-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Label (Individual). One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: add-new-label
+      description: Add a new Label
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-label-individual.createlabel
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-label
+      description: Update a Label
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: admin-label-individual.updatelabel
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-label
+      description: Delete a Label
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: admin-label-individual.deletelabel
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-label-usage
+      description: Get a Label Usage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-label-individual.getlabelusage
+      outputParameters:
+      - type: object
+        mapping: $.

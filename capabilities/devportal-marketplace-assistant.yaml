@@ -1,0 +1,113 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — Marketplace Assistant
+  description: 'WSO2 API Manager - Developer Portal — Marketplace Assistant. 2 operations. Lead operation: API Count endpoint..
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Marketplace Assistant
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-marketplace-assistant
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — Marketplace Assistant business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: marketplace-assistant-api-count
+      path: /marketplace-assistant/api-count
+      operations:
+      - name: getmarketplaceassistantapicount
+        method: GET
+        description: API Count endpoint.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: marketplace-assistant-chat
+      path: /marketplace-assistant/chat
+      operations:
+      - name: marketplaceassistantexecute
+        method: POST
+        description: Marketplace Assistant Chat Endpoint.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-marketplace-assistant-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — Marketplace Assistant. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/marketplace-assistant/api-count
+      name: marketplace-assistant-api-count
+      description: REST surface for marketplace-assistant-api-count.
+      operations:
+      - method: GET
+        name: getmarketplaceassistantapicount
+        description: API Count endpoint.
+        call: devportal-marketplace-assistant.getmarketplaceassistantapicount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/marketplace-assistant/chat
+      name: marketplace-assistant-chat
+      description: REST surface for marketplace-assistant-chat.
+      operations:
+      - method: POST
+        name: marketplaceassistantexecute
+        description: Marketplace Assistant Chat Endpoint.
+        call: devportal-marketplace-assistant.marketplaceassistantexecute
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-marketplace-assistant-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — Marketplace Assistant. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: api-count-endpoint
+      description: API Count endpoint.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-marketplace-assistant.getmarketplaceassistantapicount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: marketplace-assistant-chat-endpoint
+      description: Marketplace Assistant Chat Endpoint.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-marketplace-assistant.marketplaceassistantexecute
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Workflow (Collection)
+  description: 'WSO2 API Manager - Admin — Workflow (Collection). 1 operations. Lead operation: Retrieve All Pending Workflow
+    Processes. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Workflow (Collection)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-workflow-collection
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Workflow (Collection) business capability. Self-contained, no shared references.
+    resources:
+    - name: workflows
+      path: /workflows
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve All Pending Workflow Processes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: workflowType
+          in: query
+          type: string
+          description: We need to show the values of each workflow process separately .for that we use workflow type.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-workflow-collection-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Workflow (Collection). One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/workflows
+      name: workflows
+      description: REST surface for workflows.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve All Pending Workflow Processes
+        call: admin-workflow-collection.get
+        with:
+          workflowType: rest.workflowType
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-workflow-collection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Workflow (Collection). One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: retrieve-all-pending-workflow-processes
+      description: Retrieve All Pending Workflow Processes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-workflow-collection.get
+      with:
+        workflowType: tools.workflowType
+      outputParameters:
+      - type: object
+        mapping: $.

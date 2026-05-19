@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Workflows (Individual)
+  description: 'WSO2 API Manager - Admin — Workflows (Individual). 2 operations. Lead operation: Update Workflow Status. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Workflows (Individual)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-workflows-individual
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Workflows (Individual) business capability. Self-contained, no shared references.
+    resources:
+    - name: workflows-update-workflow-status
+      path: /workflows/update-workflow-status
+      operations:
+      - name: post
+        method: POST
+        description: Update Workflow Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: workflows-externalWorkflowRef
+      path: /workflows/{externalWorkflowRef}
+      operations:
+      - name: get
+        method: GET
+        description: Get Pending Workflow Details by External Workflow Reference
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: externalWorkflowRef
+          in: path
+          type: string
+          description: from the externel workflow reference we decide what is the the pending request that the are requesting.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-workflows-individual-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Workflows (Individual). One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/workflows/update-workflow-status
+      name: workflows-update-workflow-status
+      description: REST surface for workflows-update-workflow-status.
+      operations:
+      - method: POST
+        name: post
+        description: Update Workflow Status
+        call: admin-workflows-individual.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/workflows/{externalworkflowref}
+      name: workflows-externalworkflowref
+      description: REST surface for workflows-externalWorkflowRef.
+      operations:
+      - method: GET
+        name: get
+        description: Get Pending Workflow Details by External Workflow Reference
+        call: admin-workflows-individual.get
+        with:
+          externalWorkflowRef: rest.externalWorkflowRef
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-workflows-individual-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Workflows (Individual). One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: update-workflow-status
+      description: Update Workflow Status
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-workflows-individual.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-pending-workflow-details-external
+      description: Get Pending Workflow Details by External Workflow Reference
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-workflows-individual.get
+      with:
+        externalWorkflowRef: tools.externalWorkflowRef
+      outputParameters:
+      - type: object
+        mapping: $.

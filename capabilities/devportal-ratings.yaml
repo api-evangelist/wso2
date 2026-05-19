@@ -1,0 +1,286 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — Ratings
+  description: 'WSO2 API Manager - Developer Portal — Ratings. 8 operations. Lead operation: Retrieve API Ratings. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Ratings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-ratings
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — Ratings business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiId-ratings
+      path: /apis/{apiId}/ratings
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve API Ratings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiId-user-rating
+      path: /apis/{apiId}/user-rating
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve API Rating of User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Add or Update Logged in User's Rating for an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: delete
+        method: DELETE
+        description: Delete User API Rating
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-ratings
+      path: /mcp-servers/{mcpServerId}/ratings
+      operations:
+      - name: getmcpserverratings
+        method: GET
+        description: Retrieve MCP Server Ratings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-user-rating
+      path: /mcp-servers/{mcpServerId}/user-rating
+      operations:
+      - name: getmcpserverrating
+        method: GET
+        description: Retrieve MCP Server Rating of User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addmcpserverrating
+        method: PUT
+        description: Add or Update Logged in User's Rating for a MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletemcpserverrating
+        method: DELETE
+        description: Delete User MCP Server Rating
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-ratings-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — Ratings. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/{apiid}/ratings
+      name: apis-apiid-ratings
+      description: REST surface for apis-apiId-ratings.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve API Ratings
+        call: devportal-ratings.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/user-rating
+      name: apis-apiid-user-rating
+      description: REST surface for apis-apiId-user-rating.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve API Rating of User
+        call: devportal-ratings.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Add or Update Logged in User's Rating for an API
+        call: devportal-ratings.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete User API Rating
+        call: devportal-ratings.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/ratings
+      name: mcp-servers-mcpserverid-ratings
+      description: REST surface for mcp-servers-mcpServerId-ratings.
+      operations:
+      - method: GET
+        name: getmcpserverratings
+        description: Retrieve MCP Server Ratings
+        call: devportal-ratings.getmcpserverratings
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/user-rating
+      name: mcp-servers-mcpserverid-user-rating
+      description: REST surface for mcp-servers-mcpServerId-user-rating.
+      operations:
+      - method: GET
+        name: getmcpserverrating
+        description: Retrieve MCP Server Rating of User
+        call: devportal-ratings.getmcpserverrating
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addmcpserverrating
+        description: Add or Update Logged in User's Rating for a MCP Server
+        call: devportal-ratings.addmcpserverrating
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemcpserverrating
+        description: Delete User MCP Server Rating
+        call: devportal-ratings.deletemcpserverrating
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-ratings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — Ratings. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: retrieve-api-ratings
+      description: Retrieve API Ratings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-api-rating-user
+      description: Retrieve API Rating of User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-update-logged-user-s-rating
+      description: Add or Update Logged in User's Rating for an API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-user-api-rating
+      description: Delete User API Rating
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: devportal-ratings.delete
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-mcp-server-ratings
+      description: Retrieve MCP Server Ratings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.getmcpserverratings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-mcp-server-rating-user
+      description: Retrieve MCP Server Rating of User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.getmcpserverrating
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-update-logged-user-s-rating-2
+      description: Add or Update Logged in User's Rating for a MCP Server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: devportal-ratings.addmcpserverrating
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-user-mcp-server-rating
+      description: Delete User MCP Server Rating
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: devportal-ratings.deletemcpserverrating
+      outputParameters:
+      - type: object
+        mapping: $.

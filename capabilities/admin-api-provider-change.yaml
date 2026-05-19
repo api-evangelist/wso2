@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Api Provider Change
+  description: 'WSO2 API Manager - Admin — Api Provider Change. 1 operations. Lead operation: Update the api provider. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Api Provider Change
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-api-provider-change
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Api Provider Change business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiId-change-provider
+      path: /apis/{apiId}/change-provider
+      operations:
+      - name: providernamepost
+        method: POST
+        description: Update the api provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: provider
+          in: query
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-api-provider-change-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Api Provider Change. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/{apiid}/change-provider
+      name: apis-apiid-change-provider
+      description: REST surface for apis-apiId-change-provider.
+      operations:
+      - method: POST
+        name: providernamepost
+        description: Update the api provider
+        call: admin-api-provider-change.providernamepost
+        with:
+          provider: rest.provider
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-api-provider-change-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Api Provider Change. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: update-api-provider
+      description: Update the api provider
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-api-provider-change.providernamepost
+      with:
+        provider: tools.provider
+      outputParameters:
+      - type: object
+        mapping: $.

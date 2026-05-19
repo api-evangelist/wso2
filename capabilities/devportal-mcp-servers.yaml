@@ -1,0 +1,175 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — MCP Servers
+  description: 'WSO2 API Manager - Developer Portal — MCP Servers. 4 operations. Lead operation: Retrieve/Search MCP Servers.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - MCP Servers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-mcp-servers
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — MCP Servers business capability. Self-contained, no shared references.
+    resources:
+    - name: mcp-servers
+      path: /mcp-servers
+      operations:
+      - name: getallmcpservers
+        method: GET
+        description: Retrieve/Search MCP Servers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: '**Search condition**.'
+    - name: mcp-servers-mcpServerId
+      path: /mcp-servers/{mcpServerId}
+      operations:
+      - name: getmcpserver
+        method: GET
+        description: Get Details of a MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-subscription-policies
+      path: /mcp-servers/{mcpServerId}/subscription-policies
+      operations:
+      - name: getmcpserversubscriptionpolicies
+        method: GET
+        description: Get Details of the Subscription Throttling Policies of a MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-thumbnail
+      path: /mcp-servers/{mcpServerId}/thumbnail
+      operations:
+      - name: getmcpserverthumbnail
+        method: GET
+        description: Get Thumbnail Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-mcp-servers-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — MCP Servers. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/mcp-servers
+      name: mcp-servers
+      description: REST surface for mcp-servers.
+      operations:
+      - method: GET
+        name: getallmcpservers
+        description: Retrieve/Search MCP Servers
+        call: devportal-mcp-servers.getallmcpservers
+        with:
+          query: rest.query
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}
+      name: mcp-servers-mcpserverid
+      description: REST surface for mcp-servers-mcpServerId.
+      operations:
+      - method: GET
+        name: getmcpserver
+        description: Get Details of a MCP Server
+        call: devportal-mcp-servers.getmcpserver
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/subscription-policies
+      name: mcp-servers-mcpserverid-subscription-policies
+      description: REST surface for mcp-servers-mcpServerId-subscription-policies.
+      operations:
+      - method: GET
+        name: getmcpserversubscriptionpolicies
+        description: Get Details of the Subscription Throttling Policies of a MCP Server
+        call: devportal-mcp-servers.getmcpserversubscriptionpolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/thumbnail
+      name: mcp-servers-mcpserverid-thumbnail
+      description: REST surface for mcp-servers-mcpServerId-thumbnail.
+      operations:
+      - method: GET
+        name: getmcpserverthumbnail
+        description: Get Thumbnail Image
+        call: devportal-mcp-servers.getmcpserverthumbnail
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-mcp-servers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — MCP Servers. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: retrieve-search-mcp-servers
+      description: Retrieve/Search MCP Servers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-servers.getallmcpservers
+      with:
+        query: tools.query
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-mcp-server
+      description: Get Details of a MCP Server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-servers.getmcpserver
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-subscription-throttling-policies
+      description: Get Details of the Subscription Throttling Policies of a MCP Server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-servers.getmcpserversubscriptionpolicies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-thumbnail-image
+      description: Get Thumbnail Image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-servers.getmcpserverthumbnail
+      outputParameters:
+      - type: object
+        mapping: $.

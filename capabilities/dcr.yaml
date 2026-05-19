@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - DCR API
+  description: 'WSO2 API Manager - DCR API. 1 operations. Lead operation: Dynamic client registration. Self-contained Naftiko
+    capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - WSO2 API Manager - DCR API
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: dcr
+    baseUri: https://apis.wso2.com/client-registration/v0.17
+    description: WSO2 API Manager - DCR API business capability. Self-contained, no shared references.
+    resources:
+    - name: register
+      path: /register
+      operations:
+      - name: post
+        method: POST
+        description: Dynamic client registration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: dcr-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - DCR API. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/register
+      name: register
+      description: REST surface for register.
+      operations:
+      - method: POST
+        name: post
+        description: Dynamic client registration
+        call: dcr.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: dcr-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - DCR API. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: dynamic-client-registration
+      description: Dynamic client registration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: dcr.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

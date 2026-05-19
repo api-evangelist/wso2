@@ -1,0 +1,391 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Service Catalog APIs — Services
+  description: 'Service Catalog APIs — Services. 9 operations. Lead operation: Retrieve/search services. Self-contained Naftiko
+    capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Services
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: service-catalog-services
+    baseUri: https://apis.wso2.com/api/service-catalog/v1
+    description: Service Catalog APIs — Services business capability. Self-contained, no shared references.
+    resources:
+    - name: services
+      path: /services
+      operations:
+      - name: searchservices
+        method: GET
+        description: Retrieve/search services
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: Filter services by the name of the service
+        - name: version
+          in: query
+          type: string
+          description: Filter services by version of the service
+        - name: definitionType
+          in: query
+          type: string
+          description: Filter services by definitionType
+        - name: key
+          in: query
+          type: string
+          description: Comma seperated keys of the services to check
+        - name: shrink
+          in: query
+          type: boolean
+          description: If this set to true, a minimal set of fields will be provided for each service including the md5
+      - name: addservice
+        method: POST
+        description: Add a new service to Service Catalog
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: services-export
+      path: /services/export
+      operations:
+      - name: exportservice
+        method: GET
+        description: Export a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: Name of the service to export
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: Version of the service to export
+          required: true
+    - name: services-import
+      path: /services/import
+      operations:
+      - name: importservice
+        method: POST
+        description: Import a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: overwrite
+          in: query
+          type: boolean
+          description: Whether to overwrite if there is any existing service with the same name and version.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: services-serviceId
+      path: /services/{serviceId}
+      operations:
+      - name: getservicebyid
+        method: GET
+        description: Get details of a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateservice
+        method: PUT
+        description: Update a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteservice
+        method: DELETE
+        description: Delete a service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: services-serviceId-definition
+      path: /services/{serviceId}/definition
+      operations:
+      - name: getservicedefinition
+        method: GET
+        description: Retrieve a service definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: services-serviceId-usage
+      path: /services/{serviceId}/usage
+      operations:
+      - name: getserviceusage
+        method: GET
+        description: Retrieve the API Info that use the given service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: service-catalog-services-rest
+    port: 8080
+    description: REST adapter for Service Catalog APIs — Services. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/services
+      name: services
+      description: REST surface for services.
+      operations:
+      - method: GET
+        name: searchservices
+        description: Retrieve/search services
+        call: service-catalog-services.searchservices
+        with:
+          name: rest.name
+          version: rest.version
+          definitionType: rest.definitionType
+          key: rest.key
+          shrink: rest.shrink
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addservice
+        description: Add a new service to Service Catalog
+        call: service-catalog-services.addservice
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/export
+      name: services-export
+      description: REST surface for services-export.
+      operations:
+      - method: GET
+        name: exportservice
+        description: Export a service
+        call: service-catalog-services.exportservice
+        with:
+          name: rest.name
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/import
+      name: services-import
+      description: REST surface for services-import.
+      operations:
+      - method: POST
+        name: importservice
+        description: Import a service
+        call: service-catalog-services.importservice
+        with:
+          overwrite: rest.overwrite
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}
+      name: services-serviceid
+      description: REST surface for services-serviceId.
+      operations:
+      - method: GET
+        name: getservicebyid
+        description: Get details of a service
+        call: service-catalog-services.getservicebyid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateservice
+        description: Update a service
+        call: service-catalog-services.updateservice
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteservice
+        description: Delete a service
+        call: service-catalog-services.deleteservice
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/definition
+      name: services-serviceid-definition
+      description: REST surface for services-serviceId-definition.
+      operations:
+      - method: GET
+        name: getservicedefinition
+        description: Retrieve a service definition
+        call: service-catalog-services.getservicedefinition
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/services/{serviceid}/usage
+      name: services-serviceid-usage
+      description: REST surface for services-serviceId-usage.
+      operations:
+      - method: GET
+        name: getserviceusage
+        description: Retrieve the API Info that use the given service
+        call: service-catalog-services.getserviceusage
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: service-catalog-services-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Service Catalog APIs — Services. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: retrieve-search-services
+      description: Retrieve/search services
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.searchservices
+      with:
+        name: tools.name
+        version: tools.version
+        definitionType: tools.definitionType
+        key: tools.key
+        shrink: tools.shrink
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-new-service-service-catalog
+      description: Add a new service to Service Catalog
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: service-catalog-services.addservice
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: export-service
+      description: Export a service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.exportservice
+      with:
+        name: tools.name
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: import-service
+      description: Import a service
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: service-catalog-services.importservice
+      with:
+        overwrite: tools.overwrite
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-service
+      description: Get details of a service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.getservicebyid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-service
+      description: Update a service
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.updateservice
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-service
+      description: Delete a service
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: service-catalog-services.deleteservice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-service-definition
+      description: Retrieve a service definition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.getservicedefinition
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-api-info-that-use
+      description: Retrieve the API Info that use the given service
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-services.getserviceusage
+      outputParameters:
+      - type: object
+        mapping: $.

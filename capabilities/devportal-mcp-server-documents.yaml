@@ -1,0 +1,135 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — MCP Server Documents
+  description: 'WSO2 API Manager - Developer Portal — MCP Server Documents. 3 operations. Lead operation: Get a List of Documents
+    of a MCP Server. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - MCP Server Documents
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-mcp-server-documents
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — MCP Server Documents business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: mcp-servers-mcpServerId-documents
+      path: /mcp-servers/{mcpServerId}/documents
+      operations:
+      - name: getmcpserverdocuments
+        method: GET
+        description: Get a List of Documents of a MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-documents-documentId
+      path: /mcp-servers/{mcpServerId}/documents/{documentId}
+      operations:
+      - name: getmcpserverdocument
+        method: GET
+        description: Get a Document of a MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId-documents-documentId-content
+      path: /mcp-servers/{mcpServerId}/documents/{documentId}/content
+      operations:
+      - name: getmcpserverdocumentcontent
+        method: GET
+        description: Get the Content of a MCP Server Document
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-mcp-server-documents-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — MCP Server Documents. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/mcp-servers/{mcpserverid}/documents
+      name: mcp-servers-mcpserverid-documents
+      description: REST surface for mcp-servers-mcpServerId-documents.
+      operations:
+      - method: GET
+        name: getmcpserverdocuments
+        description: Get a List of Documents of a MCP Server
+        call: devportal-mcp-server-documents.getmcpserverdocuments
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/documents/{documentid}
+      name: mcp-servers-mcpserverid-documents-documentid
+      description: REST surface for mcp-servers-mcpServerId-documents-documentId.
+      operations:
+      - method: GET
+        name: getmcpserverdocument
+        description: Get a Document of a MCP Server
+        call: devportal-mcp-server-documents.getmcpserverdocument
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/documents/{documentid}/content
+      name: mcp-servers-mcpserverid-documents-documentid-content
+      description: REST surface for mcp-servers-mcpServerId-documents-documentId-content.
+      operations:
+      - method: GET
+        name: getmcpserverdocumentcontent
+        description: Get the Content of a MCP Server Document
+        call: devportal-mcp-server-documents.getmcpserverdocumentcontent
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-mcp-server-documents-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — MCP Server Documents. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: get-list-documents-mcp-server
+      description: Get a List of Documents of a MCP Server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-server-documents.getmcpserverdocuments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-document-mcp-server
+      description: Get a Document of a MCP Server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-server-documents.getmcpserverdocument
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-content-mcp-server-document
+      description: Get the Content of a MCP Server Document
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-mcp-server-documents.getmcpserverdocumentcontent
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,586 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — APIKeys
+  description: 'WSO2 API Manager - Developer Portal — APIKeys. 14 operations. Lead operation: Get API Key(s) of a Given API.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - APIKeys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-apikeys
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — APIKeys business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-apiId-api-keys
+      path: /apis/{apiId}/api-keys
+      operations:
+      - name: getapiboundapikeys
+        method: GET
+        description: Get API Key(s) of a Given API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-apiId-api-keys-associate
+      path: /apis/{apiId}/api-keys/associate
+      operations:
+      - name: associateapikey
+        method: POST
+        description: Create an association for the API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiId-api-keys-dissociate
+      path: /apis/{apiId}/api-keys/dissociate
+      operations:
+      - name: dissociateapikey
+        method: POST
+        description: Remove an Association for the API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiId-api-keys-generate
+      path: /apis/{apiId}/api-keys/generate
+      operations:
+      - name: generateapiboundapikey
+        method: POST
+        description: Generate API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiId-api-keys-regenerate
+      path: /apis/{apiId}/api-keys/regenerate
+      operations:
+      - name: regenerateapiboundapikey
+        method: POST
+        description: Regenerate API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiId-api-keys-revoke
+      path: /apis/{apiId}/api-keys/revoke
+      operations:
+      - name: revokeapiboundapikey
+        method: POST
+        description: Revoke API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-api-keys-keyType
+      path: /applications/{applicationId}/api-keys/{keyType}
+      operations:
+      - name: getappboundapikeys
+        method: GET
+        description: Get API Key(s) of a Given Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-api-keys-keyType-associate
+      path: /applications/{applicationId}/api-keys/{keyType}/associate
+      operations:
+      - name: associateapikeytoapp
+        method: POST
+        description: Associate an API Key to the Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-api-keys-keyType-associations
+      path: /applications/{applicationId}/api-keys/{keyType}/associations
+      operations:
+      - name: getapikeyassociationsforapp
+        method: GET
+        description: Get API Key associations of a Given Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-api-keys-keyType-dissociate
+      path: /applications/{applicationId}/api-keys/{keyType}/dissociate
+      operations:
+      - name: dissociateapikeyfromapp
+        method: POST
+        description: Remove the association of the API Key to the Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-api-keys-keyType-generate
+      path: /applications/{applicationId}/api-keys/{keyType}/generate
+      operations:
+      - name: applicationsapplicationidapikeyskeytypegeneratepost
+        method: POST
+        description: Generate API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: applications-applicationId-api-keys-keyType-regenerate
+      path: /applications/{applicationId}/api-keys/{keyType}/regenerate
+      operations:
+      - name: regenerateappboundapikey
+        method: POST
+        description: Regenerate API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-api-keys-keyType-revoke
+      path: /applications/{applicationId}/api-keys/{keyType}/revoke
+      operations:
+      - name: applicationsapplicationidapikeyskeytyperevokepost
+        method: POST
+        description: Revoke API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-api-keys-keyType-subscriptions
+      path: /applications/{applicationId}/api-keys/{keyType}/subscriptions
+      operations:
+      - name: getsubscribedapiswithapikeys
+        method: GET
+        description: Get Subscribed APIs with API Key(s) of a Given Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-apikeys-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — APIKeys. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/{apiid}/api-keys
+      name: apis-apiid-api-keys
+      description: REST surface for apis-apiId-api-keys.
+      operations:
+      - method: GET
+        name: getapiboundapikeys
+        description: Get API Key(s) of a Given API
+        call: devportal-apikeys.getapiboundapikeys
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/api-keys/associate
+      name: apis-apiid-api-keys-associate
+      description: REST surface for apis-apiId-api-keys-associate.
+      operations:
+      - method: POST
+        name: associateapikey
+        description: Create an association for the API Key
+        call: devportal-apikeys.associateapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/api-keys/dissociate
+      name: apis-apiid-api-keys-dissociate
+      description: REST surface for apis-apiId-api-keys-dissociate.
+      operations:
+      - method: POST
+        name: dissociateapikey
+        description: Remove an Association for the API Key
+        call: devportal-apikeys.dissociateapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/api-keys/generate
+      name: apis-apiid-api-keys-generate
+      description: REST surface for apis-apiId-api-keys-generate.
+      operations:
+      - method: POST
+        name: generateapiboundapikey
+        description: Generate API Key
+        call: devportal-apikeys.generateapiboundapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/api-keys/regenerate
+      name: apis-apiid-api-keys-regenerate
+      description: REST surface for apis-apiId-api-keys-regenerate.
+      operations:
+      - method: POST
+        name: regenerateapiboundapikey
+        description: Regenerate API Key
+        call: devportal-apikeys.regenerateapiboundapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/{apiid}/api-keys/revoke
+      name: apis-apiid-api-keys-revoke
+      description: REST surface for apis-apiId-api-keys-revoke.
+      operations:
+      - method: POST
+        name: revokeapiboundapikey
+        description: Revoke API Key
+        call: devportal-apikeys.revokeapiboundapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}
+      name: applications-applicationid-api-keys-keytype
+      description: REST surface for applications-applicationId-api-keys-keyType.
+      operations:
+      - method: GET
+        name: getappboundapikeys
+        description: Get API Key(s) of a Given Type
+        call: devportal-apikeys.getappboundapikeys
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/associate
+      name: applications-applicationid-api-keys-keytype-associate
+      description: REST surface for applications-applicationId-api-keys-keyType-associate.
+      operations:
+      - method: POST
+        name: associateapikeytoapp
+        description: Associate an API Key to the Application
+        call: devportal-apikeys.associateapikeytoapp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/associations
+      name: applications-applicationid-api-keys-keytype-associations
+      description: REST surface for applications-applicationId-api-keys-keyType-associations.
+      operations:
+      - method: GET
+        name: getapikeyassociationsforapp
+        description: Get API Key associations of a Given Type
+        call: devportal-apikeys.getapikeyassociationsforapp
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/dissociate
+      name: applications-applicationid-api-keys-keytype-dissociate
+      description: REST surface for applications-applicationId-api-keys-keyType-dissociate.
+      operations:
+      - method: POST
+        name: dissociateapikeyfromapp
+        description: Remove the association of the API Key to the Application
+        call: devportal-apikeys.dissociateapikeyfromapp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/generate
+      name: applications-applicationid-api-keys-keytype-generate
+      description: REST surface for applications-applicationId-api-keys-keyType-generate.
+      operations:
+      - method: POST
+        name: applicationsapplicationidapikeyskeytypegeneratepost
+        description: Generate API Key
+        call: devportal-apikeys.applicationsapplicationidapikeyskeytypegeneratepost
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/regenerate
+      name: applications-applicationid-api-keys-keytype-regenerate
+      description: REST surface for applications-applicationId-api-keys-keyType-regenerate.
+      operations:
+      - method: POST
+        name: regenerateappboundapikey
+        description: Regenerate API Key
+        call: devportal-apikeys.regenerateappboundapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/revoke
+      name: applications-applicationid-api-keys-keytype-revoke
+      description: REST surface for applications-applicationId-api-keys-keyType-revoke.
+      operations:
+      - method: POST
+        name: applicationsapplicationidapikeyskeytyperevokepost
+        description: Revoke API Key
+        call: devportal-apikeys.applicationsapplicationidapikeyskeytyperevokepost
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/api-keys/{keytype}/subscriptions
+      name: applications-applicationid-api-keys-keytype-subscriptions
+      description: REST surface for applications-applicationId-api-keys-keyType-subscriptions.
+      operations:
+      - method: GET
+        name: getsubscribedapiswithapikeys
+        description: Get Subscribed APIs with API Key(s) of a Given Type
+        call: devportal-apikeys.getsubscribedapiswithapikeys
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-apikeys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — APIKeys. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-api-key-s-given-api
+      description: Get API Key(s) of a Given API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-apikeys.getapiboundapikeys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-association-api-key
+      description: Create an association for the API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.associateapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-association-api-key
+      description: Remove an Association for the API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.dissociateapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-api-key
+      description: Generate API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.generateapiboundapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: regenerate-api-key
+      description: Regenerate API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.regenerateapiboundapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-api-key
+      description: Revoke API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.revokeapiboundapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key-s-given-type
+      description: Get API Key(s) of a Given Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-apikeys.getappboundapikeys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: associate-api-key-application
+      description: Associate an API Key to the Application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.associateapikeytoapp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key-associations-given
+      description: Get API Key associations of a Given Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-apikeys.getapikeyassociationsforapp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-association-api-key-application
+      description: Remove the association of the API Key to the Application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.dissociateapikeyfromapp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-api-key-2
+      description: Generate API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.applicationsapplicationidapikeyskeytypegeneratepost
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: regenerate-api-key-2
+      description: Regenerate API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.regenerateappboundapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-api-key-2
+      description: Revoke API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-apikeys.applicationsapplicationidapikeyskeytyperevokepost
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-subscribed-apis-api-key-s
+      description: Get Subscribed APIs with API Key(s) of a Given Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-apikeys.getsubscribedapiswithapikeys
+      outputParameters:
+      - type: object
+        mapping: $.

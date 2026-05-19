@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Gateway — Get Subscription Info
+  description: 'WSO2 API Manager - Gateway — Get Subscription Info. 1 operations. Lead operation: Get the subscriptions meta
+    information of an api by providing the api uuid and application uuid.. Self-contained Naftiko capability covering one
+    Wso2 business surface.'
+  tags:
+  - Wso2
+  - Get Subscription Info
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gateway-get-subscription-info
+    baseUri: https://apis.wso2.com/api/am/gateway/v2
+    description: WSO2 API Manager - Gateway — Get Subscription Info business capability. Self-contained, no shared references.
+    resources:
+    - name: subscriptions
+      path: /subscriptions
+      operations:
+      - name: get
+        method: GET
+        description: Get the subscriptions meta information of an api by providing the api uuid and application uuid.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiUUID
+          in: query
+          type: string
+          description: UUID of the API
+        - name: appUUID
+          in: query
+          type: string
+          description: UUID of the Application
+        - name: tenantDomain
+          in: query
+          type: string
+          description: Tenant Domain of the Application
+  exposes:
+  - type: rest
+    namespace: gateway-get-subscription-info-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Gateway — Get Subscription Info. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/subscriptions
+      name: subscriptions
+      description: REST surface for subscriptions.
+      operations:
+      - method: GET
+        name: get
+        description: Get the subscriptions meta information of an api by providing the api uuid and application uuid.
+        call: gateway-get-subscription-info.get
+        with:
+          apiUUID: rest.apiUUID
+          appUUID: rest.appUUID
+          tenantDomain: rest.tenantDomain
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gateway-get-subscription-info-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Gateway — Get Subscription Info. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-subscriptions-meta-information-api
+      description: Get the subscriptions meta information of an api by providing the api uuid and application uuid.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-get-subscription-info.get
+      with:
+        apiUUID: tools.apiUUID
+        appUUID: tools.appUUID
+        tenantDomain: tools.tenantDomain
+      outputParameters:
+      - type: object
+        mapping: $.

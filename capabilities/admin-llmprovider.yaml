@@ -1,0 +1,130 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — LLMProvider
+  description: 'WSO2 API Manager - Admin — LLMProvider. 3 operations. Lead operation: Update an LLM provider. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - LLMProvider
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-llmprovider
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — LLMProvider business capability. Self-contained, no shared references.
+    resources:
+    - name: llm-providers-llmProviderId
+      path: /llm-providers/{llmProviderId}
+      operations:
+      - name: updatellmprovider
+        method: PUT
+        description: Update an LLM provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletellmprovider
+        method: DELETE
+        description: Delete a LLM Provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: getllmprovider
+        method: GET
+        description: Get LLM Provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-llmprovider-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — LLMProvider. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/llm-providers/{llmproviderid}
+      name: llm-providers-llmproviderid
+      description: REST surface for llm-providers-llmProviderId.
+      operations:
+      - method: PUT
+        name: updatellmprovider
+        description: Update an LLM provider
+        call: admin-llmprovider.updatellmprovider
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletellmprovider
+        description: Delete a LLM Provider
+        call: admin-llmprovider.deletellmprovider
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getllmprovider
+        description: Get LLM Provider
+        call: admin-llmprovider.getllmprovider
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-llmprovider-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — LLMProvider. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: update-llm-provider
+      description: Update an LLM provider
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: admin-llmprovider.updatellmprovider
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-llm-provider
+      description: Delete a LLM Provider
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: admin-llmprovider.deletellmprovider
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-llm-provider
+      description: Get LLM Provider
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-llmprovider.getllmprovider
+      outputParameters:
+      - type: object
+        mapping: $.

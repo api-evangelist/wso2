@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Unified Search
+  description: 'WSO2 API Manager - Admin — Unified Search. 1 operations. Lead operation: Retrieve/Search Throttling Policies.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Unified Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-unified-search
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Unified Search business capability. Self-contained, no shared references.
+    resources:
+    - name: throttling-policies-search
+      path: /throttling/policies/search
+      operations:
+      - name: throttlingpolicysearch
+        method: GET
+        description: Retrieve/Search Throttling Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: '**Search**.'
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-unified-search-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Unified Search. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/throttling/policies/search
+      name: throttling-policies-search
+      description: REST surface for throttling-policies-search.
+      operations:
+      - method: GET
+        name: throttlingpolicysearch
+        description: Retrieve/Search Throttling Policies
+        call: admin-unified-search.throttlingpolicysearch
+        with:
+          query: rest.query
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-unified-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Unified Search. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: retrieve-search-throttling-policies
+      description: Retrieve/Search Throttling Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-unified-search.throttlingpolicysearch
+      with:
+        query: tools.query
+      outputParameters:
+      - type: object
+        mapping: $.

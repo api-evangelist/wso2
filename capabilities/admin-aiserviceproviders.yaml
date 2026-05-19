@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — AIServiceProviders
+  description: 'WSO2 API Manager - Admin — AIServiceProviders. 2 operations. Lead operation: Get all AI Service providers.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - AIServiceProviders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-aiserviceproviders
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — AIServiceProviders business capability. Self-contained, no shared references.
+    resources:
+    - name: ai-service-providers
+      path: /ai-service-providers
+      operations:
+      - name: getaiserviceproviders
+        method: GET
+        description: Get all AI Service providers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addaiserviceprovider
+        method: POST
+        description: Add a AI Service provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-aiserviceproviders-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — AIServiceProviders. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/ai-service-providers
+      name: ai-service-providers
+      description: REST surface for ai-service-providers.
+      operations:
+      - method: GET
+        name: getaiserviceproviders
+        description: Get all AI Service providers
+        call: admin-aiserviceproviders.getaiserviceproviders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addaiserviceprovider
+        description: Add a AI Service provider
+        call: admin-aiserviceproviders.addaiserviceprovider
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-aiserviceproviders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — AIServiceProviders. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-all-ai-service-providers
+      description: Get all AI Service providers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-aiserviceproviders.getaiserviceproviders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-ai-service-provider
+      description: Add a AI Service provider
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-aiserviceproviders.addaiserviceprovider
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

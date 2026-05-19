@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — API Categories
+  description: 'WSO2 API Manager - Developer Portal — API Categories. 1 operations. Lead operation: Get All API Categories.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - API Categories
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-api-categories
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — API Categories business capability. Self-contained, no shared references.
+    resources:
+    - name: api-categories
+      path: /api-categories
+      operations:
+      - name: get
+        method: GET
+        description: Get All API Categories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-api-categories-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — API Categories. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api-categories
+      name: api-categories
+      description: REST surface for api-categories.
+      operations:
+      - method: GET
+        name: get
+        description: Get All API Categories
+        call: devportal-api-categories.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-api-categories-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — API Categories. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-all-api-categories
+      description: Get All API Categories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-api-categories.get
+      outputParameters:
+      - type: object
+        mapping: $.

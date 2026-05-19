@@ -1,0 +1,131 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Subscription Policy (Individual)
+  description: 'WSO2 API Manager - Admin — Subscription Policy (Individual). 3 operations. Lead operation: Get a Subscription
+    Policy. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Subscription Policy (Individual)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-subscription-policy-individual
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Subscription Policy (Individual) business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: throttling-policies-subscription-policyId
+      path: /throttling/policies/subscription/{policyId}
+      operations:
+      - name: get
+        method: GET
+        description: Get a Subscription Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update a Subscription Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: delete
+        method: DELETE
+        description: Delete a Subscription Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-subscription-policy-individual-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Subscription Policy (Individual). One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/throttling/policies/subscription/{policyid}
+      name: throttling-policies-subscription-policyid
+      description: REST surface for throttling-policies-subscription-policyId.
+      operations:
+      - method: GET
+        name: get
+        description: Get a Subscription Policy
+        call: admin-subscription-policy-individual.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update a Subscription Policy
+        call: admin-subscription-policy-individual.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete a Subscription Policy
+        call: admin-subscription-policy-individual.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-subscription-policy-individual-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Subscription Policy (Individual). One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: get-subscription-policy
+      description: Get a Subscription Policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-subscription-policy-individual.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-subscription-policy
+      description: Update a Subscription Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: admin-subscription-policy-individual.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-subscription-policy
+      description: Delete a Subscription Policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: admin-subscription-policy-individual.delete
+      outputParameters:
+      - type: object
+        mapping: $.

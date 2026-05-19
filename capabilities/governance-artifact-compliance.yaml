@@ -1,0 +1,166 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Governance — Artifact Compliance
+  description: 'WSO2 API Manager - Governance — Artifact Compliance. 4 operations. Lead operation: Retrieves compliance of
+    all API artifacts. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Artifact Compliance
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: governance-artifact-compliance
+    baseUri: https://apis.wso2.com/api/am/governance/v1
+    description: WSO2 API Manager - Governance — Artifact Compliance business capability. Self-contained, no shared references.
+    resources:
+    - name: artifact-compliance-api
+      path: /artifact-compliance/api
+      operations:
+      - name: getcompliancestatuslistofapis
+        method: GET
+        description: Retrieves compliance of all API artifacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: artifact-compliance-api-summary
+      path: /artifact-compliance/api/summary
+      operations:
+      - name: getcompliancesummaryforapis
+        method: GET
+        description: Retrieves the summary of compliance of all API artifacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: artifact-compliance-api-apiId
+      path: /artifact-compliance/api/{apiId}
+      operations:
+      - name: getcompliancebyapiid
+        method: GET
+        description: Retrieve compliance details for a specific API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: artifact-compliance-api-apiId-ruleset-validation-results-rulesetId
+      path: /artifact-compliance/api/{apiId}/ruleset-validation-results/{rulesetId}
+      operations:
+      - name: getrulesetvalidationresultsbyapiid
+        method: GET
+        description: Retrieve ruleset validation results for a specific API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: governance-artifact-compliance-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Governance — Artifact Compliance. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/artifact-compliance/api
+      name: artifact-compliance-api
+      description: REST surface for artifact-compliance-api.
+      operations:
+      - method: GET
+        name: getcompliancestatuslistofapis
+        description: Retrieves compliance of all API artifacts
+        call: governance-artifact-compliance.getcompliancestatuslistofapis
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/artifact-compliance/api/summary
+      name: artifact-compliance-api-summary
+      description: REST surface for artifact-compliance-api-summary.
+      operations:
+      - method: GET
+        name: getcompliancesummaryforapis
+        description: Retrieves the summary of compliance of all API artifacts
+        call: governance-artifact-compliance.getcompliancesummaryforapis
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/artifact-compliance/api/{apiid}
+      name: artifact-compliance-api-apiid
+      description: REST surface for artifact-compliance-api-apiId.
+      operations:
+      - method: GET
+        name: getcompliancebyapiid
+        description: Retrieve compliance details for a specific API
+        call: governance-artifact-compliance.getcompliancebyapiid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/artifact-compliance/api/{apiid}/ruleset-validation-results/{rulesetid}
+      name: artifact-compliance-api-apiid-ruleset-validation-results-rulesetid
+      description: REST surface for artifact-compliance-api-apiId-ruleset-validation-results-rulesetId.
+      operations:
+      - method: GET
+        name: getrulesetvalidationresultsbyapiid
+        description: Retrieve ruleset validation results for a specific API
+        call: governance-artifact-compliance.getrulesetvalidationresultsbyapiid
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: governance-artifact-compliance-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Governance — Artifact Compliance. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: retrieves-compliance-all-api-artifacts
+      description: Retrieves compliance of all API artifacts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-artifact-compliance.getcompliancestatuslistofapis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieves-summary-compliance-all-api
+      description: Retrieves the summary of compliance of all API artifacts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-artifact-compliance.getcompliancesummaryforapis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-compliance-details-specific-api
+      description: Retrieve compliance details for a specific API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-artifact-compliance.getcompliancebyapiid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-ruleset-validation-results-specific
+      description: Retrieve ruleset validation results for a specific API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-artifact-compliance.getrulesetvalidationresultsbyapiid
+      outputParameters:
+      - type: object
+        mapping: $.

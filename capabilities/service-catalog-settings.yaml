@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Service Catalog APIs — Settings
+  description: 'Service Catalog APIs — Settings. 1 operations. Lead operation: Retrieve service catalog API settings. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Settings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: service-catalog-settings
+    baseUri: https://apis.wso2.com/api/service-catalog/v1
+    description: Service Catalog APIs — Settings business capability. Self-contained, no shared references.
+    resources:
+    - name: settings
+      path: /settings
+      operations:
+      - name: getsettings
+        method: GET
+        description: Retrieve service catalog API settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: service-catalog-settings-rest
+    port: 8080
+    description: REST adapter for Service Catalog APIs — Settings. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/settings
+      name: settings
+      description: REST surface for settings.
+      operations:
+      - method: GET
+        name: getsettings
+        description: Retrieve service catalog API settings
+        call: service-catalog-settings.getsettings
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: service-catalog-settings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Service Catalog APIs — Settings. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: retrieve-service-catalog-api-settings
+      description: Retrieve service catalog API settings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: service-catalog-settings.getsettings
+      outputParameters:
+      - type: object
+        mapping: $.

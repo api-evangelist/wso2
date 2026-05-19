@@ -1,0 +1,131 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Application Policy (Individual)
+  description: 'WSO2 API Manager - Admin — Application Policy (Individual). 3 operations. Lead operation: Get an Application
+    Throttling Policy. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Application Policy (Individual)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-application-policy-individual
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Application Policy (Individual) business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: throttling-policies-application-policyId
+      path: /throttling/policies/application/{policyId}
+      operations:
+      - name: get
+        method: GET
+        description: Get an Application Throttling Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update an Application Throttling policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: delete
+        method: DELETE
+        description: Delete an Application Throttling policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-application-policy-individual-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Application Policy (Individual). One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/throttling/policies/application/{policyid}
+      name: throttling-policies-application-policyid
+      description: REST surface for throttling-policies-application-policyId.
+      operations:
+      - method: GET
+        name: get
+        description: Get an Application Throttling Policy
+        call: admin-application-policy-individual.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update an Application Throttling policy
+        call: admin-application-policy-individual.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Delete an Application Throttling policy
+        call: admin-application-policy-individual.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-application-policy-individual-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Application Policy (Individual). One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: get-application-throttling-policy
+      description: Get an Application Throttling Policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-application-policy-individual.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-application-throttling-policy
+      description: Update an Application Throttling policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: admin-application-policy-individual.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-application-throttling-policy
+      description: Delete an Application Throttling policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: admin-application-policy-individual.delete
+      outputParameters:
+      - type: object
+        mapping: $.

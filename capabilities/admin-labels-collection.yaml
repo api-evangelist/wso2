@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Labels (Collection)
+  description: 'WSO2 API Manager - Admin — Labels (Collection). 1 operations. Lead operation: Get all Labels. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Labels (Collection)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-labels-collection
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Labels (Collection) business capability. Self-contained, no shared references.
+    resources:
+    - name: labels
+      path: /labels
+      operations:
+      - name: getalllabels
+        method: GET
+        description: Get all Labels
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-labels-collection-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Labels (Collection). One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/labels
+      name: labels
+      description: REST surface for labels.
+      operations:
+      - method: GET
+        name: getalllabels
+        description: Get all Labels
+        call: admin-labels-collection.getalllabels
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-labels-collection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Labels (Collection). One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-all-labels
+      description: Get all Labels
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-labels-collection.getalllabels
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,206 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Governance — Governance Policies
+  description: 'WSO2 API Manager - Governance — Governance Policies. 5 operations. Lead operation: Retrieves a list of all
+    governance policies.. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Governance Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: governance-governance-policies
+    baseUri: https://apis.wso2.com/api/am/governance/v1
+    description: WSO2 API Manager - Governance — Governance Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: policies
+      path: /policies
+      operations:
+      - name: getgovernancepolicies
+        method: GET
+        description: Retrieves a list of all governance policies.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: You can search for governance policies using following format.
+      - name: creategovernancepolicy
+        method: POST
+        description: Creates a new governance policy.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: policies-policyId
+      path: /policies/{policyId}
+      operations:
+      - name: getgovernancepolicybyid
+        method: GET
+        description: Get a specific governance policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updategovernancepolicybyid
+        method: PUT
+        description: Update a specific governance policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletegovernancepolicy
+        method: DELETE
+        description: Delete a specific governance policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: governance-governance-policies-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Governance — Governance Policies. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/policies
+      name: policies
+      description: REST surface for policies.
+      operations:
+      - method: GET
+        name: getgovernancepolicies
+        description: Retrieves a list of all governance policies.
+        call: governance-governance-policies.getgovernancepolicies
+        with:
+          query: rest.query
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: creategovernancepolicy
+        description: Creates a new governance policy.
+        call: governance-governance-policies.creategovernancepolicy
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/policies/{policyid}
+      name: policies-policyid
+      description: REST surface for policies-policyId.
+      operations:
+      - method: GET
+        name: getgovernancepolicybyid
+        description: Get a specific governance policy
+        call: governance-governance-policies.getgovernancepolicybyid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updategovernancepolicybyid
+        description: Update a specific governance policy
+        call: governance-governance-policies.updategovernancepolicybyid
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletegovernancepolicy
+        description: Delete a specific governance policy
+        call: governance-governance-policies.deletegovernancepolicy
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: governance-governance-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Governance — Governance Policies. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: retrieves-list-all-governance-policies
+      description: Retrieves a list of all governance policies.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-governance-policies.getgovernancepolicies
+      with:
+        query: tools.query
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-new-governance-policy
+      description: Creates a new governance policy.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: governance-governance-policies.creategovernancepolicy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-specific-governance-policy
+      description: Get a specific governance policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: governance-governance-policies.getgovernancepolicybyid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-specific-governance-policy
+      description: Update a specific governance policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: governance-governance-policies.updategovernancepolicybyid
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-specific-governance-policy
+      description: Delete a specific governance policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: governance-governance-policies.deletegovernancepolicy
+      outputParameters:
+      - type: object
+        mapping: $.

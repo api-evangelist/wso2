@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — API Category (Collection)
+  description: 'WSO2 API Manager - Admin — API Category (Collection). 1 operations. Lead operation: Get all API Categories.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - API Category (Collection)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-api-category-collection
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — API Category (Collection) business capability. Self-contained, no shared references.
+    resources:
+    - name: api-categories
+      path: /api-categories
+      operations:
+      - name: get
+        method: GET
+        description: Get all API Categories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-api-category-collection-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — API Category (Collection). One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api-categories
+      name: api-categories
+      description: REST surface for api-categories.
+      operations:
+      - method: GET
+        name: get
+        description: Get all API Categories
+        call: admin-api-category-collection.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-api-category-collection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — API Category (Collection). One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-all-api-categories
+      description: Get all API Categories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-api-category-collection.get
+      outputParameters:
+      - type: object
+        mapping: $.

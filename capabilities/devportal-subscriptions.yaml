@@ -1,0 +1,271 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — Subscriptions
+  description: 'WSO2 API Manager - Developer Portal — Subscriptions. 7 operations. Lead operation: Get All Subscriptions.
+    Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Subscriptions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-subscriptions
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — Subscriptions business capability. Self-contained, no shared references.
+    resources:
+    - name: subscriptions
+      path: /subscriptions
+      operations:
+      - name: get
+        method: GET
+        description: Get All Subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: post
+        method: POST
+        description: Add a New Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: subscriptions-multiple
+      path: /subscriptions/multiple
+      operations:
+      - name: post
+        method: POST
+        description: Add New Subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: subscriptions-apiId-additionalInfo
+      path: /subscriptions/{apiId}/additionalInfo
+      operations:
+      - name: getadditionalinfoofapisubscriptions
+        method: GET
+        description: Get Additional Information of subscriptions attached to an API.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions-subscriptionId
+      path: /subscriptions/{subscriptionId}
+      operations:
+      - name: get
+        method: GET
+        description: Get Details of a Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update Existing Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: delete
+        method: DELETE
+        description: Remove a Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-subscriptions-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — Subscriptions. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/subscriptions
+      name: subscriptions
+      description: REST surface for subscriptions.
+      operations:
+      - method: GET
+        name: get
+        description: Get All Subscriptions
+        call: devportal-subscriptions.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: post
+        description: Add a New Subscription
+        call: devportal-subscriptions.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions/multiple
+      name: subscriptions-multiple
+      description: REST surface for subscriptions-multiple.
+      operations:
+      - method: POST
+        name: post
+        description: Add New Subscriptions
+        call: devportal-subscriptions.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions/{apiid}/additionalinfo
+      name: subscriptions-apiid-additionalinfo
+      description: REST surface for subscriptions-apiId-additionalInfo.
+      operations:
+      - method: GET
+        name: getadditionalinfoofapisubscriptions
+        description: Get Additional Information of subscriptions attached to an API.
+        call: devportal-subscriptions.getadditionalinfoofapisubscriptions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions/{subscriptionid}
+      name: subscriptions-subscriptionid
+      description: REST surface for subscriptions-subscriptionId.
+      operations:
+      - method: GET
+        name: get
+        description: Get Details of a Subscription
+        call: devportal-subscriptions.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update Existing Subscription
+        call: devportal-subscriptions.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Remove a Subscription
+        call: devportal-subscriptions.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-subscriptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — Subscriptions. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-all-subscriptions
+      description: Get All Subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-subscriptions.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-new-subscription
+      description: Add a New Subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-subscriptions.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-new-subscriptions
+      description: Add New Subscriptions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-subscriptions.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-additional-information-subscriptions-attached
+      description: Get Additional Information of subscriptions attached to an API.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-subscriptions.getadditionalinfoofapisubscriptions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-subscription
+      description: Get Details of a Subscription
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-subscriptions.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-existing-subscription
+      description: Update Existing Subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: devportal-subscriptions.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-subscription
+      description: Remove a Subscription
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: devportal-subscriptions.delete
+      outputParameters:
+      - type: object
+        mapping: $.

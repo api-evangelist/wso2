@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — Key Manager (Collection)
+  description: 'WSO2 API Manager - Admin — Key Manager (Collection). 3 operations. Lead operation: Get all Key managers. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Key Manager (Collection)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-key-manager-collection
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — Key Manager (Collection) business capability. Self-contained, no shared references.
+    resources:
+    - name: key-managers
+      path: /key-managers
+      operations:
+      - name: get
+        method: GET
+        description: Get all Key managers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: post
+        method: POST
+        description: Add a new API Key Manager
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: key-managers-discover
+      path: /key-managers/discover
+      operations:
+      - name: post
+        method: POST
+        description: Retrieve Well-known information from Key Manager Well-known Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-key-manager-collection-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — Key Manager (Collection). One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/key-managers
+      name: key-managers
+      description: REST surface for key-managers.
+      operations:
+      - method: GET
+        name: get
+        description: Get all Key managers
+        call: admin-key-manager-collection.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: post
+        description: Add a new API Key Manager
+        call: admin-key-manager-collection.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/key-managers/discover
+      name: key-managers-discover
+      description: REST surface for key-managers-discover.
+      operations:
+      - method: POST
+        name: post
+        description: Retrieve Well-known information from Key Manager Well-known Endpoint
+        call: admin-key-manager-collection.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-key-manager-collection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — Key Manager (Collection). One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-all-key-managers
+      description: Get all Key managers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-key-manager-collection.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-new-api-key-manager
+      description: Add a new API Key Manager
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-key-manager-collection.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-well-known-information-key
+      description: Retrieve Well-known information from Key Manager Well-known Endpoint
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: admin-key-manager-collection.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

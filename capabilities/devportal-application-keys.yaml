@@ -1,0 +1,473 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — Application Keys
+  description: 'WSO2 API Manager - Developer Portal — Application Keys. 13 operations. Lead operation: Generate Application
+    Keys. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Application Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-application-keys
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — Application Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: applications-applicationId-generate-keys
+      path: /applications/{applicationId}/generate-keys
+      operations:
+      - name: post
+        method: POST
+        description: Generate Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-keys
+      path: /applications/{applicationId}/keys
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve All Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-keys-keyType
+      path: /applications/{applicationId}/keys/{keyType}
+      operations:
+      - name: get
+        method: GET
+        description: Get Key Details of a Given Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update Grant Types and Callback Url of an Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-keys-keyType-clean-up
+      path: /applications/{applicationId}/keys/{keyType}/clean-up
+      operations:
+      - name: post
+        method: POST
+        description: Clean-Up Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-keys-keyType-regenerate-secret
+      path: /applications/{applicationId}/keys/{keyType}/regenerate-secret
+      operations:
+      - name: post
+        method: POST
+        description: Re-Generate Consumer Secret
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-map-keys
+      path: /applications/{applicationId}/map-keys
+      operations:
+      - name: post
+        method: POST
+        description: Map Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: applications-applicationId-oauth-keys
+      path: /applications/{applicationId}/oauth-keys
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve All Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-oauth-keys-keyMappingId
+      path: /applications/{applicationId}/oauth-keys/{keyMappingId}
+      operations:
+      - name: get
+        method: GET
+        description: Get Key Details of a Given Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update Grant Types and Callback URL of an Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: delete
+        method: DELETE
+        description: Remove Generated Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-oauth-keys-keyMappingId-clean-up
+      path: /applications/{applicationId}/oauth-keys/{keyMappingId}/clean-up
+      operations:
+      - name: post
+        method: POST
+        description: Clean-Up Application Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-applicationId-oauth-keys-keyMappingId-regenerate-secret
+      path: /applications/{applicationId}/oauth-keys/{keyMappingId}/regenerate-secret
+      operations:
+      - name: post
+        method: POST
+        description: Re-Generate Consumer Secret
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-application-keys-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — Application Keys. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/applications/{applicationid}/generate-keys
+      name: applications-applicationid-generate-keys
+      description: REST surface for applications-applicationId-generate-keys.
+      operations:
+      - method: POST
+        name: post
+        description: Generate Application Keys
+        call: devportal-application-keys.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/keys
+      name: applications-applicationid-keys
+      description: REST surface for applications-applicationId-keys.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve All Application Keys
+        call: devportal-application-keys.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/keys/{keytype}
+      name: applications-applicationid-keys-keytype
+      description: REST surface for applications-applicationId-keys-keyType.
+      operations:
+      - method: GET
+        name: get
+        description: Get Key Details of a Given Type
+        call: devportal-application-keys.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update Grant Types and Callback Url of an Application
+        call: devportal-application-keys.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/keys/{keytype}/clean-up
+      name: applications-applicationid-keys-keytype-clean-up
+      description: REST surface for applications-applicationId-keys-keyType-clean-up.
+      operations:
+      - method: POST
+        name: post
+        description: Clean-Up Application Keys
+        call: devportal-application-keys.post
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/keys/{keytype}/regenerate-secret
+      name: applications-applicationid-keys-keytype-regenerate-secret
+      description: REST surface for applications-applicationId-keys-keyType-regenerate-secret.
+      operations:
+      - method: POST
+        name: post
+        description: Re-Generate Consumer Secret
+        call: devportal-application-keys.post
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/map-keys
+      name: applications-applicationid-map-keys
+      description: REST surface for applications-applicationId-map-keys.
+      operations:
+      - method: POST
+        name: post
+        description: Map Application Keys
+        call: devportal-application-keys.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/oauth-keys
+      name: applications-applicationid-oauth-keys
+      description: REST surface for applications-applicationId-oauth-keys.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve All Application Keys
+        call: devportal-application-keys.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/oauth-keys/{keymappingid}
+      name: applications-applicationid-oauth-keys-keymappingid
+      description: REST surface for applications-applicationId-oauth-keys-keyMappingId.
+      operations:
+      - method: GET
+        name: get
+        description: Get Key Details of a Given Type
+        call: devportal-application-keys.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update Grant Types and Callback URL of an Application
+        call: devportal-application-keys.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Remove Generated Application Keys
+        call: devportal-application-keys.delete
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/oauth-keys/{keymappingid}/clean-up
+      name: applications-applicationid-oauth-keys-keymappingid-clean-up
+      description: REST surface for applications-applicationId-oauth-keys-keyMappingId-clean-up.
+      operations:
+      - method: POST
+        name: post
+        description: Clean-Up Application Keys
+        call: devportal-application-keys.post
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationid}/oauth-keys/{keymappingid}/regenerate-secret
+      name: applications-applicationid-oauth-keys-keymappingid-regenerate-secret
+      description: REST surface for applications-applicationId-oauth-keys-keyMappingId-regenerate-secret.
+      operations:
+      - method: POST
+        name: post
+        description: Re-Generate Consumer Secret
+        call: devportal-application-keys.post
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-application-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — Application Keys. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: generate-application-keys
+      description: Generate Application Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-all-application-keys
+      description: Retrieve All Application Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-key-details-given-type
+      description: Get Key Details of a Given Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-grant-types-and-callback
+      description: Update Grant Types and Callback Url of an Application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: clean-up-application-keys
+      description: Clean-Up Application Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: re-generate-consumer-secret
+      description: Re-Generate Consumer Secret
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: map-application-keys
+      description: Map Application Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-all-application-keys-2
+      description: Retrieve All Application Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-key-details-given-type-2
+      description: Get Key Details of a Given Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-grant-types-and-callback-2
+      description: Update Grant Types and Callback URL of an Application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: devportal-application-keys.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-generated-application-keys
+      description: Remove Generated Application Keys
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: devportal-application-keys.delete
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: clean-up-application-keys-2
+      description: Clean-Up Application Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: re-generate-consumer-secret-2
+      description: Re-Generate Consumer Secret
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: devportal-application-keys.post
+      outputParameters:
+      - type: object
+        mapping: $.

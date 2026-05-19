@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Admin — APIKeys
+  description: 'WSO2 API Manager - Admin — APIKeys. 2 operations. Lead operation: Get all API Keys. Self-contained Naftiko
+    capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - APIKeys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: admin-apikeys
+    baseUri: https://apis.wso2.com/api/am/admin/v4
+    description: WSO2 API Manager - Admin — APIKeys business capability. Self-contained, no shared references.
+    resources:
+    - name: api-keys
+      path: /api-keys
+      operations:
+      - name: getallapikeys
+        method: GET
+        description: Get all API Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-keys-revoke
+      path: /api-keys/revoke
+      operations:
+      - name: revokeapikeyfromadmin
+        method: POST
+        description: Revoke an API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: admin-apikeys-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Admin — APIKeys. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api-keys
+      name: api-keys
+      description: REST surface for api-keys.
+      operations:
+      - method: GET
+        name: getallapikeys
+        description: Get all API Keys
+        call: admin-apikeys.getallapikeys
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api-keys/revoke
+      name: api-keys-revoke
+      description: REST surface for api-keys-revoke.
+      operations:
+      - method: POST
+        name: revokeapikeyfromadmin
+        description: Revoke an API Key
+        call: admin-apikeys.revokeapikeyfromadmin
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: admin-apikeys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Admin — APIKeys. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-all-api-keys
+      description: Get all API Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: admin-apikeys.getallapikeys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-api-key
+      description: Revoke an API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: admin-apikeys.revokeapikeyfromadmin
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

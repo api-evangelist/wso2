@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Developer Portal — Webhooks
+  description: 'WSO2 API Manager - Developer Portal — Webhooks. 1 operations. Lead operation: Get available web hook subscriptions
+    for a given application.. Self-contained Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  - Webhooks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: devportal-webhooks
+    baseUri: https://apis.wso2.com/api/am/devportal/v3
+    description: WSO2 API Manager - Developer Portal — Webhooks business capability. Self-contained, no shared references.
+    resources:
+    - name: webhooks-subscriptions
+      path: /webhooks/subscriptions
+      operations:
+      - name: get
+        method: GET
+        description: Get available web hook subscriptions for a given application.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.WSO2_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: devportal-webhooks-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Developer Portal — Webhooks. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/webhooks/subscriptions
+      name: webhooks-subscriptions
+      description: REST surface for webhooks-subscriptions.
+      operations:
+      - method: GET
+        name: get
+        description: Get available web hook subscriptions for a given application.
+        call: devportal-webhooks.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: devportal-webhooks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Developer Portal — Webhooks. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-available-web-hook-subscriptions
+      description: Get available web hook subscriptions for a given application.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: devportal-webhooks.get
+      outputParameters:
+      - type: object
+        mapping: $.

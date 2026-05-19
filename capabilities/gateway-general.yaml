@@ -1,0 +1,258 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WSO2 API Manager - Gateway
+  description: 'WSO2 API Manager - Gateway. 7 operations. Lead operation: Get API artifact from the storage. Self-contained
+    Naftiko capability covering one Wso2 business surface.'
+  tags:
+  - Wso2
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gateway-general
+    baseUri: https://apis.wso2.com/api/am/gateway/v2
+    description: WSO2 API Manager - Gateway business capability. Self-contained, no shared references.
+    resources:
+    - name: api-artifact
+      path: /api-artifact
+      operations:
+      - name: getapiartifacts
+        method: GET
+        description: Get API artifact from the storage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: end-points
+      path: /end-points
+      operations:
+      - name: getendpoints
+        method: GET
+        description: Get end-points from the storage for the API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: local-entry
+      path: /local-entry
+      operations:
+      - name: getlocalentries
+        method: GET
+        description: Get Local Entry from the storage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: redeploy-api
+      path: /redeploy-api
+      operations:
+      - name: redployapi
+        method: POST
+        description: Redeploy the API in the gateway
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: sequence
+      path: /sequence
+      operations:
+      - name: getsequences
+        method: GET
+        description: Get sequences from the storage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: server-startup-healthcheck
+      path: /server-startup-healthcheck
+      operations:
+      - name: get
+        method: GET
+        description: Health check to check if all the API are deployed during the server startup
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: undeploy-api
+      path: /undeploy-api
+      operations:
+      - name: undeployapi
+        method: POST
+        description: Undeploy the API in the gateway
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: gateway-general-rest
+    port: 8080
+    description: REST adapter for WSO2 API Manager - Gateway. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api-artifact
+      name: api-artifact
+      description: REST surface for api-artifact.
+      operations:
+      - method: GET
+        name: getapiartifacts
+        description: Get API artifact from the storage
+        call: gateway-general.getapiartifacts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/end-points
+      name: end-points
+      description: REST surface for end-points.
+      operations:
+      - method: GET
+        name: getendpoints
+        description: Get end-points from the storage for the API
+        call: gateway-general.getendpoints
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/local-entry
+      name: local-entry
+      description: REST surface for local-entry.
+      operations:
+      - method: GET
+        name: getlocalentries
+        description: Get Local Entry from the storage
+        call: gateway-general.getlocalentries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/redeploy-api
+      name: redeploy-api
+      description: REST surface for redeploy-api.
+      operations:
+      - method: POST
+        name: redployapi
+        description: Redeploy the API in the gateway
+        call: gateway-general.redployapi
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sequence
+      name: sequence
+      description: REST surface for sequence.
+      operations:
+      - method: GET
+        name: getsequences
+        description: Get sequences from the storage
+        call: gateway-general.getsequences
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/server-startup-healthcheck
+      name: server-startup-healthcheck
+      description: REST surface for server-startup-healthcheck.
+      operations:
+      - method: GET
+        name: get
+        description: Health check to check if all the API are deployed during the server startup
+        call: gateway-general.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/undeploy-api
+      name: undeploy-api
+      description: REST surface for undeploy-api.
+      operations:
+      - method: POST
+        name: undeployapi
+        description: Undeploy the API in the gateway
+        call: gateway-general.undeployapi
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gateway-general-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WSO2 API Manager - Gateway. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-api-artifact-storage
+      description: Get API artifact from the storage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-general.getapiartifacts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-end-points-storage-api
+      description: Get end-points from the storage for the API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-general.getendpoints
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-local-entry-storage
+      description: Get Local Entry from the storage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-general.getlocalentries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: redeploy-api-gateway
+      description: Redeploy the API in the gateway
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gateway-general.redployapi
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-sequences-storage
+      description: Get sequences from the storage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-general.getsequences
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: health-check-check-if-all
+      description: Health check to check if all the API are deployed during the server startup
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gateway-general.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: undeploy-api-gateway
+      description: Undeploy the API in the gateway
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gateway-general.undeployapi
+      outputParameters:
+      - type: object
+        mapping: $.
