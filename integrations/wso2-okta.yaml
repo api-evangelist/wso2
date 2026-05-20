@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SCIM-provision Okta users into WSO2 Devportal applications
+  description: When an Okta user is assigned to the WSO2 app, create the matching Devportal subscription so the user can call published APIs.
+  tags:
+  - WSO2
+  - Integration
+  - Identity
+  - okta
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    OKTA_API_KEY: OKTA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: applications
+      path: /applications
+      operations:
+      - name: createdevportalapplication
+        method: POST
+        description: Create a Devportal application for the newly-provisioned Okta user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiid-api-keys-generate
+      path: /apis/{apiId}/api-keys/generate
+      operations:
+      - name: generateapikey
+        method: POST
+        description: Generate an API key for the new Devportal application.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: okta
+    baseUri: https://yourdomain.okta.com
+    description: Okta API operations consumed by this integration.
+    resources:
+    - name: api-v1-users-userid
+      path: /api/v1/users/{userId}
+      operations:
+      - name: getuser
+        method: GET
+        description: 'Okta API: getUser'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Path parameter userId.
+          required: true
+    - name: api-v1-apps-appid-users
+      path: /api/v1/apps/{appId}/users
+      operations:
+      - name: listappusers
+        method: GET
+        description: 'Okta API: listAppUsers'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appId
+          in: path
+          type: string
+          description: Path parameter appId.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-okta-mcp
+    description: MCP adapter for the wso2-okta integration.
+    tools:
+    - name: wso2_okta
+      description: Execute the wso2 okta integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-okta-rest
+    port: 8080
+    description: REST adapter for the wso2-okta integration.
+    resources:
+    - path: /wso2-okta
+      name: wso2-okta
+      description: REST surface for the wso2-okta integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-okta integration.
+        call: wso2_okta
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

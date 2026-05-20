@@ -1,0 +1,287 @@
+# Curated top WSO2 integrations grouped by category.
+# Each entry becomes one Naftiko 1.0.0-alpha2 capability YAML in integrations/.
+# Domain: API management (API Manager), identity (Identity Server / Choreo),
+# governance, gateway operations.
+
+# DevOps / spec sync (2)
+- partner: github
+  name: Sync WSO2 Publisher APIs from a GitHub OpenAPI repo
+  category: DevOps
+  use_case: On push to main, read the OpenAPI document from a GitHub repo and update the matching WSO2 API Manager Publisher API + create a new revision so source-of-truth lives with the code.
+  partner_baseUri: https://api.github.com
+  partner_api: GitHub REST API
+  provider_ops:
+    - method: PUT
+      path: /apis/{apiId}
+      name: updatePublisherApi
+      description: Update an existing Publisher API definition from the GitHub spec.
+    - method: POST
+      path: /apis/{apiId}/revisions
+      name: createApiRevision
+      description: Create a new revision of the Publisher API after the spec sync.
+  partner_ops:
+    - method: GET
+      path: /repos/{owner}/{repo}/contents/{path}
+      name: getRepoContent
+    - method: GET
+      path: /repos/{owner}/{repo}/commits/{ref}
+      name: getCommit
+
+- partner: gitlab
+  name: Sync WSO2 Publisher APIs from a GitLab OpenAPI repo
+  category: DevOps
+  use_case: On GitLab push, fetch the latest OpenAPI file and re-deploy the matching WSO2 Publisher API + revision so the GitLab repo is the source-of-truth.
+  partner_baseUri: https://gitlab.com/api/v4
+  partner_api: GitLab REST API
+  provider_ops:
+    - method: PUT
+      path: /apis/{apiId}
+      name: updatePublisherApi
+      description: Update an existing Publisher API definition from the GitLab spec.
+    - method: POST
+      path: /apis/{apiId}/deployments
+      name: deployApiRevision
+      description: Deploy the new Publisher API revision to gateway environments.
+  partner_ops:
+    - method: GET
+      path: /projects/{id}/repository/files/{file_path}
+      name: getRepoFile
+    - method: GET
+      path: /projects/{id}/repository/commits/{sha}
+      name: getCommit
+
+# Notifications / chat (1)
+- partner: slack
+  name: Alert Slack channels on WSO2 API lifecycle changes
+  category: Notifications
+  use_case: Forward WSO2 API Manager lifecycle changes (PUBLISHED, DEPRECATED, RETIRED) and policy violations to a designated Slack channel via Incoming Webhook.
+  partner_baseUri: https://hooks.slack.com
+  partner_api: Slack Incoming Webhooks
+  provider_ops:
+    - method: GET
+      path: /apis/{apiId}/lifecycle-history
+      name: getLifecycleHistory
+      description: Read the lifecycle history of a Publisher API.
+    - method: POST
+      path: /apis/change-lifecycle
+      name: changeLifecycle
+      description: Trigger a lifecycle change for an API, then notify Slack.
+  partner_ops:
+    - method: POST
+      path: /services/{T}/{B}/{X}
+      name: postMessage
+
+# Observability (2)
+- partner: datadog
+  name: Stream WSO2 gateway metrics to Datadog
+  category: Observability
+  use_case: Forward WSO2 API Gateway throttling + traffic metrics to Datadog as custom metrics for dashboards and alerting.
+  partner_baseUri: https://api.datadoghq.com
+  partner_api: Datadog API v2
+  provider_ops:
+    - method: GET
+      path: /apis
+      name: listGatewayApis
+      description: List APIs currently deployed on the WSO2 Gateway.
+    - method: GET
+      path: /subscriptions
+      name: listGatewaySubscriptions
+      description: List subscriptions currently active on the WSO2 Gateway.
+  partner_ops:
+    - method: POST
+      path: /api/v2/series
+      name: submitMetrics
+
+- partner: prometheus
+  name: Scrape WSO2 throttling and subscription counters into Prometheus
+  category: Observability
+  use_case: Expose WSO2 Admin API throttling policy hit counts and subscription state as Prometheus metrics via the Pushgateway.
+  partner_baseUri: https://pushgateway.example.com
+  partner_api: Prometheus Pushgateway
+  provider_ops:
+    - method: GET
+      path: /throttling/policies/search
+      name: searchThrottlingPolicies
+      description: Search Admin API throttling policies to scrape counts.
+    - method: GET
+      path: /applications
+      name: listApplications
+      description: List Admin API applications for per-app metrics.
+  partner_ops:
+    - method: POST
+      path: /metrics/job/{job}
+      name: pushMetrics
+
+# Identity (3)
+- partner: keycloak
+  name: Federate Keycloak realms with WSO2 Identity for SSO
+  category: Identity
+  use_case: Register a Keycloak realm as a federated identity provider in WSO2 so Devportal users authenticate via Keycloak SSO.
+  partner_baseUri: https://keycloak.example.com/admin
+  partner_api: Keycloak Admin REST API
+  provider_ops:
+    - method: POST
+      path: /register
+      name: registerDcrClient
+      description: Register a new DCR OAuth client tied to the Keycloak federation.
+  partner_ops:
+    - method: POST
+      path: /realms/{realm}/identity-provider/instances
+      name: createIdentityProvider
+    - method: GET
+      path: /realms/{realm}/users
+      name: listUsers
+
+- partner: okta
+  name: SCIM-provision Okta users into WSO2 Devportal applications
+  category: Identity
+  use_case: When an Okta user is assigned to the WSO2 app, create the matching Devportal subscription so the user can call published APIs.
+  partner_baseUri: https://yourdomain.okta.com
+  partner_api: Okta API
+  provider_ops:
+    - method: POST
+      path: /applications
+      name: createDevportalApplication
+      description: Create a Devportal application for the newly-provisioned Okta user.
+    - method: POST
+      path: /apis/{apiId}/api-keys/generate
+      name: generateApiKey
+      description: Generate an API key for the new Devportal application.
+  partner_ops:
+    - method: GET
+      path: /api/v1/users/{userId}
+      name: getUser
+    - method: GET
+      path: /api/v1/apps/{appId}/users
+      name: listAppUsers
+
+# Policy as code (1)
+- partner: opa
+  name: Enforce OPA policies on WSO2 Publisher API publishes
+  category: Governance
+  use_case: Before changing a Publisher API to PUBLISHED, call Open Policy Agent to evaluate the API definition; reject the lifecycle change if OPA denies.
+  partner_baseUri: https://opa.example.com
+  partner_api: Open Policy Agent Data API
+  provider_ops:
+    - method: GET
+      path: /apis/{apiId}
+      name: getPublisherApi
+      description: Fetch the Publisher API definition to send to OPA for evaluation.
+    - method: POST
+      path: /apis/change-lifecycle
+      name: changeLifecycle
+      description: Trigger the lifecycle change only if OPA returns allow=true.
+  partner_ops:
+    - method: POST
+      path: /v1/data/wso2/publish/allow
+      name: evaluatePolicy
+
+# AI providers (2)
+- partner: anthropic
+  name: Register Anthropic as a WSO2 LLM provider for AI gateway routing
+  category: AI
+  use_case: Register Anthropic as a WSO2 API Manager LLM Provider so AI-augmented APIs can route Claude requests through the WSO2 AI gateway with managed credentials + throttling.
+  partner_baseUri: https://api.anthropic.com
+  partner_api: Anthropic Messages API
+  provider_ops:
+    - method: POST
+      path: /llm-providers
+      name: registerLlmProvider
+      description: Register Anthropic as a WSO2 AI gateway LLM provider.
+    - method: PUT
+      path: /llm-providers/{llmProviderId}
+      name: updateLlmProvider
+      description: Update Anthropic provider configuration (model list, credentials).
+  partner_ops:
+    - method: POST
+      path: /v1/messages
+      name: createMessage
+
+- partner: openai
+  name: Register OpenAI as a WSO2 AI service provider for managed routing
+  category: AI
+  use_case: Register OpenAI as a WSO2 AI Service Provider so chat-completion calls flow through the WSO2 AI gateway with shared org credentials, throttling policies, and audit logs.
+  partner_baseUri: https://api.openai.com
+  partner_api: OpenAI API
+  provider_ops:
+    - method: POST
+      path: /ai-service-providers
+      name: registerAiServiceProvider
+      description: Register OpenAI as an AI Service Provider in WSO2 API Manager.
+    - method: PUT
+      path: /ai-service-providers/{aiServiceProviderId}
+      name: updateAiServiceProvider
+      description: Update OpenAI provider configuration in WSO2.
+  partner_ops:
+    - method: POST
+      path: /v1/chat/completions
+      name: createChatCompletion
+
+# CI / CD (1)
+- partner: jenkins
+  name: Trigger WSO2 API redeploys from Jenkins pipelines
+  category: CI/CD
+  use_case: When a Jenkins build for an API project completes, trigger a WSO2 Publisher API revision + deployment so the new artifact reaches gateway environments.
+  partner_baseUri: https://jenkins.example.com
+  partner_api: Jenkins REST API
+  provider_ops:
+    - method: POST
+      path: /apis/{apiId}/revisions
+      name: createApiRevision
+      description: Create a new Publisher API revision triggered by Jenkins build.
+    - method: POST
+      path: /apis/{apiId}/deployments
+      name: deployApiRevision
+      description: Deploy the Publisher API revision to gateway environments.
+  partner_ops:
+    - method: POST
+      path: /job/{name}/build
+      name: triggerBuild
+    - method: GET
+      path: /job/{name}/lastBuild/api/json
+      name: getLastBuild
+
+# ITSM (1)
+- partner: servicenow
+  name: File ServiceNow change records for WSO2 governance policy violations
+  category: ITSM
+  use_case: When WSO2 API Governance detects a policy or ruleset violation, open a ServiceNow Change Request with the violating API + ruleset so compliance has an audit trail.
+  partner_baseUri: https://yourinstance.service-now.com
+  partner_api: ServiceNow Table API
+  provider_ops:
+    - method: GET
+      path: /policy-adherence
+      name: listPolicyAdherence
+      description: List API Governance policy adherence reports.
+    - method: GET
+      path: /artifact-compliance/api/{apiId}
+      name: getApiCompliance
+      description: Fetch detailed compliance state for the offending API.
+  partner_ops:
+    - method: POST
+      path: /api/now/table/change_request
+      name: createChangeRequest
+
+# Service catalog sync (1)
+- partner: backstage
+  name: Sync WSO2 Service Catalog entries to Backstage
+  category: Developer portal
+  use_case: Mirror entries from the WSO2 Service Catalog into Backstage as Component + API entities so internal developers see WSO2-managed services in their dev portal.
+  partner_baseUri: https://backstage.example.com/api
+  partner_api: Backstage Catalog API
+  provider_ops:
+    - method: GET
+      path: /services
+      name: listServiceCatalog
+      description: List all services in the WSO2 Service Catalog.
+    - method: GET
+      path: /services/{serviceId}/definition
+      name: getServiceDefinition
+      description: Fetch the OpenAPI/AsyncAPI definition for a Service Catalog entry.
+  partner_ops:
+    - method: POST
+      path: /catalog/locations
+      name: addCatalogLocation
+    - method: GET
+      path: /catalog/entities
+      name: listEntities

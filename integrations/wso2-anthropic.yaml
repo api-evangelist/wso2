@@ -1,0 +1,117 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Register Anthropic as a WSO2 LLM provider for AI gateway routing
+  description: Register Anthropic as a WSO2 API Manager LLM Provider so AI-augmented APIs can route Claude requests through the WSO2 AI gateway with managed credentials + throttling.
+  tags:
+  - WSO2
+  - Integration
+  - AI
+  - anthropic
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    ANTHROPIC_API_KEY: ANTHROPIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: llm-providers
+      path: /llm-providers
+      operations:
+      - name: registerllmprovider
+        method: POST
+        description: Register Anthropic as a WSO2 AI gateway LLM provider.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: llm-providers-llmproviderid
+      path: /llm-providers/{llmProviderId}
+      operations:
+      - name: updatellmprovider
+        method: PUT
+        description: Update Anthropic provider configuration (model list, credentials).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: llmProviderId
+          in: path
+          type: string
+          description: Path parameter llmProviderId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: anthropic
+    baseUri: https://api.anthropic.com
+    description: Anthropic Messages API operations consumed by this integration.
+    resources:
+    - name: v1-messages
+      path: /v1/messages
+      operations:
+      - name: createmessage
+        method: POST
+        description: 'Anthropic Messages API: createMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-anthropic-mcp
+    description: MCP adapter for the wso2-anthropic integration.
+    tools:
+    - name: wso2_anthropic
+      description: Execute the wso2 anthropic integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-anthropic-rest
+    port: 8080
+    description: REST adapter for the wso2-anthropic integration.
+    resources:
+    - path: /wso2-anthropic
+      name: wso2-anthropic
+      description: REST surface for the wso2-anthropic integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-anthropic integration.
+        call: wso2_anthropic
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

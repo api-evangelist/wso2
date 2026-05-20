@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Scrape WSO2 throttling and subscription counters into Prometheus
+  description: Expose WSO2 Admin API throttling policy hit counts and subscription state as Prometheus metrics via the Pushgateway.
+  tags:
+  - WSO2
+  - Integration
+  - Observability
+  - prometheus
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    PROMETHEUS_API_KEY: PROMETHEUS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: throttling-policies-search
+      path: /throttling/policies/search
+      operations:
+      - name: searchthrottlingpolicies
+        method: GET
+        description: Search Admin API throttling policies to scrape counts.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: applications
+      path: /applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: List Admin API applications for per-app metrics.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: prometheus
+    baseUri: https://pushgateway.example.com
+    description: Prometheus Pushgateway operations consumed by this integration.
+    resources:
+    - name: metrics-job-job
+      path: /metrics/job/{job}
+      operations:
+      - name: pushmetrics
+        method: POST
+        description: 'Prometheus Pushgateway: pushMetrics'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: job
+          in: path
+          type: string
+          description: Path parameter job.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-prometheus-mcp
+    description: MCP adapter for the wso2-prometheus integration.
+    tools:
+    - name: wso2_prometheus
+      description: Execute the wso2 prometheus integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-prometheus-rest
+    port: 8080
+    description: REST adapter for the wso2-prometheus integration.
+    resources:
+    - path: /wso2-prometheus
+      name: wso2-prometheus
+      description: REST surface for the wso2-prometheus integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-prometheus integration.
+        call: wso2_prometheus
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

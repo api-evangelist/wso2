@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: File ServiceNow change records for WSO2 governance policy violations
+  description: When WSO2 API Governance detects a policy or ruleset violation, open a ServiceNow Change Request with the violating API + ruleset so compliance has an audit trail.
+  tags:
+  - WSO2
+  - Integration
+  - ITSM
+  - servicenow
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    SERVICENOW_API_KEY: SERVICENOW_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: policy-adherence
+      path: /policy-adherence
+      operations:
+      - name: listpolicyadherence
+        method: GET
+        description: List API Governance policy adherence reports.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: artifact-compliance-api-apiid
+      path: /artifact-compliance/api/{apiId}
+      operations:
+      - name: getapicompliance
+        method: GET
+        description: Fetch detailed compliance state for the offending API.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+  - type: http
+    namespace: servicenow
+    baseUri: https://yourinstance.service-now.com
+    description: ServiceNow Table API operations consumed by this integration.
+    resources:
+    - name: api-now-table-change-request
+      path: /api/now/table/change_request
+      operations:
+      - name: createchangerequest
+        method: POST
+        description: 'ServiceNow Table API: createChangeRequest'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-servicenow-mcp
+    description: MCP adapter for the wso2-servicenow integration.
+    tools:
+    - name: wso2_servicenow
+      description: Execute the wso2 servicenow integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-servicenow-rest
+    port: 8080
+    description: REST adapter for the wso2-servicenow integration.
+    resources:
+    - path: /wso2-servicenow
+      name: wso2-servicenow
+      description: REST surface for the wso2-servicenow integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-servicenow integration.
+        call: wso2_servicenow
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,119 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sync WSO2 Service Catalog entries to Backstage
+  description: Mirror entries from the WSO2 Service Catalog into Backstage as Component + API entities so internal developers see WSO2-managed services in their dev portal.
+  tags:
+  - WSO2
+  - Integration
+  - Developer portal
+  - backstage
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    BACKSTAGE_API_KEY: BACKSTAGE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: services
+      path: /services
+      operations:
+      - name: listservicecatalog
+        method: GET
+        description: List all services in the WSO2 Service Catalog.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: services-serviceid-definition
+      path: /services/{serviceId}/definition
+      operations:
+      - name: getservicedefinition
+        method: GET
+        description: Fetch the OpenAPI/AsyncAPI definition for a Service Catalog entry.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serviceId
+          in: path
+          type: string
+          description: Path parameter serviceId.
+          required: true
+  - type: http
+    namespace: backstage
+    baseUri: https://backstage.example.com/api
+    description: Backstage Catalog API operations consumed by this integration.
+    resources:
+    - name: catalog-locations
+      path: /catalog/locations
+      operations:
+      - name: addcataloglocation
+        method: POST
+        description: 'Backstage Catalog API: addCatalogLocation'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: catalog-entities
+      path: /catalog/entities
+      operations:
+      - name: listentities
+        method: GET
+        description: 'Backstage Catalog API: listEntities'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  exposes:
+  - type: mcp
+    namespace: wso2-backstage-mcp
+    description: MCP adapter for the wso2-backstage integration.
+    tools:
+    - name: wso2_backstage
+      description: Execute the wso2 backstage integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-backstage-rest
+    port: 8080
+    description: REST adapter for the wso2-backstage integration.
+    resources:
+    - path: /wso2-backstage
+      name: wso2-backstage
+      description: REST surface for the wso2-backstage integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-backstage integration.
+        call: wso2_backstage
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Trigger WSO2 API redeploys from Jenkins pipelines
+  description: When a Jenkins build for an API project completes, trigger a WSO2 Publisher API revision + deployment so the new artifact reaches gateway environments.
+  tags:
+  - WSO2
+  - Integration
+  - CI/CD
+  - jenkins
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    JENKINS_API_KEY: JENKINS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: apis-apiid-revisions
+      path: /apis/{apiId}/revisions
+      operations:
+      - name: createapirevision
+        method: POST
+        description: Create a new Publisher API revision triggered by Jenkins build.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiid-deployments
+      path: /apis/{apiId}/deployments
+      operations:
+      - name: deployapirevision
+        method: POST
+        description: Deploy the Publisher API revision to gateway environments.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: jenkins
+    baseUri: https://jenkins.example.com
+    description: Jenkins REST API operations consumed by this integration.
+    resources:
+    - name: job-name-build
+      path: /job/{name}/build
+      operations:
+      - name: triggerbuild
+        method: POST
+        description: 'Jenkins REST API: triggerBuild'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Path parameter name.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: job-name-lastbuild-api-json
+      path: /job/{name}/lastBuild/api/json
+      operations:
+      - name: getlastbuild
+        method: GET
+        description: 'Jenkins REST API: getLastBuild'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Path parameter name.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-jenkins-mcp
+    description: MCP adapter for the wso2-jenkins integration.
+    tools:
+    - name: wso2_jenkins
+      description: Execute the wso2 jenkins integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-jenkins-rest
+    port: 8080
+    description: REST adapter for the wso2-jenkins integration.
+    resources:
+    - path: /wso2-jenkins
+      name: wso2-jenkins
+      description: REST surface for the wso2-jenkins integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-jenkins integration.
+        call: wso2_jenkins
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

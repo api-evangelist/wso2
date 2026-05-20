@@ -1,0 +1,65 @@
+- slug: wso2-github
+  label: Sync WSO2 Publisher APIs from a GitHub OpenAPI repo
+  partner: github
+  category: DevOps
+  use_case: On push to main, read the OpenAPI document from a GitHub repo and update the matching WSO2 API Manager Publisher API + create a new revision so source-of-truth lives with the code.
+- slug: wso2-gitlab
+  label: Sync WSO2 Publisher APIs from a GitLab OpenAPI repo
+  partner: gitlab
+  category: DevOps
+  use_case: On GitLab push, fetch the latest OpenAPI file and re-deploy the matching WSO2 Publisher API + revision so the GitLab repo is the source-of-truth.
+- slug: wso2-slack
+  label: Alert Slack channels on WSO2 API lifecycle changes
+  partner: slack
+  category: Notifications
+  use_case: Forward WSO2 API Manager lifecycle changes (PUBLISHED, DEPRECATED, RETIRED) and policy violations to a designated Slack channel via Incoming Webhook.
+- slug: wso2-datadog
+  label: Stream WSO2 gateway metrics to Datadog
+  partner: datadog
+  category: Observability
+  use_case: Forward WSO2 API Gateway throttling + traffic metrics to Datadog as custom metrics for dashboards and alerting.
+- slug: wso2-prometheus
+  label: Scrape WSO2 throttling and subscription counters into Prometheus
+  partner: prometheus
+  category: Observability
+  use_case: Expose WSO2 Admin API throttling policy hit counts and subscription state as Prometheus metrics via the Pushgateway.
+- slug: wso2-keycloak
+  label: Federate Keycloak realms with WSO2 Identity for SSO
+  partner: keycloak
+  category: Identity
+  use_case: Register a Keycloak realm as a federated identity provider in WSO2 so Devportal users authenticate via Keycloak SSO.
+- slug: wso2-okta
+  label: SCIM-provision Okta users into WSO2 Devportal applications
+  partner: okta
+  category: Identity
+  use_case: When an Okta user is assigned to the WSO2 app, create the matching Devportal subscription so the user can call published APIs.
+- slug: wso2-opa
+  label: Enforce OPA policies on WSO2 Publisher API publishes
+  partner: opa
+  category: Governance
+  use_case: Before changing a Publisher API to PUBLISHED, call Open Policy Agent to evaluate the API definition; reject the lifecycle change if OPA denies.
+- slug: wso2-anthropic
+  label: Register Anthropic as a WSO2 LLM provider for AI gateway routing
+  partner: anthropic
+  category: AI
+  use_case: Register Anthropic as a WSO2 API Manager LLM Provider so AI-augmented APIs can route Claude requests through the WSO2 AI gateway with managed credentials + throttling.
+- slug: wso2-openai
+  label: Register OpenAI as a WSO2 AI service provider for managed routing
+  partner: openai
+  category: AI
+  use_case: Register OpenAI as a WSO2 AI Service Provider so chat-completion calls flow through the WSO2 AI gateway with shared org credentials, throttling policies, and audit logs.
+- slug: wso2-jenkins
+  label: Trigger WSO2 API redeploys from Jenkins pipelines
+  partner: jenkins
+  category: CI/CD
+  use_case: When a Jenkins build for an API project completes, trigger a WSO2 Publisher API revision + deployment so the new artifact reaches gateway environments.
+- slug: wso2-servicenow
+  label: File ServiceNow change records for WSO2 governance policy violations
+  partner: servicenow
+  category: ITSM
+  use_case: When WSO2 API Governance detects a policy or ruleset violation, open a ServiceNow Change Request with the violating API + ruleset so compliance has an audit trail.
+- slug: wso2-backstage
+  label: Sync WSO2 Service Catalog entries to Backstage
+  partner: backstage
+  category: Developer portal
+  use_case: Mirror entries from the WSO2 Service Catalog into Backstage as Component + API entities so internal developers see WSO2-managed services in their dev portal.

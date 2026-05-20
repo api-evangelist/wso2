@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Enforce OPA policies on WSO2 Publisher API publishes
+  description: Before changing a Publisher API to PUBLISHED, call Open Policy Agent to evaluate the API definition; reject the lifecycle change if OPA denies.
+  tags:
+  - WSO2
+  - Integration
+  - Governance
+  - opa
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    OPA_API_KEY: OPA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: apis-apiid
+      path: /apis/{apiId}
+      operations:
+      - name: getpublisherapi
+        method: GET
+        description: Fetch the Publisher API definition to send to OPA for evaluation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+    - name: apis-change-lifecycle
+      path: /apis/change-lifecycle
+      operations:
+      - name: changelifecycle
+        method: POST
+        description: Trigger the lifecycle change only if OPA returns allow=true.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: opa
+    baseUri: https://opa.example.com
+    description: Open Policy Agent Data API operations consumed by this integration.
+    resources:
+    - name: v1-data-wso2-publish-allow
+      path: /v1/data/wso2/publish/allow
+      operations:
+      - name: evaluatepolicy
+        method: POST
+        description: 'Open Policy Agent Data API: evaluatePolicy'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-opa-mcp
+    description: MCP adapter for the wso2-opa integration.
+    tools:
+    - name: wso2_opa
+      description: Execute the wso2 opa integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-opa-rest
+    port: 8080
+    description: REST adapter for the wso2-opa integration.
+    resources:
+    - path: /wso2-opa
+      name: wso2-opa
+      description: REST surface for the wso2-opa integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-opa integration.
+        call: wso2_opa
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

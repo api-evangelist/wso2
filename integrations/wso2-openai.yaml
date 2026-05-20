@@ -1,0 +1,117 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Register OpenAI as a WSO2 AI service provider for managed routing
+  description: Register OpenAI as a WSO2 AI Service Provider so chat-completion calls flow through the WSO2 AI gateway with shared org credentials, throttling policies, and audit logs.
+  tags:
+  - WSO2
+  - Integration
+  - AI
+  - openai
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    OPENAI_API_KEY: OPENAI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: ai-service-providers
+      path: /ai-service-providers
+      operations:
+      - name: registeraiserviceprovider
+        method: POST
+        description: Register OpenAI as an AI Service Provider in WSO2 API Manager.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ai-service-providers-aiserviceproviderid
+      path: /ai-service-providers/{aiServiceProviderId}
+      operations:
+      - name: updateaiserviceprovider
+        method: PUT
+        description: Update OpenAI provider configuration in WSO2.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: aiServiceProviderId
+          in: path
+          type: string
+          description: Path parameter aiServiceProviderId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: openai
+    baseUri: https://api.openai.com
+    description: OpenAI API operations consumed by this integration.
+    resources:
+    - name: v1-chat-completions
+      path: /v1/chat/completions
+      operations:
+      - name: createchatcompletion
+        method: POST
+        description: 'OpenAI API: createChatCompletion'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-openai-mcp
+    description: MCP adapter for the wso2-openai integration.
+    tools:
+    - name: wso2_openai
+      description: Execute the wso2 openai integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-openai-rest
+    port: 8080
+    description: REST adapter for the wso2-openai integration.
+    resources:
+    - path: /wso2-openai
+      name: wso2-openai
+      description: REST surface for the wso2-openai integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-openai integration.
+        call: wso2_openai
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

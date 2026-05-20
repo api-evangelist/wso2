@@ -1,0 +1,117 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Federate Keycloak realms with WSO2 Identity for SSO
+  description: Register a Keycloak realm as a federated identity provider in WSO2 so Devportal users authenticate via Keycloak SSO.
+  tags:
+  - WSO2
+  - Integration
+  - Identity
+  - keycloak
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    KEYCLOAK_API_KEY: KEYCLOAK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: register
+      path: /register
+      operations:
+      - name: registerdcrclient
+        method: POST
+        description: Register a new DCR OAuth client tied to the Keycloak federation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: keycloak
+    baseUri: https://keycloak.example.com/admin
+    description: Keycloak Admin REST API operations consumed by this integration.
+    resources:
+    - name: realms-realm-identity-provider-instances
+      path: /realms/{realm}/identity-provider/instances
+      operations:
+      - name: createidentityprovider
+        method: POST
+        description: 'Keycloak Admin REST API: createIdentityProvider'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: realm
+          in: path
+          type: string
+          description: Path parameter realm.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: realms-realm-users
+      path: /realms/{realm}/users
+      operations:
+      - name: listusers
+        method: GET
+        description: 'Keycloak Admin REST API: listUsers'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: realm
+          in: path
+          type: string
+          description: Path parameter realm.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-keycloak-mcp
+    description: MCP adapter for the wso2-keycloak integration.
+    tools:
+    - name: wso2_keycloak
+      description: Execute the wso2 keycloak integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-keycloak-rest
+    port: 8080
+    description: REST adapter for the wso2-keycloak integration.
+    resources:
+    - path: /wso2-keycloak
+      name: wso2-keycloak
+      description: REST surface for the wso2-keycloak integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-keycloak integration.
+        call: wso2_keycloak
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

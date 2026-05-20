@@ -1,0 +1,149 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sync WSO2 Publisher APIs from a GitLab OpenAPI repo
+  description: On GitLab push, fetch the latest OpenAPI file and re-deploy the matching WSO2 Publisher API + revision so the GitLab repo is the source-of-truth.
+  tags:
+  - WSO2
+  - Integration
+  - DevOps
+  - gitlab
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    GITLAB_API_KEY: GITLAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: apis-apiid
+      path: /apis/{apiId}
+      operations:
+      - name: updatepublisherapi
+        method: PUT
+        description: Update an existing Publisher API definition from the GitLab spec.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-apiid-deployments
+      path: /apis/{apiId}/deployments
+      operations:
+      - name: deployapirevision
+        method: POST
+        description: Deploy the new Publisher API revision to gateway environments.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiId
+          in: path
+          type: string
+          description: Path parameter apiId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: gitlab
+    baseUri: https://gitlab.com/api/v4
+    description: GitLab REST API operations consumed by this integration.
+    resources:
+    - name: projects-id-repository-files-file-path
+      path: /projects/{id}/repository/files/{file_path}
+      operations:
+      - name: getrepofile
+        method: GET
+        description: 'GitLab REST API: getRepoFile'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+        - name: file_path
+          in: path
+          type: string
+          description: Path parameter file_path.
+          required: true
+    - name: projects-id-repository-commits-sha
+      path: /projects/{id}/repository/commits/{sha}
+      operations:
+      - name: getcommit
+        method: GET
+        description: 'GitLab REST API: getCommit'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Path parameter id.
+          required: true
+        - name: sha
+          in: path
+          type: string
+          description: Path parameter sha.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-gitlab-mcp
+    description: MCP adapter for the wso2-gitlab integration.
+    tools:
+    - name: wso2_gitlab
+      description: Execute the wso2 gitlab integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-gitlab-rest
+    port: 8080
+    description: REST adapter for the wso2-gitlab integration.
+    resources:
+    - path: /wso2-gitlab
+      name: wso2-gitlab
+      description: REST surface for the wso2-gitlab integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-gitlab integration.
+        call: wso2_gitlab
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

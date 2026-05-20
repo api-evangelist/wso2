@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stream WSO2 gateway metrics to Datadog
+  description: Forward WSO2 API Gateway throttling + traffic metrics to Datadog as custom metrics for dashboards and alerting.
+  tags:
+  - WSO2
+  - Integration
+  - Observability
+  - datadog
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    WSO2_API_KEY: WSO2_API_KEY
+    DATADOG_API_KEY: DATADOG_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: wso2
+    baseUri: https://api.wso2.com
+    description: WSO2 API operations consumed by this integration.
+    resources:
+    - name: apis
+      path: /apis
+      operations:
+      - name: listgatewayapis
+        method: GET
+        description: List APIs currently deployed on the WSO2 Gateway.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: subscriptions
+      path: /subscriptions
+      operations:
+      - name: listgatewaysubscriptions
+        method: GET
+        description: List subscriptions currently active on the WSO2 Gateway.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: datadog
+    baseUri: https://api.datadoghq.com
+    description: Datadog API v2 operations consumed by this integration.
+    resources:
+    - name: api-v2-series
+      path: /api/v2/series
+      operations:
+      - name: submitmetrics
+        method: POST
+        description: 'Datadog API v2: submitMetrics'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: wso2-datadog-mcp
+    description: MCP adapter for the wso2-datadog integration.
+    tools:
+    - name: wso2_datadog
+      description: Execute the wso2 datadog integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: wso2-datadog-rest
+    port: 8080
+    description: REST adapter for the wso2-datadog integration.
+    resources:
+    - path: /wso2-datadog
+      name: wso2-datadog
+      description: REST surface for the wso2-datadog integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the wso2-datadog integration.
+        call: wso2_datadog
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
