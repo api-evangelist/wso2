@@ -4,7 +4,7 @@ info:
   description: 'WSO2 Agent Onboarding — automated agent self-registration on WSO2 API Manager.
     Uses WSO2''s native Dynamic Client Registration endpoint (RFC 7591) for client provisioning,
     composes Devportal application + per-API key-generation operations, attaches throttling policies
-    as scope tiers, and observes audit via the tenant-logs surface (native, no side-channel).'
+    as scope tiers, and observes audit via the tenant-logs surface (native, no side-channel). Runtime policy enforcement (signature verify, consent check, scope classify, audit emit) lives in the orchestration.steps below — each step that gates issuance carries on_failure: deny. Lint-time validation of this capability shape lives in the companion Polychro ruleset at https://github.com/api-evangelist/posts/blob/main/polychro/agent-onboarding-rules.yaml — Polychro is Naftiko''s governance layer, separate from the capability spec, and is the correct home for cross-object consistency rules that apply across every agent-onboarding capability.'
   tags:
   - WSO2
   - Agent Onboarding
@@ -260,9 +260,3 @@ capability:
     skill:
       name: onboard-agent
       file: skills/onboard-agent.md
-  governance:
-  - { id: require-web-bot-auth, severity: blocking, description: 'All onboard calls must carry a valid RFC 9421 signature.', enforce_at: [runtime] }
-  - { id: require-consent-hash-match, severity: blocking, description: 'Submitted consent_hash must match AGENT_CONSENT_HASH.', enforce_at: [runtime] }
-  - { id: forbidden-scopes-deny, severity: blocking, description: 'Forbidden scopes return 403.', enforce_at: [runtime] }
-  - { id: approval-required-defer, severity: advisory, description: 'Approval-required scopes return 202 + status URL.', enforce_at: [runtime] }
-  - { id: per-api-key-budget, severity: advisory, description: 'WSO2 per-API key model means the credential array can grow large for multi-API agents; provider policy SHOULD cap how many APIs an agent may subscribe to in one onboarding call.', enforce_at: [runtime] }
