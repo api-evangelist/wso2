@@ -48,63 +48,63 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
   - type: OpenAPI
     url: openapi/wso2-devportal-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-api-categories.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-api-chat.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-api-documents.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-api-monetization.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-apikeys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-apis.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-application-keys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-application-secrets.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-application-tokens.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-applications.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-comments.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-graphql-policies.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-import-export.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-key-managers.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-mcp-server-documents.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-mcp-servers.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-marketplace-assistant.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-ratings.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-recommendations.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-sdks.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-settings.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-subscriptions.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-tags.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-tenants.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-throttling-policies.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-topics.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-unified-search.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-users.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devportal-webhooks.yaml
 - aid: wso2:admin-api
   name: WSO2 Admin Portal API
@@ -119,107 +119,107 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/admin-apis/admin-v4/admin-v4/
   - type: OpenAPI
     url: openapi/wso2-admin-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-general.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-aiserviceprovider.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-aiserviceproviders.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-api-category-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-api-category-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-apikeys.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-apis.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-advanced-policy-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-advanced-policy-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-alert-subscriptions.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-alerts.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-api-provider-change.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-application.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-application-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-application-policy-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-application-policy-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-applications.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-bot-detection-alert-subscriptions.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-bot-detection-data.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-consumption.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-custom-rules-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-custom-rules-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-deny-policies-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-deny-policy-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-environments.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-global-key-manager-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-global-key-manager-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-import-export.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-key-manager-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-key-manager-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-llmprovider.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-llmproviders.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-label-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-labels-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-monetization-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-organizations.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-platform-gateways.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-roles.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-settings.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-subscription-policy-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-subscription-policy-individual.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-system-scopes.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-tenant-config.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-tenant-config-schema.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-tenant-theme.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-tenants.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-transaction-records.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-unified-search.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-users.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-workflow-collection.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/admin-workflows-individual.yaml
 - aid: wso2:gateway-api
   name: WSO2 Gateway API
@@ -234,13 +234,13 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/gateway-apis/gateway-v2/gateway-v2/
   - type: OpenAPI
     url: openapi/wso2-gateway-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/gateway-general.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/gateway-get-api-info.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/gateway-get-application-info.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/gateway-get-subscription-info.yaml
 - aid: wso2:service-catalog-api
   name: WSO2 Service Catalog API
@@ -255,9 +255,9 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/service-catalog-apis/service-catalog-v1/service-catalog-v1/
   - type: OpenAPI
     url: openapi/wso2-service-catalog-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/service-catalog-services.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/service-catalog-settings.yaml
 - aid: wso2:devops-api
   name: WSO2 DevOps API
@@ -272,7 +272,7 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/devops-apis/devops-v0/devops-v0/
   - type: OpenAPI
     url: openapi/wso2-devops-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/devops.yaml
 - aid: wso2:dcr-api
   name: WSO2 DCR API
@@ -289,7 +289,7 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/
   - type: OpenAPI
     url: openapi/wso2-dcr-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/dcr.yaml
 - aid: wso2:governance-api
   name: WSO2 Governance API
@@ -306,13 +306,13 @@ apis:
     url: https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
   - type: OpenAPI
     url: openapi/wso2-governance-api.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/governance-artifact-compliance.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/governance-governance-policies.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/governance-policy-adherence.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/governance-rulesets.yaml
 common:
 - type: LinkedIn
@@ -429,7 +429,7 @@ common:
     description: Native Kubernetes deployment support.
   - name: Keycloak
     description: Identity provider integration for OAuth2 flows.
-- type: LLMsTxt
+- type: LlmsText
   url: https://wso2.com/llms.txt
 maintainers:
 - FN: Kin Lane
