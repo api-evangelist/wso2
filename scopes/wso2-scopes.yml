@@ -1,0 +1,347 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/wso2-admin-api.yaml, openapi/wso2-dcr-api.yaml, openapi/wso2-devportal-api.yaml,
+  openapi/wso2-governance-api.yaml, openapi/wso2-service-catalog-api.yaml
+schemes:
+- name: OAuth2Security
+  source: openapi/wso2-admin-api.yaml
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+- name: OAuth2Security
+  source: openapi/wso2-dcr-api.yaml
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+- name: OAuth2Security
+  source: openapi/wso2-devportal-api.yaml
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+- name: OAuth2Security
+  source: openapi/wso2-governance-api.yaml
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+- name: OAuth2Security
+  source: openapi/wso2-service-catalog-api.yaml
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+scopes:
+- scope: apim:admin
+  description: Manage all admin operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:admin_alert_manage
+  description: Manage admin alerts
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:admin_application_view
+  description: View Applications
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:admin_operations
+  description: Manage API categories and Key Managers related operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:admin_settings
+  description: Retrieve admin settings
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:admin_tier_manage
+  description: Update and delete throttling policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:admin_tier_view
+  description: View throttling policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_category
+  description: Manage API categories
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_import_export
+  description: Import and export APIs related operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_key
+  description: Generate API Keys
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:api_product_import_export
+  description: Import and export API Products related operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_provider_change
+  description: Retrieve and manage applications
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_view
+  description: view access to services for read only users
+  flows:
+  - password
+  sources:
+  - openapi/wso2-service-catalog-api.yaml
+- scope: apim:api_workflow_approve
+  description: Manage workflows
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:api_workflow_view
+  description: Retrive workflow requests
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:app_import_export
+  description: Import and export applications related operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:app_manage
+  description: Retrieve, Manage and Import, Export applications
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:app_owner_change
+  description: Retrieve and manage applications
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:app_settings_change
+  description: Change Application Settings
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:bl_manage
+  description: Update and delete deny policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:bl_view
+  description: View deny policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:bot_data
+  description: Retrieve bot detection data
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:dcr:app_manage
+  description: create oauth app using dcr
+  flows:
+  - password
+  sources:
+  - openapi/wso2-dcr-api.yaml
+- scope: apim:environment_manage
+  description: Manage gateway environments
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:environment_read
+  description: Retrieve gateway environments
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:gov_policy_manage
+  description: Manage governance policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: apim:gov_policy_read
+  description: Retrieve governance policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: apim:gov_result_read
+  description: Retrieve governance results
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: apim:gov_rule_manage
+  description: Manage governance rules
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: apim:gov_rule_read
+  description: Retrieve governance rules
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: apim:keymanagers_manage
+  description: Manage Key Managers
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:llm_provider_manage
+  description: Manage LLM Providers
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:mediation_policy_create
+  description: Create and update mediation policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:mediation_policy_view
+  description: View mediation policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:monetization_usage_publish
+  description: Retrieve and publish Monetization related usage records
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:organization_manage
+  description: Manage Organizations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:organization_read
+  description: Read Organizations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:policies_import_export
+  description: Export and import policies related operations
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:role_manage
+  description: Manage system roles
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:scope_manage
+  description: Manage system scopes
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:store_settings
+  description: Retrieve Developer Portal settings
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:sub_alert_manage
+  description: Retrieve, subscribe and configure Developer Portal alert types
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:sub_manage
+  description: Retrieve, Manage subscriptions
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:subscribe
+  description: Subscribe API
+  flows:
+  - password
+  sources:
+  - openapi/wso2-devportal-api.yaml
+- scope: apim:tenantInfo
+  description: Retrieve tenant related information
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:tenant_theme_manage
+  description: Manage tenant themes
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:tier_manage
+  description: Update and delete throttling policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: apim:tier_view
+  description: View throttling policies
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+- scope: openid
+  description: Authorize access to user details
+  flows:
+  - password
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-dcr-api.yaml
+  - openapi/wso2-devportal-api.yaml
+  - openapi/wso2-governance-api.yaml
+- scope: service_catalog:service_view
+  description: view access to services in service catalog
+  flows:
+  - password
+  sources:
+  - openapi/wso2-service-catalog-api.yaml
+- scope: service_catalog:service_write
+  description: write access to services in service catalog
+  flows:
+  - password
+  sources:
+  - openapi/wso2-service-catalog-api.yaml

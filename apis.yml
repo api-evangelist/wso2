@@ -315,6 +315,10 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/governance-rulesets.yaml
 common:
+- type: Authentication
+  url: authentication/wso2-authentication.yml
+- type: OAuthScopes
+  url: scopes/wso2-scopes.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/wso2
 - type: Website
