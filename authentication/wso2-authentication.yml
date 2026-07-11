@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/wso2-admin-api.yaml, openapi/wso2-dcr-api.yaml, openapi/wso2-devportal-api.yaml,
+  openapi/wso2-governance-api.yaml, openapi/wso2-service-catalog-api.yaml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - password
+schemes:
+- name: OAuth2Security
+  type: oauth2
+  flows:
+  - flow: password
+    tokenUrl: https://localhost:9443/oauth2/token
+    scopes: 41
+  sources:
+  - openapi/wso2-admin-api.yaml
+  - openapi/wso2-dcr-api.yaml
+  - openapi/wso2-devportal-api.yaml
+  - openapi/wso2-governance-api.yaml
+  - openapi/wso2-service-catalog-api.yaml

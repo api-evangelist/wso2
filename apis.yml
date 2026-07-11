@@ -315,6 +315,12 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/governance-rulesets.yaml
 common:
+- type: TrustCenter
+  url: security/wso2-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/wso2-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/wso2-domain-security.yml
 - type: Authentication
   url: authentication/wso2-authentication.yml
 - type: OAuthScopes
