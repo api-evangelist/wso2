@@ -1,0 +1,4019 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/wso2-admin-api.yaml, openapi/wso2-dcr-api.yaml, openapi/wso2-devops-api.yaml,
+  openapi/wso2-devportal-api.yaml, openapi/wso2-gateway-api.yaml, openapi/wso2-governance-api.yaml,
+  openapi/wso2-service-catalog-api.yaml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 274
+  by_action_class:
+    connected: 150
+    acting: 124
+  by_consequence:
+    read: 150
+    write: 116
+    safety-critical: 6
+    physical: 2
+  human_in_the_loop_required: 6
+operations:
+- path: /throttling/policies/search
+  method: get
+  operationId: throttlingPolicySearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:policies_import_export
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/application
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/application
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/application/{policyId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/application/{policyId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/application/{policyId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/subscription
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/subscription
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/subscription/{policyId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/subscription/{policyId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/subscription/{policyId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/custom
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/custom
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/custom/{ruleId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/custom/{ruleId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/custom/{ruleId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/advanced
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/advanced
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/advanced/{policyId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_view
+    - apim:tier_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/advanced/{policyId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/advanced/{policyId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/policies/export
+  method: get
+  operationId: exportThrottlingPolicy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/policies/import
+  method: post
+  operationId: importThrottlingPolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_tier_manage
+    - apim:policies_import_export
+    - apim:tier_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/deny-policies
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:bl_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/deny-policies
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:bl_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/deny-policy/{conditionId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:bl_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling/deny-policy/{conditionId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:bl_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /throttling/deny-policy/{conditionId}
+  method: patch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:bl_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_application_view
+    - apim:app_import_export
+    - apim:app_owner_change
+    - apim:app_settings_change
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_application_view
+    - apim:app_import_export
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:app_import_export
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/change-settings
+  method: post
+  operationId: updateApplicationSettings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:app_settings_change
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/change-owner
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:app_owner_change
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ai-service-providers
+  method: get
+  operationId: getAIServiceProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ai-service-providers
+  method: post
+  operationId: addAIServiceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ai-service-providers/{aiServiceProviderId}
+  method: put
+  operationId: updateAIServiceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ai-service-providers/{aiServiceProviderId}
+  method: delete
+  operationId: deleteAIServiceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /ai-service-providers/{aiServiceProviderId}
+  method: get
+  operationId: getAIServiceProvider
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /llm-providers
+  method: get
+  operationId: getLLMProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /llm-providers
+  method: post
+  operationId: addLLMProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /llm-providers/{llmProviderId}
+  method: put
+  operationId: updateLLMProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /llm-providers/{llmProviderId}
+  method: delete
+  operationId: deleteLLMProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:llm_provider_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /llm-providers/{llmProviderId}
+  method: get
+  operationId: getLLMProvider
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /environments
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:environment_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /environments
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:environment_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /environments/{environmentId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:environment_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /environments/{environmentId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:environment_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /environments/{environmentId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:environment_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /environments/{environmentId}/gateways
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:environment_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gateways
+  method: get
+  operationId: getPlatformGateways
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gateways
+  method: post
+  operationId: createPlatformGateway
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /gateways/{gatewayId}/regenerate-token
+  method: post
+  operationId: regeneratePlatformGatewayToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /gateways/{gatewayId}
+  method: put
+  operationId: updatePlatformGateway
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /gateways/{gatewayId}
+  method: delete
+  operationId: deletePlatformGateway
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:organization_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:organization_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:organization_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:organization_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:organization_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /me/organization-information
+  method: get
+  operationId: organizationInformation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_settings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bot-detection-data
+  method: get
+  operationId: getBotDetectionData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:bot_data
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /monetization/publish-usage
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:monetization_usage_publish
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /monetization/publish-usage/status
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:monetization_usage_publish
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workflows
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:api_workflow_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workflows/{externalWorkflowRef}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:api_workflow_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workflows/update-workflow-status
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:api_workflow_approve
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tenant-info/{username}
+  method: get
+  operationId: getTenantInfoByUsername
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:tenantInfo
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /custom-urls/{tenantDomain}
+  method: get
+  operationId: getCustomUrlInfoByTenantDomain
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:tenantInfo
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-categories
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:api_category
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-categories
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:api_category
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api-categories/{apiCategoryId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:api_category
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api-categories/{apiCategoryId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:api_category
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /settings
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_settings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alert-types
+  method: get
+  operationId: getAdminAlertTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alert-subscriptions
+  method: get
+  operationId: getSubscribedAlertTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alert-subscriptions
+  method: put
+  operationId: subscribeToAlerts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /alert-subscriptions
+  method: delete
+  operationId: unsubscribeAllAlerts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /alert-subscriptions/bot-detection
+  method: get
+  operationId: getBotDetectionAlertSubscriptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alert-subscriptions/bot-detection
+  method: post
+  operationId: subscribeForBotDetectionAlerts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /alert-subscriptions/bot-detection/{uuid}
+  method: delete
+  operationId: unsubscribeFromBotDetectionAlerts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_alert_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /system-scopes/{scopeName}
+  method: get
+  operationId: systemScopesScopeNameGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:scope_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /system-scopes
+  method: get
+  operationId: systemScopesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:scope_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /system-scopes
+  method: put
+  operationId: updateRolesForScope
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:scope_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /system-scopes/role-aliases
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:scope_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /system-scopes/role-aliases
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:scope_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /roles/{roleId}
+  method: head
+  operationId: validateSystemRole
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:role_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenant-theme
+  method: get
+  operationId: exportTenantTheme
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenant-theme
+  method: put
+  operationId: importTenantTheme
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /org-themes
+  method: get
+  operationId: getOrgThemes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /org-themes
+  method: post
+  operationId: importOrgTheme
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /org-themes/{id}/content
+  method: get
+  operationId: getOrgThemeContent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /org-themes/{id}
+  method: delete
+  operationId: deleteOrgTheme
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /org-themes/{id}/status
+  method: post
+  operationId: updateOrgThemeStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:tenant_theme_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tenant-config
+  method: get
+  operationId: exportTenantConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenant-config
+  method: put
+  operationId: updateTenantConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tenant-config-schema
+  method: get
+  operationId: exportTenantConfigSchema
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /key-managers
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /key-managers
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /key-managers/{keyManagerId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /key-managers/{keyManagerId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /key-managers/{keyManagerId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /global-key-managers
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /global-key-managers
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /global-key-managers/{keyManagerId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /global-key-managers/{keyManagerId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /global-key-managers/{keyManagerId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /key-managers/discover
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    - apim:keymanagers_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /key-managers/{keyManagerId}/api-usages
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /key-managers/{keyManagerId}/app-usages
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:admin_operations
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis
+  method: get
+  operationId: getAllAPIs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    - apim:api_provider_change
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/change-provider
+  method: post
+  operationId: providerNamePost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:api_provider_change
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /transaction-count
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /export-consumption
+  method: get
+  operationId: exportConsumptionData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /labels
+  method: get
+  operationId: getAllLabels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /labels
+  method: post
+  operationId: createLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /labels/{labelId}
+  method: put
+  operationId: updateLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /labels/{labelId}
+  method: delete
+  operationId: deleteLabel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /labels/{labelId}/usage
+  method: get
+  operationId: getLabelUsage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-keys
+  method: get
+  operationId: getAllAPIKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:admin
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-keys/revoke
+  method: post
+  operationId: revokeAPIKeyFromAdmin
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - apim:admin
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /register
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:dcr:app_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tenant-logs/{tenant}/apis/
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenant-logs/{tenant}/apis/{apiId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenant-logs/{tenant}/apis/{apiId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /config/correlation/
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /config/correlation/
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /apis
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/swagger
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/async-api-specification
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/graphql-schema
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/sdks/{language}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/wsdl
+  method: get
+  operationId: getWSDLOfAPI
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/documents
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/documents/{documentId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/documents/{documentId}/content
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/thumbnail
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/ratings
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/user-rating
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/user-rating
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/user-rating
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/comments
+  method: get
+  operationId: getAllCommentsOfAPI
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/comments
+  method: post
+  operationId: addCommentToAPI
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/comments/{commentId}
+  method: get
+  operationId: getCommentOfAPI
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/comments/{commentId}
+  method: patch
+  operationId: editCommentOfAPI
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/comments/{commentId}
+  method: delete
+  operationId: deleteComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/comments/{commentId}/replies
+  method: get
+  operationId: getRepliesOfComment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/topics
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/subscription-policies
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/api-keys/generate
+  method: post
+  operationId: generateApiBoundApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/api-keys/regenerate
+  method: post
+  operationId: regenerateAPIBoundAPIKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/api-keys
+  method: get
+  operationId: getAPIBoundAPIKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/api-keys/revoke
+  method: post
+  operationId: revokeAPIBoundAPIKey
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /apis/{apiId}/api-keys/associate
+  method: post
+  operationId: associateAPIKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/api-keys/dissociate
+  method: post
+  operationId: dissociateAPIKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers
+  method: get
+  operationId: getAllMCPServers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}
+  method: get
+  operationId: getMCPServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/documents
+  method: get
+  operationId: getMCPServerDocuments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/documents/{documentId}
+  method: get
+  operationId: getMCPServerDocument
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/documents/{documentId}/content
+  method: get
+  operationId: getMCPServerDocumentContent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/thumbnail
+  method: get
+  operationId: getMCPServerThumbnail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/ratings
+  method: get
+  operationId: getMCPServerRatings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/user-rating
+  method: get
+  operationId: getMCPServerRating
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/user-rating
+  method: put
+  operationId: addMCPServerRating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers/{mcpServerId}/user-rating
+  method: delete
+  operationId: deleteMCPServerRating
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers/{mcpServerId}/comments
+  method: get
+  operationId: getAllCommentsOfMCPServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/comments
+  method: post
+  operationId: addCommentToMCPServer
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers/{mcpServerId}/comments/{commentId}
+  method: get
+  operationId: getCommentOfMCPServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/comments/{commentId}
+  method: patch
+  operationId: editCommentOfMCPServer
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers/{mcpServerId}/comments/{commentId}
+  method: delete
+  operationId: deleteCommentOfMCPServer
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:admin
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /mcp-servers/{mcpServerId}/comments/{commentId}/replies
+  method: get
+  operationId: getRepliesOfCommentOfMCPServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /mcp-servers/{mcpServerId}/subscription-policies
+  method: get
+  operationId: getMCPServerSubscriptionPolicies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_import_export
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_import_export
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/generate-keys
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/map-keys
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/keys
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/keys/{keyType}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/keys/{keyType}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/keys/{keyType}/regenerate-secret
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/keys/{keyType}/clean-up
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/keys/{keyType}/generate-token
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/regenerate-secret
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/clean-up
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/generate-token
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/generate-secret
+  method: post
+  operationId: generateConsumerSecret
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/secrets
+  method: get
+  operationId: getConsumerSecrets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/oauth-keys/{keyMappingId}/revoke-secret
+  method: post
+  operationId: revokeConsumerSecret
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}/generate
+  method: post
+  operationId: applicationsApplicationIdApiKeysKeyTypeGeneratePost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}/regenerate
+  method: post
+  operationId: regenerateAppBoundAPIKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}
+  method: get
+  operationId: getAppBoundAPIKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/api-keys/{keyType}/revoke
+  method: post
+  operationId: applicationsApplicationIdApiKeysKeyTypeRevokePost
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}/subscriptions
+  method: get
+  operationId: getSubscribedAPIsWithAPIKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/api-keys/{keyType}/associate
+  method: post
+  operationId: associateAPIKeyToApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}/dissociate
+  method: post
+  operationId: dissociateAPIKeyFromApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applications/{applicationId}/api-keys/{keyType}/associations
+  method: get
+  operationId: getAPIKeyAssociationsForApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_key
+    - apim:app_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/export
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:app_import_export
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/import
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:app_import_export
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/multiple
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{apiId}/additionalInfo
+  method: get
+  operationId: getAdditionalInfoOfAPISubscriptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{subscriptionId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions/{subscriptionId}
+  method: put
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{subscriptionId}
+  method: delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /subscriptions/{subscriptionId}/usage
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:sub_manage
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling-policies/{policyLevel}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /throttling-policies/{policyLevel}/{policyId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications/{applicationId}/reset-throttle-policy
+  method: post
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - apim:app_manage
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /tags
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sdk-gen/languages
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhooks/subscriptions
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /settings
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:store_settings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /settings/application-attributes
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tenants
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /recommendations
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-categories
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /key-managers
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/graphql-policies/complexity
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/graphql-policies/complexity/types
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}/api-chat
+  method: post
+  operationId: apiChatPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/{apiId}/generate-definition-url
+  method: post
+  operationId: generateDefinitionURL
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /me/change-password
+  method: post
+  operationId: changeUserPassword
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:subscribe
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /me/organization-information
+  method: get
+  operationId: organizationInformation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:subscribe
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /marketplace-assistant/api-count
+  method: get
+  operationId: getMarketplaceAssistantApiCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /marketplace-assistant/chat
+  method: post
+  operationId: marketplaceAssistantExecute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /redeploy-api
+  method: post
+  operationId: redployAPI
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /undeploy-api
+  method: post
+  operationId: undeployAPI
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /server-startup-healthcheck
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-artifact
+  method: get
+  operationId: getAPIArtifacts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /local-entry
+  method: get
+  operationId: getLocalEntries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /sequence
+  method: get
+  operationId: getSequences
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /end-points
+  method: get
+  operationId: getEndpoints
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/{apiId}
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applications
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subscriptions
+  method: get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /rulesets
+  method: get
+  operationId: getRulesets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_rule_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /rulesets
+  method: post
+  operationId: createRuleset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_rule_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /rulesets/{rulesetId}
+  method: get
+  operationId: getRulesetById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_rule_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /rulesets/{rulesetId}
+  method: put
+  operationId: updateRulesetById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_rule_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /rulesets/{rulesetId}
+  method: delete
+  operationId: deleteRuleset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_rule_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /rulesets/{rulesetId}/content
+  method: get
+  operationId: getRulesetContent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_rule_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /rulesets/{rulesetId}/usage
+  method: get
+  operationId: getRulesetUsage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_rule_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policies
+  method: get
+  operationId: getGovernancePolicies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_policy_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policies
+  method: post
+  operationId: createGovernancePolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_policy_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /policies/{policyId}
+  method: get
+  operationId: getGovernancePolicyById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_policy_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policies/{policyId}
+  method: put
+  operationId: updateGovernancePolicyById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_policy_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /policies/{policyId}
+  method: delete
+  operationId: deleteGovernancePolicy
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - apim:gov_policy_manage
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /artifact-compliance/api
+  method: get
+  operationId: getComplianceStatusListOfAPIs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /artifact-compliance/api/summary
+  method: get
+  operationId: getComplianceSummaryForAPIs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /artifact-compliance/api/{apiId}
+  method: get
+  operationId: getComplianceByAPIId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /artifact-compliance/api/{apiId}/ruleset-validation-results/{rulesetId}
+  method: get
+  operationId: getRulesetValidationResultsByAPIId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policy-adherence
+  method: get
+  operationId: getPolicyAdherenceForAllPolicies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policy-adherence/summary
+  method: get
+  operationId: getPolicyAdherenceSummary
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /policy-adherence/{policyId}
+  method: get
+  operationId: getPolicyAdherenceByPolicyId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:gov_result_read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /services
+  method: get
+  operationId: searchServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_view
+    - service_catalog:service_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /services
+  method: post
+  operationId: addService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - service_catalog:service_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /services/{serviceId}
+  method: get
+  operationId: getServiceById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_view
+    - service_catalog:service_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /services/{serviceId}
+  method: put
+  operationId: updateService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - service_catalog:service_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /services/{serviceId}
+  method: delete
+  operationId: deleteService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - service_catalog:service_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /services/{serviceId}/definition
+  method: get
+  operationId: getServiceDefinition
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_view
+    - service_catalog:service_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /services/{serviceId}/usage
+  method: get
+  operationId: getServiceUsage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - apim:api_view
+    - service_catalog:service_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /services/import
+  method: post
+  operationId: importService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - service_catalog:service_write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /services/export
+  method: get
+  operationId: exportService
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - service_catalog:service_view
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /settings
+  method: get
+  operationId: getSettings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
