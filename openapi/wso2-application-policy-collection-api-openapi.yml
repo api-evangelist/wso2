@@ -1,0 +1,463 @@
+openapi: 3.0.1
+info:
+  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application Policy (Collection) API
+  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  contact:
+    name: WSO2
+    url: https://wso2.com/api-manager/
+    email: architecture@wso2.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v4
+servers:
+- url: https://apis.wso2.com/api/am/admin/v4
+tags:
+- name: Application Policy (Collection)
+paths:
+  /throttling/policies/application:
+    get:
+      tags:
+      - Application Policy (Collection)
+      summary: Get all Application Throttling Policies
+      description: 'Retrieves all existing application throttling policies.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      responses:
+        200:
+          description: 'OK.
+
+            Policies returned
+
+            '
+          headers:
+            Content-Type:
+              description: 'The content type of the body.
+
+                '
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationThrottlePolicyList'
+        406:
+          $ref: '#/components/responses/NotAcceptable'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:tier_view
+        - apim:admin_tier_view
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/throttling/policies/application"'
+    post:
+      tags:
+      - Application Policy (Collection)
+      summary: Add an Application Throttling Policy
+      description: 'This operation can be used to add a new application level throttling policy.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        description: 'Application level policy object that should to be added
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationThrottlePolicy'
+        required: true
+      responses:
+        201:
+          description: 'Created.
+
+            Successful response with the newly created object as entity in the body.
+
+            Location header contains URL of newly created entity.
+
+            '
+          headers:
+            Location:
+              description: 'Location of the newly created Policy object.
+
+                '
+              schema:
+                type: string
+            Content-Type:
+              description: 'The content type of the body.
+
+                '
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationThrottlePolicy'
+              example:
+                policyId: e0fd4a15-969e-4056-94c8-8a7b56f8103f
+                policyName: 20PerMin
+                displayName: 20PerMin
+                description: Allows 20 request per minute
+                isDeployed: true
+                type: ApplicationThrottlePolicy
+                defaultLimit:
+                  type: REQUESTCOUNTLIMIT
+                  requestCount:
+                    timeUnit: min
+                    unitTime: 1
+                    requestCount: 20
+        400:
+          $ref: '#/components/responses/BadRequest'
+        415:
+          $ref: '#/components/responses/UnsupportedMediaType'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:tier_manage
+        - apim:admin_tier_manage
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X POST -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -H "Content-Type: application/json" -d @data.json "https://127.0.0.1:9443/api/am/admin/v4/throttling/policies/application"'
+components:
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: 'Media types acceptable for the response. Default is application/json.
+
+        '
+      schema:
+        type: string
+        default: application/json
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: 'Media type of the entity in the body. Default is application/json.
+
+        '
+      required: true
+      schema:
+        type: string
+        default: application/json
+  schemas:
+    BandwidthLimit:
+      title: Bandwidth Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - dataAmount
+        - dataUnit
+        type: object
+        properties:
+          dataAmount:
+            type: integer
+            description: Amount of data allowed to be transfered
+            format: int64
+            example: 1000
+          dataUnit:
+            type: string
+            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
+            example: KB
+    EventCountLimit:
+      title: Event Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - eventCount
+        type: object
+        properties:
+          eventCount:
+            type: integer
+            description: Maximum number of events allowed
+            format: int64
+            example: 3000
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ApplicationThrottlePolicy:
+      title: Application Throttling Policy
+      allOf:
+      - $ref: '#/components/schemas/ThrottlePolicy'
+      - required:
+        - defaultLimit
+        type: object
+        properties:
+          defaultLimit:
+            $ref: '#/components/schemas/ThrottleLimit'
+          burstLimit:
+            $ref: '#/components/schemas/BurstLimit'
+    BurstLimit:
+      title: Burst Limit object
+      type: object
+      properties:
+        rateLimitCount:
+          type: integer
+          description: Burst control request count
+          example: 10
+        rateLimitTimeUnit:
+          type: string
+          description: Burst control time unit
+          example: min
+    ApplicationThrottlePolicyList:
+      title: Application Level Throttling Policy List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Application Throttling Policies returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationThrottlePolicy'
+    ThrottleLimit:
+      title: Throttle Limit
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Type of the throttling limit. Allowed values are \"REQUESTCOUNTLIMIT\", \"BANDWIDTHLIMIT\", \"EVENTCOUNTLIMIT\"\nand \"AIAPIQUOTALIMIT\".\nPlease see schemas of \"RequestCountLimit\", \"BandwidthLimit\", \"EventCountLimit\" and \"AIAPIQuotaLimit\" \nthrottling limit types in Definitions section.\n"
+          example: REQUESTCOUNTLIMIT
+          enum:
+          - REQUESTCOUNTLIMIT
+          - BANDWIDTHLIMIT
+          - EVENTCOUNTLIMIT
+          - AIAPIQUOTALIMIT
+        requestCount:
+          $ref: '#/components/schemas/RequestCountLimit'
+        bandwidth:
+          $ref: '#/components/schemas/BandwidthLimit'
+        eventCount:
+          $ref: '#/components/schemas/EventCountLimit'
+        aiApiQuota:
+          $ref: '#/components/schemas/AIAPIQuotaLimit'
+    ThrottlePolicy:
+      title: Generic Throttling Policy
+      required:
+      - policyName
+      type: object
+      properties:
+        policyId:
+          type: string
+          description: Id of policy
+          readOnly: true
+          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
+        policyName:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: Name of policy
+          example: 30PerMin
+        displayName:
+          type: string
+          description: Display name of the policy
+          example: 30PerMin
+          maxLength: 512
+        description:
+          maxLength: 1024
+          type: string
+          description: Description of the policy
+          example: Allows 30 request per minute
+        isDeployed:
+          type: boolean
+          description: Indicates whether the policy is deployed successfully or not.
+          default: false
+        type:
+          type: string
+          description: Indicates the type of throttle policy
+      discriminator:
+        propertyName: type
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ThrottleLimitBase:
+      title: Throttle Limit Base
+      required:
+      - timeUnit
+      - unitTime
+      type: object
+      properties:
+        timeUnit:
+          type: string
+          description: Unit of the time. Allowed values are "sec", "min", "hour", "day"
+          example: min
+        unitTime:
+          type: integer
+          description: Time limit that the throttling limit applies.
+          example: 10
+    RequestCountLimit:
+      title: Request Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 30
+    AIAPIQuotaLimit:
+      title: AI API Quota Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 300
+          totalTokenCount:
+            type: integer
+            description: Maximum number of total tokens allowed
+            format: int64
+            example: 800
+          promptTokenCount:
+            type: integer
+            description: Maximum number of prompt tokens allowed
+            format: int64
+            example: 400
+          completionTokenCount:
+            type: integer
+            description: Maximum number of completion tokens allowed
+            format: int64
+            example: 500
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+  securitySchemes:
+    OAuth2Security:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://localhost:9443/oauth2/token
+          scopes:
+            openid: Authorize access to user details
+            apim:policies_import_export: Export and import policies related operations
+            apim:admin: Manage all admin operations
+            apim:tier_view: View throttling policies
+            apim:tier_manage: Update and delete throttling policies
+            apim:admin_tier_view: View throttling policies
+            apim:admin_tier_manage: Update and delete throttling policies
+            apim:bl_view: View deny policies
+            apim:bl_manage: Update and delete deny policies
+            apim:mediation_policy_view: View mediation policies
+            apim:mediation_policy_create: Create and update mediation policies
+            apim:app_owner_change: Retrieve and manage applications
+            apim:app_settings_change: Change Application Settings
+            apim:app_import_export: Import and export applications related operations
+            apim:api_import_export: Import and export APIs related operations
+            apim:api_product_import_export: Import and export API Products related operations
+            apim:environment_manage: Manage gateway environments
+            apim:environment_read: Retrieve gateway environments
+            apim:monetization_usage_publish: Retrieve and publish Monetization related usage records
+            apim:api_workflow_approve: Manage workflows
+            apim:bot_data: Retrieve bot detection data
+            apim:tenantInfo: Retrieve tenant related information
+            apim:tenant_theme_manage: Manage tenant themes
+            apim:admin_operations: Manage API categories and Key Managers related operations
+            apim:api_category: Manage API categories
+            apim:admin_settings: Retrieve admin settings
+            apim:admin_alert_manage: Manage admin alerts
+            apim:api_workflow_view: Retrive workflow requests
+            apim:scope_manage: Manage system scopes
+            apim:role_manage: Manage system roles
+            apim:admin_application_view: View Applications
+            apim:keymanagers_manage: Manage Key Managers
+            apim:api_provider_change: Retrieve and manage applications
+            apim:llm_provider_manage: Manage LLM Providers
+            apim:gov_policy_read: Retrieve governance policies
+            apim:gov_policy_manage: Manage governance policies
+            apim:gov_result_read: Retrieve governance results
+            apim:gov_rule_read: Retrieve governance rules
+            apim:gov_rule_manage: Manage governance rules
+            apim:organization_manage: Manage Organizations
+            apim:organization_read: Read Organizations

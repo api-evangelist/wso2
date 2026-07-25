@@ -1,0 +1,158 @@
+openapi: 3.0.1
+info:
+  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Labels (Collection) API
+  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  contact:
+    name: WSO2
+    url: https://wso2.com/api-manager/
+    email: architecture@wso2.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v4
+servers:
+- url: https://apis.wso2.com/api/am/admin/v4
+tags:
+- name: Labels (Collection)
+paths:
+  /labels:
+    get:
+      tags:
+      - Labels (Collection)
+      summary: Get all Labels
+      description: 'Get all Labels
+
+        '
+      responses:
+        200:
+          description: 'OK.
+
+            Labels returned
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelList'
+      security:
+      - OAuth2Security:
+        - apim:admin
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/labels"'
+      operationId: getAllLabels
+components:
+  schemas:
+    Label:
+      title: Label
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: d7cf8523-9180-4255-84fa-6cb171c1f779
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: Health
+        description:
+          maxLength: 1024
+          type: string
+          example: Health related APIs
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            example: ""
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            example: ""
+
+            '
+    LabelList:
+      title: Label List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of labels returned.
+          example: 1
+        list:
+          type: array
+          description: List of labels.
+          items:
+            $ref: '#/components/schemas/Label'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+  securitySchemes:
+    OAuth2Security:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://localhost:9443/oauth2/token
+          scopes:
+            openid: Authorize access to user details
+            apim:policies_import_export: Export and import policies related operations
+            apim:admin: Manage all admin operations
+            apim:tier_view: View throttling policies
+            apim:tier_manage: Update and delete throttling policies
+            apim:admin_tier_view: View throttling policies
+            apim:admin_tier_manage: Update and delete throttling policies
+            apim:bl_view: View deny policies
+            apim:bl_manage: Update and delete deny policies
+            apim:mediation_policy_view: View mediation policies
+            apim:mediation_policy_create: Create and update mediation policies
+            apim:app_owner_change: Retrieve and manage applications
+            apim:app_settings_change: Change Application Settings
+            apim:app_import_export: Import and export applications related operations
+            apim:api_import_export: Import and export APIs related operations
+            apim:api_product_import_export: Import and export API Products related operations
+            apim:environment_manage: Manage gateway environments
+            apim:environment_read: Retrieve gateway environments
+            apim:monetization_usage_publish: Retrieve and publish Monetization related usage records
+            apim:api_workflow_approve: Manage workflows
+            apim:bot_data: Retrieve bot detection data
+            apim:tenantInfo: Retrieve tenant related information
+            apim:tenant_theme_manage: Manage tenant themes
+            apim:admin_operations: Manage API categories and Key Managers related operations
+            apim:api_category: Manage API categories
+            apim:admin_settings: Retrieve admin settings
+            apim:admin_alert_manage: Manage admin alerts
+            apim:api_workflow_view: Retrive workflow requests
+            apim:scope_manage: Manage system scopes
+            apim:role_manage: Manage system roles
+            apim:admin_application_view: View Applications
+            apim:keymanagers_manage: Manage Key Managers
+            apim:api_provider_change: Retrieve and manage applications
+            apim:llm_provider_manage: Manage LLM Providers
+            apim:gov_policy_read: Retrieve governance policies
+            apim:gov_policy_manage: Manage governance policies
+            apim:gov_result_read: Retrieve governance results
+            apim:gov_rule_read: Retrieve governance rules
+            apim:gov_rule_manage: Manage governance rules
+            apim:organization_manage: Manage Organizations
+            apim:organization_read: Read Organizations

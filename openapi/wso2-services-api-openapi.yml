@@ -1,0 +1,872 @@
+openapi: 3.0.1
+info:
+  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Services API
+  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  contact:
+    name: WSO2
+    url: https://wso2.com/api-manager/
+    email: architecture@wso2.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v4
+servers:
+- url: https://apis.wso2.com/api/am/admin/v4
+tags:
+- name: Services
+paths:
+  /services:
+    get:
+      summary: Retrieve/search services
+      description: 'Retrieve or search services in the service catalog of the user''s organization or tenant. Search is supported
+
+        using the name, version, definitionType and key of the service.
+
+        Search based on the definition type and key of the service will always be an exact search. If you want to
+
+        execute an exact search for either name or version the parameter should be given inside double quotation.
+
+        '
+      operationId: searchServices
+      security:
+      - OAuth2Security:
+        - service_catalog:service_view
+        - apim:api_view
+      tags:
+      - Services
+      parameters:
+      - name: name
+        in: query
+        description: 'Filter services by the name of the service
+
+          '
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: 'Filter services by version of the service
+
+          '
+        schema:
+          type: string
+      - name: definitionType
+        in: query
+        description: 'Filter services by definitionType
+
+          '
+        schema:
+          type: string
+          enum:
+          - OAS
+          - WSDL1
+          - WSDL2
+          - GRAPHQL_SDL
+          - ASYNC_API
+      - name: key
+        in: query
+        description: 'Comma seperated keys of the services to check
+
+          '
+        schema:
+          type: string
+      - name: shrink
+        in: query
+        description: 'If this set to true, a minimal set of fields will be provided for each service including the md5
+
+          '
+        schema:
+          type: boolean
+          default: false
+      - $ref: '#/components/parameters/sortBy'
+      - $ref: '#/components/parameters/sortOrder'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      responses:
+        200:
+          description: 'Paginated matched list of services returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        label: Exact search by name
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services?name=%22Pet%20Service%22"'
+      - lang: Curl
+        label: Matching search by name
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services?name=Pet%20Service"'
+      - lang: Curl
+        label: Exact search by version
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services?version=%221.0.0%22"'
+      - lang: Curl
+        label: Matching search by version
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services?version=1.0.0"'
+      - lang: Curl
+        label: Get all versions of a service
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services?name=%22Pet%20Service%22"'
+    post:
+      summary: Add a new service to Service Catalog
+      description: "Add a new service to the service catalog of the user's organization (or tenant)\nby specifying the details of the service along with its definition. \n"
+      security:
+      - OAuth2Security:
+        - service_catalog:service_write
+      tags:
+      - Services
+      operationId: addService
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceSchema'
+      responses:
+        201:
+          description: 'Created.
+
+            Successful response with the newly created service as the response payload
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        415:
+          $ref: '#/components/responses/UnsupportedMediaType'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -F "definitionFile=@definition.yaml" -F "serviceMetadata=@metadata.json;type=application/json" "https://127.0.0.1:9443/api/am/service-catalog/v1/services"'
+  /services/{serviceId}:
+    get:
+      summary: Get details of a service
+      description: 'Get details of a service using the id of the service.
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_view
+        - apim:api_view
+      operationId: getServiceById
+      tags:
+      - Services
+      parameters:
+      - $ref: '#/components/parameters/serviceId'
+      responses:
+        200:
+          description: 'Requested service in the service catalog is returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services"'
+    put:
+      summary: Update a service
+      description: 'Update a service''s details and definition
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_write
+      operationId: updateService
+      tags:
+      - Services
+      parameters:
+      - $ref: '#/components/parameters/serviceId'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceSchema'
+      responses:
+        200:
+          description: 'Updated.
+
+            Successful response with the newly updated service as entity in the body.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X PUT -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -F "definitionFile=@definition.yaml" -F "serviceMetadata=@metadata.json;type=application/json" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/7b3d976a-620a-4435-9649-e806f30dc7cf"'
+    delete:
+      summary: Delete a service
+      description: 'Delete a service by providing the service id
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_write
+      operationId: deleteService
+      tags:
+      - Services
+      parameters:
+      - $ref: '#/components/parameters/serviceId'
+      responses:
+        204:
+          description: 'Successfully deleted the catalog entry.
+
+            '
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X DELETE -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/32b4541f-ce7e-47a6-9c0c-c3db18128c50"'
+  /services/{serviceId}/definition:
+    get:
+      summary: Retrieve a service definition
+      description: 'Retrieve the definition of a service identified by the service id.
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_view
+        - apim:api_view
+      operationId: getServiceDefinition
+      tags:
+      - Services
+      parameters:
+      - $ref: '#/components/parameters/serviceId'
+      responses:
+        200:
+          description: 'Successful response with the definition file as entity in the body.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: string
+            application/yaml:
+              schema:
+                type: string
+                format: binary
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/3784c2da-2f2a-4af9-8a43-ef207fb4d739/definition"'
+  /services/{serviceId}/usage:
+    get:
+      summary: Retrieve the API Info that use the given service
+      description: 'Retrieve the id, name, context and version of the APIs that used by the service
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_view
+        - apim:api_view
+      operationId: getServiceUsage
+      tags:
+      - Services
+      parameters:
+      - $ref: '#/components/parameters/serviceId'
+      responses:
+        200:
+          description: 'List of APIs that uses the service in the service catalog is returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIList'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/3784c2da-2f2a-4af9-8a43-ef207fb4d739/usage"'
+  /services/import:
+    post:
+      summary: Import a service
+      description: 'Import  a service by providing an archived service
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_write
+      operationId: importService
+      tags:
+      - Services
+      parameters:
+      - name: overwrite
+        in: query
+        description: 'Whether to overwrite if there is any existing service with the same name and version.
+
+          '
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  description: 'Zip archive consisting of exported Application Configuration.
+
+                    '
+                  format: binary
+                verifier:
+                  type: string
+      responses:
+        200:
+          description: 'Successful response with the imported service metadata.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfoList'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -F "file=@services.zip" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/import?overwrite=true"'
+  /services/export:
+    get:
+      summary: Export a service
+      description: 'Export a service as an archived zip file.
+
+        '
+      security:
+      - OAuth2Security:
+        - service_catalog:service_view
+      operationId: exportService
+      tags:
+      - Services
+      parameters:
+      - name: name
+        in: query
+        description: 'Name of the service to export
+
+          '
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: 'Version of the service to export
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: 'Successful response as the exported service as a zipped archive.
+
+            '
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/service-catalog/v1/services/export?name=Single1Curl&version=1.0.0" > services.zip'
+components:
+  schemas:
+    ErrorListItem:
+      type: object
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+    ServiceInfo:
+      type: object
+      title: The Service Info object
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+          readOnly: true
+        name:
+          type: string
+          pattern: ^[^\*]+$
+          example: PizzashackEndpoint
+        key:
+          type: string
+          example: PizzashackEndpoint-1.0.0
+        version:
+          type: string
+          example: v1
+        md5:
+          type: string
+          example: 36583a6a249b410e7fc4f892029709cac09763ddb230e1a829d5f9134d1abd07
+    Error:
+      type: object
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    Pagination:
+      title: Pagination
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    APIList:
+      title: API List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of APIs returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIInfo'
+    Service:
+      type: object
+      title: The Service Object
+      required:
+      - name
+      - version
+      - definitionType
+      - serviceUrl
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+          readOnly: true
+        name:
+          type: string
+          pattern: ^[^\*]+$
+          example: Pizzashack-Endpoint
+          maxLength: 255
+          minLength: 1
+        description:
+          type: string
+          example: A Catalog Entry that exposes a REST endpoint
+          maxLength: 1024
+        version:
+          type: string
+          example: v1
+          maxLength: 30
+          minLength: 1
+        serviceKey:
+          type: string
+          example: Pizzashack-Endpoint-1.0.0
+          maxLength: 512
+        serviceUrl:
+          type: string
+          example: http://localhost/pizzashack
+        definitionType:
+          type: string
+          description: The type of the provided API definition
+          example: OAS3
+          enum:
+          - OAS2
+          - OAS3
+          - WSDL1
+          - WSDL2
+          - GRAPHQL_SDL
+          - ASYNC_API
+        securityType:
+          type: string
+          description: The security type of the endpoint
+          example: BASIC
+          enum:
+          - BASIC
+          - DIGEST
+          - OAUTH2
+          - X509
+          - API_KEY
+          - NONE
+          default: NONE
+        mutualSSLEnabled:
+          type: boolean
+          description: Whether Mutual SSL is enabled for the endpoint
+          default: false
+          example: false
+        usage:
+          type: integer
+          description: Number of usages of the service in APIs
+          readOnly: true
+          example: 1
+        createdTime:
+          type: string
+          readOnly: true
+          example: '2020-02-20T13:57:16.229'
+        lastUpdatedTime:
+          type: string
+          readOnly: true
+          example: '2020-02-20T13:57:16.229'
+        md5:
+          type: string
+          example: 36583a6a249b410e7fc4f892029709cac09763ddb230e1a829d5f9134d1abd07
+        definitionUrl:
+          type: string
+          example: https://petstore.swagger.io/v2/swagger.json
+    ServiceSchema:
+      type: object
+      title: The Service Schema object
+      required:
+      - serviceMetadata
+      properties:
+        serviceMetadata:
+          $ref: '#/components/schemas/Service'
+        definitionFile:
+          type: string
+          format: binary
+        inlineContent:
+          type: string
+          description: Inline content of the document
+    ServiceList:
+      type: object
+      title: Paginated List of Services in Service Catalog
+      properties:
+        list:
+          type: array
+          title: List of Services in Service Catalog
+          items:
+            $ref: '#/components/schemas/Service'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ServiceInfoList:
+      title: Services List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'MD5 hashes of services returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceInfo'
+    APIInfo:
+      title: API Info object with basic API details.
+      type: object
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: CalculatorAPI
+        displayName:
+          type: string
+          example: Calculator API
+          description: 'Display name of the API.
+
+            This is the name that will be displayed in the Publisher and DevPortal.
+
+            If not provided, the name will be used as the display name.
+
+            '
+        context:
+          type: string
+          example: CalculatorAPI
+        version:
+          type: string
+          example: 1.0.0
+        provider:
+          type: string
+          example: admin
+  parameters:
+    serviceId:
+      name: serviceId
+      in: path
+      description: uuid of the service
+      required: true
+      schema:
+        type: string
+    sortOrder:
+      name: sortOrder
+      in: query
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    sortBy:
+      name: sortBy
+      in: query
+      schema:
+        type: string
+        enum:
+        - name
+        - definitionType
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum limit of items to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+  headers:
+    ETag:
+      schema:
+        type: string
+      description: A hash-like string value which represents the current state of a resource
+  securitySchemes:
+    OAuth2Security:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://localhost:9443/oauth2/token
+          scopes:
+            openid: Authorize access to user details
+            apim:policies_import_export: Export and import policies related operations
+            apim:admin: Manage all admin operations
+            apim:tier_view: View throttling policies
+            apim:tier_manage: Update and delete throttling policies
+            apim:admin_tier_view: View throttling policies
+            apim:admin_tier_manage: Update and delete throttling policies
+            apim:bl_view: View deny policies
+            apim:bl_manage: Update and delete deny policies
+            apim:mediation_policy_view: View mediation policies
+            apim:mediation_policy_create: Create and update mediation policies
+            apim:app_owner_change: Retrieve and manage applications
+            apim:app_settings_change: Change Application Settings
+            apim:app_import_export: Import and export applications related operations
+            apim:api_import_export: Import and export APIs related operations
+            apim:api_product_import_export: Import and export API Products related operations
+            apim:environment_manage: Manage gateway environments
+            apim:environment_read: Retrieve gateway environments
+            apim:monetization_usage_publish: Retrieve and publish Monetization related usage records
+            apim:api_workflow_approve: Manage workflows
+            apim:bot_data: Retrieve bot detection data
+            apim:tenantInfo: Retrieve tenant related information
+            apim:tenant_theme_manage: Manage tenant themes
+            apim:admin_operations: Manage API categories and Key Managers related operations
+            apim:api_category: Manage API categories
+            apim:admin_settings: Retrieve admin settings
+            apim:admin_alert_manage: Manage admin alerts
+            apim:api_workflow_view: Retrive workflow requests
+            apim:scope_manage: Manage system scopes
+            apim:role_manage: Manage system roles
+            apim:admin_application_view: View Applications
+            apim:keymanagers_manage: Manage Key Managers
+            apim:api_provider_change: Retrieve and manage applications
+            apim:llm_provider_manage: Manage LLM Providers
+            apim:gov_policy_read: Retrieve governance policies
+            apim:gov_policy_manage: Manage governance policies
+            apim:gov_result_read: Retrieve governance results
+            apim:gov_rule_read: Retrieve governance rules
+            apim:gov_rule_manage: Manage governance rules
+            apim:organization_manage: Manage Organizations
+            apim:organization_read: Read Organizations

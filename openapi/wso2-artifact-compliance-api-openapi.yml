@@ -1,0 +1,610 @@
+openapi: 3.0.1
+info:
+  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Artifact Compliance API
+  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  contact:
+    name: WSO2
+    url: https://wso2.com/api-manager/
+    email: architecture@wso2.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v4
+servers:
+- url: https://apis.wso2.com/api/am/admin/v4
+tags:
+- name: Artifact Compliance
+  description: for accessing artifact compliance.
+paths:
+  /artifact-compliance/api:
+    get:
+      summary: Retrieves compliance of all API artifacts
+      description: Retrieves compliance of all API artifacts within the organization visible to logged-in user.
+      operationId: getComplianceStatusListOfAPIs
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      tags:
+      - Artifact Compliance
+      responses:
+        '200':
+          description: OK. Successful response with API compliance results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactComplianceList'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - OAuth2Security:
+        - apim:gov_result_read
+  /artifact-compliance/api/summary:
+    get:
+      summary: Retrieves the summary of compliance of all API artifacts
+      description: Retrieves the summary of compliance of all API artifacts within the organization visible to logged-in user.
+      operationId: getComplianceSummaryForAPIs
+      tags:
+      - Artifact Compliance
+      responses:
+        '200':
+          description: OK. Successful response with compliance summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactComplianceSummary'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - OAuth2Security:
+        - apim:gov_result_read
+  /artifact-compliance/api/{apiId}:
+    get:
+      summary: Retrieve compliance details for a specific API
+      description: Retrieve compliance details associated with a specific API using its unique UUID.
+      operationId: getComplianceByAPIId
+      tags:
+      - Artifact Compliance
+      parameters:
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with compliance details for the specified artifact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactComplianceDetails'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - OAuth2Security:
+        - apim:gov_result_read
+  /artifact-compliance/api/{apiId}/ruleset-validation-results/{rulesetId}:
+    get:
+      summary: Retrieve ruleset validation results for a specific API
+      description: Retrieve ruleset validation results associated with a specific API using its unique UUID.
+      operationId: getRulesetValidationResultsByAPIId
+      tags:
+      - Artifact Compliance
+      parameters:
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/rulesetId'
+      responses:
+        '200':
+          description: Successful response with ruleset validation results for the specified API.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RulesetValidationResult'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - OAuth2Security:
+        - apim:gov_result_read
+components:
+  schemas:
+    ArtifactComplianceList:
+      type: object
+      description: Compliance status of a list of artifacts.
+      properties:
+        count:
+          type: integer
+          description: Number of artifact returned.
+          example: 10
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactComplianceStatus'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ArtifactComplianceSummary:
+      type: object
+      description: Summary of compliance of certain artifact in the organization.
+      properties:
+        total:
+          type: integer
+          description: Total number of artifacts.
+          example: 10
+        compliant:
+          type: integer
+          description: Number of compliant artifacts.
+          example: 6
+        nonCompliant:
+          type: integer
+          description: Number of non-compliant artifacts.
+          example: 4
+        pending:
+          type: integer
+          description: Number of artifacts pending for compliance.
+          example: 0
+        notApplicable:
+          type: integer
+          description: Number of artifacts not applicable for compliance yet.
+          example: 0
+    ArtifactInfo:
+      type: object
+      description: Detailed information about an artifact.
+      properties:
+        name:
+          type: string
+          description: Name of the artifact.
+          example: Test API
+        type:
+          type: string
+          description: Type of the artifact.
+          enum:
+          - API
+          example: API
+        extendedType:
+          type: string
+          description: Extended type of the artifact.
+          enum:
+          - REST_API
+          - ASYNC_API
+          - MCP
+          example: REST_API
+        version:
+          type: string
+          description: Version of the artifact.
+          example: 1.0.0
+        owner:
+          type: string
+          description: Owner of the artifact.
+          example: admin
+    RulesetValidationResultWithoutRules:
+      type: object
+      description: Result of the ruleset validation.
+      properties:
+        id:
+          type: string
+          description: UUID of the ruleset.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the ruleset.
+          example: API Security Ruleset
+        ruleType:
+          type: string
+          description: Context or area to which the ruleset applies.
+          enum:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+          example: API_DEFINITION
+          x-enum-varnames:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+        status:
+          type: string
+          description: Status of the ruleset validation.
+          enum:
+          - PASSED
+          - FAILED
+          - UNAPPLIED
+          example: PASSED
+    ArtifactComplianceStatus:
+      type: object
+      description: Provides compliance status of an artifact.
+      properties:
+        id:
+          type: string
+          description: UUID of the API.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Status of the API's governance compliance.
+          enum:
+          - COMPLIANT
+          - NON-COMPLIANT
+          - NOT-APPLICABLE
+          - PENDING
+          example: COMPLIANT
+        info:
+          $ref: '#/components/schemas/ArtifactInfo'
+        policyAdherenceSummary:
+          $ref: '#/components/schemas/PolicyAdherenceSummary'
+        severityBasedRuleViolationSummary:
+          type: array
+          description: Summary of severity based rule violations.
+          items:
+            $ref: '#/components/schemas/SeverityBasedRuleViolationCount'
+    PolicyAdherenceSummary:
+      type: object
+      description: Summary of governance policy adherence in the organization.
+      properties:
+        total:
+          type: integer
+          description: Total number of policies.
+          example: 10
+        followed:
+          type: integer
+          description: Number of policies followed to.
+          example: 6
+        violated:
+          type: integer
+          description: Number of policies violated.
+          example: 4
+        unApplied:
+          type: integer
+          description: Number of policies unApplied.
+          example: 0
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    PolicyAdherenceWithRulesets:
+      type: object
+      description: Adherence status of a policy with ruleset details.
+      properties:
+        id:
+          type: string
+          description: UUID of the policy.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the policy.
+          example: Policy1
+        status:
+          type: string
+          description: Status of the policy's governance compliance.
+          enum:
+          - FOLLOWED
+          - VIOLATED
+          - UNAPPLIED
+          - PENDING
+          example: FOLLOWED
+        rulesetValidationResults:
+          type: array
+          description: List of ruleset validation information.
+          items:
+            $ref: '#/components/schemas/RulesetValidationResultWithoutRules'
+    SeverityBasedRuleViolationCount:
+      type: object
+      description: List of rules violated by the artifact under each severity.
+      properties:
+        severity:
+          type: string
+          description: Severity level of the rule violation.
+          enum:
+          - ERROR
+          - WARN
+          - INFO
+          example: WARN
+        violatedRulesCount:
+          type: integer
+          description: Number of rules violated by the artifact under each severity.
+          example: 1
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+    ArtifactComplianceDetails:
+      type: object
+      description: Provides compliance details of an artifact.
+      properties:
+        id:
+          type: string
+          description: UUID of the artifact.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Status of the artifact's governance compliance.
+          enum:
+          - COMPLIANT
+          - NON-COMPLIANT
+          - NOT-APPLICABLE
+          - PENDING
+          example: COMPLIANT
+        info:
+          $ref: '#/components/schemas/ArtifactInfo'
+        governedPolicies:
+          type: array
+          description: List of policies under which the artifact was governed.
+          items:
+            $ref: '#/components/schemas/PolicyAdherenceWithRulesets'
+    RulesetValidationResult:
+      type: object
+      description: Result of the ruleset validation.
+      properties:
+        id:
+          type: string
+          description: UUID of the ruleset.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the ruleset.
+          example: API Security Ruleset
+        status:
+          type: string
+          description: Status of the ruleset validation.
+          enum:
+          - PASSED
+          - FAILED
+          - UNAPPLIED
+          example: PASSED
+        violatedRules:
+          type: array
+          description: List of violated rules.
+          items:
+            $ref: '#/components/schemas/RuleValidationResult'
+        followedRules:
+          type: array
+          description: List of followed rules.
+          items:
+            $ref: '#/components/schemas/RuleValidationResult'
+    RuleValidationResult:
+      type: object
+      description: Result of the rule validation.
+      properties:
+        id:
+          type: string
+          description: UUID of the rule.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the rule.
+          example: API Name Rule
+        status:
+          type: string
+          description: Status of the rule validation.
+          enum:
+          - PASSED
+          - FAILED
+          example: FAILED
+        severity:
+          type: string
+          description: Severity level of the rule violation.
+          enum:
+          - ERROR
+          - WARN
+          - INFO
+          example: WARN
+        violatedPath:
+          type: object
+          description: Path in the artifact where the rule is violated.
+          properties:
+            path:
+              type: string
+              description: Path in the artifact where the rule is violated.
+              example: info.title
+            description:
+              type: string
+              description: Description of the path.
+              example: API name
+        message:
+          type: string
+          description: Message to be displayed when the rule is violated.
+          example: API name can not be too long or short
+        description:
+          type: string
+          description: Description of the rule.
+          example: API name should be between 5 to 50 characters
+  parameters:
+    apiId:
+      name: apiId
+      in: path
+      description: '**UUID** of the API.
+
+        '
+      required: true
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    rulesetId:
+      name: rulesetId
+      in: path
+      description: '**UUID** of the Ruleset.
+
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+  securitySchemes:
+    OAuth2Security:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://localhost:9443/oauth2/token
+          scopes:
+            openid: Authorize access to user details
+            apim:policies_import_export: Export and import policies related operations
+            apim:admin: Manage all admin operations
+            apim:tier_view: View throttling policies
+            apim:tier_manage: Update and delete throttling policies
+            apim:admin_tier_view: View throttling policies
+            apim:admin_tier_manage: Update and delete throttling policies
+            apim:bl_view: View deny policies
+            apim:bl_manage: Update and delete deny policies
+            apim:mediation_policy_view: View mediation policies
+            apim:mediation_policy_create: Create and update mediation policies
+            apim:app_owner_change: Retrieve and manage applications
+            apim:app_settings_change: Change Application Settings
+            apim:app_import_export: Import and export applications related operations
+            apim:api_import_export: Import and export APIs related operations
+            apim:api_product_import_export: Import and export API Products related operations
+            apim:environment_manage: Manage gateway environments
+            apim:environment_read: Retrieve gateway environments
+            apim:monetization_usage_publish: Retrieve and publish Monetization related usage records
+            apim:api_workflow_approve: Manage workflows
+            apim:bot_data: Retrieve bot detection data
+            apim:tenantInfo: Retrieve tenant related information
+            apim:tenant_theme_manage: Manage tenant themes
+            apim:admin_operations: Manage API categories and Key Managers related operations
+            apim:api_category: Manage API categories
+            apim:admin_settings: Retrieve admin settings
+            apim:admin_alert_manage: Manage admin alerts
+            apim:api_workflow_view: Retrive workflow requests
+            apim:scope_manage: Manage system scopes
+            apim:role_manage: Manage system roles
+            apim:admin_application_view: View Applications
+            apim:keymanagers_manage: Manage Key Managers
+            apim:api_provider_change: Retrieve and manage applications
+            apim:llm_provider_manage: Manage LLM Providers
+            apim:gov_policy_read: Retrieve governance policies
+            apim:gov_policy_manage: Manage governance policies
+            apim:gov_result_read: Retrieve governance results
+            apim:gov_rule_read: Retrieve governance rules
+            apim:gov_rule_manage: Manage governance rules
+            apim:organization_manage: Manage Organizations
+            apim:organization_read: Read Organizations

@@ -1,0 +1,595 @@
+openapi: 3.0.1
+info:
+  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Environments API
+  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  contact:
+    name: WSO2
+    url: https://wso2.com/api-manager/
+    email: architecture@wso2.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v4
+servers:
+- url: https://apis.wso2.com/api/am/admin/v4
+tags:
+- name: Environments
+paths:
+  /environments:
+    get:
+      tags:
+      - Environments
+      summary: Get all registered Environments
+      description: 'Get all Registered Environments
+
+        '
+      responses:
+        200:
+          description: 'OK.
+
+            Environments returned
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentList'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_read
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/environments"'
+    post:
+      tags:
+      - Environments
+      summary: Add an Environment
+      description: 'Add a new gateway environment
+
+        '
+      requestBody:
+        description: 'Environment object that should to be added
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+        required: true
+      responses:
+        201:
+          description: 'Created.
+
+            Successful response with the newly created environment as entity in the body.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_manage
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X POST -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -H "Content-Type: application/json" -d @data.json "https://127.0.0.1:9443/api/am/admin/v4/environments"'
+  /environments/{environmentId}:
+    get:
+      tags:
+      - Environments
+      summary: Get a Gateway Environment Configuration
+      description: 'Retrieve a single Gateway Environment Configuration. We should provide the Id of the Environment as a path parameter.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        200:
+          description: 'OK.
+
+            Gateway Environment Configuration returned
+
+            '
+          headers:
+            Content-Type:
+              description: 'The content type of the body.
+
+                '
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        404:
+          $ref: '#/components/responses/NotFound'
+        406:
+          $ref: '#/components/responses/NotAcceptable'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_manage
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/environments/8d263942-a6df-4cc2-a804-7a2525501450"'
+    put:
+      tags:
+      - Environments
+      summary: Update an Environment
+      description: 'Update a gateway Environment by environment Id
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        description: 'Environment object with updated information
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+        required: true
+      responses:
+        200:
+          description: 'OK.
+
+            Environment updated.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_manage
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X PUT -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -H "Content-Type: application/json" -d @data.json "https://127.0.0.1:9443/api/am/admin/v4/environments/d7cf8523-9180-4255-84fa-6cb171c1f779"'
+    delete:
+      tags:
+      - Environments
+      summary: Delete an Environment
+      description: 'Delete a Environment by Environment Id
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        200:
+          description: 'OK.
+
+            Environment successfully deleted.
+
+            '
+          content: {}
+        404:
+          $ref: '#/components/responses/NotFound'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_manage
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -X DELETE -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/environments/d7cf8523-9180-4255-84fa-6cb171c1f779"'
+  /environments/{environmentId}/gateways:
+    get:
+      tags:
+      - Environments
+      summary: Get Gateway Instances in a Gateway Environment
+      description: 'Retrieve list of gateway Instances in the gateway environment.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        200:
+          description: 'OK.
+
+            List of gateway Instances in the gateway environment returned
+
+            '
+          headers:
+            Content-Type:
+              description: 'The content type of the body.
+
+                '
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayInstanceList'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        406:
+          $ref: '#/components/responses/NotAcceptable'
+      security:
+      - OAuth2Security:
+        - apim:admin
+        - apim:environment_read
+      x-code-samples:
+      - lang: Curl
+        source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/environments/8d263942-a6df-4cc2-a804-7a2525501450/gateways"'
+components:
+  schemas:
+    GatewayEnvironmentProtocolURI:
+      title: Gateway Environment protocols and URIs
+      required:
+      - protocol
+      - endpointURI
+      type: object
+      properties:
+        protocol:
+          type: string
+          example: default
+        endpointURI:
+          type: string
+          example: default
+    AdditionalProperty:
+      title: Additional Gateway Properties
+      type: object
+      properties:
+        key:
+          type: string
+          example: Organization
+        value:
+          type: string
+          example: wso2
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    GatewayInstance:
+      title: Gateway instance in the gateway environment
+      type: object
+      required:
+      - gatewayId
+      properties:
+        gatewayId:
+          type: string
+          example: Env1_1372344
+        lastActive:
+          type: string
+          example: '2025-06-26T06:47:50Z'
+        status:
+          type: string
+          example: ACTIVE
+          default: ACTIVE
+          enum:
+          - ACTIVE
+          - EXPIRED
+    Environment:
+      title: Environment
+      required:
+      - name
+      - vhosts
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
+        name:
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+          example: us-region
+        displayName:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: US Region
+        provider:
+          type: string
+          example: wso2
+        type:
+          type: string
+          default: hybrid
+          example: hybrid
+        gatewayType:
+          type: string
+          example: Regular
+          default: Regular
+        description:
+          maxLength: 1023
+          type: string
+          example: Gateway environment in US Region
+        isReadOnly:
+          type: boolean
+          example: false
+          default: false
+          deprecated: true
+        mode:
+          type: string
+          enum:
+          - READ_ONLY
+          - READ_WRITE
+          - WRITE_ONLY
+          example: READ_WRITE
+          default: WRITE_ONLY
+          description: 'The mode of the environment. This indicates whether the environment is in read-only or read-write mode.
+
+            **READ_ONLY:** The environment is in read-only mode. API cannot be deployed, only discovery is possible.
+
+            **READ_WRITE:** The environment is in read-write mode. APIs can be deployed and discovered.
+
+            **WRITE_ONLY:** The environment is in write-only mode/ APIs only can be deployed.
+
+            '
+        apiDiscoveryScheduledWindow:
+          type: integer
+          description: 'The time window in minutes to schedule the API discovery task.
+
+            This is used to discover APIs from the API Gateway and update the API list in the environment.
+
+            '
+          default: 60
+        vhosts:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/VHost'
+        endpointURIs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayEnvironmentProtocolURI'
+        additionalProperties:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalProperty'
+        permissions:
+          type: object
+          properties:
+            permissionType:
+              type: string
+              example: ALLOW
+              default: PUBLIC
+              enum:
+              - PUBLIC
+              - ALLOW
+              - DENY
+            roles:
+              type: array
+              items:
+                type: string
+                example: Internal/everyone
+        status:
+          type: string
+          readOnly: true
+          description: For platform gateway environments (gatewayType APIPlatform), connection status to the control plane (Active or Inactive).
+          example: Active
+          default: Active
+          enum:
+          - Active
+          - Inactive
+        vhost:
+          type: string
+          format: uri
+          readOnly: true
+          description: For platform gateway environments, the gateway URL (e.g. https://host:9443). Same as Platform Gateways API; only set when this environment represents a platform gateway.
+          example: https://mg.wso2.com
+        platformGatewayVersions:
+          type: array
+          readOnly: true
+          description: API Platform Gateway versions from config. Set for deploy targets so UI can show version choices in the quick-start guide.
+          items:
+            type: string
+            example: 1.0.0
+    EnvironmentList:
+      title: Environment List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Environments returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    VHost:
+      title: Virtual Host
+      required:
+      - host
+      type: object
+      properties:
+        host:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: mg.wso2.com
+        httpContext:
+          maxLength: 255
+          minLength: 0
+          pattern: ^\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])*$
+          type: string
+          example: pets
+        httpPort:
+          type: integer
+          example: 80
+        httpsPort:
+          type: integer
+          example: 443
+        wsPort:
+          type: integer
+          example: 9099
+        wsHost:
+          type: string
+          example: mg.wso2.com
+        wssPort:
+          type: integer
+          example: 8099
+        wssHost:
+          type: string
+          example: mg.wso2.com
+    GatewayInstanceList:
+      title: Gateway instance list
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Gateway Instances returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayInstance'
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+  parameters:
+    environmentId:
+      name: environmentId
+      in: path
+      description: 'Environment UUID (or Environment name defined in config), in case the ID contains special characters it should
+
+        be base64 encoded
+
+        '
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    OAuth2Security:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://localhost:9443/oauth2/token
+          scopes:
+            openid: Authorize access to user details
+            apim:policies_import_export: Export and import policies related operations
+            apim:admin: Manage all admin operations
+            apim:tier_view: View throttling policies
+            apim:tier_manage: Update and delete throttling policies
+            apim:admin_tier_view: View throttling policies
+            apim:admin_tier_manage: Update and delete throttling policies
+            apim:bl_view: View deny policies
+            apim:bl_manage: Update and delete deny policies
+            apim:mediation_policy_view: View mediation policies
+            apim:mediation_policy_create: Create and update mediation policies
+            apim:app_owner_change: Retrieve and manage applications
+            apim:app_settings_change: Change Application Settings
+            apim:app_import_export: Import and export applications related operations
+            apim:api_import_export: Import and export APIs related operations
+            apim:api_product_import_export: Import and export API Products related operations
+            apim:environment_manage: Manage gateway environments
+            apim:environment_read: Retrieve gateway environments
+            apim:monetization_usage_publish: Retrieve and publish Monetization related usage records
+            apim:api_workflow_approve: Manage workflows
+            apim:bot_data: Retrieve bot detection data
+            apim:tenantInfo: Retrieve tenant related information
+            apim:tenant_theme_manage: Manage tenant themes
+            apim:admin_operations: Manage API categories and Key Managers related operations
+            apim:api_category: Manage API categories
+            apim:admin_settings: Retrieve admin settings
+            apim:admin_alert_manage: Manage admin alerts
+            apim:api_workflow_view: Retrive workflow requests
+            apim:scope_manage: Manage system scopes
+            apim:role_manage: Manage system roles
+            apim:admin_application_view: View Applications
+            apim:keymanagers_manage: Manage Key Managers
+            apim:api_provider_change: Retrieve and manage applications
+            apim:llm_provider_manage: Manage LLM Providers
+            apim:gov_policy_read: Retrieve governance policies
+            apim:gov_policy_manage: Manage governance policies
+            apim:gov_result_read: Retrieve governance results
+            apim:gov_rule_read: Retrieve governance rules
+            apim:gov_rule_manage: Manage governance rules
+            apim:organization_manage: Manage Organizations
+            apim:organization_read: Read Organizations
