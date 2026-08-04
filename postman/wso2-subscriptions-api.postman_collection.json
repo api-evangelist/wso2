@@ -1,0 +1,2237 @@
+{
+  "info": {
+    "_postman_id": "37a0ea74-c9fb-49f1-87b9-5c857834ccd2",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Subscriptions API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:54.000Z",
+    "updatedAt": "2026-07-28T03:36:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-37a0ea74-c9fb-49f1-87b9-5c857834ccd2"
+  },
+  "item": [
+    {
+      "name": "subscriptions",
+      "item": [
+        {
+          "name": "multiple",
+          "item": [
+            {
+              "name": "Add New Subscriptions\n",
+              "id": "0ff36c12-0859-431e-8e1f-a6876e9b26a8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"DELETE_PENDING\",\n    \"redirectionParams\": \"<string>\"\n  },\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"ON_HOLD\",\n    \"redirectionParams\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions/multiple",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions",
+                    "multiple"
+                  ]
+                },
+                "description": "This operation can be used to add a new subscriptions providing the ids of the APIs and the applications.\n"
+              },
+              "response": [
+                {
+                  "id": "7822b052-6929-4b58-99d6-af163865d070",
+                  "name": "OK.\nSuccessful response with the newly created objects as entity in the body.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"DELETE_PENDING\",\n    \"redirectionParams\": \"<string>\"\n  },\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"ON_HOLD\",\n    \"redirectionParams\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/multiple",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        "multiple"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Entity Tag of the response resource. Used by caches, or in conditional requests (Will be supported in future).\n",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"DELETE_PENDING\",\n    \"redirectionParams\": \"<string>\"\n  },\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"ON_HOLD\",\n    \"redirectionParams\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-7822b052-6929-4b58-99d6-af163865d070"
+                },
+                {
+                  "id": "f634ae49-2b30-4187-8e30-9794b1e59481",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"DELETE_PENDING\",\n    \"redirectionParams\": \"<string>\"\n  },\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"ON_HOLD\",\n    \"redirectionParams\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/multiple",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        "multiple"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-f634ae49-2b30-4187-8e30-9794b1e59481"
+                },
+                {
+                  "id": "3634e5cb-265e-4494-9409-8340019c9a5d",
+                  "name": "Unsupported Media Type. The entity of the request was not in a supported format.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"DELETE_PENDING\",\n    \"redirectionParams\": \"<string>\"\n  },\n  {\n    \"applicationId\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"subscriptionId\": \"<string>\",\n    \"apiId\": \"<string>\",\n    \"apiInfo\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    \"applicationInfo\": {\n      \"applicationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"description\": \"<string>\",\n      \"status\": \"\",\n      \"groups\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"subscriptionCount\": \"<integer>\",\n      \"attributes\": {},\n      \"owner\": \"<string>\",\n      \"tokenType\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"updatedTime\": \"<string>\"\n    },\n    \"requestedThrottlingPolicy\": \"<string>\",\n    \"status\": \"ON_HOLD\",\n    \"redirectionParams\": \"<string>\"\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/multiple",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        "multiple"
+                      ]
+                    }
+                  },
+                  "status": "Unsupported Media Type",
+                  "code": 415,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-3634e5cb-265e-4494-9409-8340019c9a5d"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-0ff36c12-0859-431e-8e1f-a6876e9b26a8"
+            }
+          ],
+          "id": "7e619fd0-df81-4ef3-a885-cdefec533de4",
+          "createdAt": "2026-07-28T03:36:54.000Z",
+          "updatedAt": "2026-07-28T03:36:54.000Z",
+          "uid": "35240-7e619fd0-df81-4ef3-a885-cdefec533de4"
+        },
+        {
+          "name": "{apiId}",
+          "item": [
+            {
+              "name": "additionalInfo",
+              "item": [
+                {
+                  "name": "Get Additional Information of subscriptions attached to an API.",
+                  "id": "750d6373-cc0f-42f5-b19a-f88be44d2624",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:apiId/additionalInfo?groupId=<string>&offset=0&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":apiId",
+                        "additionalInfo"
+                      ],
+                      "query": [
+                        {
+                          "description": "Application Group Id\n",
+                          "key": "groupId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "20f33e16-3986-42b4-90cf-2af9ba2058a2",
+                          "key": "apiId",
+                          "value": "<string>",
+                          "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                        }
+                      ]
+                    },
+                    "description": "This operation can be used to retrieve all additional Information of subscriptions attached to an API by providing the API id.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "4f8eda7c-322a-4a86-8e2a-2afb16bea417",
+                      "name": "OK.\nTypes and fields returned successfully.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/subscriptions/:apiId/additionalInfo?groupId=<string>&offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "subscriptions",
+                            ":apiId",
+                            "additionalInfo"
+                          ],
+                          "query": [
+                            {
+                              "description": "Application Group Id\n",
+                              "key": "groupId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"subscriptionId\": \"<string>\",\n      \"applicationId\": \"<string>\",\n      \"applicationName\": \"<string>\",\n      \"apiId\": \"<string>\",\n      \"isSolaceAPI\": \"<boolean>\",\n      \"solaceOrganization\": \"<string>\",\n      \"solaceDeployedEnvironments\": [\n        {\n          \"environmentName\": \"<string>\",\n          \"environmentDisplayName\": \"<string>\",\n          \"organizationName\": \"<string>\",\n          \"solaceURLs\": [\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            },\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            }\n          ],\n          \"SolaceTopicsObject\": {\n            \"defaultSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            },\n            \"mqttSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        },\n        {\n          \"environmentName\": \"<string>\",\n          \"environmentDisplayName\": \"<string>\",\n          \"organizationName\": \"<string>\",\n          \"solaceURLs\": [\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            },\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            }\n          ],\n          \"SolaceTopicsObject\": {\n            \"defaultSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            },\n            \"mqttSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"subscriptionId\": \"<string>\",\n      \"applicationId\": \"<string>\",\n      \"applicationName\": \"<string>\",\n      \"apiId\": \"<string>\",\n      \"isSolaceAPI\": \"<boolean>\",\n      \"solaceOrganization\": \"<string>\",\n      \"solaceDeployedEnvironments\": [\n        {\n          \"environmentName\": \"<string>\",\n          \"environmentDisplayName\": \"<string>\",\n          \"organizationName\": \"<string>\",\n          \"solaceURLs\": [\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            },\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            }\n          ],\n          \"SolaceTopicsObject\": {\n            \"defaultSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            },\n            \"mqttSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        },\n        {\n          \"environmentName\": \"<string>\",\n          \"environmentDisplayName\": \"<string>\",\n          \"organizationName\": \"<string>\",\n          \"solaceURLs\": [\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            },\n            {\n              \"protocol\": \"<string>\",\n              \"endpointURL\": \"<string>\"\n            }\n          ],\n          \"SolaceTopicsObject\": {\n            \"defaultSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            },\n            \"mqttSyntax\": {\n              \"publishTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"subscribeTopics\": [\n                \"<string>\",\n                \"<string>\"\n              ]\n            }\n          }\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T03:36:54.000Z",
+                      "updatedAt": "2026-07-28T03:36:54.000Z",
+                      "uid": "35240-4f8eda7c-322a-4a86-8e2a-2afb16bea417"
+                    },
+                    {
+                      "id": "81ec8498-901a-4841-a587-9ab3d691c4c9",
+                      "name": "Not Found.\nRetrieving types and fields failed.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/subscriptions/:apiId/additionalInfo?groupId=<string>&offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "subscriptions",
+                            ":apiId",
+                            "additionalInfo"
+                          ],
+                          "query": [
+                            {
+                              "description": "Application Group Id\n",
+                              "key": "groupId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:36:54.000Z",
+                      "updatedAt": "2026-07-28T03:36:54.000Z",
+                      "uid": "35240-81ec8498-901a-4841-a587-9ab3d691c4c9"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-750d6373-cc0f-42f5-b19a-f88be44d2624"
+                }
+              ],
+              "id": "2570eab4-7066-4b0f-b3be-9f08ab5905dc",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-2570eab4-7066-4b0f-b3be-9f08ab5905dc"
+            }
+          ],
+          "id": "0b08e008-57fe-455e-8bf7-ba57cbeab274",
+          "createdAt": "2026-07-28T03:36:54.000Z",
+          "updatedAt": "2026-07-28T03:36:54.000Z",
+          "uid": "35240-0b08e008-57fe-455e-8bf7-ba57cbeab274"
+        },
+        {
+          "name": "{subscriptionId}",
+          "item": [
+            {
+              "name": "Get Details of a Subscription\n",
+              "id": "b3d940a0-059c-42d4-9206-fd3294b2abd1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a7b42752-3577-4d51-9432-0a77e989c935",
+                      "key": "subscriptionId",
+                      "value": "<string>",
+                      "description": "(Required) Subscription Id\n"
+                    }
+                  ]
+                },
+                "description": "This operation can be used to get details of a single subscription.\n"
+              },
+              "response": [
+                {
+                  "id": "a21f1c35-19c2-46eb-8289-46ca6d568d1e",
+                  "name": "OK.\nSubscription returned\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Entity Tag of the response resource. Used by caches, or in conditional requests.",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Date and time the resource has been modifed the last time. Used by caches, or in conditional reuquests.",
+                        "type": "text/plain"
+                      },
+                      "key": "Last-Modified",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-a21f1c35-19c2-46eb-8289-46ca6d568d1e"
+                },
+                {
+                  "id": "a6bb9597-afb0-4237-bb6c-8b6a76937be3",
+                  "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Modified",
+                  "code": 304,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-a6bb9597-afb0-4237-bb6c-8b6a76937be3"
+                },
+                {
+                  "id": "aac68f28-6fe9-4f08-a70e-7eeb559cb25b",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-aac68f28-6fe9-4f08-a70e-7eeb559cb25b"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-b3d940a0-059c-42d4-9206-fd3294b2abd1"
+            },
+            {
+              "name": "Update Existing Subscription\n",
+              "id": "07dc4158-94a3-441f-a9b9-85cea3d09b8c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d40b91e2-3d1b-45b1-8dde-9ffb808f741a",
+                      "key": "subscriptionId",
+                      "value": "<string>",
+                      "description": "(Required) Subscription Id\n"
+                    }
+                  ]
+                },
+                "description": "This operation can be used to update a subscription providing the subscription id, api id, application Id, status and updated throttling policy tier.\n"
+              },
+              "response": [
+                {
+                  "id": "4144b7a8-0fbe-4bbb-9e5a-57150498ec5f",
+                  "name": "Subscription Updated.\nSuccessful response with the updated object as entity in the body.\nLocation header contains URL of newly updates entity.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Entity Tag of the response resource. Used by caches, or in conditional request.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location to the updated subscription.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Location",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-4144b7a8-0fbe-4bbb-9e5a-57150498ec5f"
+                },
+                {
+                  "id": "c669d34c-2b98-4468-9d88-9eac12b96b07",
+                  "name": "Accepted.\nThe request has been accepted.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the updated subscription.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Location",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workflowStatus\": \"REGISTERED\",\n  \"jsonPayload\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-c669d34c-2b98-4468-9d88-9eac12b96b07"
+                },
+                {
+                  "id": "140ed9ce-b693-4f71-a47a-ebe619613ebb",
+                  "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Modified",
+                  "code": 304,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-140ed9ce-b693-4f71-a47a-ebe619613ebb"
+                },
+                {
+                  "id": "7e66e2e1-838e-435c-855b-26e37310afb5",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-7e66e2e1-838e-435c-855b-26e37310afb5"
+                },
+                {
+                  "id": "0962be9d-f74a-4d32-99fc-ebb516e655e7",
+                  "name": "Not Found.\nRequested Subscription does not exist.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-0962be9d-f74a-4d32-99fc-ebb516e655e7"
+                },
+                {
+                  "id": "55d23b57-1e7f-4c95-a677-a095da40c1a3",
+                  "name": "Unsupported media type.\nThe entity of the request was in a not supported format.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unsupported Media Type",
+                  "code": 415,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-55d23b57-1e7f-4c95-a677-a095da40c1a3"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-07dc4158-94a3-441f-a9b9-85cea3d09b8c"
+            },
+            {
+              "name": "Remove a Subscription\n",
+              "id": "b2f5e627-d0db-4529-9a7b-e52059b56390",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "description": "Validator for conditional requests; based on ETag.\n",
+                    "key": "If-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "46de68a6-2921-4f40-aefa-387418293772",
+                      "key": "subscriptionId",
+                      "value": "<string>",
+                      "description": "(Required) Subscription Id\n"
+                    }
+                  ]
+                },
+                "description": "This operation can be used to remove a subscription.\n"
+              },
+              "response": [
+                {
+                  "id": "6969fb32-b77b-4e1a-ab14-d7aa64f96a4d",
+                  "name": "OK.\nResource successfully deleted.\n",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on ETag.\n",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-6969fb32-b77b-4e1a-ab14-d7aa64f96a4d"
+                },
+                {
+                  "id": "460920cd-c77c-450d-8893-499ba4e74a35",
+                  "name": "Accepted.\nThe request has been accepted.\n",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on ETag.\n",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Accepted",
+                  "code": 202,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Location of the existing subscription.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Location",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workflowStatus\": \"REGISTERED\",\n  \"jsonPayload\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-460920cd-c77c-450d-8893-499ba4e74a35"
+                },
+                {
+                  "id": "68cb8a96-3f48-4c19-9d19-3eb2308ca854",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on ETag.\n",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-68cb8a96-3f48-4c19-9d19-3eb2308ca854"
+                },
+                {
+                  "id": "ed2927bb-1feb-460b-b311-3fed7f819f58",
+                  "name": "Precondition Failed. The request has not been performed because one of the preconditions is not met.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Validator for conditional requests; based on ETag.\n",
+                        "key": "If-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subscriptions/:subscriptionId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "subscriptionId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Precondition Failed",
+                  "code": 412,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:54.000Z",
+                  "updatedAt": "2026-07-28T03:36:54.000Z",
+                  "uid": "35240-ed2927bb-1feb-460b-b311-3fed7f819f58"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-b2f5e627-d0db-4529-9a7b-e52059b56390"
+            }
+          ],
+          "id": "66de0e63-2e3b-47f3-8a0d-014be410d80f",
+          "createdAt": "2026-07-28T03:36:54.000Z",
+          "updatedAt": "2026-07-28T03:36:54.000Z",
+          "uid": "35240-66de0e63-2e3b-47f3-8a0d-014be410d80f"
+        },
+        {
+          "name": "Get All Subscriptions\n",
+          "id": "33ddb6bc-7128-43f3-8530-6a1cf6572e0a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions?apiId=<string>&applicationId=<string>&groupId=<string>&offset=0&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions"
+              ],
+              "query": [
+                {
+                  "description": "**API ID** consisting of the **UUID** of the API.\n",
+                  "key": "apiId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "**Application Identifier** consisting of the UUID of the Application.\n",
+                  "key": "applicationId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Application Group Id\n",
+                  "key": "groupId",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Starting point within the complete list of items qualified.\n",
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "description": "Maximum size of resource array to return.\n",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "This operation can be used to retrieve a list of subscriptions of the user associated with the provided access token. This operation is capable of\n\n1. Retrieving applications which are subscribed to a specific API.\n`GET https://localhost:9443/api/am/devportal/v3/subscriptions?apiId=c43a325c-260b-4302-81cb-768eafaa3aed`\n\n2. Retrieving APIs which are subscribed by a specific application.\n`GET https://localhost:9443/api/am/devportal/v3/subscriptions?applicationId=c43a325c-260b-4302-81cb-768eafaa3aed`\n\nIf application sharing is enabled, the **groupId** can be used to include subscriptions associated with the\nspecified **groupId** in the results, provided the application is shared within the group.\n\n**IMPORTANT:**\n* It is mandatory to provide either **apiId** or **applicationId**.\n"
+          },
+          "response": [
+            {
+              "id": "e14696bf-e602-46aa-9ac3-385cb35cfef7",
+              "name": "OK.\nSubscription list returned.\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions?apiId=<string>&applicationId=<string>&groupId=<string>&offset=0&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "description": "**API ID** consisting of the **UUID** of the API.\n",
+                      "key": "apiId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "**Application Identifier** consisting of the UUID of the Application.\n",
+                      "key": "applicationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Application Group Id\n",
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Entity Tag of the response resource.\nUsed by caches, or in conditional requests.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "ETag",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"applicationId\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"subscriptionId\": \"<string>\",\n      \"apiId\": \"<string>\",\n      \"apiInfo\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"displayName\": \"<string>\",\n        \"description\": \"<string>\",\n        \"context\": \"<string>\",\n        \"version\": \"<string>\",\n        \"type\": \"<string>\",\n        \"createdTime\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"lifeCycleStatus\": \"<string>\",\n        \"thumbnailUri\": \"<string>\",\n        \"avgRating\": \"<string>\",\n        \"throttlingPolicies\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"advertiseInfo\": {\n          \"advertised\": \"<boolean>\",\n          \"apiExternalProductionEndpoint\": \"<string>\",\n          \"apiExternalSandboxEndpoint\": \"<string>\",\n          \"originalDevPortalUrl\": \"<string>\",\n          \"apiOwner\": \"<string>\",\n          \"vendor\": \"WSO2\"\n        },\n        \"businessInformation\": {\n          \"businessOwner\": \"<string>\",\n          \"businessOwnerEmail\": \"<string>\",\n          \"technicalOwner\": \"<string>\",\n          \"technicalOwnerEmail\": \"<string>\"\n        },\n        \"isSubscriptionAvailable\": \"<boolean>\",\n        \"monetizationLabel\": \"<string>\",\n        \"gatewayType\": \"<string>\",\n        \"gatewayVendor\": \"<string>\",\n        \"additionalProperties\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\",\n            \"display\": \"<boolean>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\",\n            \"display\": \"<boolean>\"\n          }\n        ],\n        \"monetizedInfo\": \"<boolean>\",\n        \"egress\": false,\n        \"subtype\": \"DEFAULT\"\n      },\n      \"applicationInfo\": {\n        \"applicationId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"throttlingPolicy\": \"<string>\",\n        \"description\": \"<string>\",\n        \"status\": \"\",\n        \"groups\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"subscriptionCount\": \"<integer>\",\n        \"attributes\": {},\n        \"owner\": \"<string>\",\n        \"tokenType\": \"<string>\",\n        \"createdTime\": \"<string>\",\n        \"updatedTime\": \"<string>\"\n      },\n      \"requestedThrottlingPolicy\": \"<string>\",\n      \"status\": \"DELETE_PENDING\",\n      \"redirectionParams\": \"<string>\"\n    },\n    {\n      \"applicationId\": \"<string>\",\n      \"throttlingPolicy\": \"<string>\",\n      \"subscriptionId\": \"<string>\",\n      \"apiId\": \"<string>\",\n      \"apiInfo\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"displayName\": \"<string>\",\n        \"description\": \"<string>\",\n        \"context\": \"<string>\",\n        \"version\": \"<string>\",\n        \"type\": \"<string>\",\n        \"createdTime\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"lifeCycleStatus\": \"<string>\",\n        \"thumbnailUri\": \"<string>\",\n        \"avgRating\": \"<string>\",\n        \"throttlingPolicies\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"advertiseInfo\": {\n          \"advertised\": \"<boolean>\",\n          \"apiExternalProductionEndpoint\": \"<string>\",\n          \"apiExternalSandboxEndpoint\": \"<string>\",\n          \"originalDevPortalUrl\": \"<string>\",\n          \"apiOwner\": \"<string>\",\n          \"vendor\": \"WSO2\"\n        },\n        \"businessInformation\": {\n          \"businessOwner\": \"<string>\",\n          \"businessOwnerEmail\": \"<string>\",\n          \"technicalOwner\": \"<string>\",\n          \"technicalOwnerEmail\": \"<string>\"\n        },\n        \"isSubscriptionAvailable\": \"<boolean>\",\n        \"monetizationLabel\": \"<string>\",\n        \"gatewayType\": \"<string>\",\n        \"gatewayVendor\": \"<string>\",\n        \"additionalProperties\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\",\n            \"display\": \"<boolean>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\",\n            \"display\": \"<boolean>\"\n          }\n        ],\n        \"monetizedInfo\": \"<boolean>\",\n        \"egress\": false,\n        \"subtype\": \"DEFAULT\"\n      },\n      \"applicationInfo\": {\n        \"applicationId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"throttlingPolicy\": \"<string>\",\n        \"description\": \"<string>\",\n        \"status\": \"\",\n        \"groups\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"subscriptionCount\": \"<integer>\",\n        \"attributes\": {},\n        \"owner\": \"<string>\",\n        \"tokenType\": \"<string>\",\n        \"createdTime\": \"<string>\",\n        \"updatedTime\": \"<string>\"\n      },\n      \"requestedThrottlingPolicy\": \"<string>\",\n      \"status\": \"BLOCKED\",\n      \"redirectionParams\": \"<string>\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-e14696bf-e602-46aa-9ac3-385cb35cfef7"
+            },
+            {
+              "id": "ccf079d5-f81a-46d5-983a-2996c61a7e7a",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions?apiId=<string>&applicationId=<string>&groupId=<string>&offset=0&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "description": "**API ID** consisting of the **UUID** of the API.\n",
+                      "key": "apiId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "**Application Identifier** consisting of the UUID of the Application.\n",
+                      "key": "applicationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Application Group Id\n",
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-ccf079d5-f81a-46d5-983a-2996c61a7e7a"
+            },
+            {
+              "id": "686b4cfd-8c78-4f47-af8c-d01d014f7794",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions?apiId=<string>&applicationId=<string>&groupId=<string>&offset=0&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "description": "**API ID** consisting of the **UUID** of the API.\n",
+                      "key": "apiId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "**Application Identifier** consisting of the UUID of the Application.\n",
+                      "key": "applicationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Application Group Id\n",
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-686b4cfd-8c78-4f47-af8c-d01d014f7794"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:54.000Z",
+          "updatedAt": "2026-07-28T03:36:54.000Z",
+          "uid": "35240-33ddb6bc-7128-43f3-8530-6a1cf6572e0a"
+        },
+        {
+          "name": "Add a New Subscription\n",
+          "id": "3c7c40e7-57e0-4fe4-82d1-67bcfdd88621",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions"
+              ]
+            },
+            "description": "This operation can be used to add a new subscription providing the id of the API and the application.\n"
+          },
+          "response": [
+            {
+              "id": "62b7ed85-6179-421d-ab01-1561b757ba1b",
+              "name": "Created.\nSuccessful response with the newly created object as entity in the body.\nLocation header contains URL of newly created entity.\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Entity Tag of the response resource. Used by caches, or in conditional request.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "ETag",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Location to the newly created subscription.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-62b7ed85-6179-421d-ab01-1561b757ba1b"
+            },
+            {
+              "id": "cab59e04-9e71-437b-8d32-517f8df92576",
+              "name": "Accepted.\nThe request has been accepted.\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Location of the newly created subscription.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "Location",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"workflowStatus\": \"REGISTERED\",\n  \"jsonPayload\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-cab59e04-9e71-437b-8d32-517f8df92576"
+            },
+            {
+              "id": "af1c9265-f949-4412-ba4d-343c5dc443e8",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-af1c9265-f949-4412-ba4d-343c5dc443e8"
+            },
+            {
+              "id": "50d996da-a696-4db3-b34d-46b069859a6c",
+              "name": "Unsupported Media Type. The entity of the request was not in a supported format.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"subscriptionId\": \"<string>\",\n  \"apiId\": \"<string>\",\n  \"apiInfo\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"context\": \"<string>\",\n    \"version\": \"<string>\",\n    \"type\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"lifeCycleStatus\": \"<string>\",\n    \"thumbnailUri\": \"<string>\",\n    \"avgRating\": \"<string>\",\n    \"throttlingPolicies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"advertiseInfo\": {\n      \"advertised\": \"<boolean>\",\n      \"apiExternalProductionEndpoint\": \"<string>\",\n      \"apiExternalSandboxEndpoint\": \"<string>\",\n      \"originalDevPortalUrl\": \"<string>\",\n      \"apiOwner\": \"<string>\",\n      \"vendor\": \"WSO2\"\n    },\n    \"businessInformation\": {\n      \"businessOwner\": \"<string>\",\n      \"businessOwnerEmail\": \"<string>\",\n      \"technicalOwner\": \"<string>\",\n      \"technicalOwnerEmail\": \"<string>\"\n    },\n    \"isSubscriptionAvailable\": \"<boolean>\",\n    \"monetizationLabel\": \"<string>\",\n    \"gatewayType\": \"<string>\",\n    \"gatewayVendor\": \"<string>\",\n    \"additionalProperties\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\",\n        \"display\": \"<boolean>\"\n      }\n    ],\n    \"monetizedInfo\": \"<boolean>\",\n    \"egress\": false,\n    \"subtype\": \"DEFAULT\"\n  },\n  \"applicationInfo\": {\n    \"applicationId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"throttlingPolicy\": \"<string>\",\n    \"description\": \"<string>\",\n    \"status\": \"\",\n    \"groups\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"subscriptionCount\": \"<integer>\",\n    \"attributes\": {},\n    \"owner\": \"<string>\",\n    \"tokenType\": \"<string>\",\n    \"createdTime\": \"<string>\",\n    \"updatedTime\": \"<string>\"\n  },\n  \"requestedThrottlingPolicy\": \"<string>\",\n  \"status\": \"DELETE_PENDING\",\n  \"redirectionParams\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:54.000Z",
+              "updatedAt": "2026-07-28T03:36:54.000Z",
+              "uid": "35240-50d996da-a696-4db3-b34d-46b069859a6c"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:54.000Z",
+          "updatedAt": "2026-07-28T03:36:54.000Z",
+          "uid": "35240-3c7c40e7-57e0-4fe4-82d1-67bcfdd88621"
+        }
+      ],
+      "id": "0d5f0150-320a-46eb-927f-120e5aa0f1c8",
+      "createdAt": "2026-07-28T03:36:54.000Z",
+      "updatedAt": "2026-07-28T03:36:54.000Z",
+      "uid": "35240-0d5f0150-320a-46eb-927f-120e5aa0f1c8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

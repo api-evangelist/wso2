@@ -1,0 +1,3289 @@
+{
+  "info": {
+    "_postman_id": "ef723433-854e-4629-93b6-0301d894ddee",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Services API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:48.000Z",
+    "updatedAt": "2026-07-28T03:36:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ef723433-854e-4629-93b6-0301d894ddee"
+  },
+  "item": [
+    {
+      "name": "services",
+      "item": [
+        {
+          "name": "{serviceId}",
+          "item": [
+            {
+              "name": "definition",
+              "item": [
+                {
+                  "name": "Retrieve a service definition",
+                  "id": "5742185b-e72f-4a63-8f73-026509ad5c0e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId/definition",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId",
+                        "definition"
+                      ],
+                      "variable": [
+                        {
+                          "id": "eca60eb7-2c3a-4a2f-ad5e-c7a5fd10ef17",
+                          "key": "serviceId",
+                          "value": "<string>",
+                          "description": "(Required) uuid of the service"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve the definition of a service identified by the service id.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "d61ea8c5-a85b-4a6b-8383-0f6e41a66333",
+                      "name": "Successful response with the definition file as entity in the body.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/definition",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "definition"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "<string>",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-d61ea8c5-a85b-4a6b-8383-0f6e41a66333"
+                    },
+                    {
+                      "id": "52b9653a-e0d1-4753-9dd4-c499e5c5ff36",
+                      "name": "Bad Request. Invalid request or validation error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/definition",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "definition"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-52b9653a-e0d1-4753-9dd4-c499e5c5ff36"
+                    },
+                    {
+                      "id": "61007e16-7f6f-4408-9b6f-1695f185e64f",
+                      "name": "Unauthorized. The user is not authorized.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/definition",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "definition"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-61007e16-7f6f-4408-9b6f-1695f185e64f"
+                    },
+                    {
+                      "id": "d7a7039b-113f-4ff9-a64e-f9aea489ab7f",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/definition",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "definition"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-d7a7039b-113f-4ff9-a64e-f9aea489ab7f"
+                    },
+                    {
+                      "id": "c3a48be6-1ed3-40a3-8c06-62029c6b0808",
+                      "name": "Internal Server Error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/definition",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "definition"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-c3a48be6-1ed3-40a3-8c06-62029c6b0808"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:48.000Z",
+                  "updatedAt": "2026-07-28T03:36:48.000Z",
+                  "uid": "35240-5742185b-e72f-4a63-8f73-026509ad5c0e"
+                }
+              ],
+              "id": "45e68c97-2740-4741-bf6c-aeb13946e98b",
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-45e68c97-2740-4741-bf6c-aeb13946e98b"
+            },
+            {
+              "name": "usage",
+              "item": [
+                {
+                  "name": "Retrieve the API Info that use the given service",
+                  "id": "1490d10e-69df-49ee-a0ad-da72134b9c45",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId/usage",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId",
+                        "usage"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cbf38cdb-cbbb-4a91-aa3b-58e3457af053",
+                          "key": "serviceId",
+                          "value": "<string>",
+                          "description": "(Required) uuid of the service"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve the id, name, context and version of the APIs that used by the service\n"
+                  },
+                  "response": [
+                    {
+                      "id": "e82c589a-3459-4a33-ba81-acaa69dec673",
+                      "name": "List of APIs that uses the service in the service catalog is returned.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/usage",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "usage"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"provider\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"provider\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-e82c589a-3459-4a33-ba81-acaa69dec673"
+                    },
+                    {
+                      "id": "727e8cea-61e1-48b6-a4e5-68ce5201dbee",
+                      "name": "Bad Request. Invalid request or validation error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/usage",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "usage"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-727e8cea-61e1-48b6-a4e5-68ce5201dbee"
+                    },
+                    {
+                      "id": "154e7b7d-93ba-42e4-a466-8703b930783b",
+                      "name": "Unauthorized. The user is not authorized.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/usage",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "usage"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-154e7b7d-93ba-42e4-a466-8703b930783b"
+                    },
+                    {
+                      "id": "9d28416b-2ac1-4c8b-abd2-e3b292f675c8",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/usage",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "usage"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-9d28416b-2ac1-4c8b-abd2-e3b292f675c8"
+                    },
+                    {
+                      "id": "466228eb-165a-4bd9-b798-e799ec894386",
+                      "name": "Internal Server Error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/services/:serviceId/usage",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "services",
+                            ":serviceId",
+                            "usage"
+                          ],
+                          "variable": [
+                            {
+                              "key": "serviceId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:49.000Z",
+                      "updatedAt": "2026-07-28T03:36:49.000Z",
+                      "uid": "35240-466228eb-165a-4bd9-b798-e799ec894386"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:48.000Z",
+                  "updatedAt": "2026-07-28T03:36:48.000Z",
+                  "uid": "35240-1490d10e-69df-49ee-a0ad-da72134b9c45"
+                }
+              ],
+              "id": "bc5a0bb3-3a6a-42d1-bee1-ed025f3781d4",
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-bc5a0bb3-3a6a-42d1-bee1-ed025f3781d4"
+            },
+            {
+              "name": "Get details of a service",
+              "id": "041c21a6-25e3-404e-8e1b-b872b7b31b33",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services/:serviceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    ":serviceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "b739ac10-d364-41b1-bcf4-a813488eef06",
+                      "key": "serviceId",
+                      "value": "<string>",
+                      "description": "(Required) uuid of the service"
+                    }
+                  ]
+                },
+                "description": "Get details of a service using the id of the service.\n"
+              },
+              "response": [
+                {
+                  "id": "cc54f883-d4c1-4aea-80b1-5c8f478cb879",
+                  "name": "Requested service in the service catalog is returned.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"G\\\":x8W\\\\?mI\",\n  \"version\": \"<string>\",\n  \"definitionType\": \"OAS2\",\n  \"serviceUrl\": \"<string>\",\n  \"id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"serviceKey\": \"<string>\",\n  \"securityType\": \"NONE\",\n  \"mutualSSLEnabled\": false,\n  \"usage\": \"<integer>\",\n  \"createdTime\": \"<string>\",\n  \"lastUpdatedTime\": \"<string>\",\n  \"md5\": \"<string>\",\n  \"definitionUrl\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-cc54f883-d4c1-4aea-80b1-5c8f478cb879"
+                },
+                {
+                  "id": "e6c61e86-3e73-4ef9-bfe8-419110993312",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-e6c61e86-3e73-4ef9-bfe8-419110993312"
+                },
+                {
+                  "id": "a699d1dc-6301-44fa-a093-9ea8a3b8d02a",
+                  "name": "Unauthorized. The user is not authorized.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-a699d1dc-6301-44fa-a093-9ea8a3b8d02a"
+                },
+                {
+                  "id": "a2a63404-3c5e-4768-99c2-cb0c12253304",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-a2a63404-3c5e-4768-99c2-cb0c12253304"
+                },
+                {
+                  "id": "e9f26139-d2b9-47aa-aefe-23cb0ff2f477",
+                  "name": "Internal Server Error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-e9f26139-d2b9-47aa-aefe-23cb0ff2f477"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-041c21a6-25e3-404e-8e1b-b872b7b31b33"
+            },
+            {
+              "name": "Update a service",
+              "id": "89291b25-a97d-4321-bcf7-5b2af1dab5ee",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services/:serviceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    ":serviceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ff1e5ca1-fddb-493a-b990-d163f87ff9d5",
+                      "key": "serviceId",
+                      "value": "<string>",
+                      "description": "(Required) uuid of the service"
+                    }
+                  ]
+                },
+                "description": "Update a service's details and definition\n"
+              },
+              "response": [
+                {
+                  "id": "2b997047-f24a-4300-aef6-b7f68d8fb06a",
+                  "name": "Updated.\nSuccessful response with the newly updated service as entity in the body.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "serviceMetadata",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "key": "definitionFile",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Inline content of the document",
+                          "key": "inlineContent",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"G\\\":x8W\\\\?mI\",\n  \"version\": \"<string>\",\n  \"definitionType\": \"OAS2\",\n  \"serviceUrl\": \"<string>\",\n  \"id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"serviceKey\": \"<string>\",\n  \"securityType\": \"NONE\",\n  \"mutualSSLEnabled\": false,\n  \"usage\": \"<integer>\",\n  \"createdTime\": \"<string>\",\n  \"lastUpdatedTime\": \"<string>\",\n  \"md5\": \"<string>\",\n  \"definitionUrl\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-2b997047-f24a-4300-aef6-b7f68d8fb06a"
+                },
+                {
+                  "id": "24beb847-0040-49a2-8d31-6ee38416c024",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "serviceMetadata",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "key": "definitionFile",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Inline content of the document",
+                          "key": "inlineContent",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-24beb847-0040-49a2-8d31-6ee38416c024"
+                },
+                {
+                  "id": "539b8773-d928-4c9c-9ca0-d2d3cc46ccab",
+                  "name": "Unauthorized. The user is not authorized.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "serviceMetadata",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "key": "definitionFile",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Inline content of the document",
+                          "key": "inlineContent",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-539b8773-d928-4c9c-9ca0-d2d3cc46ccab"
+                },
+                {
+                  "id": "a1f6b05e-ca1b-4717-86a0-f0ed4a7e3dc3",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "serviceMetadata",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "key": "definitionFile",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Inline content of the document",
+                          "key": "inlineContent",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-a1f6b05e-ca1b-4717-86a0-f0ed4a7e3dc3"
+                },
+                {
+                  "id": "a076122e-ea91-4826-9df9-40e1a8830b2c",
+                  "name": "Internal Server Error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "serviceMetadata",
+                          "value": "[object Object]",
+                          "type": "text"
+                        },
+                        {
+                          "key": "definitionFile",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Inline content of the document",
+                          "key": "inlineContent",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-a076122e-ea91-4826-9df9-40e1a8830b2c"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-89291b25-a97d-4321-bcf7-5b2af1dab5ee"
+            },
+            {
+              "name": "Delete a service",
+              "id": "a2e1e69b-38c9-4d0f-a013-82d2223aeeb1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services/:serviceId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    ":serviceId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cdfeda20-b61d-4322-8e2c-894e0789b212",
+                      "key": "serviceId",
+                      "value": "<string>",
+                      "description": "(Required) uuid of the service"
+                    }
+                  ]
+                },
+                "description": "Delete a service by providing the service id\n"
+              },
+              "response": [
+                {
+                  "id": "76c91fa5-13e6-42c4-bd85-87a56bf385f0",
+                  "name": "Successfully deleted the catalog entry.\n",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-76c91fa5-13e6-42c4-bd85-87a56bf385f0"
+                },
+                {
+                  "id": "4f46bcc1-a80b-48f8-b76c-9f50fdc12213",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-4f46bcc1-a80b-48f8-b76c-9f50fdc12213"
+                },
+                {
+                  "id": "eb5a6062-1774-4cf4-8d32-684c571ed773",
+                  "name": "Unauthorized. The user is not authorized.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-eb5a6062-1774-4cf4-8d32-684c571ed773"
+                },
+                {
+                  "id": "de4a4c2c-34fd-4feb-b698-51b4b6d5f542",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-de4a4c2c-34fd-4feb-b698-51b4b6d5f542"
+                },
+                {
+                  "id": "c7ac9638-545c-43f1-bf0d-6e164a3b7e5f",
+                  "name": "Conflict. Specified resource already exists.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-c7ac9638-545c-43f1-bf0d-6e164a3b7e5f"
+                },
+                {
+                  "id": "d4d3684d-6f15-4f36-ba90-9178d0684c6f",
+                  "name": "Internal Server Error.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-d4d3684d-6f15-4f36-ba90-9178d0684c6f"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-a2e1e69b-38c9-4d0f-a013-82d2223aeeb1"
+            }
+          ],
+          "id": "b8548345-ba3d-45cb-9111-f8b2436e133a",
+          "createdAt": "2026-07-28T03:36:48.000Z",
+          "updatedAt": "2026-07-28T03:36:48.000Z",
+          "uid": "35240-b8548345-ba3d-45cb-9111-f8b2436e133a"
+        },
+        {
+          "name": "import",
+          "item": [
+            {
+              "name": "Import a service",
+              "id": "fbc53f60-7c81-4300-b874-fc20f912d5ff",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                      "key": "file",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "key": "verifier",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services/import?overwrite=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    "import"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to overwrite if there is any existing service with the same name and version.\n",
+                      "key": "overwrite",
+                      "value": "false"
+                    }
+                  ]
+                },
+                "description": "Import  a service by providing an archived service\n"
+              },
+              "response": [
+                {
+                  "id": "ef791a01-5159-440e-99d1-e0ff87594dc8",
+                  "name": "Successful response with the imported service metadata.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "key": "verifier",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/import?overwrite=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to overwrite if there is any existing service with the same name and version.\n",
+                          "key": "overwrite",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"zJQmIDKt\",\n      \"key\": \"<string>\",\n      \"version\": \"<string>\",\n      \"md5\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"6 'U\\\"wE5\",\n      \"key\": \"<string>\",\n      \"version\": \"<string>\",\n      \"md5\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-ef791a01-5159-440e-99d1-e0ff87594dc8"
+                },
+                {
+                  "id": "8ad9282a-dc9a-4120-ab68-80ab528fcfd2",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "key": "verifier",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/import?overwrite=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to overwrite if there is any existing service with the same name and version.\n",
+                          "key": "overwrite",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-8ad9282a-dc9a-4120-ab68-80ab528fcfd2"
+                },
+                {
+                  "id": "c87ae0e4-141b-43ea-82c4-d32a2627c7c3",
+                  "name": "Unauthorized. The user is not authorized.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "key": "verifier",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/import?overwrite=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to overwrite if there is any existing service with the same name and version.\n",
+                          "key": "overwrite",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-c87ae0e4-141b-43ea-82c4-d32a2627c7c3"
+                },
+                {
+                  "id": "9d5c46bd-fd59-4252-91e5-1ffe6d0d795b",
+                  "name": "Internal Server Error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "key": "verifier",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/import?overwrite=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to overwrite if there is any existing service with the same name and version.\n",
+                          "key": "overwrite",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-9d5c46bd-fd59-4252-91e5-1ffe6d0d795b"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-fbc53f60-7c81-4300-b874-fc20f912d5ff"
+            }
+          ],
+          "id": "8478e74c-e58c-4391-8925-06d12e509fb2",
+          "createdAt": "2026-07-28T03:36:48.000Z",
+          "updatedAt": "2026-07-28T03:36:48.000Z",
+          "uid": "35240-8478e74c-e58c-4391-8925-06d12e509fb2"
+        },
+        {
+          "name": "export",
+          "item": [
+            {
+              "name": "Export a service",
+              "id": "64bf7a1f-1aac-405a-9780-f627e750723b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services/export?name=<string>&version=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Name of the service to export\n",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Version of the service to export\n",
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Export a service as an archived zip file.\n"
+              },
+              "response": [
+                {
+                  "id": "d7747a2e-35dd-41a2-bd48-95484ffbf1ee",
+                  "name": "Successful response as the exported service as a zipped archive.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/zip"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/export?name=<string>&version=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Name of the service to export\n",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Version of the service to export\n",
+                          "key": "version",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/zip"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<binary>",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-d7747a2e-35dd-41a2-bd48-95484ffbf1ee"
+                },
+                {
+                  "id": "d2f57eab-f980-48bd-b848-365e591637b6",
+                  "name": "Unauthorized. The user is not authorized.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/export?name=<string>&version=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Name of the service to export\n",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Version of the service to export\n",
+                          "key": "version",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-d2f57eab-f980-48bd-b848-365e591637b6"
+                },
+                {
+                  "id": "1ea046e2-7993-4e70-9ab0-d7eec943c281",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/export?name=<string>&version=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Name of the service to export\n",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Version of the service to export\n",
+                          "key": "version",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-1ea046e2-7993-4e70-9ab0-d7eec943c281"
+                },
+                {
+                  "id": "1c5c8e3e-cce2-40aa-bf0d-17e11383e655",
+                  "name": "Internal Server Error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/export?name=<string>&version=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Name of the service to export\n",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Version of the service to export\n",
+                          "key": "version",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:49.000Z",
+                  "updatedAt": "2026-07-28T03:36:49.000Z",
+                  "uid": "35240-1c5c8e3e-cce2-40aa-bf0d-17e11383e655"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:48.000Z",
+              "updatedAt": "2026-07-28T03:36:48.000Z",
+              "uid": "35240-64bf7a1f-1aac-405a-9780-f627e750723b"
+            }
+          ],
+          "id": "2887c43a-bc5a-4c23-81c4-72df9dfe3902",
+          "createdAt": "2026-07-28T03:36:48.000Z",
+          "updatedAt": "2026-07-28T03:36:48.000Z",
+          "uid": "35240-2887c43a-bc5a-4c23-81c4-72df9dfe3902"
+        },
+        {
+          "name": "Retrieve/search services",
+          "id": "a38a6b42-4418-4907-879c-b2ada3571bad",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/services?name=<string>&version=<string>&definitionType=WSDL2&key=<string>&shrink=false&sortBy=definitionType&sortOrder=desc&limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services"
+              ],
+              "query": [
+                {
+                  "description": "Filter services by the name of the service\n",
+                  "key": "name",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter services by version of the service\n",
+                  "key": "version",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter services by definitionType\n",
+                  "key": "definitionType",
+                  "value": "WSDL2"
+                },
+                {
+                  "description": "Comma seperated keys of the services to check\n",
+                  "key": "key",
+                  "value": "<string>"
+                },
+                {
+                  "description": "If this set to true, a minimal set of fields will be provided for each service including the md5\n",
+                  "key": "shrink",
+                  "value": "false"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "definitionType"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                },
+                {
+                  "description": "Maximum limit of items to return.\n",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Starting point within the complete list of items qualified.\n",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Retrieve or search services in the service catalog of the user's organization or tenant. Search is supported\nusing the name, version, definitionType and key of the service.\nSearch based on the definition type and key of the service will always be an exact search. If you want to\nexecute an exact search for either name or version the parameter should be given inside double quotation.\n"
+          },
+          "response": [
+            {
+              "id": "d27df7f2-c1e8-474b-b3fb-19ef9ef5a487",
+              "name": "Paginated matched list of services returned.\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services?name=<string>&version=<string>&definitionType=WSDL2&key=<string>&shrink=false&sortBy=definitionType&sortOrder=desc&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter services by the name of the service\n",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by version of the service\n",
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by definitionType\n",
+                      "key": "definitionType",
+                      "value": "WSDL2"
+                    },
+                    {
+                      "description": "Comma seperated keys of the services to check\n",
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "If this set to true, a minimal set of fields will be provided for each service including the md5\n",
+                      "key": "shrink",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "definitionType"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Maximum limit of items to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"list\": [\n    {\n      \"name\": \"X?<CCgs/\",\n      \"version\": \"<string>\",\n      \"definitionType\": \"OAS3\",\n      \"serviceUrl\": \"<string>\",\n      \"id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"serviceKey\": \"<string>\",\n      \"securityType\": \"NONE\",\n      \"mutualSSLEnabled\": false,\n      \"usage\": \"<integer>\",\n      \"createdTime\": \"<string>\",\n      \"lastUpdatedTime\": \"<string>\",\n      \"md5\": \"<string>\",\n      \"definitionUrl\": \"<string>\"\n    },\n    {\n      \"name\": \"NJ\",\n      \"version\": \"<string>\",\n      \"definitionType\": \"WSDL1\",\n      \"serviceUrl\": \"<string>\",\n      \"id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"serviceKey\": \"<string>\",\n      \"securityType\": \"NONE\",\n      \"mutualSSLEnabled\": false,\n      \"usage\": \"<integer>\",\n      \"createdTime\": \"<string>\",\n      \"lastUpdatedTime\": \"<string>\",\n      \"md5\": \"<string>\",\n      \"definitionUrl\": \"<string>\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-d27df7f2-c1e8-474b-b3fb-19ef9ef5a487"
+            },
+            {
+              "id": "580ac248-3fef-4cd3-8b7c-cdb99359f26e",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services?name=<string>&version=<string>&definitionType=WSDL2&key=<string>&shrink=false&sortBy=definitionType&sortOrder=desc&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter services by the name of the service\n",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by version of the service\n",
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by definitionType\n",
+                      "key": "definitionType",
+                      "value": "WSDL2"
+                    },
+                    {
+                      "description": "Comma seperated keys of the services to check\n",
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "If this set to true, a minimal set of fields will be provided for each service including the md5\n",
+                      "key": "shrink",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "definitionType"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Maximum limit of items to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-580ac248-3fef-4cd3-8b7c-cdb99359f26e"
+            },
+            {
+              "id": "ccd30e1f-cacc-416c-9361-c01389a1961d",
+              "name": "Unauthorized. The user is not authorized.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services?name=<string>&version=<string>&definitionType=WSDL2&key=<string>&shrink=false&sortBy=definitionType&sortOrder=desc&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter services by the name of the service\n",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by version of the service\n",
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by definitionType\n",
+                      "key": "definitionType",
+                      "value": "WSDL2"
+                    },
+                    {
+                      "description": "Comma seperated keys of the services to check\n",
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "If this set to true, a minimal set of fields will be provided for each service including the md5\n",
+                      "key": "shrink",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "definitionType"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Maximum limit of items to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-ccd30e1f-cacc-416c-9361-c01389a1961d"
+            },
+            {
+              "id": "5969bd2e-eea6-434b-82bb-7cc86478cd91",
+              "name": "Internal Server Error.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services?name=<string>&version=<string>&definitionType=WSDL2&key=<string>&shrink=false&sortBy=definitionType&sortOrder=desc&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter services by the name of the service\n",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by version of the service\n",
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter services by definitionType\n",
+                      "key": "definitionType",
+                      "value": "WSDL2"
+                    },
+                    {
+                      "description": "Comma seperated keys of the services to check\n",
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "If this set to true, a minimal set of fields will be provided for each service including the md5\n",
+                      "key": "shrink",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "definitionType"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "desc"
+                    },
+                    {
+                      "description": "Maximum limit of items to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-5969bd2e-eea6-434b-82bb-7cc86478cd91"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:48.000Z",
+          "updatedAt": "2026-07-28T03:36:48.000Z",
+          "uid": "35240-a38a6b42-4418-4907-879c-b2ada3571bad"
+        },
+        {
+          "name": "Add a new service to Service Catalog",
+          "id": "1f98a22d-ede0-4c93-8288-541a76bf9ecd",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": "(Required) ",
+                  "key": "serviceMetadata",
+                  "value": "[object Object]",
+                  "type": "text"
+                },
+                {
+                  "key": "definitionFile",
+                  "type": "file",
+                  "value": null
+                },
+                {
+                  "description": "Inline content of the document",
+                  "key": "inlineContent",
+                  "value": "<string>",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services"
+              ]
+            },
+            "description": "Add a new service to the service catalog of the user's organization (or tenant)\nby specifying the details of the service along with its definition. \n"
+          },
+          "response": [
+            {
+              "id": "1bc9f084-b1d7-4dce-b892-4873647eb7f2",
+              "name": "Created.\nSuccessful response with the newly created service as the response payload\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file"
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"name\": \"G\\\":x8W\\\\?mI\",\n  \"version\": \"<string>\",\n  \"definitionType\": \"OAS2\",\n  \"serviceUrl\": \"<string>\",\n  \"id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"serviceKey\": \"<string>\",\n  \"securityType\": \"NONE\",\n  \"mutualSSLEnabled\": false,\n  \"usage\": \"<integer>\",\n  \"createdTime\": \"<string>\",\n  \"lastUpdatedTime\": \"<string>\",\n  \"md5\": \"<string>\",\n  \"definitionUrl\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-1bc9f084-b1d7-4dce-b892-4873647eb7f2"
+            },
+            {
+              "id": "0c189470-4918-418f-815b-948b35dc1d93",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file"
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-0c189470-4918-418f-815b-948b35dc1d93"
+            },
+            {
+              "id": "d66fc5a6-474b-407c-ab04-6e0028aeb861",
+              "name": "Unauthorized. The user is not authorized.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file"
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-d66fc5a6-474b-407c-ab04-6e0028aeb861"
+            },
+            {
+              "id": "cf008d30-4034-4713-ac8c-433d509424db",
+              "name": "Unsupported Media Type. The entity of the request was not in a supported format.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file"
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-cf008d30-4034-4713-ac8c-433d509424db"
+            },
+            {
+              "id": "ed5db3b0-dd16-498e-bf1c-94f75e946556",
+              "name": "Internal Server Error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) ",
+                      "key": "serviceMetadata",
+                      "value": "[object Object]",
+                      "type": "text"
+                    },
+                    {
+                      "key": "definitionFile",
+                      "type": "file"
+                    },
+                    {
+                      "description": "Inline content of the document",
+                      "key": "inlineContent",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:49.000Z",
+              "updatedAt": "2026-07-28T03:36:49.000Z",
+              "uid": "35240-ed5db3b0-dd16-498e-bf1c-94f75e946556"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:48.000Z",
+          "updatedAt": "2026-07-28T03:36:48.000Z",
+          "uid": "35240-1f98a22d-ede0-4c93-8288-541a76bf9ecd"
+        }
+      ],
+      "id": "bb63e3e2-5272-44c4-bef5-1f7845a19664",
+      "createdAt": "2026-07-28T03:36:48.000Z",
+      "updatedAt": "2026-07-28T03:36:48.000Z",
+      "uid": "35240-bb63e3e2-5272-44c4-bef5-1f7845a19664"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

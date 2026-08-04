@@ -1,0 +1,947 @@
+{
+  "info": {
+    "_postman_id": "ff0b081e-076e-404c-9c5e-4487d20cbecc",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Policy Adherence API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:36.000Z",
+    "updatedAt": "2026-07-28T03:36:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ff0b081e-076e-404c-9c5e-4487d20cbecc"
+  },
+  "item": [
+    {
+      "name": "policy-adherence",
+      "item": [
+        {
+          "name": "summary",
+          "item": [
+            {
+              "name": "Retrieves the summary of adherence for all policies",
+              "id": "8ceada80-e769-4c1b-b478-d68b8be3b354",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence/summary",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence",
+                    "summary"
+                  ]
+                },
+                "description": "Retrieves the summary of adherence for all governance policies within the organization."
+              },
+              "response": [
+                {
+                  "id": "2bf4a23a-068b-4f37-a526-37ff369bab7d",
+                  "name": "OK. Successful response with adherence summary.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        "summary"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"total\": \"<integer>\",\n  \"followed\": \"<integer>\",\n  \"violated\": \"<integer>\",\n  \"unApplied\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-2bf4a23a-068b-4f37-a526-37ff369bab7d"
+                },
+                {
+                  "id": "6a364bcf-e914-4c36-b0ca-2b481b0bcf0c",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        "summary"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-6a364bcf-e914-4c36-b0ca-2b481b0bcf0c"
+                },
+                {
+                  "id": "241cbc32-ab00-4c34-bf3a-573ba86e1da8",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        "summary"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-241cbc32-ab00-4c34-bf3a-573ba86e1da8"
+                },
+                {
+                  "id": "9c537e09-1186-4e67-a8cd-0c7cf14725f8",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        "summary"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-9c537e09-1186-4e67-a8cd-0c7cf14725f8"
+                },
+                {
+                  "id": "8f140f17-2e9e-4365-8783-bbe2a6404dd2",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        "summary"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-8f140f17-2e9e-4365-8783-bbe2a6404dd2"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-8ceada80-e769-4c1b-b478-d68b8be3b354"
+            }
+          ],
+          "id": "7f485812-99e3-4dc4-ae4c-cbac908147bc",
+          "createdAt": "2026-07-28T03:36:36.000Z",
+          "updatedAt": "2026-07-28T03:36:36.000Z",
+          "uid": "35240-7f485812-99e3-4dc4-ae4c-cbac908147bc"
+        },
+        {
+          "name": "{policyId}",
+          "item": [
+            {
+              "name": "Retrieve adherence details for a specific policy",
+              "id": "cea65298-7653-40e6-a441-a69a51c095c4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence",
+                    ":policyId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f85e61bc-6a0c-4b26-9c72-0add8a8a7d19",
+                      "key": "policyId",
+                      "value": "<string>",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "description": "Retrieve adherence details associated with a specific governance policy within the organization using its unique ID. The list of artifacts under the policy will only contain the artifacts visible to user"
+              },
+              "response": [
+                {
+                  "id": "6863edb6-ef3b-403b-a5a6-d80ef47368f6",
+                  "name": "Ok. Successful response with adherence details for the specified policy.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        ":policyId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "policyId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"status\": \"VIOLATED\",\n  \"evaluatedArtifacts\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"NOT-APPLICABLE\",\n      \"info\": {\n        \"name\": \"<string>\",\n        \"type\": \"API\",\n        \"extendedType\": \"MCP\",\n        \"version\": \"<string>\",\n        \"owner\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"COMPLIANT\",\n      \"info\": {\n        \"name\": \"<string>\",\n        \"type\": \"API\",\n        \"extendedType\": \"ASYNC_API\",\n        \"version\": \"<string>\",\n        \"owner\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-6863edb6-ef3b-403b-a5a6-d80ef47368f6"
+                },
+                {
+                  "id": "90c6a6b0-e1c2-4f19-a350-39c61cf46e22",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        ":policyId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "policyId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-90c6a6b0-e1c2-4f19-a350-39c61cf46e22"
+                },
+                {
+                  "id": "04a35520-66f4-42fa-8837-69af1a833bc0",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        ":policyId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "policyId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-04a35520-66f4-42fa-8837-69af1a833bc0"
+                },
+                {
+                  "id": "37cf45e9-a413-4f2e-bdac-67a96a8e0b09",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        ":policyId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "policyId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-37cf45e9-a413-4f2e-bdac-67a96a8e0b09"
+                },
+                {
+                  "id": "fb4bc310-207e-43a1-894c-f04bc9c98ac6",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policy-adherence/:policyId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policy-adherence",
+                        ":policyId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "policyId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:36:36.000Z",
+                  "updatedAt": "2026-07-28T03:36:36.000Z",
+                  "uid": "35240-fb4bc310-207e-43a1-894c-f04bc9c98ac6"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-cea65298-7653-40e6-a441-a69a51c095c4"
+            }
+          ],
+          "id": "2320ab60-e11f-435c-a4e2-b63cc37fa4da",
+          "createdAt": "2026-07-28T03:36:36.000Z",
+          "updatedAt": "2026-07-28T03:36:36.000Z",
+          "uid": "35240-2320ab60-e11f-435c-a4e2-b63cc37fa4da"
+        },
+        {
+          "name": "Retrieve adherence status for all policies",
+          "id": "ea38ab48-5a0b-40d4-8642-5680b15107eb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policy-adherence"
+              ],
+              "query": [
+                {
+                  "description": "Maximum size of resource array to return.\n",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Starting point within the complete list of items qualified.\n",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Retrieve adherence status of all governance policies within the organization."
+          },
+          "response": [
+            {
+              "id": "cecc6f72-5f96-4b1d-b412-01a6c4f52d57",
+              "name": "Ok. Successful response with adherence details for all policies.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"VIOLATED\",\n      \"artifactComplianceSummary\": {\n        \"compliant\": \"<integer>\",\n        \"nonCompliant\": \"<integer>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"FOLLOWED\",\n      \"artifactComplianceSummary\": {\n        \"compliant\": \"<integer>\",\n        \"nonCompliant\": \"<integer>\"\n      }\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-cecc6f72-5f96-4b1d-b412-01a6c4f52d57"
+            },
+            {
+              "id": "84667f0e-9393-430b-9551-5c61dbd948af",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-84667f0e-9393-430b-9551-5c61dbd948af"
+            },
+            {
+              "id": "d2518917-8dae-4372-a046-8cfd03ffefb7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-d2518917-8dae-4372-a046-8cfd03ffefb7"
+            },
+            {
+              "id": "6bbc6754-30e0-4078-885d-279455c3b26d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-6bbc6754-30e0-4078-885d-279455c3b26d"
+            },
+            {
+              "id": "decd0912-6d50-4fb0-a599-8e841d277a4e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policy-adherence?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policy-adherence"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:36.000Z",
+              "updatedAt": "2026-07-28T03:36:36.000Z",
+              "uid": "35240-decd0912-6d50-4fb0-a599-8e841d277a4e"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:36.000Z",
+          "updatedAt": "2026-07-28T03:36:36.000Z",
+          "uid": "35240-ea38ab48-5a0b-40d4-8642-5680b15107eb"
+        }
+      ],
+      "id": "53daf203-b8b8-47a7-8916-e6f9833ac22d",
+      "createdAt": "2026-07-28T03:36:36.000Z",
+      "updatedAt": "2026-07-28T03:36:36.000Z",
+      "uid": "35240-53daf203-b8b8-47a7-8916-e6f9833ac22d"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

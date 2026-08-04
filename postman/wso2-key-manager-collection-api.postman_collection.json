@@ -1,0 +1,445 @@
+{
+  "info": {
+    "_postman_id": "e9deba4f-0744-468e-9f64-434ce735de9f",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Key Manager (Collection) API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:35:51.000Z",
+    "updatedAt": "2026-07-28T03:35:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e9deba4f-0744-468e-9f64-434ce735de9f"
+  },
+  "item": [
+    {
+      "name": "key-managers",
+      "item": [
+        {
+          "name": "discover",
+          "item": [
+            {
+              "name": "Retrieve Well-known information from Key Manager Well-known Endpoint",
+              "id": "66ccac8f-6fbd-4415-9c4f-fa72d0ce3fa9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "Well-Known Endpoint",
+                      "key": "url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": "Key Manager Type\n",
+                      "key": "type",
+                      "value": "false",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers/discover",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers",
+                    "discover"
+                  ]
+                },
+                "description": "Retrieve well-known information from key manager's well-known endpoint\n"
+              },
+              "response": [
+                {
+                  "id": "10d57103-a393-459f-a1e5-6f7569e1b5c6",
+                  "name": "OK.\nKeyManagers returned\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "Well-Known Endpoint",
+                          "key": "url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Key Manager Type\n",
+                          "key": "type",
+                          "value": "false",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/discover",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        "discover"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"valid\": false,\n  \"value\": {\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"displayName\": \"<string>\",\n    \"description\": \"<string>\",\n    \"wellKnownEndpoint\": \"<string>\",\n    \"introspectionEndpoint\": \"<string>\",\n    \"clientRegistrationEndpoint\": \"<string>\",\n    \"tokenEndpoint\": \"<string>\",\n    \"displayTokenEndpoint\": \"<string>\",\n    \"revokeEndpoint\": \"<string>\",\n    \"displayRevokeEndpoint\": \"<string>\",\n    \"userInfoEndpoint\": \"<string>\",\n    \"authorizeEndpoint\": \"<string>\",\n    \"endpoints\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"certificates\": {\n      \"type\": \"PEM\",\n      \"value\": \"<string>\"\n    },\n    \"issuer\": \"<string>\",\n    \"alias\": \"<string>\",\n    \"scopeManagementEndpoint\": \"<string>\",\n    \"availableGrantTypes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enableTokenGeneration\": \"<boolean>\",\n    \"enableTokenEncryption\": false,\n    \"enableTokenHashing\": false,\n    \"enableMapOAuthConsumerApps\": false,\n    \"enableOAuthAppCreation\": false,\n    \"enableSelfValidationJWT\": true,\n    \"claimMapping\": [\n      {\n        \"remoteClaim\": \"<string>\",\n        \"localClaim\": \"<string>\"\n      },\n      {\n        \"remoteClaim\": \"<string>\",\n        \"localClaim\": \"<string>\"\n      }\n    ],\n    \"consumerKeyClaim\": \"<string>\",\n    \"scopesClaim\": \"<string>\",\n    \"tokenValidation\": [\n      {\n        \"id\": \"<integer>\",\n        \"enable\": true,\n        \"type\": \"CUSTOM\",\n        \"value\": {}\n      },\n      {\n        \"id\": \"<integer>\",\n        \"enable\": true,\n        \"type\": \"JWT\",\n        \"value\": {}\n      }\n    ],\n    \"enabled\": \"<boolean>\",\n    \"global\": \"<boolean>\",\n    \"additionalProperties\": {},\n    \"permissions\": {\n      \"permissionType\": \"PUBLIC\",\n      \"roles\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"tokenType\": \"DIRECT\",\n    \"allowedOrganizations\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:35:52.000Z",
+                  "updatedAt": "2026-07-28T03:35:52.000Z",
+                  "uid": "35240-10d57103-a393-459f-a1e5-6f7569e1b5c6"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:52.000Z",
+              "updatedAt": "2026-07-28T03:35:52.000Z",
+              "uid": "35240-66ccac8f-6fbd-4415-9c4f-fa72d0ce3fa9"
+            }
+          ],
+          "id": "d60b08e7-d6e9-4220-aa1a-24372a214653",
+          "createdAt": "2026-07-28T03:35:52.000Z",
+          "updatedAt": "2026-07-28T03:35:52.000Z",
+          "uid": "35240-d60b08e7-d6e9-4220-aa1a-24372a214653"
+        },
+        {
+          "name": "Get all Key managers",
+          "id": "c34ffd54-5fb4-4960-9c45-20acf1cf60bb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/key-managers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "key-managers"
+              ]
+            },
+            "description": "Get all Key managers\n"
+          },
+          "response": [
+            {
+              "id": "4725bc1f-37d8-4a4c-9af8-429e21f00c4b",
+              "name": "OK.\nKeyManagers returned\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"enabled\": \"<boolean>\",\n      \"isGlobal\": \"<boolean>\",\n      \"isUsed\": \"<boolean>\",\n      \"tokenType\": \"DIRECT\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"enabled\": \"<boolean>\",\n      \"isGlobal\": \"<boolean>\",\n      \"isUsed\": \"<boolean>\",\n      \"tokenType\": \"DIRECT\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:52.000Z",
+              "updatedAt": "2026-07-28T03:35:52.000Z",
+              "uid": "35240-4725bc1f-37d8-4a4c-9af8-429e21f00c4b"
+            }
+          ],
+          "createdAt": "2026-07-28T03:35:52.000Z",
+          "updatedAt": "2026-07-28T03:35:52.000Z",
+          "uid": "35240-c34ffd54-5fb4-4960-9c45-20acf1cf60bb"
+        },
+        {
+          "name": "Add a new API Key Manager",
+          "id": "b9314772-26ff-4042-b1a9-8454289fd451",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"REFERENCE\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/key-managers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "key-managers"
+              ]
+            },
+            "description": "Add a new API Key Manager\n"
+          },
+          "response": [
+            {
+              "id": "162aec77-6636-4130-94b4-f6e71215cdd6",
+              "name": "Created.\nSuccessful response with the newly created object as entity in the body.\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"REFERENCE\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"REFERENCE\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:52.000Z",
+              "updatedAt": "2026-07-28T03:35:52.000Z",
+              "uid": "35240-162aec77-6636-4130-94b4-f6e71215cdd6"
+            },
+            {
+              "id": "43883b7d-a61b-4018-aa68-235590ab1bf0",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"REFERENCE\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:52.000Z",
+              "updatedAt": "2026-07-28T03:35:52.000Z",
+              "uid": "35240-43883b7d-a61b-4018-aa68-235590ab1bf0"
+            }
+          ],
+          "createdAt": "2026-07-28T03:35:52.000Z",
+          "updatedAt": "2026-07-28T03:35:52.000Z",
+          "uid": "35240-b9314772-26ff-4042-b1a9-8454289fd451"
+        }
+      ],
+      "id": "4dd55c3f-dca0-4db0-8f1c-cd9fb75d3e2c",
+      "createdAt": "2026-07-28T03:35:52.000Z",
+      "updatedAt": "2026-07-28T03:35:52.000Z",
+      "uid": "35240-4dd55c3f-dca0-4db0-8f1c-cd9fb75d3e2c"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

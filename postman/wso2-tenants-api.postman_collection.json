@@ -1,0 +1,745 @@
+{
+  "info": {
+    "_postman_id": "98ba7423-5769-4d77-809f-9585e8008b75",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Tenants API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:01.000Z",
+    "updatedAt": "2026-07-28T03:37:01.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-98ba7423-5769-4d77-809f-9585e8008b75"
+  },
+  "item": [
+    {
+      "name": "tenant-info",
+      "item": [
+        {
+          "name": "{username}",
+          "item": [
+            {
+              "name": "Get Tenant Id of User\n",
+              "id": "b69d2c5e-138a-4727-843a-d515a99a9e3f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-info/:username",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-info",
+                    ":username"
+                  ],
+                  "variable": [
+                    {
+                      "id": "997ea447-0e57-43b9-9ab5-5ac410c407db",
+                      "key": "username",
+                      "value": "john",
+                      "description": "(Required) The state represents the current state of the tenant. Supported states are [ active, inactive]\n"
+                    }
+                  ]
+                },
+                "description": "This operation is to get tenant id of the provided user\n"
+              },
+              "response": [
+                {
+                  "id": "d015ca98-36af-46e7-a693-318b89ccc3d9",
+                  "name": "OK.\nTenant id of the user retrieved.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-info/:username",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-info",
+                        ":username"
+                      ],
+                      "variable": [
+                        {
+                          "key": "username"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"username\": \"<string>\",\n  \"tenantDomain\": \"<string>\",\n  \"tenantId\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-d015ca98-36af-46e7-a693-318b89ccc3d9"
+                },
+                {
+                  "id": "582cf2a0-3d9e-40a0-a0ef-ce8dafae10bb",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-info/:username",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-info",
+                        ":username"
+                      ],
+                      "variable": [
+                        {
+                          "key": "username"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-582cf2a0-3d9e-40a0-a0ef-ce8dafae10bb"
+                },
+                {
+                  "id": "378e066c-27b3-4622-841e-b1b55d2aaf65",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-info/:username",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-info",
+                        ":username"
+                      ],
+                      "variable": [
+                        {
+                          "key": "username"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-378e066c-27b3-4622-841e-b1b55d2aaf65"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:01.000Z",
+              "updatedAt": "2026-07-28T03:37:01.000Z",
+              "uid": "35240-b69d2c5e-138a-4727-843a-d515a99a9e3f"
+            }
+          ],
+          "id": "14e8b7f8-96c3-4b2a-a00d-a5c72d15ad66",
+          "createdAt": "2026-07-28T03:37:01.000Z",
+          "updatedAt": "2026-07-28T03:37:01.000Z",
+          "uid": "35240-14e8b7f8-96c3-4b2a-a00d-a5c72d15ad66"
+        }
+      ],
+      "id": "7f26be3f-d7cb-4b35-8e2b-c3657ef42901",
+      "createdAt": "2026-07-28T03:37:01.000Z",
+      "updatedAt": "2026-07-28T03:37:01.000Z",
+      "uid": "35240-7f26be3f-d7cb-4b35-8e2b-c3657ef42901"
+    },
+    {
+      "name": "custom-urls",
+      "item": [
+        {
+          "name": "{tenantDomain}",
+          "item": [
+            {
+              "name": "Get Custom URL Info of a Tenant Domain\n",
+              "id": "a84dd15c-6644-4f0d-ab5a-99e2ceddd350",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/custom-urls/:tenantDomain",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "custom-urls",
+                    ":tenantDomain"
+                  ],
+                  "variable": [
+                    {
+                      "id": "4ca3f748-9fd5-43c9-94ca-b161f7e38346",
+                      "key": "tenantDomain",
+                      "value": "<string>",
+                      "description": "(Required) The tenant domain name.\n"
+                    }
+                  ]
+                },
+                "description": "This operation is to get custom-url information of the provided tenant-domain\n"
+              },
+              "response": [
+                {
+                  "id": "c958dac6-2596-4813-b5f4-d456dbc9dbaa",
+                  "name": "OK.\nCustom url info of the tenant is retrieved.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/custom-urls/:tenantDomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "custom-urls",
+                        ":tenantDomain"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenantDomain"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"tenantDomain\": \"<string>\",\n  \"tenantAdminUsername\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"devPortal\": {\n    \"url\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-c958dac6-2596-4813-b5f4-d456dbc9dbaa"
+                },
+                {
+                  "id": "8732e9af-e50f-4e2c-98df-cafd612a2cec",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/custom-urls/:tenantDomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "custom-urls",
+                        ":tenantDomain"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenantDomain"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-8732e9af-e50f-4e2c-98df-cafd612a2cec"
+                },
+                {
+                  "id": "107dca87-56d7-41ec-910d-1dd214a178af",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/custom-urls/:tenantDomain",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "custom-urls",
+                        ":tenantDomain"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenantDomain"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:01.000Z",
+                  "updatedAt": "2026-07-28T03:37:01.000Z",
+                  "uid": "35240-107dca87-56d7-41ec-910d-1dd214a178af"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:01.000Z",
+              "updatedAt": "2026-07-28T03:37:01.000Z",
+              "uid": "35240-a84dd15c-6644-4f0d-ab5a-99e2ceddd350"
+            }
+          ],
+          "id": "10ee8844-71c3-4a81-b48f-815dd50b6236",
+          "createdAt": "2026-07-28T03:37:01.000Z",
+          "updatedAt": "2026-07-28T03:37:01.000Z",
+          "uid": "35240-10ee8844-71c3-4a81-b48f-815dd50b6236"
+        }
+      ],
+      "id": "9eb8b6d7-9d8d-4a0a-986c-ab222f46a918",
+      "createdAt": "2026-07-28T03:37:01.000Z",
+      "updatedAt": "2026-07-28T03:37:01.000Z",
+      "uid": "35240-9eb8b6d7-9d8d-4a0a-986c-ab222f46a918"
+    },
+    {
+      "name": "tenants",
+      "item": [
+        {
+          "name": "Get Tenants by State\n",
+          "id": "b0be4c7e-b5ca-47d8-a97c-9ea3a51d360c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenants?state=active&limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ],
+              "query": [
+                {
+                  "description": "The state represents the current state of the tenant\n\nSupported states are [ active, inactive]\n",
+                  "key": "state",
+                  "value": "active"
+                },
+                {
+                  "description": "Maximum size of resource array to return.\n",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Starting point within the complete list of items qualified.\n",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "This operation is used to get tenants by state\n"
+          },
+          "response": [
+            {
+              "id": "67d75fc5-6903-4145-bdcc-d1d7aa00020f",
+              "name": "OK.\nTenant names returned.\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenants?state=active&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenants"
+                  ],
+                  "query": [
+                    {
+                      "description": "The state represents the current state of the tenant\n\nSupported states are [ active, inactive]\n",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The content type of the body.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "Content-Type",
+                  "value": "<string>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"domain\": \"<string>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"status\": \"<string>\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:37:01.000Z",
+              "updatedAt": "2026-07-28T03:37:01.000Z",
+              "uid": "35240-67d75fc5-6903-4145-bdcc-d1d7aa00020f"
+            },
+            {
+              "id": "6b4b1c6e-8f07-4091-9ae1-9ecafd69da31",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenants?state=active&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenants"
+                  ],
+                  "query": [
+                    {
+                      "description": "The state represents the current state of the tenant\n\nSupported states are [ active, inactive]\n",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:37:01.000Z",
+              "updatedAt": "2026-07-28T03:37:01.000Z",
+              "uid": "35240-6b4b1c6e-8f07-4091-9ae1-9ecafd69da31"
+            },
+            {
+              "id": "83e3b13b-bb24-4eed-b9fa-ec398f2ca8da",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenants?state=active&limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenants"
+                  ],
+                  "query": [
+                    {
+                      "description": "The state represents the current state of the tenant\n\nSupported states are [ active, inactive]\n",
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:37:01.000Z",
+              "updatedAt": "2026-07-28T03:37:01.000Z",
+              "uid": "35240-83e3b13b-bb24-4eed-b9fa-ec398f2ca8da"
+            }
+          ],
+          "createdAt": "2026-07-28T03:37:01.000Z",
+          "updatedAt": "2026-07-28T03:37:01.000Z",
+          "uid": "35240-b0be4c7e-b5ca-47d8-a97c-9ea3a51d360c"
+        }
+      ],
+      "id": "c12a5b5b-1712-4a66-ab55-10b0051bab82",
+      "createdAt": "2026-07-28T03:37:01.000Z",
+      "updatedAt": "2026-07-28T03:37:01.000Z",
+      "uid": "35240-c12a5b5b-1712-4a66-ab55-10b0051bab82"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

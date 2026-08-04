@@ -1,0 +1,852 @@
+{
+  "info": {
+    "_postman_id": "6e5bd792-42b9-41e7-a850-6b38a9abc389",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application Tokens API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:34:59.000Z",
+    "updatedAt": "2026-07-28T03:34:59.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6e5bd792-42b9-41e7-a850-6b38a9abc389"
+  },
+  "item": [
+    {
+      "name": "applications",
+      "item": [
+        {
+          "name": "{applicationId}",
+          "item": [
+            {
+              "name": "keys",
+              "item": [
+                {
+                  "name": "{keyType}",
+                  "item": [
+                    {
+                      "name": "generate-token",
+                      "item": [
+                        {
+                          "name": "Generate Application Token",
+                          "id": "852bd708-49af-43b1-9624-7ba3468611cf",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "oauth2",
+                              "oauth2": [
+                                {
+                                  "key": "scope",
+                                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "accessTokenUrl",
+                                  "value": "https://localhost:9443/oauth2/token",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "grant_type",
+                                  "value": "password_credentials",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Validator for conditional requests; based on ETag.\n",
+                                "key": "If-Match",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/keys/:keyType/generate-token",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "keys",
+                                ":keyType",
+                                "generate-token"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "28da5a3a-ea8d-4981-9a71-906f407dbbdf",
+                                  "key": "applicationId",
+                                  "value": "<string>",
+                                  "description": "(Required) Application Identifier consisting of the UUID of the Application.\n"
+                                },
+                                {
+                                  "id": "88765706-acbc-40c6-aa44-2fa35777decf",
+                                  "key": "keyType",
+                                  "value": "SANDBOX",
+                                  "description": "(Required) **Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+                                }
+                              ]
+                            },
+                            "description": "Generate an access token for application by client_credentials grant type\n"
+                          },
+                          "response": [
+                            {
+                              "id": "68c1d42a-c375-485f-a3fd-0ad9bf570066",
+                              "name": "OK.\nToken is generated.\n",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/keys/:keyType/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "keys",
+                                    ":keyType",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyType"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"accessToken\": \"<string>\",\n  \"tokenScopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"validityTime\": \"<long>\"\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-68c1d42a-c375-485f-a3fd-0ad9bf570066"
+                            },
+                            {
+                              "id": "137ab8e4-c38d-4d57-8b44-b974c36b383f",
+                              "name": "Bad Request. Invalid request or validation error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/keys/:keyType/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "keys",
+                                    ":keyType",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyType"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-137ab8e4-c38d-4d57-8b44-b974c36b383f"
+                            },
+                            {
+                              "id": "ca54cd90-cc8f-48fb-ae13-d40468c11db8",
+                              "name": "Not Found. The specified resource does not exist.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/keys/:keyType/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "keys",
+                                    ":keyType",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyType"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-ca54cd90-cc8f-48fb-ae13-d40468c11db8"
+                            },
+                            {
+                              "id": "17093809-d3dc-4c9f-bab9-f0cc08ce7ba2",
+                              "name": "Precondition Failed. The request has not been performed because one of the preconditions is not met.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/keys/:keyType/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "keys",
+                                    ":keyType",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyType"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Precondition Failed",
+                              "code": 412,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-17093809-d3dc-4c9f-bab9-f0cc08ce7ba2"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:35:00.000Z",
+                          "updatedAt": "2026-07-28T03:35:00.000Z",
+                          "uid": "35240-852bd708-49af-43b1-9624-7ba3468611cf"
+                        }
+                      ],
+                      "id": "486c4632-925b-466a-824a-92a168684349",
+                      "createdAt": "2026-07-28T03:35:00.000Z",
+                      "updatedAt": "2026-07-28T03:35:00.000Z",
+                      "uid": "35240-486c4632-925b-466a-824a-92a168684349"
+                    }
+                  ],
+                  "id": "e0252800-33c1-415e-aea3-cfc01f328fc9",
+                  "createdAt": "2026-07-28T03:35:00.000Z",
+                  "updatedAt": "2026-07-28T03:35:00.000Z",
+                  "uid": "35240-e0252800-33c1-415e-aea3-cfc01f328fc9"
+                }
+              ],
+              "id": "9f3a65f9-832e-4d49-a471-484cf979b0b1",
+              "createdAt": "2026-07-28T03:35:00.000Z",
+              "updatedAt": "2026-07-28T03:35:00.000Z",
+              "uid": "35240-9f3a65f9-832e-4d49-a471-484cf979b0b1"
+            },
+            {
+              "name": "oauth-keys",
+              "item": [
+                {
+                  "name": "{keyMappingId}",
+                  "item": [
+                    {
+                      "name": "generate-token",
+                      "item": [
+                        {
+                          "name": "Generate Application Token",
+                          "id": "157742b7-71d7-4e57-a99e-f40bb8bfe211",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "oauth2",
+                              "oauth2": [
+                                {
+                                  "key": "scope",
+                                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "accessTokenUrl",
+                                  "value": "https://localhost:9443/oauth2/token",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "grant_type",
+                                  "value": "password_credentials",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "Validator for conditional requests; based on ETag.\n",
+                                "key": "If-Match",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":applicationId",
+                                "oauth-keys",
+                                ":keyMappingId",
+                                "generate-token"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "7462bf29-e28a-47ae-84a3-a0ded81fa393",
+                                  "key": "applicationId",
+                                  "value": "<string>",
+                                  "description": "(Required) Application Identifier consisting of the UUID of the Application.\n"
+                                },
+                                {
+                                  "id": "0cfbf08b-43a2-4993-b602-fc1c1a79d443",
+                                  "key": "keyMappingId",
+                                  "value": "<string>",
+                                  "description": "(Required) OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+                                }
+                              ]
+                            },
+                            "description": "Generate an access token for application by client_credentials grant type\n"
+                          },
+                          "response": [
+                            {
+                              "id": "355b6b53-fab9-46bf-902a-701a6a778196",
+                              "name": "OK.\nToken is generated.\n",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "oauth-keys",
+                                    ":keyMappingId",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyMappingId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"accessToken\": \"<string>\",\n  \"tokenScopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"validityTime\": \"<long>\"\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-355b6b53-fab9-46bf-902a-701a6a778196"
+                            },
+                            {
+                              "id": "c05afe67-4433-4a04-b263-e4c1a16a751e",
+                              "name": "Bad Request. Invalid request or validation error.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "oauth-keys",
+                                    ":keyMappingId",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyMappingId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-c05afe67-4433-4a04-b263-e4c1a16a751e"
+                            },
+                            {
+                              "id": "1682f9b1-ccbe-4d2c-b56b-43bad94bf3c1",
+                              "name": "Not Found. The specified resource does not exist.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "oauth-keys",
+                                    ":keyMappingId",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyMappingId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-1682f9b1-ccbe-4d2c-b56b-43bad94bf3c1"
+                            },
+                            {
+                              "id": "ba3b8d21-ec1a-416c-9ba4-3eddbf08aff6",
+                              "name": "Precondition Failed. The request has not been performed because one of the preconditions is not met.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "description": "Validator for conditional requests; based on ETag.\n",
+                                    "key": "If-Match",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"consumerSecret\": \"<string>\",\n  \"validityPeriod\": \"<long>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"revokeToken\": \"<string>\",\n  \"grantType\": \"CLIENT_CREDENTIALS\",\n  \"additionalProperties\": {}\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "applications",
+                                    ":applicationId",
+                                    "oauth-keys",
+                                    ":keyMappingId",
+                                    "generate-token"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "applicationId"
+                                    },
+                                    {
+                                      "key": "keyMappingId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Precondition Failed",
+                              "code": 412,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:00.000Z",
+                              "updatedAt": "2026-07-28T03:35:00.000Z",
+                              "uid": "35240-ba3b8d21-ec1a-416c-9ba4-3eddbf08aff6"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:35:00.000Z",
+                          "updatedAt": "2026-07-28T03:35:00.000Z",
+                          "uid": "35240-157742b7-71d7-4e57-a99e-f40bb8bfe211"
+                        }
+                      ],
+                      "id": "552a6d72-954f-4d66-a52e-4c847c2638f2",
+                      "createdAt": "2026-07-28T03:35:00.000Z",
+                      "updatedAt": "2026-07-28T03:35:00.000Z",
+                      "uid": "35240-552a6d72-954f-4d66-a52e-4c847c2638f2"
+                    }
+                  ],
+                  "id": "32ac6594-15a5-4480-923b-2b9c82c5b27b",
+                  "createdAt": "2026-07-28T03:35:00.000Z",
+                  "updatedAt": "2026-07-28T03:35:00.000Z",
+                  "uid": "35240-32ac6594-15a5-4480-923b-2b9c82c5b27b"
+                }
+              ],
+              "id": "a566d703-2f35-4e87-9199-d8582943243a",
+              "createdAt": "2026-07-28T03:35:00.000Z",
+              "updatedAt": "2026-07-28T03:35:00.000Z",
+              "uid": "35240-a566d703-2f35-4e87-9199-d8582943243a"
+            }
+          ],
+          "id": "599cd029-a682-4e0e-af18-321a2ee4546e",
+          "createdAt": "2026-07-28T03:35:00.000Z",
+          "updatedAt": "2026-07-28T03:35:00.000Z",
+          "uid": "35240-599cd029-a682-4e0e-af18-321a2ee4546e"
+        }
+      ],
+      "id": "5087cb04-03cb-4bdb-af4e-cb34860513c8",
+      "createdAt": "2026-07-28T03:35:00.000Z",
+      "updatedAt": "2026-07-28T03:35:00.000Z",
+      "uid": "35240-5087cb04-03cb-4bdb-af4e-cb34860513c8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

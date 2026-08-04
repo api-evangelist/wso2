@@ -1,0 +1,456 @@
+{
+  "info": {
+    "_postman_id": "beb6b71a-d1f7-43b0-85fc-39a44bdefaf8",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Subscription Policy (Collection) API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:50.000Z",
+    "updatedAt": "2026-07-28T03:36:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-beb6b71a-d1f7-43b0-85fc-39a44bdefaf8"
+  },
+  "item": [
+    {
+      "name": "throttling",
+      "item": [
+        {
+          "name": "policies",
+          "item": [
+            {
+              "name": "subscription",
+              "item": [
+                {
+                  "name": "Get all Subscription Throttling Policies",
+                  "id": "0c47e11f-32d5-4118-9d40-1fc3d68f2097",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/throttling/policies/subscription",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "throttling",
+                        "policies",
+                        "subscription"
+                      ]
+                    },
+                    "description": "This operation can be used to retrieve all Subscription level throttling policies.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "4a666ce7-f7a0-4498-9fb7-24b4f0abeb47",
+                      "name": "OK.\nPolicies returned\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/subscription",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "subscription"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"defaultLimit\": {\n        \"type\": \"AIAPIQUOTALIMIT\",\n        \"requestCount\": {\n          \"requestCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"bandwidth\": {\n          \"dataAmount\": \"<long>\",\n          \"dataUnit\": \"<string>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"eventCount\": {\n          \"eventCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"aiApiQuota\": {\n          \"requestCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\",\n          \"totalTokenCount\": \"<long>\",\n          \"promptTokenCount\": \"<long>\",\n          \"completionTokenCount\": \"<long>\"\n        }\n      },\n      \"policyName\": \"<string>\",\n      \"policyId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"isDeployed\": false,\n      \"type\": \"<string>\",\n      \"graphQLMaxComplexity\": \"<integer>\",\n      \"graphQLMaxDepth\": \"<integer>\",\n      \"monetization\": {\n        \"properties\": {\n          \"exercitation_f\": \"<string>\"\n        },\n        \"monetizationPlan\": \"DYNAMICRATE\"\n      },\n      \"rateLimitCount\": \"<integer>\",\n      \"rateLimitTimeUnit\": \"<string>\",\n      \"subscriberCount\": \"<integer>\",\n      \"customAttributes\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      \"stopOnQuotaReach\": false,\n      \"billingPlan\": \"<string>\",\n      \"permissions\": {\n        \"permissionType\": \"ALLOW\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"defaultLimit\": {\n        \"type\": \"AIAPIQUOTALIMIT\",\n        \"requestCount\": {\n          \"requestCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"bandwidth\": {\n          \"dataAmount\": \"<long>\",\n          \"dataUnit\": \"<string>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"eventCount\": {\n          \"eventCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\"\n        },\n        \"aiApiQuota\": {\n          \"requestCount\": \"<long>\",\n          \"timeUnit\": \"<string>\",\n          \"unitTime\": \"<integer>\",\n          \"totalTokenCount\": \"<long>\",\n          \"promptTokenCount\": \"<long>\",\n          \"completionTokenCount\": \"<long>\"\n        }\n      },\n      \"policyName\": \"<string>\",\n      \"policyId\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"isDeployed\": false,\n      \"type\": \"<string>\",\n      \"graphQLMaxComplexity\": \"<integer>\",\n      \"graphQLMaxDepth\": \"<integer>\",\n      \"monetization\": {\n        \"properties\": {\n          \"dolore_7_\": \"<string>\"\n        },\n        \"monetizationPlan\": \"FIXEDRATE\"\n      },\n      \"rateLimitCount\": \"<integer>\",\n      \"rateLimitTimeUnit\": \"<string>\",\n      \"subscriberCount\": \"<integer>\",\n      \"customAttributes\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      \"stopOnQuotaReach\": false,\n      \"billingPlan\": \"<string>\",\n      \"permissions\": {\n        \"permissionType\": \"DENY\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:51.000Z",
+                      "updatedAt": "2026-07-28T03:36:51.000Z",
+                      "uid": "35240-4a666ce7-f7a0-4498-9fb7-24b4f0abeb47"
+                    },
+                    {
+                      "id": "2aded0a2-51bb-4113-9cda-59571cb7c2b5",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/subscription",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "subscription"
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:51.000Z",
+                      "updatedAt": "2026-07-28T03:36:51.000Z",
+                      "uid": "35240-2aded0a2-51bb-4113-9cda-59571cb7c2b5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:51.000Z",
+                  "updatedAt": "2026-07-28T03:36:51.000Z",
+                  "uid": "35240-0c47e11f-32d5-4118-9d40-1fc3d68f2097"
+                },
+                {
+                  "name": "Add a Subscription Throttling Policy",
+                  "id": "abe86472-bbda-4b4e-af1d-480a5de0ef52",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"defaultLimit\": {\n    \"type\": \"AIAPIQUOTALIMIT\",\n    \"requestCount\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"bandwidth\": {\n      \"dataAmount\": \"<long>\",\n      \"dataUnit\": \"<string>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"eventCount\": {\n      \"eventCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"aiApiQuota\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\",\n      \"totalTokenCount\": \"<long>\",\n      \"promptTokenCount\": \"<long>\",\n      \"completionTokenCount\": \"<long>\"\n    }\n  },\n  \"policyName\": \"<string>\",\n  \"policyId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDeployed\": false,\n  \"type\": \"<string>\",\n  \"graphQLMaxComplexity\": \"<integer>\",\n  \"graphQLMaxDepth\": \"<integer>\",\n  \"monetization\": {\n    \"properties\": {\n      \"dolor24\": \"<string>\"\n    },\n    \"monetizationPlan\": \"FIXEDRATE\"\n  },\n  \"rateLimitCount\": \"<integer>\",\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"subscriberCount\": \"<integer>\",\n  \"customAttributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"stopOnQuotaReach\": false,\n  \"billingPlan\": \"<string>\",\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/throttling/policies/subscription",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "throttling",
+                        "policies",
+                        "subscription"
+                      ]
+                    },
+                    "description": "This operation can be used to add a Subscription level throttling policy specifying the details of the policy in the payload.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "bda2e0ed-9368-4e90-8f44-925500b10491",
+                      "name": "Created.\nSuccessful response with the newly created object as entity in the body.\nLocation header contains URL of newly created entity.\n",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"defaultLimit\": {\n    \"type\": \"AIAPIQUOTALIMIT\",\n    \"requestCount\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"bandwidth\": {\n      \"dataAmount\": \"<long>\",\n      \"dataUnit\": \"<string>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"eventCount\": {\n      \"eventCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"aiApiQuota\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\",\n      \"totalTokenCount\": \"<long>\",\n      \"promptTokenCount\": \"<long>\",\n      \"completionTokenCount\": \"<long>\"\n    }\n  },\n  \"policyName\": \"<string>\",\n  \"policyId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDeployed\": false,\n  \"type\": \"<string>\",\n  \"graphQLMaxComplexity\": \"<integer>\",\n  \"graphQLMaxDepth\": \"<integer>\",\n  \"monetization\": {\n    \"properties\": {\n      \"dolor24\": \"<string>\"\n    },\n    \"monetizationPlan\": \"FIXEDRATE\"\n  },\n  \"rateLimitCount\": \"<integer>\",\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"subscriberCount\": \"<integer>\",\n  \"customAttributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"stopOnQuotaReach\": false,\n  \"billingPlan\": \"<string>\",\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/subscription",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "subscription"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Location of the newly created Policy object.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Location",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"defaultLimit\": {\n    \"type\": \"AIAPIQUOTALIMIT\",\n    \"requestCount\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"bandwidth\": {\n      \"dataAmount\": \"<long>\",\n      \"dataUnit\": \"<string>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"eventCount\": {\n      \"eventCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"aiApiQuota\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\",\n      \"totalTokenCount\": \"<long>\",\n      \"promptTokenCount\": \"<long>\",\n      \"completionTokenCount\": \"<long>\"\n    }\n  },\n  \"policyName\": \"<string>\",\n  \"policyId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDeployed\": false,\n  \"type\": \"<string>\",\n  \"graphQLMaxComplexity\": \"<integer>\",\n  \"graphQLMaxDepth\": \"<integer>\",\n  \"monetization\": {\n    \"properties\": {\n      \"dolor24\": \"<string>\"\n    },\n    \"monetizationPlan\": \"FIXEDRATE\"\n  },\n  \"rateLimitCount\": \"<integer>\",\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"subscriberCount\": \"<integer>\",\n  \"customAttributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"stopOnQuotaReach\": false,\n  \"billingPlan\": \"<string>\",\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T03:36:51.000Z",
+                      "updatedAt": "2026-07-28T03:36:51.000Z",
+                      "uid": "35240-bda2e0ed-9368-4e90-8f44-925500b10491"
+                    },
+                    {
+                      "id": "0f8b630d-2acc-4e81-b011-e9b7a67e104d",
+                      "name": "Bad Request. Invalid request or validation error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"defaultLimit\": {\n    \"type\": \"AIAPIQUOTALIMIT\",\n    \"requestCount\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"bandwidth\": {\n      \"dataAmount\": \"<long>\",\n      \"dataUnit\": \"<string>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"eventCount\": {\n      \"eventCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"aiApiQuota\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\",\n      \"totalTokenCount\": \"<long>\",\n      \"promptTokenCount\": \"<long>\",\n      \"completionTokenCount\": \"<long>\"\n    }\n  },\n  \"policyName\": \"<string>\",\n  \"policyId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDeployed\": false,\n  \"type\": \"<string>\",\n  \"graphQLMaxComplexity\": \"<integer>\",\n  \"graphQLMaxDepth\": \"<integer>\",\n  \"monetization\": {\n    \"properties\": {\n      \"dolor24\": \"<string>\"\n    },\n    \"monetizationPlan\": \"FIXEDRATE\"\n  },\n  \"rateLimitCount\": \"<integer>\",\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"subscriberCount\": \"<integer>\",\n  \"customAttributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"stopOnQuotaReach\": false,\n  \"billingPlan\": \"<string>\",\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/subscription",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "subscription"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:51.000Z",
+                      "updatedAt": "2026-07-28T03:36:51.000Z",
+                      "uid": "35240-0f8b630d-2acc-4e81-b011-e9b7a67e104d"
+                    },
+                    {
+                      "id": "2f169e0e-3b64-47b9-af4b-5f9295cea6bb",
+                      "name": "Unsupported Media Type. The entity of the request was not in a supported format.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"defaultLimit\": {\n    \"type\": \"AIAPIQUOTALIMIT\",\n    \"requestCount\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"bandwidth\": {\n      \"dataAmount\": \"<long>\",\n      \"dataUnit\": \"<string>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"eventCount\": {\n      \"eventCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\"\n    },\n    \"aiApiQuota\": {\n      \"requestCount\": \"<long>\",\n      \"timeUnit\": \"<string>\",\n      \"unitTime\": \"<integer>\",\n      \"totalTokenCount\": \"<long>\",\n      \"promptTokenCount\": \"<long>\",\n      \"completionTokenCount\": \"<long>\"\n    }\n  },\n  \"policyName\": \"<string>\",\n  \"policyId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDeployed\": false,\n  \"type\": \"<string>\",\n  \"graphQLMaxComplexity\": \"<integer>\",\n  \"graphQLMaxDepth\": \"<integer>\",\n  \"monetization\": {\n    \"properties\": {\n      \"dolor24\": \"<string>\"\n    },\n    \"monetizationPlan\": \"FIXEDRATE\"\n  },\n  \"rateLimitCount\": \"<integer>\",\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"subscriberCount\": \"<integer>\",\n  \"customAttributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"stopOnQuotaReach\": false,\n  \"billingPlan\": \"<string>\",\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/subscription",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "subscription"
+                          ]
+                        }
+                      },
+                      "status": "Unsupported Media Type",
+                      "code": 415,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:51.000Z",
+                      "updatedAt": "2026-07-28T03:36:51.000Z",
+                      "uid": "35240-2f169e0e-3b64-47b9-af4b-5f9295cea6bb"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:51.000Z",
+                  "updatedAt": "2026-07-28T03:36:51.000Z",
+                  "uid": "35240-abe86472-bbda-4b4e-af1d-480a5de0ef52"
+                }
+              ],
+              "id": "9ccf8ca1-3cc2-4f4e-be52-8c9aa9d4e851",
+              "createdAt": "2026-07-28T03:36:51.000Z",
+              "updatedAt": "2026-07-28T03:36:51.000Z",
+              "uid": "35240-9ccf8ca1-3cc2-4f4e-be52-8c9aa9d4e851"
+            }
+          ],
+          "id": "d5e3ec40-046a-4241-9ed6-7ab0073b861b",
+          "createdAt": "2026-07-28T03:36:51.000Z",
+          "updatedAt": "2026-07-28T03:36:51.000Z",
+          "uid": "35240-d5e3ec40-046a-4241-9ed6-7ab0073b861b"
+        }
+      ],
+      "id": "df545248-cb76-401b-936e-d6ad4c3ef1c6",
+      "createdAt": "2026-07-28T03:36:51.000Z",
+      "updatedAt": "2026-07-28T03:36:51.000Z",
+      "uid": "35240-df545248-cb76-401b-936e-d6ad4c3ef1c6"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

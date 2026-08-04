@@ -1,0 +1,1203 @@
+{
+  "info": {
+    "_postman_id": "4de7a071-f23e-457f-ac51-8e39b8463e6f",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Environments API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:35:38.000Z",
+    "updatedAt": "2026-07-28T03:35:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4de7a071-f23e-457f-ac51-8e39b8463e6f"
+  },
+  "item": [
+    {
+      "name": "environments",
+      "item": [
+        {
+          "name": "{environmentId}",
+          "item": [
+            {
+              "name": "gateways",
+              "item": [
+                {
+                  "name": "Get Gateway Instances in a Gateway Environment",
+                  "id": "906e7f29-4eaa-4afe-a9d2-7d3540de5296",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId/gateways",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId",
+                        "gateways"
+                      ],
+                      "variable": [
+                        {
+                          "id": "880612a2-ca60-4644-8537-c80373c78632",
+                          "key": "environmentId",
+                          "value": "<string>",
+                          "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve list of gateway Instances in the gateway environment.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "5731035d-f7c8-438b-b1ee-dcab6585b346",
+                      "name": "OK.\nList of gateway Instances in the gateway environment returned\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/environments/:environmentId/gateways",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "environments",
+                            ":environmentId",
+                            "gateways"
+                          ],
+                          "variable": [
+                            {
+                              "key": "environmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"gatewayId\": \"<string>\",\n      \"lastActive\": \"<string>\",\n      \"status\": \"ACTIVE\"\n    },\n    {\n      \"gatewayId\": \"<string>\",\n      \"lastActive\": \"<string>\",\n      \"status\": \"ACTIVE\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:38.000Z",
+                      "updatedAt": "2026-07-28T03:35:38.000Z",
+                      "uid": "35240-5731035d-f7c8-438b-b1ee-dcab6585b346"
+                    },
+                    {
+                      "id": "20b93982-5812-4e40-9565-d44d6b79f710",
+                      "name": "Bad Request. Invalid request or validation error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/environments/:environmentId/gateways",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "environments",
+                            ":environmentId",
+                            "gateways"
+                          ],
+                          "variable": [
+                            {
+                              "key": "environmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:38.000Z",
+                      "updatedAt": "2026-07-28T03:35:38.000Z",
+                      "uid": "35240-20b93982-5812-4e40-9565-d44d6b79f710"
+                    },
+                    {
+                      "id": "5e15b0b1-1f1d-4c49-b30a-b8bd6a90ea13",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/environments/:environmentId/gateways",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "environments",
+                            ":environmentId",
+                            "gateways"
+                          ],
+                          "variable": [
+                            {
+                              "key": "environmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:38.000Z",
+                      "updatedAt": "2026-07-28T03:35:38.000Z",
+                      "uid": "35240-5e15b0b1-1f1d-4c49-b30a-b8bd6a90ea13"
+                    },
+                    {
+                      "id": "6607515b-acf5-4bd4-b304-4fbca8b01897",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/environments/:environmentId/gateways",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "environments",
+                            ":environmentId",
+                            "gateways"
+                          ],
+                          "variable": [
+                            {
+                              "key": "environmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:38.000Z",
+                      "updatedAt": "2026-07-28T03:35:38.000Z",
+                      "uid": "35240-6607515b-acf5-4bd4-b304-4fbca8b01897"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-906e7f29-4eaa-4afe-a9d2-7d3540de5296"
+                }
+              ],
+              "id": "75adf307-654e-4cb6-9b9f-61f5ad80a294",
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-75adf307-654e-4cb6-9b9f-61f5ad80a294"
+            },
+            {
+              "name": "Get a Gateway Environment Configuration",
+              "id": "5f7ee745-56eb-4a97-97f9-e874169e75bf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "93bf11f8-4e8d-4b1b-8cae-9ed71cd73931",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "description": "Retrieve a single Gateway Environment Configuration. We should provide the Id of the Environment as a path parameter.\n"
+              },
+              "response": [
+                {
+                  "id": "4122a8be-9546-41ba-af23-fb035f64ba92",
+                  "name": "OK.\nGateway Environment Configuration returned\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-4122a8be-9546-41ba-af23-fb035f64ba92"
+                },
+                {
+                  "id": "97fbb702-158d-43f1-b8b6-2085e491309d",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-97fbb702-158d-43f1-b8b6-2085e491309d"
+                },
+                {
+                  "id": "ce20c522-9273-4a5b-8e42-fa6d88d2714a",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-ce20c522-9273-4a5b-8e42-fa6d88d2714a"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-5f7ee745-56eb-4a97-97f9-e874169e75bf"
+            },
+            {
+              "name": "Update an Environment",
+              "id": "ee3f3043-bbd1-442a-858c-b49db658d989",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ac6f7ec6-b613-4221-b425-d95f68a71980",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "description": "Update a gateway Environment by environment Id\n"
+              },
+              "response": [
+                {
+                  "id": "4752cd06-f23a-4e0e-8434-65bbe049390b",
+                  "name": "OK.\nEnvironment updated.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-4752cd06-f23a-4e0e-8434-65bbe049390b"
+                },
+                {
+                  "id": "e14d3dac-6821-4f38-ad7f-8d6ee8728645",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-e14d3dac-6821-4f38-ad7f-8d6ee8728645"
+                },
+                {
+                  "id": "f561cccf-11eb-465e-bd29-457df081ccb0",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-f561cccf-11eb-465e-bd29-457df081ccb0"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-ee3f3043-bbd1-442a-858c-b49db658d989"
+            },
+            {
+              "name": "Delete an Environment",
+              "id": "3ce39533-aa15-40e1-a389-d3948fc596ed",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments/:environmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2bd1b8a0-bcbc-40c9-8e68-a534b29f866e",
+                      "key": "environmentId",
+                      "value": "<string>",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "description": "Delete a Environment by Environment Id\n"
+              },
+              "response": [
+                {
+                  "id": "eb2f079c-9fff-41f5-9e13-906304394e90",
+                  "name": "OK.\nEnvironment successfully deleted.\n",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-eb2f079c-9fff-41f5-9e13-906304394e90"
+                },
+                {
+                  "id": "631b97c5-e7a7-4304-90cd-4cd3f0d3247b",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/environments/:environmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "environments",
+                        ":environmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "environmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:38.000Z",
+                  "updatedAt": "2026-07-28T03:35:38.000Z",
+                  "uid": "35240-631b97c5-e7a7-4304-90cd-4cd3f0d3247b"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-3ce39533-aa15-40e1-a389-d3948fc596ed"
+            }
+          ],
+          "id": "9f8e9b46-925b-414b-82e0-e5e887cb2ad1",
+          "createdAt": "2026-07-28T03:35:38.000Z",
+          "updatedAt": "2026-07-28T03:35:38.000Z",
+          "uid": "35240-9f8e9b46-925b-414b-82e0-e5e887cb2ad1"
+        },
+        {
+          "name": "Get all registered Environments",
+          "id": "d1b9c0fe-7479-4e9f-bf21-4d6c10908d75",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/environments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "environments"
+              ]
+            },
+            "description": "Get all Registered Environments\n"
+          },
+          "response": [
+            {
+              "id": "9bea2b7d-9516-4a7e-90f6-5f3147bf6c94",
+              "name": "OK.\nEnvironments returned\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/environments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"name\": \"idTKv49u1\",\n      \"vhosts\": [\n        {\n          \"host\": \"<string>\",\n          \"httpContext\": \"nEzlA-7NC0y6GumCbK6gTYAGxrVLT\",\n          \"httpPort\": \"<integer>\",\n          \"httpsPort\": \"<integer>\",\n          \"wsPort\": \"<integer>\",\n          \"wsHost\": \"<string>\",\n          \"wssPort\": \"<integer>\",\n          \"wssHost\": \"<string>\"\n        }\n      ],\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"type\": \"hybrid\",\n      \"gatewayType\": \"Regular\",\n      \"description\": \"<string>\",\n      \"isReadOnly\": false,\n      \"mode\": \"WRITE_ONLY\",\n      \"apiDiscoveryScheduledWindow\": 60,\n      \"endpointURIs\": [\n        {\n          \"protocol\": \"<string>\",\n          \"endpointURI\": \"<string>\"\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"endpointURI\": \"<string>\"\n        }\n      ],\n      \"additionalProperties\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      \"permissions\": {\n        \"permissionType\": \"PUBLIC\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"status\": \"Active\",\n      \"vhost\": \"<uri>\",\n      \"platformGatewayVersions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"Zrz\",\n      \"vhosts\": [\n        {\n          \"host\": \"<string>\",\n          \"httpContext\": \"/xJGWhzVOR8M0Dh9vTTqZaZXDs4S3spmhK\",\n          \"httpPort\": \"<integer>\",\n          \"httpsPort\": \"<integer>\",\n          \"wsPort\": \"<integer>\",\n          \"wsHost\": \"<string>\",\n          \"wssPort\": \"<integer>\",\n          \"wssHost\": \"<string>\"\n        }\n      ],\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"type\": \"hybrid\",\n      \"gatewayType\": \"Regular\",\n      \"description\": \"<string>\",\n      \"isReadOnly\": false,\n      \"mode\": \"WRITE_ONLY\",\n      \"apiDiscoveryScheduledWindow\": 60,\n      \"endpointURIs\": [\n        {\n          \"protocol\": \"<string>\",\n          \"endpointURI\": \"<string>\"\n        },\n        {\n          \"protocol\": \"<string>\",\n          \"endpointURI\": \"<string>\"\n        }\n      ],\n      \"additionalProperties\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      \"permissions\": {\n        \"permissionType\": \"PUBLIC\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"status\": \"Active\",\n      \"vhost\": \"<uri>\",\n      \"platformGatewayVersions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-9bea2b7d-9516-4a7e-90f6-5f3147bf6c94"
+            }
+          ],
+          "createdAt": "2026-07-28T03:35:38.000Z",
+          "updatedAt": "2026-07-28T03:35:38.000Z",
+          "uid": "35240-d1b9c0fe-7479-4e9f-bf21-4d6c10908d75"
+        },
+        {
+          "name": "Add an Environment",
+          "id": "931b97f5-9e93-401f-a2b3-9ea3b2adf896",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/environments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "environments"
+              ]
+            },
+            "description": "Add a new gateway environment\n"
+          },
+          "response": [
+            {
+              "id": "3e73e7ed-1666-4e51-afb2-443fb69339e1",
+              "name": "Created.\nSuccessful response with the newly created environment as entity in the body.\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-3e73e7ed-1666-4e51-afb2-443fb69339e1"
+            },
+            {
+              "id": "8997ddb6-b2fc-40d1-9fb2-cd1d0e2f3561",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"fT\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"/P7rIBqqcJSZx9NP3\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"<uri>\",\n  \"platformGatewayVersions\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/environments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "environments"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:35:38.000Z",
+              "updatedAt": "2026-07-28T03:35:38.000Z",
+              "uid": "35240-8997ddb6-b2fc-40d1-9fb2-cd1d0e2f3561"
+            }
+          ],
+          "createdAt": "2026-07-28T03:35:38.000Z",
+          "updatedAt": "2026-07-28T03:35:38.000Z",
+          "uid": "35240-931b97f5-9e93-401f-a2b3-9ea3b2adf896"
+        }
+      ],
+      "id": "ae1cf8b9-fb82-4cc1-840c-661d87f83e45",
+      "createdAt": "2026-07-28T03:35:38.000Z",
+      "updatedAt": "2026-07-28T03:35:38.000Z",
+      "uid": "35240-ae1cf8b9-fb82-4cc1-840c-661d87f83e45"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

@@ -1,0 +1,1134 @@
+{
+  "info": {
+    "_postman_id": "571e8dee-c1aa-4bf2-ad91-35af6192a014",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Platform Gateways API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:35.000Z",
+    "updatedAt": "2026-07-28T03:36:35.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-571e8dee-c1aa-4bf2-ad91-35af6192a014"
+  },
+  "item": [
+    {
+      "name": "gateways",
+      "item": [
+        {
+          "name": "{gatewayId}",
+          "item": [
+            {
+              "name": "regenerate-token",
+              "item": [
+                {
+                  "name": "Regenerate registration token for a platform gateway",
+                  "id": "2cfa7b0b-8d4d-41e7-928a-7bd6b6b7effa",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId/regenerate-token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId",
+                        "regenerate-token"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f9a06089-7598-4b75-92f6-5748cdd0219f",
+                          "key": "gatewayId",
+                          "value": "<string>",
+                          "description": "(Required) Gateway UUID"
+                        }
+                      ]
+                    },
+                    "description": "Regenerate the registration token for an existing platform gateway. The old token is revoked\nand a new one is generated. Store the new token (e.g. as GATEWAY_CONTROL_PLANE_TOKEN in Docker Compose)\nfor the gateway to reconnect to the control plane WebSocket. The token is returned only once.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "34af568c-3b6b-4df4-a95a-067578855799",
+                      "name": "OK.\nGateway and new registration token (returned once) in the response body.\n",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gateways/:gatewayId/regenerate-token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gateways",
+                            ":gatewayId",
+                            "regenerate-token"
+                          ],
+                          "variable": [
+                            {
+                              "key": "gatewayId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"anim_0\": -16174876,\n    \"cillum7\": 76232406,\n    \"commodo_7\": -58836435.52204534\n  },\n  \"vhost\": \"<uri>\",\n  \"isActive\": \"<boolean>\",\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"registrationToken\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:36:35.000Z",
+                      "updatedAt": "2026-07-28T03:36:35.000Z",
+                      "uid": "35240-34af568c-3b6b-4df4-a95a-067578855799"
+                    },
+                    {
+                      "id": "c9f3d571-62a0-4008-89fb-a5ce3ff96be6",
+                      "name": "Bad Request. Invalid request or validation error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gateways/:gatewayId/regenerate-token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gateways",
+                            ":gatewayId",
+                            "regenerate-token"
+                          ],
+                          "variable": [
+                            {
+                              "key": "gatewayId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:35.000Z",
+                      "updatedAt": "2026-07-28T03:36:35.000Z",
+                      "uid": "35240-c9f3d571-62a0-4008-89fb-a5ce3ff96be6"
+                    },
+                    {
+                      "id": "e2e6df45-a427-42be-84c8-af5be34b196f",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gateways/:gatewayId/regenerate-token",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gateways",
+                            ":gatewayId",
+                            "regenerate-token"
+                          ],
+                          "variable": [
+                            {
+                              "key": "gatewayId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:35.000Z",
+                      "updatedAt": "2026-07-28T03:36:35.000Z",
+                      "uid": "35240-e2e6df45-a427-42be-84c8-af5be34b196f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-2cfa7b0b-8d4d-41e7-928a-7bd6b6b7effa"
+                }
+              ],
+              "id": "a7c64d3a-48df-4a26-be2b-ce98eda6531a",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-a7c64d3a-48df-4a26-be2b-ce98eda6531a"
+            },
+            {
+              "name": "Update a platform gateway",
+              "id": "9e0261a6-1995-466d-a891-0c0801e8ca07",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"oya\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"ex3d0\": true,\n    \"deserunt1\": -77391961.2860523\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/gateways/:gatewayId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways",
+                    ":gatewayId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "bc1ee595-a641-4e08-8066-745b4c5e2a69",
+                      "key": "gatewayId",
+                      "value": "<string>",
+                      "description": "(Required) Gateway UUID"
+                    }
+                  ]
+                },
+                "description": "Update platform gateway metadata. Request body must include all updatable fields (displayName,\ndescription, properties, permissions). Name and vhost cannot be changed. UI should send\nthe full resource representation to align with PUT semantics.\n"
+              },
+              "response": [
+                {
+                  "id": "914fbdce-526e-4d51-8434-5caa2e407a2e",
+                  "name": "OK. Updated platform gateway in the response body.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"oya\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"ex3d0\": true,\n    \"deserunt1\": -77391961.2860523\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"id8_\": \"dolor id aute\",\n    \"ut3\": true,\n    \"sint_e_d\": 39223834,\n    \"ad_ca\": \"irure Ut exercitation cillum\"\n  },\n  \"vhost\": \"<uri>\",\n  \"isActive\": \"<boolean>\",\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-914fbdce-526e-4d51-8434-5caa2e407a2e"
+                },
+                {
+                  "id": "25c1072d-ae9e-418e-868c-f3446f724dc6",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"oya\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"ex3d0\": true,\n    \"deserunt1\": -77391961.2860523\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-25c1072d-ae9e-418e-868c-f3446f724dc6"
+                },
+                {
+                  "id": "76b6d6c4-7d39-40d1-aa8c-7c349b0f57ac",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"oya\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"ex3d0\": true,\n    \"deserunt1\": -77391961.2860523\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-76b6d6c4-7d39-40d1-aa8c-7c349b0f57ac"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-9e0261a6-1995-466d-a891-0c0801e8ca07"
+            },
+            {
+              "name": "Delete a platform gateway",
+              "id": "c57f3fa0-725a-4835-9b11-4c39ecbe0e0a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gateways/:gatewayId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways",
+                    ":gatewayId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f1ec2a46-08a6-447b-9994-5eccdb94516a",
+                      "key": "gatewayId",
+                      "value": "<string>",
+                      "description": "(Required) Gateway UUID"
+                    }
+                  ]
+                },
+                "description": "Delete a platform gateway and all its references (tokens, instance mappings, revision deployment\nrecords, gateway environment, permissions). Fails with 409 if any API revisions are currently\ndeployed to this gateway; undeploy all APIs from the gateway first.\n"
+              },
+              "response": [
+                {
+                  "id": "66704a7c-adf4-46ca-a112-fb61265334a3",
+                  "name": "OK. Gateway and all references removed.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-66704a7c-adf4-46ca-a112-fb61265334a3"
+                },
+                {
+                  "id": "b3ffe4fc-e69d-4fb1-b2a8-2f0048279147",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-b3ffe4fc-e69d-4fb1-b2a8-2f0048279147"
+                },
+                {
+                  "id": "c6e98b4f-bf5d-43f0-9a4c-5766bdee4d6a",
+                  "name": "Conflict. Cannot delete gateway while API revisions are deployed to it.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gateways/:gatewayId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gateways",
+                        ":gatewayId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "gatewayId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:35.000Z",
+                  "updatedAt": "2026-07-28T03:36:35.000Z",
+                  "uid": "35240-c6e98b4f-bf5d-43f0-9a4c-5766bdee4d6a"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-c57f3fa0-725a-4835-9b11-4c39ecbe0e0a"
+            }
+          ],
+          "id": "95727a94-1ae2-4f01-b6c0-d157a9df0a0b",
+          "createdAt": "2026-07-28T03:36:35.000Z",
+          "updatedAt": "2026-07-28T03:36:35.000Z",
+          "uid": "35240-95727a94-1ae2-4f01-b6c0-d157a9df0a0b"
+        },
+        {
+          "name": "Get all platform gateways",
+          "id": "be69d2da-2f65-44a7-9aae-04c47add7c4c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gateways",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gateways"
+              ]
+            },
+            "description": "Get all registered platform gateways for the organization.\n"
+          },
+          "response": [
+            {
+              "id": "17f2bf57-9889-4616-afb1-869b5cf5b4ac",
+              "name": "OK.\nList of platform gateways returned (without registration tokens).\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"properties\": {\n        \"minim0\": true,\n        \"esse_58\": -97518722.89992204\n      },\n      \"vhost\": \"<uri>\",\n      \"isActive\": \"<boolean>\",\n      \"permissions\": {\n        \"permissionType\": \"PUBLIC\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"properties\": {\n        \"sed3\": true,\n        \"in_f\": 36927381\n      },\n      \"vhost\": \"<uri>\",\n      \"isActive\": \"<boolean>\",\n      \"permissions\": {\n        \"permissionType\": \"PUBLIC\",\n        \"roles\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-17f2bf57-9889-4616-afb1-869b5cf5b4ac"
+            },
+            {
+              "id": "2b4163a8-a0b2-4c0b-a685-0abb97901a24",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-2b4163a8-a0b2-4c0b-a685-0abb97901a24"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:35.000Z",
+          "updatedAt": "2026-07-28T03:36:35.000Z",
+          "uid": "35240-be69d2da-2f65-44a7-9aae-04c47add7c4c"
+        },
+        {
+          "name": "Register a platform gateway",
+          "id": "186d0b52-6cbd-42c7-b739-be4686d2a40b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ljp1yp9r-1\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"eu_588\": 4947997.403851986,\n    \"in2a8\": -80138697.58507127,\n    \"ipsume4\": \"magna pariatur sunt ex\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gateways",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gateways"
+              ]
+            },
+            "description": "Register a new platform gateway. A registration token is generated and returned\nonce in the response; store it (e.g. as GATEWAY_CONTROL_PLANE_TOKEN in Docker Compose) for the\ngateway to connect to the control plane WebSocket. The token is stored hashed and cannot be retrieved later.\n"
+          },
+          "response": [
+            {
+              "id": "7c9bbb99-1906-44a9-8c63-b67ea625de1e",
+              "name": "Created.\nGateway and registration token (returned once) in the response body.\n",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"ljp1yp9r-1\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"eu_588\": 4947997.403851986,\n    \"in2a8\": -80138697.58507127,\n    \"ipsume4\": \"magna pariatur sunt ex\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"anim_0\": -16174876,\n    \"cillum7\": 76232406,\n    \"commodo_7\": -58836435.52204534\n  },\n  \"vhost\": \"<uri>\",\n  \"isActive\": \"<boolean>\",\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"registrationToken\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-7c9bbb99-1906-44a9-8c63-b67ea625de1e"
+            },
+            {
+              "id": "bf83bada-9590-490e-b189-5291eb87b6bb",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"ljp1yp9r-1\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"eu_588\": 4947997.403851986,\n    \"in2a8\": -80138697.58507127,\n    \"ipsume4\": \"magna pariatur sunt ex\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-bf83bada-9590-490e-b189-5291eb87b6bb"
+            },
+            {
+              "id": "2a3a3a5f-c2f8-40ef-a847-4f9836015908",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"ljp1yp9r-1\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"eu_588\": 4947997.403851986,\n    \"in2a8\": -80138697.58507127,\n    \"ipsume4\": \"magna pariatur sunt ex\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-2a3a3a5f-c2f8-40ef-a847-4f9836015908"
+            },
+            {
+              "id": "ae847493-3229-4fa3-82d2-64c2ae5812e6",
+              "name": "Conflict. Specified resource already exists.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"ljp1yp9r-1\",\n  \"displayName\": \"<string>\",\n  \"vhost\": \"<uri>\",\n  \"description\": \"<string>\",\n  \"properties\": {\n    \"eu_588\": 4947997.403851986,\n    \"in2a8\": -80138697.58507127,\n    \"ipsume4\": \"magna pariatur sunt ex\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/gateways",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gateways"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:35.000Z",
+              "updatedAt": "2026-07-28T03:36:35.000Z",
+              "uid": "35240-ae847493-3229-4fa3-82d2-64c2ae5812e6"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:35.000Z",
+          "updatedAt": "2026-07-28T03:36:35.000Z",
+          "uid": "35240-186d0b52-6cbd-42c7-b739-be4686d2a40b"
+        }
+      ],
+      "id": "1d96428b-761c-48dd-adef-7a74cf82698b",
+      "createdAt": "2026-07-28T03:36:35.000Z",
+      "updatedAt": "2026-07-28T03:36:35.000Z",
+      "uid": "35240-1d96428b-761c-48dd-adef-7a74cf82698b"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

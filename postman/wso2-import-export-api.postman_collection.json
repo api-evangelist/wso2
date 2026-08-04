@@ -1,0 +1,1543 @@
+{
+  "info": {
+    "_postman_id": "4acce8a4-2fa1-4219-9cb3-8772e68d2331",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Import Export API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:35:50.000Z",
+    "updatedAt": "2026-07-28T03:35:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4acce8a4-2fa1-4219-9cb3-8772e68d2331"
+  },
+  "item": [
+    {
+      "name": "throttling",
+      "item": [
+        {
+          "name": "policies",
+          "item": [
+            {
+              "name": "export",
+              "item": [
+                {
+                  "name": "Export a Throttling Policy",
+                  "id": "bc8389c0-e908-46b6-a271-5eefd199104f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/throttling/policies/export?policyId=<string>&name=<string>&type=api",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "throttling",
+                        "policies",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "UUID of the ThrottlingPolicy",
+                          "key": "policyId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Throttling Policy Name\n",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Type of the Throttling Policy\n",
+                          "key": "type",
+                          "value": "api"
+                        }
+                      ]
+                    },
+                    "description": "This operation can be used to export the details of a particular Throttling Policy.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "55eb0124-0bc3-4c50-8650-1db9ca0e5a20",
+                      "name": "OK.\nExport Successful.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/export?policyId=<string>&name=<string>&type=api",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "export"
+                          ],
+                          "query": [
+                            {
+                              "description": "UUID of the ThrottlingPolicy",
+                              "key": "policyId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Throttling Policy Name\n",
+                              "key": "name",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Type of the Throttling Policy\n",
+                              "key": "type",
+                              "value": "api"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string>\",\n  \"subtype\": \"<string>\",\n  \"version\": \"<string>\",\n  \"data\": {}\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-55eb0124-0bc3-4c50-8650-1db9ca0e5a20"
+                    },
+                    {
+                      "id": "788772d8-8668-41c9-b739-af9d2400a99a",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/export?policyId=<string>&name=<string>&type=api",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "export"
+                          ],
+                          "query": [
+                            {
+                              "description": "UUID of the ThrottlingPolicy",
+                              "key": "policyId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Throttling Policy Name\n",
+                              "key": "name",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Type of the Throttling Policy\n",
+                              "key": "type",
+                              "value": "api"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-788772d8-8668-41c9-b739-af9d2400a99a"
+                    },
+                    {
+                      "id": "09bf174b-72ec-419a-b087-e965b7ba0f5d",
+                      "name": "Internal Server Error.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/export?policyId=<string>&name=<string>&type=api",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "export"
+                          ],
+                          "query": [
+                            {
+                              "description": "UUID of the ThrottlingPolicy",
+                              "key": "policyId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Throttling Policy Name\n",
+                              "key": "name",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Type of the Throttling Policy\n",
+                              "key": "type",
+                              "value": "api"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-09bf174b-72ec-419a-b087-e965b7ba0f5d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-bc8389c0-e908-46b6-a271-5eefd199104f"
+                }
+              ],
+              "id": "8b8b976e-ddf8-4781-b2ff-194660793e9b",
+              "createdAt": "2026-07-28T03:35:51.000Z",
+              "updatedAt": "2026-07-28T03:35:51.000Z",
+              "uid": "35240-8b8b976e-ddf8-4781-b2ff-194660793e9b"
+            },
+            {
+              "name": "import",
+              "item": [
+                {
+                  "name": "Import a Throttling Policy",
+                  "id": "d417d958-ba51-4158-b9c4-42da2a818407",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Json File",
+                          "key": "file",
+                          "type": "file",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "throttling",
+                        "policies",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Update an existing throttlingpolicy with the same name\n",
+                          "key": "overwrite",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    },
+                    "description": "This operation can be used to import a Throttling Policy\n"
+                  },
+                  "response": [
+                    {
+                      "id": "3c309551-ca33-4e37-9856-8004af2abd8c",
+                      "name": "Created.\nThrottling Policy Imported Successfully.\n",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) Json File",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "import"
+                          ],
+                          "query": [
+                            {
+                              "description": "Update an existing throttlingpolicy with the same name\n",
+                              "key": "overwrite",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-3c309551-ca33-4e37-9856-8004af2abd8c"
+                    },
+                    {
+                      "id": "7f5c6bac-0d7c-4d61-b5c2-a78f48be5298",
+                      "name": "Forbidden. The request must be conditional but no condition has been specified.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) Json File",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "import"
+                          ],
+                          "query": [
+                            {
+                              "description": "Update an existing throttlingpolicy with the same name\n",
+                              "key": "overwrite",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-7f5c6bac-0d7c-4d61-b5c2-a78f48be5298"
+                    },
+                    {
+                      "id": "3ab56099-b99f-4d06-befe-147992f265ba",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) Json File",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "import"
+                          ],
+                          "query": [
+                            {
+                              "description": "Update an existing throttlingpolicy with the same name\n",
+                              "key": "overwrite",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-3ab56099-b99f-4d06-befe-147992f265ba"
+                    },
+                    {
+                      "id": "f2555236-1ebb-4826-9a2f-ac083dd74652",
+                      "name": "Conflict. Specified resource already exists.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) Json File",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "import"
+                          ],
+                          "query": [
+                            {
+                              "description": "Update an existing throttlingpolicy with the same name\n",
+                              "key": "overwrite",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-f2555236-1ebb-4826-9a2f-ac083dd74652"
+                    },
+                    {
+                      "id": "29e529af-c8a9-44b2-ad0f-4898ef94739e",
+                      "name": "Internal Server Error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) Json File",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/throttling/policies/import?overwrite=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "throttling",
+                            "policies",
+                            "import"
+                          ],
+                          "query": [
+                            {
+                              "description": "Update an existing throttlingpolicy with the same name\n",
+                              "key": "overwrite",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:51.000Z",
+                      "updatedAt": "2026-07-28T03:35:51.000Z",
+                      "uid": "35240-29e529af-c8a9-44b2-ad0f-4898ef94739e"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-d417d958-ba51-4158-b9c4-42da2a818407"
+                }
+              ],
+              "id": "4d9eee93-4a86-45ee-8c85-815848ffa0e6",
+              "createdAt": "2026-07-28T03:35:51.000Z",
+              "updatedAt": "2026-07-28T03:35:51.000Z",
+              "uid": "35240-4d9eee93-4a86-45ee-8c85-815848ffa0e6"
+            }
+          ],
+          "id": "a4a8b91f-a863-4bf5-8a0c-8cdf2f19b427",
+          "createdAt": "2026-07-28T03:35:51.000Z",
+          "updatedAt": "2026-07-28T03:35:51.000Z",
+          "uid": "35240-a4a8b91f-a863-4bf5-8a0c-8cdf2f19b427"
+        }
+      ],
+      "id": "2faad5b7-62d2-4f5e-a99c-bdfe7d20b455",
+      "createdAt": "2026-07-28T03:35:51.000Z",
+      "updatedAt": "2026-07-28T03:35:51.000Z",
+      "uid": "35240-2faad5b7-62d2-4f5e-a99c-bdfe7d20b455"
+    },
+    {
+      "name": "applications",
+      "item": [
+        {
+          "name": "export",
+          "item": [
+            {
+              "name": "Export an Application",
+              "id": "a6214af7-9cdc-4de3-ba6b-ffef107fbada",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/applications/export?appName=<string>&appOwner=<string>&withKeys=<boolean>&format=JSON",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "applications",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Application Name\n",
+                      "key": "appName",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Owner of the Application\n",
+                      "key": "appOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Export application keys\n",
+                      "key": "withKeys",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Format of output documents. Can be YAML or JSON.\n",
+                      "key": "format",
+                      "value": "JSON"
+                    }
+                  ]
+                },
+                "description": "This operation can be used to export the details of a particular application as a zip file.\n"
+              },
+              "response": [
+                {
+                  "id": "342710cb-3a06-4bea-bc03-1c5f1b374cb5",
+                  "name": "OK.\nExport Successful.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/zip"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/export?appName=<string>&appOwner=<string>&withKeys=<boolean>&format=JSON",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Application Name\n",
+                          "key": "appName",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Owner of the Application\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Export application keys\n",
+                          "key": "withKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Format of output documents. Can be YAML or JSON.\n",
+                          "key": "format",
+                          "value": "JSON"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/zip"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<binary>",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-342710cb-3a06-4bea-bc03-1c5f1b374cb5"
+                },
+                {
+                  "id": "da325eb3-2153-4636-97f4-585a22339b8d",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/export?appName=<string>&appOwner=<string>&withKeys=<boolean>&format=JSON",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Application Name\n",
+                          "key": "appName",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Owner of the Application\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Export application keys\n",
+                          "key": "withKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Format of output documents. Can be YAML or JSON.\n",
+                          "key": "format",
+                          "value": "JSON"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-da325eb3-2153-4636-97f4-585a22339b8d"
+                },
+                {
+                  "id": "f727e38f-4a7d-459c-b179-132ecccc0906",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/export?appName=<string>&appOwner=<string>&withKeys=<boolean>&format=JSON",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Application Name\n",
+                          "key": "appName",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Owner of the Application\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Export application keys\n",
+                          "key": "withKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Format of output documents. Can be YAML or JSON.\n",
+                          "key": "format",
+                          "value": "JSON"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-f727e38f-4a7d-459c-b179-132ecccc0906"
+                },
+                {
+                  "id": "f0eec57c-70cd-4f2e-b754-1e7d27236ba0",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/export?appName=<string>&appOwner=<string>&withKeys=<boolean>&format=JSON",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Application Name\n",
+                          "key": "appName",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Owner of the Application\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Export application keys\n",
+                          "key": "withKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Format of output documents. Can be YAML or JSON.\n",
+                          "key": "format",
+                          "value": "JSON"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-f0eec57c-70cd-4f2e-b754-1e7d27236ba0"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:51.000Z",
+              "updatedAt": "2026-07-28T03:35:51.000Z",
+              "uid": "35240-a6214af7-9cdc-4de3-ba6b-ffef107fbada"
+            }
+          ],
+          "id": "7857d89b-12c6-44e8-816a-f1cf0009becd",
+          "createdAt": "2026-07-28T03:35:51.000Z",
+          "updatedAt": "2026-07-28T03:35:51.000Z",
+          "uid": "35240-7857d89b-12c6-44e8-816a-f1cf0009becd"
+        },
+        {
+          "name": "import",
+          "item": [
+            {
+              "name": "Import an Application",
+              "id": "1e3f22c0-cc9e-419f-b0cb-4740198e81b4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                      "key": "file",
+                      "type": "file",
+                      "value": null
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/applications/import?preserveOwner=<boolean>&skipSubscriptions=<boolean>&appOwner=<string>&skipApplicationKeys=<boolean>&update=<boolean>&ignoreTier=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "applications",
+                    "import"
+                  ],
+                  "query": [
+                    {
+                      "description": "Preserve Original Creator of the Application\n",
+                      "key": "preserveOwner",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Skip importing Subscriptions of the Application\n",
+                      "key": "skipSubscriptions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Expected Owner of the Application in the Import Environment\n",
+                      "key": "appOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Skip importing Keys of the Application\n",
+                      "key": "skipApplicationKeys",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Update if application exists\n",
+                      "key": "update",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Ignore tier and proceed with subscribed APIs\n",
+                      "key": "ignoreTier",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "This operation can be used to import an application.\n"
+              },
+              "response": [
+                {
+                  "id": "0a802c29-8250-4415-adf7-158b32af6eb1",
+                  "name": "OK.\nSuccessful response with the updated object information as entity in the body.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/import?preserveOwner=<boolean>&skipSubscriptions=<boolean>&appOwner=<string>&skipApplicationKeys=<boolean>&update=<boolean>&ignoreTier=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Preserve Original Creator of the Application\n",
+                          "key": "preserveOwner",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Skip importing Subscriptions of the Application\n",
+                          "key": "skipSubscriptions",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Expected Owner of the Application in the Import Environment\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Skip importing Keys of the Application\n",
+                          "key": "skipApplicationKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Update if application exists\n",
+                          "key": "update",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Ignore tier and proceed with subscribed APIs\n",
+                          "key": "ignoreTier",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"applicationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"throttlingPolicy\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"\",\n  \"groups\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"subscriptionCount\": \"<integer>\",\n  \"attributes\": {},\n  \"owner\": \"<string>\",\n  \"tokenType\": \"<string>\",\n  \"createdTime\": \"<string>\",\n  \"updatedTime\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-0a802c29-8250-4415-adf7-158b32af6eb1"
+                },
+                {
+                  "id": "19188380-4a1f-4616-a6bb-852020ec636e",
+                  "name": "Multi Status.\nPartially successful response with skipped APIs information object as entity in the body.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/import?preserveOwner=<boolean>&skipSubscriptions=<boolean>&appOwner=<string>&skipApplicationKeys=<boolean>&update=<boolean>&ignoreTier=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Preserve Original Creator of the Application\n",
+                          "key": "preserveOwner",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Skip importing Subscriptions of the Application\n",
+                          "key": "skipSubscriptions",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Expected Owner of the Application in the Import Environment\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Skip importing Keys of the Application\n",
+                          "key": "skipApplicationKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Update if application exists\n",
+                          "key": "update",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Ignore tier and proceed with subscribed APIs\n",
+                          "key": "ignoreTier",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Multi-Status (WebDAV) (RFC 4918)",
+                  "code": 207,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-19188380-4a1f-4616-a6bb-852020ec636e"
+                },
+                {
+                  "id": "2f23ca0f-5dce-4cfb-b93e-eed35c9c3a10",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/import?preserveOwner=<boolean>&skipSubscriptions=<boolean>&appOwner=<string>&skipApplicationKeys=<boolean>&update=<boolean>&ignoreTier=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Preserve Original Creator of the Application\n",
+                          "key": "preserveOwner",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Skip importing Subscriptions of the Application\n",
+                          "key": "skipSubscriptions",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Expected Owner of the Application in the Import Environment\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Skip importing Keys of the Application\n",
+                          "key": "skipApplicationKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Update if application exists\n",
+                          "key": "update",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Ignore tier and proceed with subscribed APIs\n",
+                          "key": "ignoreTier",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-2f23ca0f-5dce-4cfb-b93e-eed35c9c3a10"
+                },
+                {
+                  "id": "d60e2518-f52f-44ad-8d9e-973d7ca71098",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) Zip archive consisting of exported Application Configuration.\n",
+                          "key": "file",
+                          "type": "file"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/import?preserveOwner=<boolean>&skipSubscriptions=<boolean>&appOwner=<string>&skipApplicationKeys=<boolean>&update=<boolean>&ignoreTier=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        "import"
+                      ],
+                      "query": [
+                        {
+                          "description": "Preserve Original Creator of the Application\n",
+                          "key": "preserveOwner",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Skip importing Subscriptions of the Application\n",
+                          "key": "skipSubscriptions",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Expected Owner of the Application in the Import Environment\n",
+                          "key": "appOwner",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Skip importing Keys of the Application\n",
+                          "key": "skipApplicationKeys",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Update if application exists\n",
+                          "key": "update",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Ignore tier and proceed with subscribed APIs\n",
+                          "key": "ignoreTier",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:51.000Z",
+                  "updatedAt": "2026-07-28T03:35:51.000Z",
+                  "uid": "35240-d60e2518-f52f-44ad-8d9e-973d7ca71098"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:51.000Z",
+              "updatedAt": "2026-07-28T03:35:51.000Z",
+              "uid": "35240-1e3f22c0-cc9e-419f-b0cb-4740198e81b4"
+            }
+          ],
+          "id": "8e0e940c-ea02-42d7-b4df-c9180f34a977",
+          "createdAt": "2026-07-28T03:35:51.000Z",
+          "updatedAt": "2026-07-28T03:35:51.000Z",
+          "uid": "35240-8e0e940c-ea02-42d7-b4df-c9180f34a977"
+        }
+      ],
+      "id": "22e04c02-116b-4249-81c3-c643c42c5cea",
+      "createdAt": "2026-07-28T03:35:51.000Z",
+      "updatedAt": "2026-07-28T03:35:51.000Z",
+      "uid": "35240-22e04c02-116b-4249-81c3-c643c42c5cea"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

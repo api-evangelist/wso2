@@ -1,0 +1,1206 @@
+{
+  "info": {
+    "_postman_id": "241b205f-3678-4fa8-92ea-60ad47cb6e7e",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Key Manager (Individual) API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:35:52.000Z",
+    "updatedAt": "2026-07-28T03:35:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-241b205f-3678-4fa8-92ea-60ad47cb6e7e"
+  },
+  "item": [
+    {
+      "name": "key-managers",
+      "item": [
+        {
+          "name": "{keyManagerId}",
+          "item": [
+            {
+              "name": "api-usages",
+              "item": [
+                {
+                  "name": "Retrieve Key Manager Usages (APIs)",
+                  "id": "3b80d2a3-b068-4c92-b9c9-510edd2e2835",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId/api-usages?offset=0&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId",
+                        "api-usages"
+                      ],
+                      "query": [
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "300f0ba1-fa49-4c6a-91e3-d71f97cad996",
+                          "key": "keyManagerId",
+                          "value": "<string>",
+                          "description": "(Required) Key Manager UUID\n"
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a list of APIs that are specifically utilizing the Key Manager identified by the provided ID.\nThe Key Manager ID should be provided as a path parameter.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "e257ee44-dbd7-4584-8e0d-2e35ad651000",
+                      "name": "OK.\nKeyManager API usages returned.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/api-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "api-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"apiCount\": \"<integer>\",\n  \"apis\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"type\": \"<string>\",\n      \"transportType\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"status\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"advertiseOnly\": \"<boolean>\",\n      \"keyManagerEntry\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"type\": \"<string>\",\n      \"transportType\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"status\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"advertiseOnly\": \"<boolean>\",\n      \"keyManagerEntry\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-e257ee44-dbd7-4584-8e0d-2e35ad651000"
+                    },
+                    {
+                      "id": "74c7c3ee-ce30-43e3-9013-ae77d555dd63",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/api-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "api-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-74c7c3ee-ce30-43e3-9013-ae77d555dd63"
+                    },
+                    {
+                      "id": "3a0fdc3b-2537-48a3-8250-45bbd99c6962",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/api-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "api-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-3a0fdc3b-2537-48a3-8250-45bbd99c6962"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-3b80d2a3-b068-4c92-b9c9-510edd2e2835"
+                }
+              ],
+              "id": "24129da6-efee-4a7e-8785-c85460def900",
+              "createdAt": "2026-07-28T03:35:53.000Z",
+              "updatedAt": "2026-07-28T03:35:53.000Z",
+              "uid": "35240-24129da6-efee-4a7e-8785-c85460def900"
+            },
+            {
+              "name": "app-usages",
+              "item": [
+                {
+                  "name": "Retrieve Key Manager Usages (Appilcations)",
+                  "id": "ce26e17f-8f14-4122-857b-2045b83083b3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId/app-usages?offset=0&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId",
+                        "app-usages"
+                      ],
+                      "query": [
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "54dd65fb-c274-444e-876d-4215671da8e7",
+                          "key": "keyManagerId",
+                          "value": "<string>",
+                          "description": "(Required) Key Manager UUID\n"
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a list of Applications that are specifically utilizing the Key Manager identified by the provided ID.\nThe Key Manager ID should be provided as a path parameter.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "f4a7f8c5-b781-4b0e-bb23-1dccb226dbce",
+                      "name": "OK.\nKeyManager application usages returned.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/app-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "app-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"applicationCount\": \"<integer>\",\n  \"applications\": [\n    {\n      \"name\": \"<string>\",\n      \"uuid\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"organization\": \"<string>\",\n      \"organizationId\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"uuid\": \"<string>\",\n      \"owner\": \"<string>\",\n      \"organization\": \"<string>\",\n      \"organizationId\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-f4a7f8c5-b781-4b0e-bb23-1dccb226dbce"
+                    },
+                    {
+                      "id": "2a681665-0a71-4491-ad8b-42d0ba8d8685",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/app-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "app-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-2a681665-0a71-4491-ad8b-42d0ba8d8685"
+                    },
+                    {
+                      "id": "8de08227-5fe3-480b-a9a9-bab2e6a9956d",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/key-managers/:keyManagerId/app-usages?offset=0&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "key-managers",
+                            ":keyManagerId",
+                            "app-usages"
+                          ],
+                          "query": [
+                            {
+                              "description": "Starting point within the complete list of items qualified.\n",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Maximum size of resource array to return.\n",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "keyManagerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:53.000Z",
+                      "updatedAt": "2026-07-28T03:35:53.000Z",
+                      "uid": "35240-8de08227-5fe3-480b-a9a9-bab2e6a9956d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-ce26e17f-8f14-4122-857b-2045b83083b3"
+                }
+              ],
+              "id": "6e41ae88-f74f-4543-b795-fa2906eb5408",
+              "createdAt": "2026-07-28T03:35:53.000Z",
+              "updatedAt": "2026-07-28T03:35:53.000Z",
+              "uid": "35240-6e41ae88-f74f-4543-b795-fa2906eb5408"
+            },
+            {
+              "name": "Get a Key Manager Configuration",
+              "id": "9a9ed9e3-2cf2-46b6-86ff-c28bfcd43625",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers",
+                    ":keyManagerId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "905a5c68-d2a9-4360-9f94-d3125686abf6",
+                      "key": "keyManagerId",
+                      "value": "<string>",
+                      "description": "(Required) Key Manager UUID\n"
+                    }
+                  ]
+                },
+                "description": "Retrieve a single Key Manager Configuration. We should provide the Id of the KeyManager as a path parameter.\n"
+              },
+              "response": [
+                {
+                  "id": "1ee0578c-84ce-428d-954d-ac4cbdb8193f",
+                  "name": "OK.\nKeyManager Configuration returned\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The content type of the body.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Content-Type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-1ee0578c-84ce-428d-954d-ac4cbdb8193f"
+                },
+                {
+                  "id": "08d9fb78-5944-4498-a6f9-a80287ba9b29",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-08d9fb78-5944-4498-a6f9-a80287ba9b29"
+                },
+                {
+                  "id": "18269282-4d44-44b4-9d55-dfad44fb9a4d",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-18269282-4d44-44b4-9d55-dfad44fb9a4d"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:53.000Z",
+              "updatedAt": "2026-07-28T03:35:53.000Z",
+              "uid": "35240-9a9ed9e3-2cf2-46b6-86ff-c28bfcd43625"
+            },
+            {
+              "name": "Update a Key Manager",
+              "id": "78a01750-a75d-490c-8c41-28ede09a2f0e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers",
+                    ":keyManagerId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "50c5adaf-b201-49a1-9e22-888c98d3a04f",
+                      "key": "keyManagerId",
+                      "value": "<string>",
+                      "description": "(Required) Key Manager UUID\n"
+                    }
+                  ]
+                },
+                "description": "Update a Key Manager by keyManager id\n"
+              },
+              "response": [
+                {
+                  "id": "09ce78e3-ee77-4b58-850e-87e3e40d24f9",
+                  "name": "OK.\nLabel updated.\n",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-09ce78e3-ee77-4b58-850e-87e3e40d24f9"
+                },
+                {
+                  "id": "12d15c84-cad2-4164-8200-20b349dce899",
+                  "name": "Bad Request. Invalid request or validation error.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-12d15c84-cad2-4164-8200-20b349dce899"
+                },
+                {
+                  "id": "31cde24a-b289-409f-8f2b-aa785eca298d",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"JWKS\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"CUSTOM\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"JWT\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-31cde24a-b289-409f-8f2b-aa785eca298d"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:53.000Z",
+              "updatedAt": "2026-07-28T03:35:53.000Z",
+              "uid": "35240-78a01750-a75d-490c-8c41-28ede09a2f0e"
+            },
+            {
+              "name": "Delete a Key Manager",
+              "id": "a064b4d1-9170-4f69-8132-cfb0be021ceb",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "key-managers",
+                    ":keyManagerId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "478b1873-d8c3-4151-a2e2-e39adcf9d618",
+                      "key": "keyManagerId",
+                      "value": "<string>",
+                      "description": "(Required) Key Manager UUID\n"
+                    }
+                  ]
+                },
+                "description": "Delete a Key Manager by keyManager id\n"
+              },
+              "response": [
+                {
+                  "id": "0578917e-30f2-4bf3-91de-be150b927370",
+                  "name": "OK.\nKey Manager successfully deleted.\n",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-0578917e-30f2-4bf3-91de-be150b927370"
+                },
+                {
+                  "id": "96cc80a4-8fdc-4d88-8e36-f4ce82c32888",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/key-managers/:keyManagerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "key-managers",
+                        ":keyManagerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "keyManagerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:35:53.000Z",
+                  "updatedAt": "2026-07-28T03:35:53.000Z",
+                  "uid": "35240-96cc80a4-8fdc-4d88-8e36-f4ce82c32888"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:53.000Z",
+              "updatedAt": "2026-07-28T03:35:53.000Z",
+              "uid": "35240-a064b4d1-9170-4f69-8132-cfb0be021ceb"
+            }
+          ],
+          "id": "aac13836-698c-4880-b729-c081c51662c3",
+          "createdAt": "2026-07-28T03:35:53.000Z",
+          "updatedAt": "2026-07-28T03:35:53.000Z",
+          "uid": "35240-aac13836-698c-4880-b729-c081c51662c3"
+        }
+      ],
+      "id": "d62fc78d-092c-4c30-aad0-4d6b5faf5aa5",
+      "createdAt": "2026-07-28T03:35:53.000Z",
+      "updatedAt": "2026-07-28T03:35:53.000Z",
+      "uid": "35240-d62fc78d-092c-4c30-aad0-4d6b5faf5aa5"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

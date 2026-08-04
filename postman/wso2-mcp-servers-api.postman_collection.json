@@ -1,0 +1,1216 @@
+{
+  "info": {
+    "_postman_id": "1d11d4ae-6a08-485b-b31a-3ab7e11d9ce3",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) MCP Servers API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:36:15.000Z",
+    "updatedAt": "2026-07-28T03:36:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1d11d4ae-6a08-485b-b31a-3ab7e11d9ce3"
+  },
+  "item": [
+    {
+      "name": "mcp-servers",
+      "item": [
+        {
+          "name": "{mcpServerId}",
+          "item": [
+            {
+              "name": "thumbnail",
+              "item": [
+                {
+                  "name": "Get Thumbnail Image",
+                  "id": "3160ac6a-d5a9-4cb2-8d61-f4c32882b8a4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/thumbnail",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId",
+                        "thumbnail"
+                      ],
+                      "variable": [
+                        {
+                          "id": "310d564c-3f0b-4059-87f0-ec7c10fbde54",
+                          "key": "mcpServerId",
+                          "value": "<string>",
+                          "description": "(Required) **MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+                        }
+                      ]
+                    },
+                    "description": "This operation can be used to download a thumbnail image of a MCP Server.\n\n`X-WSO2-Tenant` header can be used to retrieve a thumbnail of a MCP Server that belongs to a different tenant \ndomain. If not specified super tenant will be used. If Authorization header is present in the request, the \nuser's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted \nMCP Server's thumbnail, you need to provide Authorization header.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "02f9aa08-15c3-4036-bd0c-e45842ff4bf8",
+                      "name": "OK.\nThumbnail image returned\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/thumbnail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "thumbnail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Entity Tag of the response resource.\nUsed by caches, or in conditional requests.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "ETag",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Date and time the resource has been modified the last time.\nUsed by caches, or in conditional requests (Will be supported in future).\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Last-Modified",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The content type of the body.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-02f9aa08-15c3-4036-bd0c-e45842ff4bf8"
+                    },
+                    {
+                      "id": "1467ec7e-ff04-4bff-b4bc-3c9a73f60c8e",
+                      "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/thumbnail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "thumbnail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Modified",
+                      "code": 304,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-1467ec7e-ff04-4bff-b4bc-3c9a73f60c8e"
+                    },
+                    {
+                      "id": "de7ac089-ffcf-4a66-8ec6-e00fba39c027",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/thumbnail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "thumbnail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-de7ac089-ffcf-4a66-8ec6-e00fba39c027"
+                    },
+                    {
+                      "id": "343c6953-4cc8-4414-afb6-30bf9f5cacbd",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/thumbnail",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "thumbnail"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-343c6953-4cc8-4414-afb6-30bf9f5cacbd"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-3160ac6a-d5a9-4cb2-8d61-f4c32882b8a4"
+                }
+              ],
+              "id": "5f18ef4c-973b-48ea-a5bc-f645067dae4d",
+              "createdAt": "2026-07-28T03:36:16.000Z",
+              "updatedAt": "2026-07-28T03:36:16.000Z",
+              "uid": "35240-5f18ef4c-973b-48ea-a5bc-f645067dae4d"
+            },
+            {
+              "name": "subscription-policies",
+              "item": [
+                {
+                  "name": "Get Details of the Subscription Throttling Policies of a MCP Server\n",
+                  "id": "7178eb39-efe1-43be-a2a9-8b59fd43b409",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/subscription-policies",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId",
+                        "subscription-policies"
+                      ],
+                      "variable": [
+                        {
+                          "id": "984be18a-bb23-48fc-a4a3-dd504d74ec5a",
+                          "key": "mcpServerId",
+                          "value": "<string>",
+                          "description": "(Required) **MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+                        }
+                      ]
+                    },
+                    "description": "This operation can be used to retrieve details of the subscription throttling policy of a MCP Server by \nspecifying the MCP Server Id.\n\n`X-WSO2-Tenant` header can be used to retrieve MCP Server subscription throttling policies that belongs to a \ndifferent tenant domain. If not specified super tenant will be used. If Authorization header is present in the \nrequest, the user's tenant associated with the access token will be used.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "cea30ec2-5561-4ab4-b50a-e0ec30342789",
+                      "name": "OK.\nThrottling Policy returned\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/subscription-policies",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "subscription-policies"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Entity Tag of the response resource.\nUsed by caches, or in conditional requests.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "ETag",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Date and time the resource has been modified the last time.\nUsed by caches, or in conditional requests.\n",
+                            "type": "text/plain"
+                          },
+                          "key": "Last-Modified",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"<string>\",\n  \"requestCount\": \"<long>\",\n  \"stopOnQuotaReach\": \"<boolean>\",\n  \"tierPlan\": \"FREE\",\n  \"unitTime\": \"<long>\",\n  \"description\": \"<string>\",\n  \"policyLevel\": \"subscription\",\n  \"attributes\": {\n    \"non_81\": \"<string>\",\n    \"dolore_0\": \"<string>\"\n  },\n  \"dataUnit\": \"<string>\",\n  \"timeUnit\": \"<string>\",\n  \"rateLimitCount\": 0,\n  \"rateLimitTimeUnit\": \"<string>\",\n  \"quotaPolicyType\": \"BANDWIDTHVOLUME\",\n  \"monetizationAttributes\": {\n    \"billingType\": \"fixedPrice\",\n    \"billingCycle\": \"<string>\",\n    \"fixedPrice\": \"<string>\",\n    \"pricePerRequest\": \"<string>\",\n    \"currencyType\": \"<string>\"\n  },\n  \"throttlingPolicyPermissions\": {\n    \"type\": \"deny\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-cea30ec2-5561-4ab4-b50a-e0ec30342789"
+                    },
+                    {
+                      "id": "2d4d38d9-9308-477a-afd4-659c3f1f1c16",
+                      "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/subscription-policies",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "subscription-policies"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Modified",
+                      "code": 304,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-2d4d38d9-9308-477a-afd4-659c3f1f1c16"
+                    },
+                    {
+                      "id": "f94596cf-3186-4b8c-8293-0029f5feac12",
+                      "name": "Not Found. The specified resource does not exist.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/subscription-policies",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "subscription-policies"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-f94596cf-3186-4b8c-8293-0029f5feac12"
+                    },
+                    {
+                      "id": "6879fe65-6336-4c05-9441-898ebd3700f6",
+                      "name": "Not Acceptable. The requested media type is not supported.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                            "key": "X-WSO2-Tenant",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                            "key": "If-None-Match",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/mcp-servers/:mcpServerId/subscription-policies",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "mcp-servers",
+                            ":mcpServerId",
+                            "subscription-policies"
+                          ],
+                          "variable": [
+                            {
+                              "key": "mcpServerId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Acceptable",
+                      "code": 406,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:36:16.000Z",
+                      "updatedAt": "2026-07-28T03:36:16.000Z",
+                      "uid": "35240-6879fe65-6336-4c05-9441-898ebd3700f6"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-7178eb39-efe1-43be-a2a9-8b59fd43b409"
+                }
+              ],
+              "id": "4fb8d381-c181-40cd-bd50-bf5106e53c56",
+              "createdAt": "2026-07-28T03:36:16.000Z",
+              "updatedAt": "2026-07-28T03:36:16.000Z",
+              "uid": "35240-4fb8d381-c181-40cd-bd50-bf5106e53c56"
+            },
+            {
+              "name": "Get Details of a MCP Server\n",
+              "id": "a8324c1f-c03e-408a-8b08-992beac02fcf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/mcp-servers/:mcpServerId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "mcp-servers",
+                    ":mcpServerId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "12f8fa6d-4b11-4f85-96b9-454f56cccd44",
+                      "key": "mcpServerId",
+                      "value": "<string>",
+                      "description": "(Required) **MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+                    }
+                  ]
+                },
+                "description": "Using this operation, you can retrieve complete details of a single MCP Server. You need to provide the Id of \nthe MCP Server to retrieve it.\n\n`X-WSO2-Tenant` header can be used to retrieve a MCP Server of a different tenant domain. If not specified \nsuper tenant will be used. If Authorization header is present in the request, the user's tenant associated \nwith the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But if it is provided, it will be \nvalidated and checked for permissions of the user, hence you may be able to see APIs which are restricted for\nspecial permissions/roles. \\n\n"
+              },
+              "response": [
+                {
+                  "id": "324fd5bf-0752-4666-975b-d07fb333e80f",
+                  "name": "OK.\nRequested API is returned\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "mcpServerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Entity Tag of the response resource. Used by caches, or in conditional requests.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "ETag",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Date and time the resource has been modified the last time.\nUsed by caches, or in conditional requests.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "Last-Modified",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"context\": \"<string>\",\n  \"lifeCycleStatus\": \"<string>\",\n  \"name\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"version\": \"<string>\",\n  \"id\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"apiDefinition\": \"<string>\",\n  \"wsdlUri\": \"<string>\",\n  \"isDefaultVersion\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"transport\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"operations\": [\n    {\n      \"id\": \"<string>\",\n      \"target\": \"<string>\",\n      \"verb\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"target\": \"<string>\",\n      \"verb\": \"<string>\"\n    }\n  ],\n  \"authorizationHeader\": \"<string>\",\n  \"apiKeyHeader\": \"<string>\",\n  \"securityScheme\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tiers\": [\n    {\n      \"tierName\": \"<string>\",\n      \"tierPlan\": \"<string>\",\n      \"monetizationAttributes\": {\n        \"fixedPrice\": \"<string>\",\n        \"pricePerRequest\": \"<string>\",\n        \"currencyType\": \"<string>\",\n        \"billingCycle\": \"<string>\"\n      }\n    },\n    {\n      \"tierName\": \"<string>\",\n      \"tierPlan\": \"<string>\",\n      \"monetizationAttributes\": {\n        \"fixedPrice\": \"<string>\",\n        \"pricePerRequest\": \"<string>\",\n        \"currencyType\": \"<string>\",\n        \"billingCycle\": \"<string>\"\n      }\n    }\n  ],\n  \"hasThumbnail\": false,\n  \"additionalProperties\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"display\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"display\": \"<boolean>\"\n    }\n  ],\n  \"monetization\": {\n    \"enabled\": \"<boolean>\"\n  },\n  \"endpointURLs\": [\n    {\n      \"environmentName\": \"<string>\",\n      \"environmentDisplayName\": \"<string>\",\n      \"environmentType\": \"<string>\",\n      \"URLs\": {\n        \"http\": \"<string>\",\n        \"https\": \"<string>\",\n        \"ws\": \"<string>\",\n        \"wss\": \"<string>\"\n      },\n      \"defaultVersionURLs\": {\n        \"http\": \"<string>\",\n        \"https\": \"<string>\",\n        \"ws\": \"<string>\",\n        \"wss\": \"<string>\"\n      }\n    },\n    {\n      \"environmentName\": \"<string>\",\n      \"environmentDisplayName\": \"<string>\",\n      \"environmentType\": \"<string>\",\n      \"URLs\": {\n        \"http\": \"<string>\",\n        \"https\": \"<string>\",\n        \"ws\": \"<string>\",\n        \"wss\": \"<string>\"\n      },\n      \"defaultVersionURLs\": {\n        \"http\": \"<string>\",\n        \"https\": \"<string>\",\n        \"ws\": \"<string>\",\n        \"wss\": \"<string>\"\n      }\n    }\n  ],\n  \"businessInformation\": {\n    \"businessOwner\": \"<string>\",\n    \"businessOwnerEmail\": \"<string>\",\n    \"technicalOwner\": \"<string>\",\n    \"technicalOwnerEmail\": \"<string>\"\n  },\n  \"environmentList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"roles\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"description\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"roles\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"description\": \"<string>\"\n    }\n  ],\n  \"avgRating\": \"<string>\",\n  \"subscriptions\": \"<long>\",\n  \"advertiseInfo\": {\n    \"advertised\": \"<boolean>\",\n    \"apiExternalProductionEndpoint\": \"<string>\",\n    \"apiExternalSandboxEndpoint\": \"<string>\",\n    \"originalDevPortalUrl\": \"<string>\",\n    \"apiOwner\": \"<string>\",\n    \"vendor\": \"WSO2\"\n  },\n  \"isSubscriptionAvailable\": \"<boolean>\",\n  \"initiatedFromGateway\": \"<boolean>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"keyManagers\": {},\n  \"createdTime\": \"<string>\",\n  \"lastUpdatedTime\": \"<string>\",\n  \"gatewayType\": \"<string>\",\n  \"gatewayVendor\": \"<string>\",\n  \"asyncTransportProtocols\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"egress\": false,\n  \"subtype\": \"DEFAULT\"\n}",
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-324fd5bf-0752-4666-975b-d07fb333e80f"
+                },
+                {
+                  "id": "5cc45d7c-c45f-479b-8d7a-8d17018cab13",
+                  "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "mcpServerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Modified",
+                  "code": 304,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-5cc45d7c-c45f-479b-8d7a-8d17018cab13"
+                },
+                {
+                  "id": "e342fcfe-8159-41db-b34a-c26313c4a3da",
+                  "name": "Not Found. The specified resource does not exist.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "mcpServerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-e342fcfe-8159-41db-b34a-c26313c4a3da"
+                },
+                {
+                  "id": "a8e3d98e-00cf-44db-a343-be0b053f0034",
+                  "name": "Not Acceptable. The requested media type is not supported.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                        "key": "X-WSO2-Tenant",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                        "key": "If-None-Match",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/mcp-servers/:mcpServerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "mcp-servers",
+                        ":mcpServerId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "mcpServerId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:36:16.000Z",
+                  "updatedAt": "2026-07-28T03:36:16.000Z",
+                  "uid": "35240-a8e3d98e-00cf-44db-a343-be0b053f0034"
+                }
+              ],
+              "createdAt": "2026-07-28T03:36:16.000Z",
+              "updatedAt": "2026-07-28T03:36:16.000Z",
+              "uid": "35240-a8324c1f-c03e-408a-8b08-992beac02fcf"
+            }
+          ],
+          "id": "7526cf33-de2e-48e9-a7fe-c4c1ff57644f",
+          "createdAt": "2026-07-28T03:36:16.000Z",
+          "updatedAt": "2026-07-28T03:36:16.000Z",
+          "uid": "35240-7526cf33-de2e-48e9-a7fe-c4c1ff57644f"
+        },
+        {
+          "name": "Retrieve/Search MCP Servers\n",
+          "id": "fe0f8a87-4bb3-4dab-a2ed-b06a05904d67",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mcp-servers?limit=25&offset=0&query=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mcp-servers"
+              ],
+              "query": [
+                {
+                  "description": "Maximum size of resource array to return.\n",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Starting point within the complete list of items qualified.\n",
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an MCP Server if the provider of the MCP Server is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match a MCP Server if the provider of the MCP Server starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, doc, provider, tag**]\n\nTo search by Properties provide the query in below format.\n\n**property_name:property_value**\n\nEg.\n\"environment:test\" where environment is the property name and test is the propert value.\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven query string against API Name.\n",
+                  "key": "query",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "This operation provides you a list of available MCP servers qualifying under a given search condition.\n\nEach retrieved MCP Server is represented with a minimal amount of attributes. If you want to get complete \ndetails of a MCP server, you need to use **Get details of a MCP** operation.\n\nThis operation supports retrieving MCP servers of other tenants. The required tenant domain need to be \nspecified as a header `X-WSO2-Tenant`. If not specified super tenant's MCP servers will be retrieved. If you \nused an Authorization header, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* By default, this operation retrieves Published MCP Server. \n* This operation does not require an Authorization header by default. But if it is provided, it will be validated and checked for permissions of the user, hence you may be able to see APIs which are restricted for special permissions/roles.\n"
+          },
+          "response": [
+            {
+              "id": "931330a4-e0c2-451f-9e8e-326acabfe5c3",
+              "name": "OK.\nList of qualifying MCP Servers is returned.\n",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/mcp-servers?limit=25&offset=0&query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "mcp-servers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an MCP Server if the provider of the MCP Server is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match a MCP Server if the provider of the MCP Server starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, doc, provider, tag**]\n\nTo search by Properties provide the query in below format.\n\n**property_name:property_value**\n\nEg.\n\"environment:test\" where environment is the property name and test is the propert value.\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven query string against API Name.\n",
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\",\n      \"context\": \"<string>\",\n      \"version\": \"<string>\",\n      \"type\": \"<string>\",\n      \"createdTime\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"lifeCycleStatus\": \"<string>\",\n      \"thumbnailUri\": \"<string>\",\n      \"avgRating\": \"<string>\",\n      \"throttlingPolicies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"advertiseInfo\": {\n        \"advertised\": \"<boolean>\",\n        \"apiExternalProductionEndpoint\": \"<string>\",\n        \"apiExternalSandboxEndpoint\": \"<string>\",\n        \"originalDevPortalUrl\": \"<string>\",\n        \"apiOwner\": \"<string>\",\n        \"vendor\": \"WSO2\"\n      },\n      \"businessInformation\": {\n        \"businessOwner\": \"<string>\",\n        \"businessOwnerEmail\": \"<string>\",\n        \"technicalOwner\": \"<string>\",\n        \"technicalOwnerEmail\": \"<string>\"\n      },\n      \"isSubscriptionAvailable\": \"<boolean>\",\n      \"monetizationLabel\": \"<string>\",\n      \"gatewayType\": \"<string>\",\n      \"gatewayVendor\": \"<string>\",\n      \"additionalProperties\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\",\n          \"display\": \"<boolean>\"\n        }\n      ],\n      \"monetizedInfo\": \"<boolean>\",\n      \"egress\": false,\n      \"subtype\": \"DEFAULT\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:36:16.000Z",
+              "updatedAt": "2026-07-28T03:36:16.000Z",
+              "uid": "35240-931330a4-e0c2-451f-9e8e-326acabfe5c3"
+            },
+            {
+              "id": "b341f950-7f73-4b10-b932-844180a69c6d",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/mcp-servers?limit=25&offset=0&query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "mcp-servers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an MCP Server if the provider of the MCP Server is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match a MCP Server if the provider of the MCP Server starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, doc, provider, tag**]\n\nTo search by Properties provide the query in below format.\n\n**property_name:property_value**\n\nEg.\n\"environment:test\" where environment is the property name and test is the propert value.\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven query string against API Name.\n",
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\",\n  \"moreInfo\": \"<string>\",\n  \"error\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:36:16.000Z",
+              "updatedAt": "2026-07-28T03:36:16.000Z",
+              "uid": "35240-b341f950-7f73-4b10-b932-844180a69c6d"
+            }
+          ],
+          "createdAt": "2026-07-28T03:36:16.000Z",
+          "updatedAt": "2026-07-28T03:36:16.000Z",
+          "uid": "35240-fe0f8a87-4bb3-4dab-a2ed-b06a05904d67"
+        }
+      ],
+      "id": "727e5a58-4e52-4491-8753-13a58948fb0f",
+      "createdAt": "2026-07-28T03:36:16.000Z",
+      "updatedAt": "2026-07-28T03:36:16.000Z",
+      "uid": "35240-727e5a58-4e52-4491-8753-13a58948fb0f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}

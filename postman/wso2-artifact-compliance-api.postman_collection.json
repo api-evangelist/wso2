@@ -1,0 +1,1331 @@
+{
+  "info": {
+    "_postman_id": "10ee269e-d6d6-4ad5-a5d4-105d7f4287fd",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Artifact Compliance API",
+    "description": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:35:02.000Z",
+    "updatedAt": "2026-07-28T03:35:02.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-10ee269e-d6d6-4ad5-a5d4-105d7f4287fd"
+  },
+  "item": [
+    {
+      "name": "artifact-compliance",
+      "item": [
+        {
+          "name": "api",
+          "item": [
+            {
+              "name": "summary",
+              "item": [
+                {
+                  "name": "Retrieves the summary of compliance of all API artifacts",
+                  "id": "08982dbf-3e23-4bc3-961b-33676fbf1bd3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api",
+                        "summary"
+                      ]
+                    },
+                    "description": "Retrieves the summary of compliance of all API artifacts within the organization visible to logged-in user."
+                  },
+                  "response": [
+                    {
+                      "id": "3b64c89c-9f42-4b2b-8172-0bccde2103e9",
+                      "name": "OK. Successful response with compliance summary.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            "summary"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"total\": \"<integer>\",\n  \"compliant\": \"<integer>\",\n  \"nonCompliant\": \"<integer>\",\n  \"pending\": \"<integer>\",\n  \"notApplicable\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-3b64c89c-9f42-4b2b-8172-0bccde2103e9"
+                    },
+                    {
+                      "id": "bb187952-1002-4be0-bc93-4b90d2c0171e",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            "summary"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-bb187952-1002-4be0-bc93-4b90d2c0171e"
+                    },
+                    {
+                      "id": "240d45e3-83d7-4c35-b1fe-efe5a5b447a0",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            "summary"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-240d45e3-83d7-4c35-b1fe-efe5a5b447a0"
+                    },
+                    {
+                      "id": "00bb98e0-2303-4e9c-8267-130e2aa3f526",
+                      "name": "Forbidden",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            "summary"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-00bb98e0-2303-4e9c-8267-130e2aa3f526"
+                    },
+                    {
+                      "id": "5c877443-3dd7-4645-bb11-310dbb65bb7b",
+                      "name": "Internal Server Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/summary",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            "summary"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-5c877443-3dd7-4645-bb11-310dbb65bb7b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-08982dbf-3e23-4bc3-961b-33676fbf1bd3"
+                }
+              ],
+              "id": "cd203179-065c-489e-994a-46a828d2dc0f",
+              "createdAt": "2026-07-28T03:35:03.000Z",
+              "updatedAt": "2026-07-28T03:35:03.000Z",
+              "uid": "35240-cd203179-065c-489e-994a-46a828d2dc0f"
+            },
+            {
+              "name": "{apiId}",
+              "item": [
+                {
+                  "name": "ruleset-validation-results",
+                  "item": [
+                    {
+                      "name": "{rulesetId}",
+                      "item": [
+                        {
+                          "name": "Retrieve ruleset validation results for a specific API",
+                          "id": "3dbf029d-e79a-4911-9c10-ee3fbc5279f1",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "oauth2",
+                              "oauth2": [
+                                {
+                                  "key": "scope",
+                                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "accessTokenUrl",
+                                  "value": "https://localhost:9443/oauth2/token",
+                                  "type": "string"
+                                },
+                                {
+                                  "key": "grant_type",
+                                  "value": "password_credentials",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "artifact-compliance",
+                                "api",
+                                ":apiId",
+                                "ruleset-validation-results",
+                                ":rulesetId"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "dc02de16-2a05-4cc7-bf32-a35123c69fcb",
+                                  "key": "apiId",
+                                  "value": "<string>",
+                                  "description": "(Required) **UUID** of the API.\n"
+                                },
+                                {
+                                  "id": "53ccd444-2fd5-4166-805d-f8fc61297c14",
+                                  "key": "rulesetId",
+                                  "value": "<string>",
+                                  "description": "(Required) **UUID** of the Ruleset.\n"
+                                }
+                              ]
+                            },
+                            "description": "Retrieve ruleset validation results associated with a specific API using its unique UUID."
+                          },
+                          "response": [
+                            {
+                              "id": "7e08e777-1275-48d1-9704-8290c5b5236e",
+                              "name": "Successful response with ruleset validation results for the specified API.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "artifact-compliance",
+                                    "api",
+                                    ":apiId",
+                                    "ruleset-validation-results",
+                                    ":rulesetId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "apiId"
+                                    },
+                                    {
+                                      "key": "rulesetId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"status\": \"FAILED\",\n  \"violatedRules\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"FAILED\",\n      \"severity\": \"WARN\",\n      \"violatedPath\": {\n        \"path\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"PASSED\",\n      \"severity\": \"WARN\",\n      \"violatedPath\": {\n        \"path\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"followedRules\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"FAILED\",\n      \"severity\": \"INFO\",\n      \"violatedPath\": {\n        \"path\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"FAILED\",\n      \"severity\": \"WARN\",\n      \"violatedPath\": {\n        \"path\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      \"message\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:35:03.000Z",
+                              "updatedAt": "2026-07-28T03:35:03.000Z",
+                              "uid": "35240-7e08e777-1275-48d1-9704-8290c5b5236e"
+                            },
+                            {
+                              "id": "cb49aae5-cb02-49eb-b320-2d48fe5886c8",
+                              "name": "Bad request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "artifact-compliance",
+                                    "api",
+                                    ":apiId",
+                                    "ruleset-validation-results",
+                                    ":rulesetId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "apiId"
+                                    },
+                                    {
+                                      "key": "rulesetId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T03:35:03.000Z",
+                              "updatedAt": "2026-07-28T03:35:03.000Z",
+                              "uid": "35240-cb49aae5-cb02-49eb-b320-2d48fe5886c8"
+                            },
+                            {
+                              "id": "f3350073-ff64-4a55-8b11-300b2dc63b4b",
+                              "name": "Unauthorized",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "artifact-compliance",
+                                    "api",
+                                    ":apiId",
+                                    "ruleset-validation-results",
+                                    ":rulesetId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "apiId"
+                                    },
+                                    {
+                                      "key": "rulesetId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T03:35:03.000Z",
+                              "updatedAt": "2026-07-28T03:35:03.000Z",
+                              "uid": "35240-f3350073-ff64-4a55-8b11-300b2dc63b4b"
+                            },
+                            {
+                              "id": "d940ba6d-9037-4bd4-8d0d-baab654946b1",
+                              "name": "Forbidden",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "artifact-compliance",
+                                    "api",
+                                    ":apiId",
+                                    "ruleset-validation-results",
+                                    ":rulesetId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "apiId"
+                                    },
+                                    {
+                                      "key": "rulesetId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T03:35:03.000Z",
+                              "updatedAt": "2026-07-28T03:35:03.000Z",
+                              "uid": "35240-d940ba6d-9037-4bd4-8d0d-baab654946b1"
+                            },
+                            {
+                              "id": "80ed8e86-a57b-4a28-8936-40076fbe5f60",
+                              "name": "Internal Server Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: oauth2",
+                                    "key": "Authorization",
+                                    "value": "<token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/artifact-compliance/api/:apiId/ruleset-validation-results/:rulesetId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "artifact-compliance",
+                                    "api",
+                                    ":apiId",
+                                    "ruleset-validation-results",
+                                    ":rulesetId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "apiId"
+                                    },
+                                    {
+                                      "key": "rulesetId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T03:35:03.000Z",
+                              "updatedAt": "2026-07-28T03:35:03.000Z",
+                              "uid": "35240-80ed8e86-a57b-4a28-8936-40076fbe5f60"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:35:03.000Z",
+                          "updatedAt": "2026-07-28T03:35:03.000Z",
+                          "uid": "35240-3dbf029d-e79a-4911-9c10-ee3fbc5279f1"
+                        }
+                      ],
+                      "id": "327f86a5-f0af-40a3-a140-eb495400a9f6",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-327f86a5-f0af-40a3-a140-eb495400a9f6"
+                    }
+                  ],
+                  "id": "9478060c-0f85-45ee-9e25-b7197510d7ef",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-9478060c-0f85-45ee-9e25-b7197510d7ef"
+                },
+                {
+                  "name": "Retrieve compliance details for a specific API",
+                  "id": "f8b1c306-598c-4bb2-8023-9c27c77e1a49",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://localhost:9443/oauth2/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password_credentials",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api",
+                        ":apiId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "06da4b53-53bd-4abf-ae2c-4f2c2521d862",
+                          "key": "apiId",
+                          "value": "<string>",
+                          "description": "(Required) **UUID** of the API.\n"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve compliance details associated with a specific API using its unique UUID."
+                  },
+                  "response": [
+                    {
+                      "id": "9c2888c5-839c-4020-ac8e-73008275f394",
+                      "name": "Successful response with compliance details for the specified artifact.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            ":apiId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"status\": \"PENDING\",\n  \"info\": {\n    \"name\": \"<string>\",\n    \"type\": \"API\",\n    \"extendedType\": \"ASYNC_API\",\n    \"version\": \"<string>\",\n    \"owner\": \"<string>\"\n  },\n  \"governedPolicies\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"PENDING\",\n      \"rulesetValidationResults\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ruleType\": \"API_DEFINITION\",\n          \"status\": \"FAILED\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ruleType\": \"API_DEFINITION\",\n          \"status\": \"UNAPPLIED\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"status\": \"PENDING\",\n      \"rulesetValidationResults\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ruleType\": \"API_METADATA\",\n          \"status\": \"FAILED\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"ruleType\": \"API_METADATA\",\n          \"status\": \"PASSED\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-9c2888c5-839c-4020-ac8e-73008275f394"
+                    },
+                    {
+                      "id": "edc5d806-92ff-44e1-9ec7-7f4102a26f10",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            ":apiId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-edc5d806-92ff-44e1-9ec7-7f4102a26f10"
+                    },
+                    {
+                      "id": "ee04a469-9a29-4575-8f30-098147f6880c",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            ":apiId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-ee04a469-9a29-4575-8f30-098147f6880c"
+                    },
+                    {
+                      "id": "908f800f-1b8f-43f5-b274-59231dac67e5",
+                      "name": "Forbidden",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            ":apiId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-908f800f-1b8f-43f5-b274-59231dac67e5"
+                    },
+                    {
+                      "id": "428dc82b-db77-47fb-a91e-ec9a8b1794f5",
+                      "name": "Internal Server Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/artifact-compliance/api/:apiId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "artifact-compliance",
+                            "api",
+                            ":apiId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "apiId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T03:35:03.000Z",
+                      "updatedAt": "2026-07-28T03:35:03.000Z",
+                      "uid": "35240-428dc82b-db77-47fb-a91e-ec9a8b1794f5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-f8b1c306-598c-4bb2-8023-9c27c77e1a49"
+                }
+              ],
+              "id": "fba8372d-6b56-47ab-b816-ba3a7e7dc72d",
+              "createdAt": "2026-07-28T03:35:03.000Z",
+              "updatedAt": "2026-07-28T03:35:03.000Z",
+              "uid": "35240-fba8372d-6b56-47ab-b816-ba3a7e7dc72d"
+            },
+            {
+              "name": "Retrieves compliance of all API artifacts",
+              "id": "cba414d3-18ed-4860-94a8-a165cf9ed087",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://localhost:9443/oauth2/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password_credentials",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "artifact-compliance",
+                    "api"
+                  ],
+                  "query": [
+                    {
+                      "description": "Maximum size of resource array to return.\n",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Starting point within the complete list of items qualified.\n",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                },
+                "description": "Retrieves compliance of all API artifacts within the organization visible to logged-in user."
+              },
+              "response": [
+                {
+                  "id": "59fd59e0-a1e5-403e-b8aa-0b5aa19b936b",
+                  "name": "OK. Successful response with API compliance results.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api"
+                      ],
+                      "query": [
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"list\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"PENDING\",\n      \"info\": {\n        \"name\": \"<string>\",\n        \"type\": \"API\",\n        \"extendedType\": \"ASYNC_API\",\n        \"version\": \"<string>\",\n        \"owner\": \"<string>\"\n      },\n      \"policyAdherenceSummary\": {\n        \"total\": \"<integer>\",\n        \"followed\": \"<integer>\",\n        \"violated\": \"<integer>\",\n        \"unApplied\": \"<integer>\"\n      },\n      \"severityBasedRuleViolationSummary\": [\n        {\n          \"severity\": \"WARN\",\n          \"violatedRulesCount\": \"<integer>\"\n        },\n        {\n          \"severity\": \"ERROR\",\n          \"violatedRulesCount\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"PENDING\",\n      \"info\": {\n        \"name\": \"<string>\",\n        \"type\": \"API\",\n        \"extendedType\": \"MCP\",\n        \"version\": \"<string>\",\n        \"owner\": \"<string>\"\n      },\n      \"policyAdherenceSummary\": {\n        \"total\": \"<integer>\",\n        \"followed\": \"<integer>\",\n        \"violated\": \"<integer>\",\n        \"unApplied\": \"<integer>\"\n      },\n      \"severityBasedRuleViolationSummary\": [\n        {\n          \"severity\": \"ERROR\",\n          \"violatedRulesCount\": \"<integer>\"\n        },\n        {\n          \"severity\": \"INFO\",\n          \"violatedRulesCount\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"offset\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"next\": \"<string>\",\n    \"previous\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-59fd59e0-a1e5-403e-b8aa-0b5aa19b936b"
+                },
+                {
+                  "id": "2a4c443d-3cac-4b09-b0bf-4ea95e13a1e9",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api"
+                      ],
+                      "query": [
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-2a4c443d-3cac-4b09-b0bf-4ea95e13a1e9"
+                },
+                {
+                  "id": "9653b2a6-bbcd-4f2c-a2a7-18b1fd9c529c",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api"
+                      ],
+                      "query": [
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-9653b2a6-bbcd-4f2c-a2a7-18b1fd9c529c"
+                },
+                {
+                  "id": "c3e32916-ff65-4e1c-b5ae-b7f2732e654a",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api"
+                      ],
+                      "query": [
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-c3e32916-ff65-4e1c-b5ae-b7f2732e654a"
+                },
+                {
+                  "id": "d93e0651-602c-4f10-a1d5-76b5f34a4a57",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/artifact-compliance/api?limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "artifact-compliance",
+                        "api"
+                      ],
+                      "query": [
+                        {
+                          "description": "Maximum size of resource array to return.\n",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Starting point within the complete list of items qualified.\n",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<long>\",\n  \"message\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:35:03.000Z",
+                  "updatedAt": "2026-07-28T03:35:03.000Z",
+                  "uid": "35240-d93e0651-602c-4f10-a1d5-76b5f34a4a57"
+                }
+              ],
+              "createdAt": "2026-07-28T03:35:03.000Z",
+              "updatedAt": "2026-07-28T03:35:03.000Z",
+              "uid": "35240-cba414d3-18ed-4860-94a8-a165cf9ed087"
+            }
+          ],
+          "id": "c678bd6c-5f32-485c-b88b-b8bbd24ca906",
+          "createdAt": "2026-07-28T03:35:03.000Z",
+          "updatedAt": "2026-07-28T03:35:03.000Z",
+          "uid": "35240-c678bd6c-5f32-485c-b88b-b8bbd24ca906"
+        }
+      ],
+      "id": "92446ffd-1f9d-4bd8-bbcf-f71238390457",
+      "createdAt": "2026-07-28T03:35:03.000Z",
+      "updatedAt": "2026-07-28T03:35:03.000Z",
+      "uid": "35240-92446ffd-1f9d-4bd8-bbcf-f71238390457"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://apis.wso2.com/api/am/admin/v4"
+    }
+  ]
+}
