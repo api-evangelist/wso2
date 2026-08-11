@@ -3298,7 +3298,7 @@ common:
   url: https://apim.docs.wso2.com/en/latest/apiops/cli/cicd-using-cli/
 - type: Security
   url: https://wso2.com/security
-- type: SignUp
+- type: Signup
   url: https://wso2.com/user/register
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/wso2/overview
