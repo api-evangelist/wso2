@@ -1,0 +1,338 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Ratings API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve API Ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/ratings",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve the list of ratings of an API.\n\n`X-WSO2-Tenant` header can be used to retrieve ratings of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve API Rating of User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to get the user rating of an API.\n\n`X-WSO2-Tenant` header can be used to retrieve the logged in user rating of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Add or Update Logged in User's Rating for an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to add or update an API rating.\n\n`X-WSO2-Tenant` header can be used to add or update the logged in user rating of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Delete User API Rating",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to delete logged in user API rating.\n\n`X-WSO2-Tenant` header can be used to delete the logged in user rating of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve MCP Server Ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/ratings",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve the list of ratings of a MCP Server.\n\n`X-WSO2-Tenant` header can be used to retrieve ratings of a MCP Server that belongs to a different tenant \ndomain. If not specified super tenant will be used. If Authorization header is present in the request, the \nuser's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve MCP Server Rating of User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to get the user rating of a MCP Server.\n\n`X-WSO2-Tenant` header can be used to retrieve the logged in user rating of a MCP Server that belongs to a \ndifferent tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Add or Update Logged in User's Rating for a MCP Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to add or update a MCP Server rating.\n\n`X-WSO2-Tenant` header can be used to add or update the logged in user rating of a MCP Server that belongs to a \ndifferent tenant domain. If not specified super tenant will be used. If Authorization header is present in \nthe request, the user's tenant associated with the access token will be used.\n"
+        },
+        {
+          "info": {
+            "name": "Delete User MCP Server Rating",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/user-rating",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to delete logged in user MCP Server rating.\n\n`X-WSO2-Tenant` header can be used to delete the logged in user rating of a MCP Server that belongs to a \ndifferent tenant domain. If not specified super tenant will be used. If Authorization header is present in the \nrequest, the user's tenant associated with the access token will be used.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

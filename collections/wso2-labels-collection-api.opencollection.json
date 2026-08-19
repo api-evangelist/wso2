@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Labels (Collection) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Labels (Collection)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/labels",
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all Labels\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

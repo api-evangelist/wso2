@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update Application Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/change-settings",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation allows updating one or more settings of an application.\n"
+        },
+        {
+          "info": {
+            "name": "Change Application Owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/change-owner",
+            "params": [
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "**Deprecated.**\nThis API will be removed in a future release.\nUse `/applications/{applicationId}/change-settings` instead.\n\nThis operation is used to change the owner of an Application.\nIn order to change the owner of an application, we need to pass the new application owner as a query parameter\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

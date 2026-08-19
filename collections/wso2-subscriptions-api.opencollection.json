@@ -1,0 +1,302 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Subscriptions API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Subscriptions\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "query",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "query",
+                "description": "**Application Identifier** consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Application Group Id\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve a list of subscriptions of the user associated with the provided access token. This operation is capable of\n\n1. Retrieving applications which are subscribed to a specific API.\n`GET https://localhost:9443/api/am/devportal/v3/subscriptions?apiId=c43a325c-260b-4302-81cb-768eafaa3aed`\n\n2. Retrieving APIs which are subscribed by a specific application.\n`GET https://localhost:9443/api/am/devportal/v3/subscriptions?applicationId=c43a325c-260b-4302-81cb-768eafaa3ae"
+        },
+        {
+          "info": {
+            "name": "Add a New Subscription\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to add a new subscription providing the id of the API and the application.\n"
+        },
+        {
+          "info": {
+            "name": "Add New Subscriptions\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions/multiple",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to add a new subscriptions providing the ids of the APIs and the applications.\n"
+        },
+        {
+          "info": {
+            "name": "Get Additional Information of subscriptions attached to an API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions/:apiId/additionalInfo",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Application Group Id\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve all additional Information of subscriptions attached to an API by providing the API id.\n"
+        },
+        {
+          "info": {
+            "name": "Get Details of a Subscription\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions/:subscriptionId",
+            "headers": [
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "Subscription Id\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to get details of a single subscription.\n"
+        },
+        {
+          "info": {
+            "name": "Update Existing Subscription\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions/:subscriptionId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "Subscription Id\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to update a subscription providing the subscription id, api id, application Id, status and updated throttling policy tier.\n"
+        },
+        {
+          "info": {
+            "name": "Remove a Subscription\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions/:subscriptionId",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "Subscription Id\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to remove a subscription.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

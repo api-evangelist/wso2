@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) AIServiceProvider API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AIServiceProvider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get AI Service Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/ai-service-providers/:aiServiceProviderId",
+            "params": [
+              {
+                "name": "aiServiceProviderId",
+                "value": "",
+                "type": "path",
+                "description": "AI Service Provider UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a AI Service Provider\n"
+        },
+        {
+          "info": {
+            "name": "Update an AI Service provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/ai-service-providers/:aiServiceProviderId",
+            "params": [
+              {
+                "name": "aiServiceProviderId",
+                "value": "",
+                "type": "path",
+                "description": "AI Service Provider UUID\n"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a AI Service provider by AIServiceProviderId\n"
+        },
+        {
+          "info": {
+            "name": "Delete a AI Service Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/ai-service-providers/:aiServiceProviderId",
+            "params": [
+              {
+                "name": "aiServiceProviderId",
+                "value": "",
+                "type": "path",
+                "description": "AI Service Provider UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a AI Service Provider by aiServiceProviderId\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

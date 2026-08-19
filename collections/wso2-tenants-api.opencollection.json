@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Tenants API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Tenant Id of User\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-info/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "The state represents the current state of the tenant. Supported states are [ active, inactive]\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation is to get tenant id of the provided user\n"
+        },
+        {
+          "info": {
+            "name": "Get Custom URL Info of a Tenant Domain\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/custom-urls/:tenantDomain",
+            "params": [
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "path",
+                "description": "The tenant domain name.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation is to get custom-url information of the provided tenant-domain\n"
+        },
+        {
+          "info": {
+            "name": "Get Tenants by State\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenants",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "The state represents the current state of the tenant\n\nSupported states are [ active, inactive]\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation is used to get tenants by state\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

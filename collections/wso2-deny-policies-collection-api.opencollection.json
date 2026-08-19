@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Deny Policies (Collection) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deny Policies (Collection)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Deny Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/deny-policies",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "**Search condition**.\nYou can search in attributes by using **\"conditionType:\"** modifier and **\"conditionValue:\"** modifier.\nEg.\nThe entry \"conditionType:API\" will result in a match with blocking conditions only if the conditionType is \"API\". Similarly, \"conditionValue:test/1.0.0\" will result in a match with blocking conditions only if the conditionValue is \"test/1.0.0\".\nWhen you use \"conditionType:API & conditionValue:test/1.0.0\" as a combination, it will result in a match with blocking conditions only if both the conditionType is \"API\" and the conditionValue is \"test/1.0.0\".\nIf query attribute is provided, this returns the blocking conditions that match the specified attributes.\nPlease note that you need to use encoded URL (URL encoding) if you are using a client which does not support URL encoding (such as curl)\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all existing deny policies.\n"
+        },
+        {
+          "info": {
+            "name": "Add a deny policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/deny-policies",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adds a new deny policy\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

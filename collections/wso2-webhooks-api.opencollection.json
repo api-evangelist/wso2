@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Webhooks API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available web hook subscriptions for a given application.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/webhooks/subscriptions",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "query",
+                "description": "**Application Identifier** consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "query",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation will provide a list of web hook topic subscriptions for a given application. If the api id is provided\nresults will be filtered by the api Id.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

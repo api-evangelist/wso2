@@ -1,0 +1,500 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application Keys API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/generate-keys",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Generate keys (Consumer key/secret) for application\n"
+        },
+        {
+          "info": {
+            "name": "Map Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/map-keys",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Map keys (Consumer key/secret) to an application\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve All Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve keys (Consumer key/secret) of application\n"
+        },
+        {
+          "info": {
+            "name": "Get Key Details of a Given Type\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys/:keyType",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "path",
+                "description": "**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Application Group Id\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve key details of an individual application specifying the key type in the URI.\n"
+        },
+        {
+          "info": {
+            "name": "Update Grant Types and Callback Url of an Application\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys/:keyType",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "path",
+                "description": "**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to update grant types and callback url of an application. (Consumer Key and Consumer Secret are ignored) Upon succesfull you will retrieve the updated key details as the response.\n"
+        },
+        {
+          "info": {
+            "name": "Re-Generate Consumer Secret\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys/:keyType/regenerate-secret",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "path",
+                "description": "**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to re generate consumer secret for an application for the give key type\n"
+        },
+        {
+          "info": {
+            "name": "Clean-Up Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys/:keyType/clean-up",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "path",
+                "description": "**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Clean up keys after failed key generation of an application\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve All Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve keys (Consumer key/secret) of application\n"
+        },
+        {
+          "info": {
+            "name": "Get Key Details of a Given Type\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Application Group Id\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve key details of an individual application specifying the key type in the URI.\n"
+        },
+        {
+          "info": {
+            "name": "Update Grant Types and Callback URL of an Application\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to update grant types and callback url of an application. (Consumer Key and Consumer Secret are ignored) Upon succesfull you will retrieve the updated key details as the response.\n"
+        },
+        {
+          "info": {
+            "name": "Remove Generated Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Remove generated application keys from dev portal rest api\n"
+        },
+        {
+          "info": {
+            "name": "Re-Generate Consumer Secret\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId/regenerate-secret",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to re generate consumer secret for an application for the give key type\n"
+        },
+        {
+          "info": {
+            "name": "Clean-Up Application Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId/clean-up",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Clean up keys after failed key generation of an application\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

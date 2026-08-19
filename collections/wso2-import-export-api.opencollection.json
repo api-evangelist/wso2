@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Import Export API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Import Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export a Throttling Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/policies/export",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the ThrottlingPolicy"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Throttling Policy Name\n"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the Throttling Policy\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to export the details of a particular Throttling Policy.\n"
+        },
+        {
+          "info": {
+            "name": "Import a Throttling Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/policies/import",
+            "params": [
+              {
+                "name": "overwrite",
+                "value": "",
+                "type": "query",
+                "description": "Update an existing throttlingpolicy with the same name\n"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to import a Throttling Policy\n"
+        },
+        {
+          "info": {
+            "name": "Export an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/export",
+            "params": [
+              {
+                "name": "appName",
+                "value": "",
+                "type": "query",
+                "description": "Application Name\n"
+              },
+              {
+                "name": "appOwner",
+                "value": "",
+                "type": "query",
+                "description": "Owner of the Application\n"
+              },
+              {
+                "name": "withKeys",
+                "value": "",
+                "type": "query",
+                "description": "Export application keys\n"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Format of output documents. Can be YAML or JSON.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to export the details of a particular application as a zip file.\n"
+        },
+        {
+          "info": {
+            "name": "Import an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/import",
+            "params": [
+              {
+                "name": "preserveOwner",
+                "value": "",
+                "type": "query",
+                "description": "Preserve Original Creator of the Application\n"
+              },
+              {
+                "name": "skipSubscriptions",
+                "value": "",
+                "type": "query",
+                "description": "Skip importing Subscriptions of the Application\n"
+              },
+              {
+                "name": "appOwner",
+                "value": "",
+                "type": "query",
+                "description": "Expected Owner of the Application in the Import Environment\n"
+              },
+              {
+                "name": "skipApplicationKeys",
+                "value": "",
+                "type": "query",
+                "description": "Skip importing Keys of the Application\n"
+              },
+              {
+                "name": "update",
+                "value": "",
+                "type": "query",
+                "description": "Update if application exists\n"
+              },
+              {
+                "name": "ignoreTier",
+                "value": "",
+                "type": "query",
+                "description": "Ignore tier and proceed with subscribed APIs\n"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to import an application.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Throttling Policies API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Throttling Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Available Throttling Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling-policies/:policyLevel",
+            "headers": [
+              {
+                "name": "If-None-Match",
+                "value": ""
+              },
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "policyLevel",
+                "value": "",
+                "type": "path",
+                "description": "List Application or Subscription type thro.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to get all available application or subscription level throttling policies\n"
+        },
+        {
+          "info": {
+            "name": "Get Details of a Throttling Policy\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling-policies/:policyLevel/:policyId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "The name of the policy\n"
+              },
+              {
+                "name": "policyLevel",
+                "value": "",
+                "type": "path",
+                "description": "List Application or Subscription type thro.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve details of a single throttling policy by specifying the policy level and policy name.\n\n`X-WSO2-Tenant` header can be used to retrive throttling policy that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

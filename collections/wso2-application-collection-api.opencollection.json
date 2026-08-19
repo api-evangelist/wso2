@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application (Collection) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application (Collection)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve/Search Applications\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "username of the application creator\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Application Name\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant domain of the applications to get. This has to be specified only if it is required to get applications of\na tenant other than the requester's tenant. So, if not specified, the default will be set as the\nrequester's tenant domain. This cross tenant Application access is allowed only for super tenant admin\nusers **only at a migration process**.\n"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve list of applications owned by the given user, If no user\nis provided, the applications owned by the user associated with the provided access token will be returned.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

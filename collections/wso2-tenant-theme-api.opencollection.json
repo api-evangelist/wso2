@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Tenant Theme API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenant Theme",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export a DevPortal Tenant Theme",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-theme",
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to export a DevPortal tenant theme as a zip file.\n"
+        },
+        {
+          "info": {
+            "name": "Import a DevPortal Tenant Theme",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-theme",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to import a DevPortal tenant theme.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

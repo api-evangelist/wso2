@@ -1,0 +1,3303 @@
+{
+  "item": [
+    {
+      "id": "af0f63e5-d68d-4113-9bd5-adb218b7af1e",
+      "name": "APIs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "32202492-e783-45b5-836e-96f6649a5bfe",
+          "name": "Retrieve/Search APIs\n",
+          "request": {
+            "name": "Retrieve/Search APIs\n",
+            "description": {
+              "content": "This operation provides you a list of available APIs qualifying under a given search condition.\nEach retrieved API is represented with a minimal amount of attributes. If you want to get complete details of an API, you need to use **Get details of an API** operation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum size of resource array to return.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting point within the complete list of items qualified.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "**Search and get all apis in admin portal**.\n\nYou can search by proving a keyword.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "139c9d9e-bb15-4c0f-831f-1e648f37bcf4",
+              "name": "OK.\nList of qualifying APIs is returned.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests (Will be supported in future).\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apis\": [\n    {\n      \"provider\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"id\": \"string\"\n    },\n    {\n      \"provider\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"id\": \"string\"\n    }\n  ],\n  \"count\": 1,\n  \"pagination\": {\n    \"offset\": 0,\n    \"limit\": 1,\n    \"total\": 10,\n    \"next\": \"string\",\n    \"previous\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae0f522b-8073-41c8-b1a3-74d886834327",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource (Will be supported in future).\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d8bd7d41-3084-4fc7-a670-6bea40aaf65b",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resource.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dadbf6a7-10cc-4ad8-aade-17c1d22e2cbb",
+          "name": "Get Details of an API\n",
+          "request": {
+            "name": "Get Details of an API\n",
+            "description": {
+              "content": "Using this operation, you can retrieve complete details of a single API. You need to provide the Id of the API to retrive it.\n\n`X-WSO2-Tenant` header can be used to retrieve an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But if it is provided, it will be validated and checked for permissions of the user, hence you may be able to see APIs which are restricted for special permissions/roles. \\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "70d97929-5b3a-4d9c-b3f4-8325f77d5776",
+              "name": "OK.\nRequested API is returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modified the last time.\nUsed by caches, or in conditional requests.\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"context\": \"CalculatorAPI\",\n  \"lifeCycleStatus\": \"PUBLISHED\",\n  \"name\": \"CalculatorAPI\",\n  \"provider\": \"admin\",\n  \"version\": \"1.0.0\",\n  \"id\": \"01234567-0123-0123-0123-012345678901\",\n  \"displayName\": \"Pizza Shack API\",\n  \"description\": \"A calculator API that supports basic operations\",\n  \"apiDefinition\": \"{\\\"paths\\\":{\\\"\\\\/substract\\\":{\\\"get\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"parameters\\\":[{\\\"name\\\":\\\"x\\\",\\\"required\\\":true,\\\"type\\\":\\\"string\\\",\\\"in\\\":\\\"query\\\"},{\\\"name\\\":\\\"y\\\",\\\"required\\\":true,\\\"type\\\":\\\"string\\\",\\\"in\\\":\\\"query\\\"}],\\\"responses\\\":{\\\"200\\\":{}}}},\\\"\\\\/add\\\":{\\\"get\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"parameters\\\":[{\\\"name\\\":\\\"x\\\",\\\"required\\\":true,\\\"type\\\":\\\"string\\\",\\\"in\\\":\\\"query\\\"},{\\\"name\\\":\\\"y\\\",\\\"required\\\":true,\\\"type\\\":\\\"string\\\",\\\"in\\\":\\\"query\\\"}],\\\"responses\\\":{\\\"200\\\":{}}}}},\\\"swagger\\\":\\\"2.0\\\",\\\"info\\\":{\\\"title\\\":\\\"CalculatorAPI\\\",\\\"version\\\":\\\"1.0.0\\\"}}\",\n  \"wsdlUri\": \"http://www.webservicex.com/globalweather.asmx?wsdl\",\n  \"isDefaultVersion\": false,\n  \"type\": \"HTTP\",\n  \"transport\": [\n    \"http\",\n    \"https\"\n  ],\n  \"authorizationHeader\": \"Authorization\",\n  \"apiKeyHeader\": \"ApiKey\",\n  \"securityScheme\": [\n    \"oauth2\",\n    \"oauth_basic_auth_api_key_mandatory\"\n  ],\n  \"tags\": [\n    \"substract\",\n    \"add\"\n  ],\n  \"tiers\": [\n    {\n      \"tierName\": \"Gold\",\n      \"tierPlan\": \"COMMERCIAL\",\n      \"monetizationAttributes\": {\n        \"fixedPrice\": \"10\",\n        \"pricePerRequest\": \"1\",\n        \"currencyType\": \"USD\",\n        \"billingCycle\": \"month\"\n      }\n    },\n    {\n      \"tierName\": \"Gold\",\n      \"tierPlan\": \"COMMERCIAL\",\n      \"monetizationAttributes\": {\n        \"fixedPrice\": \"10\",\n        \"pricePerRequest\": \"1\",\n        \"currencyType\": \"USD\",\n        \"billingCycle\": \"month\"\n      }\n    }\n  ],\n  \"hasThumbnail\": true,\n  \"additionalProperties\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"display\": true\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"display\": true\n    }\n  ],\n  \"monetization\": {\n    \"enabled\": true\n  },\n  \"endpointURLs\": [\n    {\n      \"environmentName\": \"Default\",\n      \"environmentDisplayName\": \"Default\",\n      \"environmentType\": \"hybrid\",\n      \"URLs\": {\n        \"http\": \"http://localhost:8280/phoneverify/1.0.0\",\n        \"https\": \"https://localhost:8243/phoneverify/1.0.0\",\n        \"ws\": \"ws://localhost:9099/phoneverify/1.0.0\",\n        \"wss\": \"wss://localhost:9099/phoneverify/1.0.0\"\n      },\n      \"defaultVersionURLs\": {\n        \"http\": \"http://localhost:8280/phoneverify/\",\n        \"https\": \"https://localhost:8243/phoneverify/\",\n        \"ws\": \"ws://localhost:9099/phoneverify/\",\n        \"wss\": \"wss://localhost:9099/phoneverify/\"\n      }\n    },\n    {\n      \"environmentName\": \"Default\",\n      \"environmentDisplayName\": \"Default\",\n      \"environmentType\": \"hybrid\",\n      \"URLs\": {\n        \"http\": \"http://localhost:8280/phoneverify/1.0.0\",\n        \"https\": \"https://localhost:8243/phoneverify/1.0.0\",\n        \"ws\": \"ws://localhost:9099/phoneverify/1.0.0\",\n        \"wss\": \"wss://localhost:9099/phoneverify/1.0.0\"\n      },\n      \"defaultVersionURLs\": {\n        \"http\": \"http://localhost:8280/phoneverify/\",\n        \"https\": \"https://localhost:8243/phoneverify/\",\n        \"ws\": \"ws://localhost:9099/phoneverify/\",\n        \"wss\": \"wss://localhost:9099/phoneverify/\"\n      }\n    }\n  ],\n  \"businessInformation\": {\n    \"businessOwner\": \"businessowner\",\n    \"businessOwnerEmail\": \"businessowner@wso2.com\",\n    \"technicalOwner\": \"technicalowner\",\n    \"technicalOwnerEmail\": \"technicalowner@wso2.com\"\n  },\n  \"environmentList\": [\n    \"PRODUCTION\",\n    \"SANDBOX\"\n  ],\n  \"scopes\": [\n    {\n      \"key\": \"admin_scope\",\n      \"name\": \"admin scope\",\n      \"roles\": [\n        \"manager\",\n        \"developer\"\n      ],\n      \"description\": \"string\"\n    },\n    {\n      \"key\": \"admin_scope\",\n      \"name\": \"admin scope\",\n      \"roles\": [\n        \"manager\",\n        \"developer\"\n      ],\n      \"description\": \"string\"\n    }\n  ],\n  \"avgRating\": \"4.5\",\n  \"subscriptions\": 10,\n  \"advertiseInfo\": {\n    \"advertised\": true,\n    \"apiExternalProductionEndpoint\": \"https://localhost:9443/devportal\",\n    \"apiExternalSandboxEndpoint\": \"https://localhost:9443/devportal\",\n    \"originalDevPortalUrl\": \"https://localhost:9443/devportal\",\n    \"apiOwner\": \"admin\",\n    \"vendor\": \"WSO2\"\n  },\n  \"isSubscriptionAvailable\": false,\n  \"initiatedFromGateway\": false,\n  \"categories\": [\n    \"Marketing\",\n    \"Marketing\"\n  ],\n  \"keyManagers\": {},\n  \"createdTime\": \"2020-10-31 13:57:16.229000\",\n  \"lastUpdatedTime\": \"2020-10-31 13:57:16.229000\",\n  \"gatewayType\": \"solace\",\n  \"gatewayVendor\": \"wso2\",\n  \"asyncTransportProtocols\": [\n    \"http\",\n    \"mqtt\"\n  ],\n  \"egress\": true,\n  \"subtype\": \"AIAPI\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aad5a9b8-fc67-455e-b9d2-78cc9b329c76",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f96394fb-46a9-4e1f-bccf-c1182db727b6",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ebc1c42-8532-40df-b13f-4f2d6f00001b",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49cc38a1-783a-4321-aebf-751f1f1e17f3",
+          "name": "Get Swagger Definition\n",
+          "request": {
+            "name": "Get Swagger Definition\n",
+            "description": {
+              "content": "You can use this operation to retrieve the swagger definition of an API.\n\n `X-WSO2-Tenant` header can be used to retrieve the swagger definition an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's swagger definition, you need to provide Authorization header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "swagger"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environmentName",
+                  "value": "<string>",
+                  "description": "Name of the API gateway environment.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "X-WSO2-Tenant-Q",
+                  "value": "<string>",
+                  "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retirieved from.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "**Key Manager Specific Swagger Generation**.\nTo retrieve an OpenAPI Specification (OAS) definition for a specific Key Manager, please specify the Key Manager's ID in your request. \n  \nFor example, by passing the query parameter `kmId=65e30b46-85e4-4788-85b7-b1c3de06b2e0`, you will receive the OAS definition containing all relevant information for the Key Manager associated with that ID.\n  \n**Important:** If you're using a client that does not automatically handle URL encoding (such as `curl`), please ensure that you encode the URL properly.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae12323c-e2cf-421c-a1a8-201a66b5b0ae",
+              "name": "OK.\nRequested swagger document of the API is returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "swagger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests.\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"swagger\\\" : \\\"2.0\\\", \\\"info\\\" : { \\\"version\\\" : \\\"1.0\\\", \\\"title\\\" : \\\"PhoneVerification\\\" }, \\\"host\\\" : \\\"localhost:8243\\\", \\\"basePath\\\" : \\\"/phoneverify/1.0\\\", \\\"schemes\\\" : [ \\\"https\\\", \\\"http\\\" ], \\\"security\\\" : [ { \\\"default\\\" : [ ] } ], \\\"paths\\\" : { \\\"/*\\\" : { \\\"post\\\" : { \\\"consumes\\\" : [ \\\"text/xml\\\", \\\"application/soap+xml\\\" ], \\\"parameters\\\" : [ { \\\"in\\\" : \\\"body\\\", \\\"name\\\" : \\\"SOAP Request\\\", \\\"description\\\" : \\\"SOAP request.\\\", \\\"required\\\" : true, \\\"schema\\\" : { \\\"type\\\" : \\\"string\\\" } }, { \\\"name\\\" : \\\"SOAPAction\\\", \\\"in\\\" : \\\"header\\\", \\\"description\\\" : \\\"SOAPAction header for soap 1.1\\\", \\\"required\\\" : false, \\\"type\\\" : \\\"string\\\" } ], \\\"responses\\\" : { \\\"200\\\" : { \\\"description\\\" : \\\"OK\\\" } }, \\\"security\\\" : [ { \\\"default\\\" : [ ] } ], \\\"x-auth-type\\\" : \\\"Application & Application User\\\", \\\"x-throttling-tier\\\" : \\\"Unlimited\\\" } } }, \\\"securityDefinitions\\\" : { \\\"default\\\" : { \\\"type\\\" : \\\"oauth2\\\", \\\"authorizationUrl\\\" : \\\"https://localhost:8243/authorize\\\", \\\"flow\\\" : \\\"implicit\\\" } } }\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8b0d432-2035-4eec-a9b6-0ec830ab396f",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "swagger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2028b257-ed1d-493e-b805-79d010d0a3d8",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "swagger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ac99413-df08-4e7a-9416-f36c2185b934",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "swagger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20321f77-3ad9-4fbc-a8a2-37ac83e9a716",
+          "name": "Get async api specification definition\n",
+          "request": {
+            "name": "Get async api specification definition\n",
+            "description": {
+              "content": "You can use this operation to retrieve the async api specification of an API.\n\n `X-WSO2-Tenant` header can be used to retrieve the async api specification an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's swagger definition, you need to provide Authorization header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "async-api-specification"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environmentName",
+                  "value": "<string>",
+                  "description": "Name of the API gateway environment.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "44563933-3cac-44f8-8cfb-62b55feedc95",
+              "name": "OK.\nRequested async api specification document of the API is returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "async-api-specification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests.\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\\"asyncapi\\\": \\\"2.0.0\\\",\\\"defaultContentType\\\": \\\"application/json\\\",\\\"info\\\": {\\\"title\\\": \\\"Streetlights API\\\",\\\"version\\\": \\\"1.0.0\\\",\\\"description\\\": \\\"The Smartylighting Streetlights API allows you to remotely manag e the city lights.\\\\n\\\\n### Check out its awesome features:\\\\n\\\\n* Turn a specific streetlight on/off\\\\n* Dim a specific streetlight\\\\n* Receive real-time information about environmental lighting conditions\\\\n\\\",\\\"licen se\\\": {\\\"name\\\": \\\"Apache 2.0\\\",\\\"url\\\":\\\"https://www.apache.org/licenses/LICENSE-2.0\\\" }},\\\"servers\\\": {\\\"productio n\\\": {\\\"url\\\": \\\"ws://localhost:8080\\\",\\\"protocol\\\": \\\"ws\\\"},\\\"sandbox\\\": {\\\"url\\\": \\\"ws://localhost:8080\\\",\\\"protocol\\\": \\\"ws\\\"}},\\\"channels\\\": {\\\"smartylighting/streetlights/1/0/event/{streetlightId}/lighting/measured\\\": {\\\"descrip tion\\\": \\\"The topic on which measured values may be produced and consumed.\\\",“publish\\\": {\\\"operationId\\\": \\\"re ceiveLightMeasurement\\\",\\\"summary\\\": \\\"Inform about environmental lighting conditions of a particular street light.\\\",\\\"traits\\\": [{\\\"$ref\\\": \\\"#/components/operationTraits/kafka\\\"}],\\\"message\\\": {\\\"$ref\\\": \\\"#/components/mes sages/lightMeasured\\\"}},\\\"parameters\\\": {\\\"streetlightId\\\": {\\\"$ref\\\": \\\"#/components/parameters/streetlightId\\\"} }},\\\"smartylighting/streetlights/1/0/action/{streetlightId}/turn/on\\\": {\\\"subscribe\\\": {\\\"operationId\\\": \\\"turn On\\\",\\\"traits\\\": [{\\\"$ref\\\": \\\"#/components/operationTraits/kafka\\\"}],\\\"message\\\": {\\\"$ref\\\": \\\"#/components/message s/turnOnOff\\\"}},\\\"parameters\\\": {\\\"streetlightId\\\": {\\\"$ref\\\": \\\"#/components/parameters/streetlightId\\\"}}},\\\"smar tylighting/streetlights/1/0/action/{streetlightId}/turn/off\\\": {\\\"subscribe\\\": {\\\"operationId\\\": \\\"turnOff\\\",\\\"t raits\\\": [{\\\"$ref\\\": \\\"#/components/operationTraits/kafka\\\"}],\\\"message\\\": {\\\"$ref\\\": \\\"#/components/messages/turn OnOff\\\"}},\\\"parameters\\\": {\\\"streetlightId\\\": {\\\"$ref\\\": \\\"#/components/parameters/streetlightId\\\"}}},\\\"smartyligh ting/streetlights/1/0/action/{streetlightId}/dim\\\": {\\\"subscribe\\\": {\\\"operationId\\\": \\\"dimLight\\\",\\\"traits\\\": [{ \\\"$ref\\\": \\\"#/components/operationTraits/kafka\\\"}],\\\"message\\\": {\\\"$ref\\\": \\\"#/components/messages/dimLight\\\"}},\\\"p arameters\\\": {\\\"streetlightId\\\": {\\\"$ref\\\": \\\"#/components/parameters/streetlightId\\\"}}}},\\\"components\\\": {\\\"schem as\\\": {\\\"lightMeasuredPayload\\\": {\\\"type\\\": \\\"object\\\",\\\"properties\\\": {\\\"lumens\\\": {\\\"description\\\": \\\"Light intensit y measured in lumens.\\\",\\\"minimum\\\": 0,\\\"type\\\": \\\"integer\\\"},\\\"sentAt\\\": {“$ref\\\": \\\"#/components/schemas/sentAt\\\"} }},\\\"turnOnOffPayload\\\": {\\\"type\\\": \\\"object\\\",\\\"properties\\\": {\\\"command\\\": {\\\"description\\\": \\\"Whether to turn on o r off the light.\\\",\\\"enum\\\": [true,false],\\\"type\\\": \\\"string\\\"},\\\"sentAt\\\": {\\\"$ref\\\": \\\"#/components/schemas/sentAt \\\"}}},\\\"dimLightPayload\\\": {\\\"type\\\": \\\"object\\\",\\\"properties\\\": {\\\"percentage\\\": {\\\"description\\\": \\\"Percentage to wh ich the light should be dimmed to.\\\",\\\"maximum\\\": 100,\\\"minimum\\\": 0,\\\"type\\\": \\\"integer\\\"},\\\"sentAt\\\": {\\\"$ref\\\": \\\"# /components/schemas/sentAt\\\"}}},\\\"sentAt\\\": {\\\"format\\\": \\\"date-time\\\",\\\"description\\\": \\\"Date and time when the m essage was sent.\\\",\\\"type\\\": \\\"string\\\"}},\\\"messages\\\": {\\\"lightMeasured\\\": {\\\"contentType\\\": \\\"application/json\\\",\\\"n ame\\\": \\\"lightMeasured\\\",\\\"title\\\": \\\"Light measured\\\",\\\"summary\\\": \\\"Inform about environmental lighting conditio ns of a particular streetlight.\\\",\\\"payload\\\": {\\\"$ref\\\": \\\"#/components/schemas/lightMeasuredPayload\\\"},\\\"trait s\\\": [{\\\"$ref\\\": \\\"#/components/messageTraits/commonHeaders\\\"}]},\\\"turnOnOff\\\": {\\\"name\\\": \\\"turnOnOff\\\",\\\"title\\\": \\\" on/off\\\",\\\"summary\\\": \\\"Command a particular streetlight to turn the lights on or off.\\\",\\\"payload\\\": {\\\"$ref\\\":\\\" #/components/schemas/turnOnOffPayload\\\"},\\\"traits\\\": [{\\\"$ref\\\": \\\"#/components/messageTraits/commonHeaders\\\"}] },\\\"dimLight\\\": {\\\"name\\\": \\\"dimLight\\\",\\\"title\\\": \\\"Dim light\\\",\\\"summary\\\": \\\"Command a particular streetlight to d im the lights.\\\",\\\"payload\\\": {\\\"$ref\\\": \\\"#/components/schemas/dimLightPayload\\\"},\\\"traits\\\": [{\\\"$ref\\\":\\\"#/compon ents/messageTraits/commonHeaders\\\"}]}},\\\"securitySchemes\\\": {\\\"apiKey\\\": {\\\"type\\\": \\\"apiKey\\\",\\\"description\\\": \\\"Pr ovide your API key as the user and leave the password empty.\\\",\\\"in\\\": \\\"user\\\"},\\\"supportedOauthFlows\\\": {\\\"typ e\\\": \\\"oauth2\\\",\\\"description\\\": \\\"Flows to support OAuth 2.0\\\",\\\"flows\\\": {\\\"implicit\\\": {\\\"authorizationUrl\\\": \\\"http s://authserver.example/auth\\\",\\\"scopes\\\": {\\\"streetlights:on\\\": \\\"Ability to switch lights on\\\",\\\"streetlights:o ff\\\": \\\"Ability to switch lights off\\\",\\\"streetlights:dim\\\": \\\"Ability to dim the lights\\\"}},\\\"password\\\": {\\\"toke nUrl\\\": \\\"https://authserver.example/token\\\",\\\"scopes\\\": {\\\"streetlights:on\\\": \\\"Ability to switch lights on\\\",\\\"s treetlights:off\\\": \\\"Ability to switch lights off\\\",\\\"streetlights:dim\\\": \\\"Ability to dim the lights\\\"}},\\\"clie ntCredentials\\\": {\\\"tokenUrl\\\": \\\"https://authserver.example/token\\\",\\\"scopes\\\": {\\\"streetlights:on\\\": \\\"Ability t o switch lights on\\\",\\\"streetlights:off\\\": \\\"Ability to switch lights off\\\",\\\"streetlights:dim\\\": \\\"Ability to d im the lights\\\"}},\\\"authorizationCode\\\": {\\\"authorizationUrl\\\": \\\"https://authserver.example/auth\\\",\\\"tokenUrl\\\": \\\"https://authserver.example/token\\\",\\\"refreshUrl\\\": \\\"https://authserver.example/refresh\\\",\\\"scopes\\\": {\\\"street lights:on\\\": \\\"Ability to switch lights on\\\",\\\"streetlights:off\\\": \\\"Ability to switch lights off\\\",\\\"streetligh ts:dim\\\": \\\"Ability to dim the lights\\\"}}}},\\\"openIdConnectWellKnown\\\": {\\\"type\\\": \\\"openIdConnect\\\",\\\"openIdConne ctUrl\\\": \\\"https://authserver.example/.well-known\\\"},\\\"oauth2\\\": {\\\"type\\\": \\\"oauth2\\\",\\\"flows\\\": {\\\"implicit\\\": {\\\"aut horizationUrl\\\": \\\"http://localhost:9999\\\",\\\"scopes\\\": {},\\\"x-scopes-bindings\\\": {}}}}},\\\"parameters\\\": {\\\"streetl ightId\\\": {\\\"description\\\": \\\"The ID of the streetlight.\\\",\\\"schema\\\": {\\\"type\\\": \\\"string\\\"}}},\\\"operationTraits\\\": {\\\"kafka\\\": {\\\"bindings\\\": {\\\"kafka\\\": {\\\"clientId\\\": \\\"my-app-id\\\"}}}},\\\"messageTraits\\\": {\\\"commonHeaders\\\": {\\\"heade rs\\\": {\\\"type\\\": \\\"object\\\",\\\"properties\\\": {\\\"my-app-header\\\": {\\\"type\\\": \\\"integer\\\",\\\"minimum\\\": 0,\\\"maximum\\\": 100}}} }}}}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61a1ceb9-6171-42c6-95df-a1552c5a4dfa",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "async-api-specification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8edea114-a580-4a85-aa14-21208d2baddf",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "async-api-specification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6481e43c-be70-4837-9a0d-efc01c0298e4",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "async-api-specification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b8d9f74-2e69-4395-acab-782dd17ce437",
+          "name": "Get GraphQL Definition\n",
+          "request": {
+            "name": "Get GraphQL Definition\n",
+            "description": {
+              "content": "You can use this operation to retrieve the GraphQL schema definition of a GraphQL API.\n\n `X-WSO2-Tenant` header can be used to retrieve the swagger definition an API of a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's swagger definition, you need to provide Authorization header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "graphql-schema"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6a2d6aa0-4488-42dd-a731-9f9bf728a802",
+              "name": "OK.\nRequested swagger document of the API is returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "graphql-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests.\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"directive @cacheControl( maxAge: Int scope: CacheControlScope ) on FIELD_DEFINITION | OBJECT | INTERFACE enum CacheControlScope { PUBLIC PRIVATE }\\n# A `Lift` is a chairlift, gondola, tram, funicular, pulley, rope tow, or other means of ascending a mountain. type Lift { # The unique identifier for a `Lift` (id: \\\"panorama\\\") id: ID! # The name of a `Lift` name: String! # The current status for a `Lift`: `OPEN`, `CLOSED`, `HOLD` status: LiftStatus # The number of people that a `Lift` can hold capacity: Int! # A boolean describing whether a `Lift` is open for night skiing night: Boolean! # The number of feet in elevation that a `Lift` ascends elevationGain: Int! # A list of trails that this `Lift` serves trailAccess: [Trail!]! }\\n# An enum describing the options for `LiftStatus`: `OPEN`, `CLOSED`, `HOLD` enum LiftStatus { OPEN CLOSED HOLD }\\ntype Mutation { # Sets a `Lift` status by sending `id` and `status` setLiftStatus(id: ID!, status: LiftStatus!): Lift! # Sets a `Trail` status by sending `id` and `status` setTrailStatus(id: ID!, status: TrailStatus!): Trail! }\\ntype Query { # A list of all `Lift` objects allLifts(status: LiftStatus): [Lift!]! # A list of all `Trail` objects allTrails(status: TrailStatus): [Trail!]! # Returns a `Lift` by `id` (id: \\\"panorama\\\") Lift(id: ID!): Lift! # Returns a `Trail` by `id` (id: \\\"old-witch\\\") Trail(id: ID!): Trail! # Returns an `Int` of `Lift` objects with optional `LiftStatus` filter liftCount(status: LiftStatus): Int! # Returns an `Int` of `Trail` objects with optional `TrailStatus` filter trailCount(status: TrailStatus): Int! # Returns a list of `SearchResult` objects based on `term` or `status` search(term: String, status: LiftStatus): [SearchResult!]! }\\nunion SearchResult = Lift | Trail type Subscription { # Listens for changes in lift status liftStatusChange: Lift # Listens for changes in trail status trailStatusChange: Trail }\\n# A `Trail` is a run at a ski resort type Trail { id: ID! # The name of a `Trail` name: String! # The current status for a `Trail`: OPEN, CLOSED status: TrailStatus # The difficulty rating for a `Trail` difficulty: String! # A boolean describing whether or not a `Trail` is groomed groomed: Boolean! # A boolean describing whether or not a `Trail` has trees trees: Boolean! # A boolean describing whether or not a `Trail` is open for night skiing night: Boolean! # A list of Lifts that provide access to this `Trail` accessedByLifts: [ Lift! ]! }\\n# An enum describing the options for `TrailStatus`: `OPEN`, `CLOSED` enum TrailStatus { OPEN CLOSED }\\n# The `Upload` scalar type represents a file upload. scalar Upload\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "584ca5f8-e786-4a50-819a-a5b1a5c76def",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "graphql-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55edf3ab-fdf2-4add-88cd-f0873b84aac8",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "graphql-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b579164-14b5-488d-8db0-68770f4041e9",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "graphql-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "240d0ade-e485-4af1-ad09-fe046883672e",
+          "name": "Get API WSDL definition",
+          "request": {
+            "name": "Get API WSDL definition",
+            "description": {
+              "content": "This operation can be used to retrieve the WSDL definition of an API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "wsdl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "If format is wsdl, send the content of the main WSDL file and not the archived WSDL. If not defined, send the zip.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "environmentName",
+                  "value": "<string>",
+                  "description": "Name of the API gateway environment.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "exp",
+                  "value": "<long>",
+                  "description": "Time of expiration of the generated URL.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "sig",
+                  "value": "<string>",
+                  "description": "Signature to validate the generated URL.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "X-WSO2-Tenant-Q",
+                  "value": "<string>",
+                  "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retirieved from.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "24bbfc1b-3a4b-4493-aa27-08261ead01b9",
+              "name": "OK.\nRequested WSDL document of the API is returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "wsdl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exp",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sig",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource. Used by caches, or in conditional requests (Will be supported in future).\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests (Will be supported in future).\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "360daa42-55b9-4841-93c2-82bd609f1d25",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource (Will be supported in future).\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "wsdl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exp",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sig",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bb9bf577-2bc7-41c2-add0-2dde5b526a03",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "wsdl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exp",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sig",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc1ad2d0-71c0-4972-a9ee-203c59bb5756",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "wsdl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exp",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "sig",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-WSO2-Tenant-Q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7e7dea7-8752-4311-8c6c-89bfda025f59",
+          "name": "Get Thumbnail Image",
+          "request": {
+            "name": "Get Thumbnail Image",
+            "description": {
+              "content": "This operation can be used to download a thumbnail image of an API.\n\n`X-WSO2-Tenant` header can be used to retrive a thumbnail of an API that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted API's thumbnail, you need to provide Authorization header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "thumbnail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dcf6b1c6-9e61-4107-b85d-8feda1829052",
+              "name": "OK.\nThumbnail image returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "thumbnail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource.\nUsed by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests (Will be supported in future).\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "41c83a99-a9f4-4d45-ade3-0f2933e8d1d7",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "thumbnail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "152f896b-0291-4086-9e55-bce67870b945",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "thumbnail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6eecc02-ae93-4cb8-a2cd-26ef5f97025e",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "thumbnail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d803a19-7e84-45e8-a928-9e1f2bdcb31a",
+          "name": "Get Details of the Subscription Throttling Policies of an API\n",
+          "request": {
+            "name": "Get Details of the Subscription Throttling Policies of an API\n",
+            "description": {
+              "content": "This operation can be used to retrieve details of the subscription throttling policy of an API by specifying the API Id.\n\n`X-WSO2-Tenant` header can be used to retrive API subscription throttling policies that belongs to a different tenant domain. If not specified super tenant will be used. If Authorization header is present in the request, the user's tenant associated with the access token will be used.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "subscription-policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                "key": "If-None-Match",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d01d2e21-dcca-461f-be90-ab268d2a55ea",
+              "name": "OK.\nThrottling Policy returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "subscription-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Entity Tag of the response resource.\nUsed by caches, or in conditional requests.\n",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Date and time the resource has been modifed the last time.\nUsed by caches, or in conditional requests.\n",
+                  "key": "Last-Modified",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Platinum\",\n  \"requestCount\": 50,\n  \"stopOnQuotaReach\": true,\n  \"tierPlan\": \"FREE\",\n  \"unitTime\": 60000,\n  \"description\": \"Allows 50 request(s) per minute.\",\n  \"policyLevel\": \"subscription\",\n  \"attributes\": {},\n  \"dataUnit\": \"KB\",\n  \"timeUnit\": \"min\",\n  \"rateLimitCount\": 10,\n  \"rateLimitTimeUnit\": \"min\",\n  \"quotaPolicyType\": \"REQUESTCOUNT\",\n  \"monetizationAttributes\": {\n    \"billingType\": \"fixedPrice\",\n    \"billingCycle\": \"month\",\n    \"fixedPrice\": \"10\",\n    \"pricePerRequest\": \"1\",\n    \"currencyType\": \"USD\"\n  },\n  \"throttlingPolicyPermissions\": {\n    \"type\": \"allow\",\n    \"roles\": [\n      \"manager\",\n      \"developer\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b487798-d310-4e77-bff3-b50158510de7",
+              "name": "Not Modified.\nEmpty body because the client has already the latest version of the requested resource.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "subscription-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Modified",
+              "code": 304,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "557a2da8-dbec-419b-8892-28ddf791694d",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "subscription-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c346bfc4-7707-4ebf-925a-fc3e04e3a870",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "subscription-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Validator for conditional requests; based on the ETag of the formerly retrieved\nvariant of the resourec.\n",
+                    "key": "If-None-Match",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a361c07d-5489-4e16-96b5-1c8a33652d6f",
+          "name": "Generate a URL to download a resource for an API",
+          "request": {
+            "name": "Generate a URL to download a resource for an API",
+            "description": {
+              "content": "Generate a URL to access an API resource like the WSDL definition.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":apiId",
+                "generate-definition-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) Type of the resource to be retrieved using the generated url (Ex - wsdl)"
+                },
+                {
+                  "disabled": false,
+                  "key": "environmentName",
+                  "value": "<string>",
+                  "description": "Name of the API gateway environment.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                "key": "X-WSO2-Tenant",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7dc1f042-7eb9-4b0e-aafb-586a6193bfb8",
+              "name": "OK. Returns generated download URL as a string.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "generate-definition-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef5ab7c8-d9d7-40e0-b672-a772f393ff4a",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "generate-definition-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"message\": \"Bad Request\",\n  \"description\": \"Invalid request or validation error\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cffa492-dbc5-44f7-b92d-7c6b47fceada",
+              "name": "Unauthorized. The user is not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "generate-definition-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"message\": \"Unauthorized\",\n  \"description\": \"The user is not authorized\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6a4816e-ae5e-4650-92a9-cc6b0513bc6e",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "generate-definition-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3eca7259-748e-4101-9fc3-f43ecd0d8225",
+              "name": "Internal Server Error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":apiId",
+                    "generate-definition-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environmentName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) **API ID** consisting of the **UUID** of the API.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n",
+                    "key": "X-WSO2-Tenant",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 500,\n  \"message\": \"Internal Server Error\",\n  \"description\": \"The server encountered an internal error. Please contact administrator.\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.wso2.com/api/am/admin/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ffdff158-35a0-464b-b927-0fbea1b77b7e",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) APIs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+      "type": "text/plain"
+    }
+  }
+}

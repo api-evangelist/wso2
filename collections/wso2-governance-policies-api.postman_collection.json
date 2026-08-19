@@ -1,0 +1,1710 @@
+{
+  "item": [
+    {
+      "id": "9b7194f4-511e-427f-ab84-d0d9b5c99e8c",
+      "name": "Governance Policies",
+      "description": {
+        "content": "for managing governance policies.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b580a82-23eb-4cab-9c50-ebab3ad10d3a",
+          "name": "Retrieves a list of all governance policies.",
+          "request": {
+            "name": "Retrieves a list of all governance policies.",
+            "description": {
+              "content": "Retrieves a list of governance policies for the user's organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum size of resource array to return.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting point within the complete list of items qualified.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "You can search for governance policies using following format.\n\n  - \"query=name:{NAME}\" searches policies by name.\n  - \"query=state:{STATE} \" searches policies by state.\n\nYou can also use multiple attributes to search for policies.\n  - \"query=name:{NAME} state:{STATE}\" searches policies by name, state, and label.\n\nRemember to use URL encoding if your client doesn't support it (e.g., curl).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "261a5b8b-9dad-417c-97ae-11fe34675e7c",
+              "name": "OK. Successful response with a list of governance policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Best Practices state:API_CREATE label:GLOBAL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 10,\n  \"list\": [\n    {\n      \"name\": \"API Security Policy\",\n      \"rulesets\": [\n        \"94566543-d21b-34d5-b678-912345678900\",\n        \"94566543-d21b-34d5-b678-912345678900\"\n      ],\n      \"labels\": [\n        \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n      ],\n      \"governableStates\": [\n        \"API_DEPLOY\",\n        \"API_DEPLOY\"\n      ],\n      \"actions\": [\n        {\n          \"state\": \"API_DEPLOY\",\n          \"ruleSeverity\": \"ERROR\",\n          \"type\": \"BLOCK\"\n        },\n        {\n          \"state\": \"API_DEPLOY\",\n          \"ruleSeverity\": \"ERROR\",\n          \"type\": \"BLOCK\"\n        }\n      ],\n      \"id\": \"987e6543-d21b-34d5-b678-912345678900\",\n      \"description\": \"Policy for enforcing security standards across all APIs.\",\n      \"createdBy\": \"admin@wso2.com\",\n      \"createdTime\": \"2024-08-01T12:00:00Z\",\n      \"updatedBy\": \"admin@wso2.com\",\n      \"updatedTime\": \"2024-08-02T12:00:00Z\"\n    },\n    {\n      \"name\": \"API Security Policy\",\n      \"rulesets\": [\n        \"94566543-d21b-34d5-b678-912345678900\",\n        \"94566543-d21b-34d5-b678-912345678900\"\n      ],\n      \"labels\": [\n        \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n      ],\n      \"governableStates\": [\n        \"API_DEPLOY\",\n        \"API_DEPLOY\"\n      ],\n      \"actions\": [\n        {\n          \"state\": \"API_DEPLOY\",\n          \"ruleSeverity\": \"ERROR\",\n          \"type\": \"BLOCK\"\n        },\n        {\n          \"state\": \"API_DEPLOY\",\n          \"ruleSeverity\": \"ERROR\",\n          \"type\": \"BLOCK\"\n        }\n      ],\n      \"id\": \"987e6543-d21b-34d5-b678-912345678900\",\n      \"description\": \"Policy for enforcing security standards across all APIs.\",\n      \"createdBy\": \"admin@wso2.com\",\n      \"createdTime\": \"2024-08-01T12:00:00Z\",\n      \"updatedBy\": \"admin@wso2.com\",\n      \"updatedTime\": \"2024-08-02T12:00:00Z\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": 0,\n    \"limit\": 1,\n    \"total\": 10,\n    \"next\": \"string\",\n    \"previous\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "385c0a59-8a2c-4a64-80dd-e7e1de17be4f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Best Practices state:API_CREATE label:GLOBAL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a65e46c-0500-4c70-bc7d-864461b5407d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Best Practices state:API_CREATE label:GLOBAL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfaa1602-0702-4317-8ad2-22be153dcf88",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Best Practices state:API_CREATE label:GLOBAL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83f8f8b0-2e97-4ee5-93d8-3e89a4b574a1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Best Practices state:API_CREATE label:GLOBAL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67ef6212-3db4-4a21-9a4f-2daee883ff1d",
+          "name": "Creates a new governance policy.",
+          "request": {
+            "name": "Creates a new governance policy.",
+            "description": {
+              "content": "Creates a new governance policy for the user's organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"rulesets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"governableStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"<string>\",\n      \"ruleSeverity\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"state\": \"<string>\",\n      \"ruleSeverity\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "427af679-3cdc-48bc-adfe-4b537c40efe7",
+              "name": "OK. Governance policy created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"id\": \"987e6543-d21b-34d5-b678-912345678900\",\n  \"description\": \"Policy for enforcing security standards across all APIs.\",\n  \"createdBy\": \"admin@wso2.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@wso2.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e27b5efd-4dd5-4fb1-bb40-ac418c06bf07",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2801fa0-6379-4cc2-93bb-aa37ad65ffaf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9638205c-dd4a-4c5f-bd07-d2d65136bf8c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abc1ed8d-1f72-46aa-b3a1-39649892931f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7954c6f4-c9c1-4e87-ab27-3b08fd8133f4",
+          "name": "Get a specific governance policy",
+          "request": {
+            "name": "Get a specific governance policy",
+            "description": {
+              "content": "Retrieves details of a specific governance policy identified by the policyId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) **UUID** of the Policy.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7e9b9311-30f8-4a10-a5dc-2a5c313469ac",
+              "name": "OK. Governance policy details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"id\": \"987e6543-d21b-34d5-b678-912345678900\",\n  \"description\": \"Policy for enforcing security standards across all APIs.\",\n  \"createdBy\": \"admin@wso2.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@wso2.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ba30a26-26a0-478b-9b13-1bf1c0b2357c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8de5205-2261-4eea-aeae-9ad21f22f951",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b6ce58d-b090-4907-948b-71d62c3c5c9a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33b8e62e-bd35-49ad-afd5-3d57ec5050ef",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c737048-b624-438b-9cd5-48a93f125743",
+          "name": "Update a specific governance policy",
+          "request": {
+            "name": "Update a specific governance policy",
+            "description": {
+              "content": "Updates the details of an existing governance policy identified by the policyId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) **UUID** of the Policy.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"rulesets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"labels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"governableStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"<string>\",\n      \"ruleSeverity\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"state\": \"<string>\",\n      \"ruleSeverity\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da8bd2f0-0f2a-40e9-8f32-3dd697c43e2f",
+              "name": "OK. Governance policy updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"id\": \"987e6543-d21b-34d5-b678-912345678900\",\n  \"description\": \"Policy for enforcing security standards across all APIs.\",\n  \"createdBy\": \"admin@wso2.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@wso2.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1d9519f-84b9-4806-bdf8-6188e5e462cd",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46bd54b6-d0fd-4d0f-ad58-d5c1c55571bc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f626aa8-ba6d-48d5-b06a-35a00d34a727",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "510f9ef7-28ee-40cc-9233-aa4ff17c6130",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"API Security Policy\",\n  \"rulesets\": [\n    \"94566543-d21b-34d5-b678-912345678900\",\n    \"94566543-d21b-34d5-b678-912345678900\"\n  ],\n  \"labels\": [\n    \"54d5833a-ca86-44bb-bcda-5b9fcdacd79d\"\n  ],\n  \"governableStates\": [\n    \"API_DEPLOY\",\n    \"API_DEPLOY\"\n  ],\n  \"actions\": [\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    },\n    {\n      \"state\": \"API_DEPLOY\",\n      \"ruleSeverity\": \"ERROR\",\n      \"type\": \"BLOCK\"\n    }\n  ],\n  \"description\": \"Policy for enforcing security standards across all APIs.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4fc2fab-29ed-4e66-8905-9397680a66c5",
+          "name": "Delete a specific governance policy",
+          "request": {
+            "name": "Delete a specific governance policy",
+            "description": {
+              "content": "Deletes an existing governance policy identified by the policyId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) **UUID** of the Policy.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c67e4d2-c4bb-41f9-b9ca-330ed275d867",
+              "name": "OK. Governance policy deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ca1a773-a29a-4c64-820d-46e42b39ac7c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c02929e9-164c-4fe2-9bd4-637b3cf594b5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f985b1ea-afff-4846-be3a-509a0138613e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "309b0d92-946e-453d-b172-8213ff112755",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) **UUID** of the Policy.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7304,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.wso2.com/api/am/admin/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "adbc8b24-d39a-4c3e-accd-195ee17c7da0",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Governance Policies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+      "type": "text/plain"
+    }
+  }
+}

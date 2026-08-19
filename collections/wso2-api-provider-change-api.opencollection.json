@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Api Provider Change API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Api Provider Change",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update the api provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/change-provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update the api provider\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

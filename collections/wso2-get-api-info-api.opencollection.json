@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Get API Info API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Get API Info",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of APIS by providing context and version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Context of the API\n"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "version of the API\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the API\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to get the API information from storage. If the Tenant domain is not provided\ncarbon.super will be picked as the Tenant domain.\n"
+        },
+        {
+          "info": {
+            "name": "Get the subscription information of an API by providing the API uuid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "API ID of the API\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the API\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to get the subscription information of an API from storage. If the Tenant domain is not provided\ncarbon.super will be picked as the Tenant domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

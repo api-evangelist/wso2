@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) MCP Servers API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MCP Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve/Search MCP Servers\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "**Search condition**.\n\nYou can search in attributes by using an **\"<attribute>:\"** modifier.\n\nEg.\n\"provider:wso2\" will match an MCP Server if the provider of the MCP Server is exactly \"wso2\".\n\nAdditionally you can use wildcards.\n\nEg.\n\"provider:wso2*\" will match a MCP Server if the provider of the MCP Server starts with \"wso2\".\n\nSupported attribute modifiers are [**version, context, status,\ndescription, doc, provider, tag**]\n\nTo search by Properties provide the query in below format.\n\n**property_name:property_value**\n\nEg.\n\"environment:test\" where environment is the property name and test is the propert value.\n\nIf no advanced attribute modifier has been specified, search will match the\ngiven query string against API Name.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation provides you a list of available MCP servers qualifying under a given search condition.\n\nEach retrieved MCP Server is represented with a minimal amount of attributes. If you want to get complete \ndetails of a MCP server, you need to use **Get details of a MCP** operation.\n\nThis operation supports retrieving MCP servers of other tenants. The required tenant domain need to be \nspecified as a header `X-WSO2-Tenant`. If not specified super tenant's MCP servers will be retrieved. If yo"
+        },
+        {
+          "info": {
+            "name": "Get Details of a MCP Server\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Using this operation, you can retrieve complete details of a single MCP Server. You need to provide the Id of \nthe MCP Server to retrieve it.\n\n`X-WSO2-Tenant` header can be used to retrieve a MCP Server of a different tenant domain. If not specified \nsuper tenant will be used. If Authorization header is present in the request, the user's tenant associated \nwith the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But if it is provided, i"
+        },
+        {
+          "info": {
+            "name": "Get Thumbnail Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/thumbnail",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to download a thumbnail image of a MCP Server.\n\n`X-WSO2-Tenant` header can be used to retrieve a thumbnail of a MCP Server that belongs to a different tenant \ndomain. If not specified super tenant will be used. If Authorization header is present in the request, the \nuser's tenant associated with the access token will be used.\n\n**NOTE:**\n* This operation does not require an Authorization header by default. But in order to see a restricted \nMCP Server's thumbnail, you ne"
+        },
+        {
+          "info": {
+            "name": "Get Details of the Subscription Throttling Policies of a MCP Server\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/subscription-policies",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This operation can be used to retrieve details of the subscription throttling policy of a MCP Server by \nspecifying the MCP Server Id.\n\n`X-WSO2-Tenant` header can be used to retrieve MCP Server subscription throttling policies that belongs to a \ndifferent tenant domain. If not specified super tenant will be used. If Authorization header is present in the \nrequest, the user's tenant associated with the access token will be used.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

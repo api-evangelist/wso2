@@ -1,0 +1,292 @@
+{
+  "item": [
+    {
+      "id": "c78a8ac3-305f-4da2-ba0e-8cf32bdb9263",
+      "name": "Global Key Manager (Collection)",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45529135-ebe2-4f3b-8fbf-8a4f99f432d6",
+          "name": "Get all Global Key managers",
+          "request": {
+            "name": "Get all Global Key managers",
+            "description": {
+              "content": "Get all Global Key managers\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "global-key-managers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4f439f1-1885-48ff-9ea6-f2e15a468d99",
+              "name": "OK.\nKeyManagers returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "global-key-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"list\": [\n    {\n      \"name\": \"WSO2 IS\",\n      \"type\": \"IS\",\n      \"id\": \"01234567-0123-0123-0123-012345678901\",\n      \"description\": \"This is a key manager for Developers\",\n      \"enabled\": true,\n      \"isGlobal\": true,\n      \"isUsed\": true,\n      \"tokenType\": \"EXCHANGED\"\n    },\n    {\n      \"name\": \"WSO2 IS\",\n      \"type\": \"IS\",\n      \"id\": \"01234567-0123-0123-0123-012345678901\",\n      \"description\": \"This is a key manager for Developers\",\n      \"enabled\": true,\n      \"isGlobal\": true,\n      \"isUsed\": true,\n      \"tokenType\": \"EXCHANGED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aeb4da93-0666-4d78-996b-22aec59f3e08",
+          "name": "Add a new Global Key Manager",
+          "request": {
+            "name": "Add a new Global Key Manager",
+            "description": {
+              "content": "Add a new Global Key Manager\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "global-key-managers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"wellKnownEndpoint\": \"<string>\",\n  \"introspectionEndpoint\": \"<string>\",\n  \"clientRegistrationEndpoint\": \"<string>\",\n  \"tokenEndpoint\": \"<string>\",\n  \"displayTokenEndpoint\": \"<string>\",\n  \"revokeEndpoint\": \"<string>\",\n  \"displayRevokeEndpoint\": \"<string>\",\n  \"userInfoEndpoint\": \"<string>\",\n  \"authorizeEndpoint\": \"<string>\",\n  \"endpoints\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"<string>\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"scopeManagementEndpoint\": \"<string>\",\n  \"availableGrantTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enableTokenGeneration\": \"<boolean>\",\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    },\n    {\n      \"remoteClaim\": \"<string>\",\n      \"localClaim\": \"<string>\"\n    }\n  ],\n  \"consumerKeyClaim\": \"<string>\",\n  \"scopesClaim\": \"<string>\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": true,\n      \"type\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"global\": \"<boolean>\",\n  \"additionalProperties\": {},\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"tokenType\": \"DIRECT\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7711f8b4-3ed8-4f7c-9bfc-08b579e18f02",
+              "name": "Created.\nSuccessful response with the newly created object as entity in the body.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "global-key-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"WSO2 Identity Server\",\n  \"type\": \"WSO2-IS\",\n  \"displayName\": \"WSO2 Identity Server\",\n  \"description\": \"This is a key manager for Developers\",\n  \"wellKnownEndpoint\": \"\",\n  \"introspectionEndpoint\": \"https://localhost:9444/oauth2/introspect\",\n  \"clientRegistrationEndpoint\": \"https://localhost:9444/keymanager-operations/dcr/register\",\n  \"tokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"displayTokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"revokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"displayRevokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"userInfoEndpoint\": \"https://localhost:9444/oauth2/userinfo?schema=openid\",\n  \"authorizeEndpoint\": \"https://localhost:9444/oauth2/authorize\",\n  \"endpoints\": [\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    },\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"<string>\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"https://localhost:9444/services\",\n  \"alias\": \"https://localhost:9443/oauth2/token\",\n  \"scopeManagementEndpoint\": \"https://wso2is.com:9444/api/identity/oauth2/v1.0/scopes\",\n  \"availableGrantTypes\": [\n    \"client_credentials\",\n    \"client_credentials\"\n  ],\n  \"enableTokenGeneration\": true,\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    },\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    }\n  ],\n  \"consumerKeyClaim\": \"azp\",\n  \"scopesClaim\": \"scp\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": true,\n  \"global\": true,\n  \"additionalProperties\": {\n    \"self_validate_jwt\": true,\n    \"Username\": \"admin\",\n    \"Password\": \"admin\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/subscriber\",\n      \"Internal/subscriber\"\n    ]\n  },\n  \"tokenType\": \"EXCHANGED\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"WSO2 Identity Server\",\n  \"type\": \"WSO2-IS\",\n  \"id\": \"01234567-0123-0123-0123-012345678901\",\n  \"displayName\": \"WSO2 Identity Server\",\n  \"description\": \"This is a key manager for Developers\",\n  \"wellKnownEndpoint\": \"\",\n  \"introspectionEndpoint\": \"https://localhost:9444/oauth2/introspect\",\n  \"clientRegistrationEndpoint\": \"https://localhost:9444/keymanager-operations/dcr/register\",\n  \"tokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"displayTokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"revokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"displayRevokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"userInfoEndpoint\": \"https://localhost:9444/oauth2/userinfo?schema=openid\",\n  \"authorizeEndpoint\": \"https://localhost:9444/oauth2/authorize\",\n  \"endpoints\": [\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    },\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"<string>\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"https://localhost:9444/services\",\n  \"alias\": \"https://localhost:9443/oauth2/token\",\n  \"scopeManagementEndpoint\": \"https://wso2is.com:9444/api/identity/oauth2/v1.0/scopes\",\n  \"availableGrantTypes\": [\n    \"client_credentials\",\n    \"client_credentials\"\n  ],\n  \"enableTokenGeneration\": true,\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    },\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    }\n  ],\n  \"consumerKeyClaim\": \"azp\",\n  \"scopesClaim\": \"scp\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": true,\n  \"global\": true,\n  \"additionalProperties\": {\n    \"self_validate_jwt\": true,\n    \"Username\": \"admin\",\n    \"Password\": \"admin\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/subscriber\",\n      \"Internal/subscriber\"\n    ]\n  },\n  \"tokenType\": \"EXCHANGED\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f0bd1af-b7fb-4b9f-82cc-7f1ad4296311",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "global-key-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"WSO2 Identity Server\",\n  \"type\": \"WSO2-IS\",\n  \"displayName\": \"WSO2 Identity Server\",\n  \"description\": \"This is a key manager for Developers\",\n  \"wellKnownEndpoint\": \"\",\n  \"introspectionEndpoint\": \"https://localhost:9444/oauth2/introspect\",\n  \"clientRegistrationEndpoint\": \"https://localhost:9444/keymanager-operations/dcr/register\",\n  \"tokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"displayTokenEndpoint\": \"https://localhost:9444/oauth2/token\",\n  \"revokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"displayRevokeEndpoint\": \"https://localhost:9444/oauth2/revoke\",\n  \"userInfoEndpoint\": \"https://localhost:9444/oauth2/userinfo?schema=openid\",\n  \"authorizeEndpoint\": \"https://localhost:9444/oauth2/authorize\",\n  \"endpoints\": [\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    },\n    {\n      \"name\": \"token_endpoint\",\n      \"value\": \"https://localhost:9443/oauth2/token\"\n    }\n  ],\n  \"certificates\": {\n    \"type\": \"<string>\",\n    \"value\": \"<string>\"\n  },\n  \"issuer\": \"https://localhost:9444/services\",\n  \"alias\": \"https://localhost:9443/oauth2/token\",\n  \"scopeManagementEndpoint\": \"https://wso2is.com:9444/api/identity/oauth2/v1.0/scopes\",\n  \"availableGrantTypes\": [\n    \"client_credentials\",\n    \"client_credentials\"\n  ],\n  \"enableTokenGeneration\": true,\n  \"enableTokenEncryption\": false,\n  \"enableTokenHashing\": false,\n  \"enableMapOAuthConsumerApps\": false,\n  \"enableOAuthAppCreation\": false,\n  \"enableSelfValidationJWT\": true,\n  \"claimMapping\": [\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    },\n    {\n      \"remoteClaim\": \"http://idp.org/username\",\n      \"localClaim\": \"http://wso2.org/username\"\n    }\n  ],\n  \"consumerKeyClaim\": \"azp\",\n  \"scopesClaim\": \"scp\",\n  \"tokenValidation\": [\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    },\n    {\n      \"id\": \"<integer>\",\n      \"enable\": false,\n      \"type\": \"<string>\",\n      \"value\": {}\n    }\n  ],\n  \"enabled\": true,\n  \"global\": true,\n  \"additionalProperties\": {\n    \"self_validate_jwt\": true,\n    \"Username\": \"admin\",\n    \"Password\": \"admin\"\n  },\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/subscriber\",\n      \"Internal/subscriber\"\n    ]\n  },\n  \"tokenType\": \"EXCHANGED\",\n  \"allowedOrganizations\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"message\": \"Bad Request\",\n  \"description\": \"Invalid request or validation error\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.wso2.com/api/am/admin/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8e7f556d-8f6f-4b9f-92ef-927727421d84",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Global Key Manager (Collection) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+      "type": "text/plain"
+    }
+  }
+}

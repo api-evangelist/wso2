@@ -1,0 +1,1194 @@
+{
+  "item": [
+    {
+      "id": "c9c319f7-5c6e-43e4-a1c7-c139814dc96e",
+      "name": "Environments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38d63a53-64cc-4798-bb53-5a5dcd58f5c8",
+          "name": "Get all registered Environments",
+          "request": {
+            "name": "Get all registered Environments",
+            "description": {
+              "content": "Get all Registered Environments\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5d986f07-4476-4df3-8d6f-15c99b88ef31",
+              "name": "OK.\nEnvironments returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"list\": [\n    {\n      \"name\": \"us-region\",\n      \"vhosts\": [\n        {\n          \"host\": \"mg.wso2.com\",\n          \"httpContext\": \"pets\",\n          \"httpPort\": 80,\n          \"httpsPort\": 443,\n          \"wsPort\": 9099,\n          \"wsHost\": \"mg.wso2.com\",\n          \"wssPort\": 8099,\n          \"wssHost\": \"mg.wso2.com\"\n        }\n      ],\n      \"id\": \"ece92bdc-e1e6-325c-b6f4-656208a041e9\",\n      \"displayName\": \"US Region\",\n      \"provider\": \"wso2\",\n      \"type\": \"hybrid\",\n      \"gatewayType\": \"Regular\",\n      \"description\": \"Gateway environment in US Region\",\n      \"isReadOnly\": false,\n      \"mode\": \"READ_WRITE\",\n      \"apiDiscoveryScheduledWindow\": 60,\n      \"endpointURIs\": [\n        {\n          \"protocol\": \"default\",\n          \"endpointURI\": \"default\"\n        },\n        {\n          \"protocol\": \"default\",\n          \"endpointURI\": \"default\"\n        }\n      ],\n      \"additionalProperties\": [\n        {\n          \"key\": \"Organization\",\n          \"value\": \"wso2\"\n        },\n        {\n          \"key\": \"Organization\",\n          \"value\": \"wso2\"\n        }\n      ],\n      \"permissions\": {\n        \"permissionType\": \"ALLOW\",\n        \"roles\": [\n          \"Internal/everyone\",\n          \"Internal/everyone\"\n        ]\n      },\n      \"status\": \"Active\",\n      \"vhost\": \"https://mg.wso2.com\",\n      \"platformGatewayVersions\": [\n        \"1.0.0\",\n        \"1.0.0\"\n      ]\n    },\n    {\n      \"name\": \"us-region\",\n      \"vhosts\": [\n        {\n          \"host\": \"mg.wso2.com\",\n          \"httpContext\": \"pets\",\n          \"httpPort\": 80,\n          \"httpsPort\": 443,\n          \"wsPort\": 9099,\n          \"wsHost\": \"mg.wso2.com\",\n          \"wssPort\": 8099,\n          \"wssHost\": \"mg.wso2.com\"\n        }\n      ],\n      \"id\": \"ece92bdc-e1e6-325c-b6f4-656208a041e9\",\n      \"displayName\": \"US Region\",\n      \"provider\": \"wso2\",\n      \"type\": \"hybrid\",\n      \"gatewayType\": \"Regular\",\n      \"description\": \"Gateway environment in US Region\",\n      \"isReadOnly\": false,\n      \"mode\": \"READ_WRITE\",\n      \"apiDiscoveryScheduledWindow\": 60,\n      \"endpointURIs\": [\n        {\n          \"protocol\": \"default\",\n          \"endpointURI\": \"default\"\n        },\n        {\n          \"protocol\": \"default\",\n          \"endpointURI\": \"default\"\n        }\n      ],\n      \"additionalProperties\": [\n        {\n          \"key\": \"Organization\",\n          \"value\": \"wso2\"\n        },\n        {\n          \"key\": \"Organization\",\n          \"value\": \"wso2\"\n        }\n      ],\n      \"permissions\": {\n        \"permissionType\": \"ALLOW\",\n        \"roles\": [\n          \"Internal/everyone\",\n          \"Internal/everyone\"\n        ]\n      },\n      \"status\": \"Active\",\n      \"vhost\": \"https://mg.wso2.com\",\n      \"platformGatewayVersions\": [\n        \"1.0.0\",\n        \"1.0.0\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bf03b7f-133d-4d6a-8b74-2b193cef1f46",
+          "name": "Add an Environment",
+          "request": {
+            "name": "Add an Environment",
+            "description": {
+              "content": "Add a new gateway environment\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"<string>\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c389edd3-58a9-4fba-be42-4e266c4b3a80",
+              "name": "Created.\nSuccessful response with the newly created environment as entity in the body.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"id\": \"ece92bdc-e1e6-325c-b6f4-656208a041e9\",\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"https://mg.wso2.com\",\n  \"platformGatewayVersions\": [\n    \"1.0.0\",\n    \"1.0.0\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0bbce77-d306-4dec-88fe-ae812e340424",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"message\": \"Bad Request\",\n  \"description\": \"Invalid request or validation error\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce9069d3-e40d-4ea2-9abd-54a73d5237b7",
+          "name": "Get a Gateway Environment Configuration",
+          "request": {
+            "name": "Get a Gateway Environment Configuration",
+            "description": {
+              "content": "Retrieve a single Gateway Environment Configuration. We should provide the Id of the Environment as a path parameter.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments",
+                ":environmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environmentId",
+                  "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c4482d65-02ce-4510-b5bd-9fd3ef82ea7e",
+              "name": "OK.\nGateway Environment Configuration returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"id\": \"ece92bdc-e1e6-325c-b6f4-656208a041e9\",\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"https://mg.wso2.com\",\n  \"platformGatewayVersions\": [\n    \"1.0.0\",\n    \"1.0.0\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1677148-aeec-4724-9fed-2074a039e8a0",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67477ee2-f133-47a7-9156-72713a709af7",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d29b4def-b7aa-44e8-95ee-7a2e42496ba5",
+          "name": "Update an Environment",
+          "request": {
+            "name": "Update an Environment",
+            "description": {
+              "content": "Update a gateway Environment by environment Id\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments",
+                ":environmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environmentId",
+                  "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"vhosts\": [\n    {\n      \"host\": \"<string>\",\n      \"httpContext\": \"<string>\",\n      \"httpPort\": \"<integer>\",\n      \"httpsPort\": \"<integer>\",\n      \"wsPort\": \"<integer>\",\n      \"wsHost\": \"<string>\",\n      \"wssPort\": \"<integer>\",\n      \"wssHost\": \"<string>\"\n    }\n  ],\n  \"displayName\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"<string>\",\n  \"isReadOnly\": false,\n  \"mode\": \"WRITE_ONLY\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    },\n    {\n      \"protocol\": \"<string>\",\n      \"endpointURI\": \"<string>\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"PUBLIC\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5de54ce-ccf8-4ed3-94da-8d6b712c5bf4",
+              "name": "OK.\nEnvironment updated.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"id\": \"ece92bdc-e1e6-325c-b6f4-656208a041e9\",\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  },\n  \"status\": \"Active\",\n  \"vhost\": \"https://mg.wso2.com\",\n  \"platformGatewayVersions\": [\n    \"1.0.0\",\n    \"1.0.0\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b726ed9b-ad75-4f0f-9f17-950eb939b01c",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"message\": \"Bad Request\",\n  \"description\": \"Invalid request or validation error\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb0e3d0f-365c-4a2e-a2f5-c64b33310e05",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"us-region\",\n  \"vhosts\": [\n    {\n      \"host\": \"mg.wso2.com\",\n      \"httpContext\": \"pets\",\n      \"httpPort\": 80,\n      \"httpsPort\": 443,\n      \"wsPort\": 9099,\n      \"wsHost\": \"mg.wso2.com\",\n      \"wssPort\": 8099,\n      \"wssHost\": \"mg.wso2.com\"\n    }\n  ],\n  \"displayName\": \"US Region\",\n  \"provider\": \"wso2\",\n  \"type\": \"hybrid\",\n  \"gatewayType\": \"Regular\",\n  \"description\": \"Gateway environment in US Region\",\n  \"isReadOnly\": false,\n  \"mode\": \"READ_WRITE\",\n  \"apiDiscoveryScheduledWindow\": 60,\n  \"endpointURIs\": [\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    },\n    {\n      \"protocol\": \"default\",\n      \"endpointURI\": \"default\"\n    }\n  ],\n  \"additionalProperties\": [\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    },\n    {\n      \"key\": \"Organization\",\n      \"value\": \"wso2\"\n    }\n  ],\n  \"permissions\": {\n    \"permissionType\": \"ALLOW\",\n    \"roles\": [\n      \"Internal/everyone\",\n      \"Internal/everyone\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00f96c6a-4d0e-429e-9ac5-82441e5681cb",
+          "name": "Delete an Environment",
+          "request": {
+            "name": "Delete an Environment",
+            "description": {
+              "content": "Delete a Environment by Environment Id\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments",
+                ":environmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environmentId",
+                  "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "be07a624-3748-440c-ad9e-f778502fa4de",
+              "name": "OK.\nEnvironment successfully deleted.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "58b7fdfc-7d76-4103-aee4-b8140fae0bac",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecc57561-a8df-4163-a7d4-904f4b1079c7",
+          "name": "Get Gateway Instances in a Gateway Environment",
+          "request": {
+            "name": "Get Gateway Instances in a Gateway Environment",
+            "description": {
+              "content": "Retrieve list of gateway Instances in the gateway environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "environments",
+                ":environmentId",
+                "gateways"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environmentId",
+                  "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e068ee91-89a9-4c39-ac3a-38e945cf5774",
+              "name": "OK.\nList of gateway Instances in the gateway environment returned\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId",
+                    "gateways"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"list\": [\n    {\n      \"gatewayId\": \"Env1_1372344\",\n      \"lastActive\": \"2025-06-26T06:47:50Z\",\n      \"status\": \"ACTIVE\"\n    },\n    {\n      \"gatewayId\": \"Env1_1372344\",\n      \"lastActive\": \"2025-06-26T06:47:50Z\",\n      \"status\": \"ACTIVE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "508b8e6c-f1c2-49f8-b1e0-803c336f083b",
+              "name": "Bad Request. Invalid request or validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId",
+                    "gateways"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"message\": \"Bad Request\",\n  \"description\": \"Invalid request or validation error\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ac3aa0a-9bad-409b-80a0-fd1d2c5d31c4",
+              "name": "Not Found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId",
+                    "gateways"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"message\": \"Not Found\",\n  \"description\": \"The specified resource does not exist\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45389935-071a-4475-af02-c13bdc4ca836",
+              "name": "Not Acceptable. The requested media type is not supported.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "environments",
+                    ":environmentId",
+                    "gateways"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environmentId",
+                      "description": "(Required) Environment UUID (or Environment name defined in config), in case the ID contains special characters it should\nbe base64 encoded\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 406,\n  \"message\": \"Not Acceptable\",\n  \"description\": \"The requested media type is not supported\",\n  \"moreInfo\": \"\",\n  \"error\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.wso2.com/api/am/admin/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "17182f56-dbd8-4a47-a76f-988d82763805",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Environments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+      "type": "text/plain"
+    }
+  }
+}

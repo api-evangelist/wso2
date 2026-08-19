@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Rulesets API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rulesets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves a list of rulesets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "You can search for rulesets using the following format:\n\n  - \"query=name:{NAME}\" searches rulesets by name.\n  - \"query=artifactType:{ARTIFACT_TYPE}\" searches rulesets by artifact type.\n  - \"query=ruleType:{RULE_TYPE}\" searches rulesets by rule type.\n\nYou can combine multiple attributes to search for rulesets:\n  - \"query=name:{NAME} artifactType:{ARTIFACT_TYPE} ruleType:{RULE_TYPE}\" searches rulesets by name, artifact type, and rule type.\n\nRemember to use URL encoding if your client does not support it (e.g., curl).\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all rulesets associated with the requested organization."
+        },
+        {
+          "info": {
+            "name": "Create a new ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new ruleset in the user's organization."
+        },
+        {
+          "info": {
+            "name": "Retrieves details of a specific ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets/:rulesetId",
+            "params": [
+              {
+                "name": "rulesetId",
+                "value": "",
+                "type": "path",
+                "description": "**UUID** of the Ruleset.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves details of the ruleset identified by the rulesetId."
+        },
+        {
+          "info": {
+            "name": "Updates a specific ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets/:rulesetId",
+            "params": [
+              {
+                "name": "rulesetId",
+                "value": "",
+                "type": "path",
+                "description": "**UUID** of the Ruleset.\n"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates the details of the ruleset identified by the `rulesetId`."
+        },
+        {
+          "info": {
+            "name": "Deletes a specific ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets/:rulesetId",
+            "params": [
+              {
+                "name": "rulesetId",
+                "value": "",
+                "type": "path",
+                "description": "**UUID** of the Ruleset.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes an existing ruleset identified by the rulesetId."
+        },
+        {
+          "info": {
+            "name": "Retrieves the content of a specific ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets/:rulesetId/content",
+            "params": [
+              {
+                "name": "rulesetId",
+                "value": "",
+                "type": "path",
+                "description": "**UUID** of the Ruleset.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the content of the ruleset identified by the rulesetId."
+        },
+        {
+          "info": {
+            "name": "Retrieves the policy usage of a specific ruleset.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/rulesets/:rulesetId/usage",
+            "params": [
+              {
+                "name": "rulesetId",
+                "value": "",
+                "type": "path",
+                "description": "**UUID** of the Ruleset.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the list of policies using the ruleset identified by the rulesetId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

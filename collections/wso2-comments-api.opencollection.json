@@ -1,0 +1,602 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Comments API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve API Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a list of Comments that are already added to APIs\n"
+        },
+        {
+          "info": {
+            "name": "Add an API Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments",
+            "params": [
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "replyTo",
+                "value": "",
+                "type": "query",
+                "description": "ID of the perent comment.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add an API Comment"
+        },
+        {
+          "info": {
+            "name": "Get Details of an API Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments/:commentId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              },
+              {
+                "name": "replyLimit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of replies array to return.\n"
+              },
+              {
+                "name": "replyOffset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of replies.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the individual comment given by a user for a certain API.\n"
+        },
+        {
+          "info": {
+            "name": "Edit a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments/:commentId",
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Edit the individual comment\n"
+        },
+        {
+          "info": {
+            "name": "Delete an API Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments/:commentId",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Remove a Comment\n"
+        },
+        {
+          "info": {
+            "name": "Get replies of a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/apis/:apiId/comments/:commentId/replies",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "**API ID** consisting of the **UUID** of the API.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get replies of a comment\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve MCP Server Comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a list of Comments that are already added to MCP Servers\n"
+        },
+        {
+          "info": {
+            "name": "Add a MCP Server Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "replyTo",
+                "value": "",
+                "type": "query",
+                "description": "ID of the perent comment.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add a MCP Server Comment"
+        },
+        {
+          "info": {
+            "name": "Get Details of a MCP Server Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments/:commentId",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              },
+              {
+                "name": "replyLimit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of replies array to return.\n"
+              },
+              {
+                "name": "replyOffset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of replies.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the individual comment given by a user for a certain MCP Server.\n"
+        },
+        {
+          "info": {
+            "name": "Edit a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments/:commentId",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Edit the individual comment\n"
+        },
+        {
+          "info": {
+            "name": "Delete a MCP Server Comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments/:commentId",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Remove a Comment\n"
+        },
+        {
+          "info": {
+            "name": "Get replies of a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/mcp-servers/:mcpServerId/comments/:commentId/replies",
+            "headers": [
+              {
+                "name": "X-WSO2-Tenant",
+                "value": ""
+              },
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "**MCP Server ID** consisting of the **UUID** of the MCP Server.\n"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path",
+                "description": "Comment Id\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum size of resource array to return.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting point within the complete list of items qualified.\n"
+              },
+              {
+                "name": "includeCommenterInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether we need to display commentor details.\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get replies of a comment\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Roles API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Whether Given Role Name already Exist",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://apis.wso2.com/api/am/admin/v4/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The Base 64 URL encoded role name with domain. If the given role is in PRIMARY user-store, role ID should be\nderived as Base64URLEncode(role-name). If the given role is in secondary user-store, role ID should be\nderived as Base64URLEncode({user-store-name}/{role-name}).\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Using this operation, user can check a given role name exists or not.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

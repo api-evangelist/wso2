@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Get Application Info API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Get Application Info",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the applications information by providing the application name or uuid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the Application\n"
+              },
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the Application\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the Application\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to get the application information from storage. If the Tenant domain is not\nprovided carbon.super will be picked as the Tenant domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

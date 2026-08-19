@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Sequence API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sequence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get sequences from the storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/sequence",
+            "params": [
+              {
+                "name": "apiName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API\n"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "version of the API\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the API\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to get the API sequence from the storage. If the Tenant domain is not provided carbon.super\nwill be picked as the Tenant domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

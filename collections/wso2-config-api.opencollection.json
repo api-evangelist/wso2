@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Config API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET status of correlation log components\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/config/correlation/"
+          },
+          "docs": "GET status of correlation log components\n"
+        },
+        {
+          "info": {
+            "name": "Enable / Disable correlation logs\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/config/correlation/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation enables you to enable / disable correlation logs  of the product. This operation can be done at the product level  or at each component level by providing the componentName query parameter.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

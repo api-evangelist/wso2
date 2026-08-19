@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Marketplace Assistant API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Marketplace Assistant",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API Count endpoint.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/marketplace-assistant/api-count"
+          },
+          "docs": "Get the api count of Marketplace Assistant AI service.\n"
+        },
+        {
+          "info": {
+            "name": "Marketplace Assistant Chat Endpoint.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/marketplace-assistant/chat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a single query to the service and get the response.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

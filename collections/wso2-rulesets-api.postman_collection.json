@@ -1,0 +1,3129 @@
+{
+  "item": [
+    {
+      "id": "d4d2b9ce-55d1-43d8-875e-303fd80fd6ff",
+      "name": "Rulesets",
+      "description": {
+        "content": "for managing rulesets.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d957239c-d4ce-4984-aaf5-8a4d9599dc86",
+          "name": "Retrieves a list of rulesets.",
+          "request": {
+            "name": "Retrieves a list of rulesets.",
+            "description": {
+              "content": "Returns a list of all rulesets associated with the requested organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Maximum size of resource array to return.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Starting point within the complete list of items qualified.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "You can search for rulesets using the following format:\n\n  - \"query=name:{NAME}\" searches rulesets by name.\n  - \"query=artifactType:{ARTIFACT_TYPE}\" searches rulesets by artifact type.\n  - \"query=ruleType:{RULE_TYPE}\" searches rulesets by rule type.\n\nYou can combine multiple attributes to search for rulesets:\n  - \"query=name:{NAME} artifactType:{ARTIFACT_TYPE} ruleType:{RULE_TYPE}\" searches rulesets by name, artifact type, and rule type.\n\nRemember to use URL encoding if your client does not support it (e.g., curl).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a9ec0043-ee4e-4ad1-ad49-fb0e405a98f3",
+              "name": "OK. Successful response with a list of rulesets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Security Practices artifactType:REST_API ruleType:API_DEFINITION"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2,\n  \"list\": [\n    {\n      \"name\": \"API Security Ruleset\",\n      \"ruleType\": \"API_DEFINITION\",\n      \"artifactType\": \"REST_API\",\n      \"provider\": \"TechWave\",\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"description\": \"A ruleset designed to enforce security standards for APIs.\",\n      \"ruleCategory\": \"SPECTRAL\",\n      \"documentationLink\": \"https://example.com/docs/api-security-ruleset\",\n      \"createdBy\": \"admin@gmail.com\",\n      \"createdTime\": \"2024-08-01T12:00:00Z\",\n      \"updatedBy\": \"admin@gmail.com\",\n      \"updatedTime\": \"2024-08-02T12:00:00Z\"\n    },\n    {\n      \"name\": \"API Security Ruleset\",\n      \"ruleType\": \"API_DEFINITION\",\n      \"artifactType\": \"REST_API\",\n      \"provider\": \"TechWave\",\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"description\": \"A ruleset designed to enforce security standards for APIs.\",\n      \"ruleCategory\": \"SPECTRAL\",\n      \"documentationLink\": \"https://example.com/docs/api-security-ruleset\",\n      \"createdBy\": \"admin@gmail.com\",\n      \"createdTime\": \"2024-08-01T12:00:00Z\",\n      \"updatedBy\": \"admin@gmail.com\",\n      \"updatedTime\": \"2024-08-02T12:00:00Z\"\n    }\n  ],\n  \"pagination\": {\n    \"offset\": 0,\n    \"limit\": 1,\n    \"total\": 10,\n    \"next\": \"string\",\n    \"previous\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c656cf1-5c5f-4728-a2a0-d724a4642f0c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Security Practices artifactType:REST_API ruleType:API_DEFINITION"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a242b801-1766-4565-8c5b-b977b6d827fa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Security Practices artifactType:REST_API ruleType:API_DEFINITION"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b944cd8-0832-4076-ab4a-327c5ab18cf4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Security Practices artifactType:REST_API ruleType:API_DEFINITION"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c68c42b-f5ca-44b4-9d3f-117112613136",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "query",
+                      "value": "name:WSO2 Security Practices artifactType:REST_API ruleType:API_DEFINITION"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a11b4caf-f2c6-46bb-ba8e-f55f25bc63da",
+          "name": "Create a new ruleset.",
+          "request": {
+            "name": "Create a new ruleset.",
+            "description": {
+              "content": "Creates a new ruleset in the user's organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Name of the ruleset."
+                },
+                {
+                  "key": "rulesetContent",
+                  "type": "file",
+                  "description": "(Required) The content of the ruleset file (YAML or JSON)."
+                },
+                {
+                  "key": "ruleType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)"
+                },
+                {
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)"
+                },
+                {
+                  "key": "description",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "A brief description of the ruleset."
+                },
+                {
+                  "key": "ruleCategory",
+                  "value": "SPECTRAL",
+                  "type": "text",
+                  "description": "Category the rules included in ruleset. (This can only be one of SPECTRAL)"
+                },
+                {
+                  "key": "documentationLink",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL to the documentation related to the ruleset."
+                },
+                {
+                  "key": "provider",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Entity or individual providing the ruleset."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bbdbd0b3-ca5a-497f-b22e-2fdfcc46ff69",
+              "name": "OK. Ruleset created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Ruleset\",\n  \"ruleType\": \"API_DEFINITION\",\n  \"artifactType\": \"REST_API\",\n  \"provider\": \"TechWave\",\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"description\": \"A ruleset designed to enforce security standards for APIs.\",\n  \"ruleCategory\": \"SPECTRAL\",\n  \"documentationLink\": \"https://example.com/docs/api-security-ruleset\",\n  \"createdBy\": \"admin@gmail.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@gmail.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9fc9e3a-dc77-4028-93a4-9bf3fab6070a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c79245c-2039-43c3-8b38-ddcc30b35afd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16924184-b5be-45e9-b850-ac0eea71d54d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a38dda9-938c-4c27-ab88-cf4cb5b0615f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be21c926-ff1b-4be1-af28-b2f546e459c4",
+          "name": "Retrieves details of a specific ruleset.",
+          "request": {
+            "name": "Retrieves details of a specific ruleset.",
+            "description": {
+              "content": "Retrieves details of the ruleset identified by the rulesetId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets",
+                ":rulesetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rulesetId",
+                  "description": "(Required) **UUID** of the Ruleset.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d4b68013-b02c-4ce8-b95c-1813fe28c8c5",
+              "name": "OK. Ruleset details retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Ruleset\",\n  \"ruleType\": \"API_DEFINITION\",\n  \"artifactType\": \"REST_API\",\n  \"provider\": \"TechWave\",\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"description\": \"A ruleset designed to enforce security standards for APIs.\",\n  \"ruleCategory\": \"SPECTRAL\",\n  \"documentationLink\": \"https://example.com/docs/api-security-ruleset\",\n  \"createdBy\": \"admin@gmail.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@gmail.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1801fcc-94a4-448c-aa0c-80ff803e8379",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "730ed3a6-c43c-4c3d-b512-bc038792b627",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c842a9f0-3ff7-4d7f-a1e3-c8574a2e19c3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70d89ec6-e388-4c9d-bbbf-eea5f20e6d6c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46982a67-c74a-4782-94a6-74c63d9045dd",
+          "name": "Updates a specific ruleset.",
+          "request": {
+            "name": "Updates a specific ruleset.",
+            "description": {
+              "content": "Updates the details of the ruleset identified by the `rulesetId`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets",
+                ":rulesetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rulesetId",
+                  "description": "(Required) **UUID** of the Ruleset.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Name of the ruleset."
+                },
+                {
+                  "key": "rulesetContent",
+                  "value": "<binary>",
+                  "type": "text",
+                  "description": "(Required) The content of the ruleset file (YAML or JSON)."
+                },
+                {
+                  "key": "ruleType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)"
+                },
+                {
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)"
+                },
+                {
+                  "key": "description",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "A brief description of the ruleset."
+                },
+                {
+                  "key": "ruleCategory",
+                  "value": "SPECTRAL",
+                  "type": "text",
+                  "description": "Category the rules included in ruleset. (This can only be one of SPECTRAL)"
+                },
+                {
+                  "key": "documentationLink",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "URL to the documentation related to the ruleset."
+                },
+                {
+                  "key": "provider",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Entity or individual providing the ruleset."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "80140ccc-298f-49d0-96e0-e820d4bfd13a",
+              "name": "OK. Ruleset updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"API Security Ruleset\",\n  \"ruleType\": \"API_DEFINITION\",\n  \"artifactType\": \"REST_API\",\n  \"provider\": \"TechWave\",\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"description\": \"A ruleset designed to enforce security standards for APIs.\",\n  \"ruleCategory\": \"SPECTRAL\",\n  \"documentationLink\": \"https://example.com/docs/api-security-ruleset\",\n  \"createdBy\": \"admin@gmail.com\",\n  \"createdTime\": \"2024-08-01T12:00:00Z\",\n  \"updatedBy\": \"admin@gmail.com\",\n  \"updatedTime\": \"2024-08-02T12:00:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "deee1abf-8cc3-4e4f-b55a-15d73300eb3d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "696d406e-035e-4e5d-b92d-605136b4d830",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "820f392d-5073-47e2-ab91-7aaadfcecac2",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d29db0f-0826-4257-968d-51bffd6f55e3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Name of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "API Security Ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The content of the ruleset file (YAML or JSON).",
+                        "type": "text/plain"
+                      },
+                      "key": "rulesetContent",
+                      "value": "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) Context or area to which the ruleset applies. (This can only be one of API_METADATA,API_DEFINITION,API_DOCUMENTATION)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleType",
+                      "value": "API_DEFINITION",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of artifact that the ruleset validates. (This can only be one of REST_API,ASYNC_API,MCP)",
+                        "type": "text/plain"
+                      },
+                      "key": "artifactType",
+                      "value": "REST_API",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A brief description of the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "A ruleset designed to enforce security standards for APIs.",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Category the rules included in ruleset. (This can only be one of SPECTRAL)",
+                        "type": "text/plain"
+                      },
+                      "key": "ruleCategory",
+                      "value": "SPECTRAL",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "URL to the documentation related to the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "documentationLink",
+                      "value": "https://example.com/docs/api-security-ruleset",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Entity or individual providing the ruleset.",
+                        "type": "text/plain"
+                      },
+                      "key": "provider",
+                      "value": "TechWave",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "984d49fb-0336-407b-a31d-635f51753179",
+          "name": "Deletes a specific ruleset.",
+          "request": {
+            "name": "Deletes a specific ruleset.",
+            "description": {
+              "content": "Deletes an existing ruleset identified by the rulesetId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets",
+                ":rulesetId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rulesetId",
+                  "description": "(Required) **UUID** of the Ruleset.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c23dc80d-c082-4051-8786-dbcb8ae4b3d4",
+              "name": "OK. Ruleset deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03fb28ef-9483-4130-bf80-3e757b9da278",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e83ac9b-8769-4d2d-819a-c26e97fc6d16",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee073e08-0eae-441c-b49c-4f71b2ec3dab",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4249c1a0-e32e-4d1e-844d-b919a633bb1a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5609977e-bdee-44d9-8325-b233752b4cdc",
+          "name": "Retrieves the content of a specific ruleset.",
+          "request": {
+            "name": "Retrieves the content of a specific ruleset.",
+            "description": {
+              "content": "Retrieves the content of the ruleset identified by the rulesetId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets",
+                ":rulesetId",
+                "content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rulesetId",
+                  "description": "(Required) **UUID** of the Ruleset.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-yaml"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72c6bdae-7ea0-4cfb-a660-4bb1034406f0",
+              "name": "OK. Ruleset content retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/x-yaml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92c45fa6-33ca-4c90-90d7-39b7358dc539",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b7d62b6-84ff-4723-943b-1669b454b845",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcae105e-a162-4d35-96a8-ab69d288a270",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2db9c87-6a59-48fb-85e3-a308971f0d4e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c8f9e97-bad0-4cda-941f-4287c83d9537",
+          "name": "Retrieves the policy usage of a specific ruleset.",
+          "request": {
+            "name": "Retrieves the policy usage of a specific ruleset.",
+            "description": {
+              "content": "Retrieves the list of policies using the ruleset identified by the rulesetId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rulesets",
+                ":rulesetId",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rulesetId",
+                  "description": "(Required) **UUID** of the Ruleset.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid apim:policies_import_export apim:admin apim:tier_view apim:tier_manage apim:admin_tier_view apim:admin_tier_manage apim:bl_view apim:bl_manage apim:mediation_policy_view apim:mediation_policy_create apim:app_owner_change apim:app_settings_change apim:app_import_export apim:api_import_export apim:api_product_import_export apim:environment_manage apim:environment_read apim:monetization_usage_publish apim:api_workflow_approve apim:bot_data apim:tenantInfo apim:tenant_theme_manage apim:admin_operations apim:api_category apim:admin_settings apim:admin_alert_manage apim:api_workflow_view apim:scope_manage apim:role_manage apim:admin_application_view apim:keymanagers_manage apim:api_provider_change apim:llm_provider_manage apim:gov_policy_read apim:gov_policy_manage apim:gov_result_read apim:gov_rule_read apim:gov_rule_manage apim:organization_manage apim:organization_read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://localhost:9443/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aac176e6-0adb-45f8-bff7-e0a6a7aaad58",
+              "name": "OK. Ruleset usage retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"123e4567-e89b-12d3-a456-426614174000\",\n  \"123e4567-e89b-12d3-a456-426614174000\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "533dcafe-9b84-4de8-a83f-2f38b91cc34a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f350241-3c02-44ce-9d3f-3f94445888e7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cadc4765-88cc-40e6-be30-6d8ed6001deb",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb8d594d-6914-43e5-9f80-dc729ce311e3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rulesets",
+                    ":rulesetId",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rulesetId",
+                      "description": "(Required) **UUID** of the Ruleset.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9666,\n  \"message\": \"string\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.wso2.com/api/am/admin/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4962927d-fef4-459c-850c-3809d72383cc",
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Rulesets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n\n\nContact Support:\n Name: WSO2\n Email: architecture@wso2.com",
+      "type": "text/plain"
+    }
+  }
+}

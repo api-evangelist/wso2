@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) LLMProvider API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LLMProvider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get LLM Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/llm-providers/:llmProviderId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "LLM Provider UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a LLM Provider\n"
+        },
+        {
+          "info": {
+            "name": "Update an LLM provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/llm-providers/:llmProviderId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "LLM Provider UUID\n"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a LLM provider by LLMProviderId\n"
+        },
+        {
+          "info": {
+            "name": "Delete a LLM Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/llm-providers/:llmProviderId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "LLM Provider UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a LLM Provider by llmProviderId\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

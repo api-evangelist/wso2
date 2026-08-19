@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Label (Individual) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Label (Individual)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a new Label",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/labels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add a new Label\n"
+        },
+        {
+          "info": {
+            "name": "Update a Label",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/labels/:labelId",
+            "params": [
+              {
+                "name": "labelId",
+                "value": "",
+                "type": "path",
+                "description": "Label UUID\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a Label by label id\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Label",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/labels/:labelId",
+            "params": [
+              {
+                "name": "labelId",
+                "value": "",
+                "type": "path",
+                "description": "Label UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a Label by label id\n"
+        },
+        {
+          "info": {
+            "name": "Get a Label Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/labels/:labelId/usage",
+            "params": [
+              {
+                "name": "labelId",
+                "value": "",
+                "type": "path",
+                "description": "Label UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a single Label Usage. We should provide the Id of the Label as a path parameter.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

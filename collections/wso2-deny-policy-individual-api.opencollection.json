@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Deny Policy (Individual) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deny Policy (Individual)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Deny Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/deny-policy/:conditionId",
+            "params": [
+              {
+                "name": "conditionId",
+                "value": "",
+                "type": "path",
+                "description": "Blocking condition identifier\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a Deny policy providing the condition Id\n"
+        },
+        {
+          "info": {
+            "name": "Update a Deny Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/deny-policy/:conditionId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conditionId",
+                "value": "",
+                "type": "path",
+                "description": "Blocking condition identifier\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a deny policy by Id\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Deny Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/throttling/deny-policy/:conditionId",
+            "params": [
+              {
+                "name": "conditionId",
+                "value": "",
+                "type": "path",
+                "description": "Blocking condition identifier\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes an existing deny policy\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

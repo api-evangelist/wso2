@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Application Tokens API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Application Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/keys/:keyType/generate-token",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "path",
+                "description": "**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Generate an access token for application by client_credentials grant type\n"
+        },
+        {
+          "info": {
+            "name": "Generate Application Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/applications/:applicationId/oauth-keys/:keyMappingId/generate-token",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "Application Identifier consisting of the UUID of the Application.\n"
+              },
+              {
+                "name": "keyMappingId",
+                "value": "",
+                "type": "path",
+                "description": "OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Generate an access token for application by client_credentials grant type\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

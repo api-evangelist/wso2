@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Get Subscription Info API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Get Subscription Info",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the subscriptions meta information of an api by providing the api uuid and application uuid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/subscriptions",
+            "params": [
+              {
+                "name": "apiUUID",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the API\n"
+              },
+              {
+                "name": "appUUID",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the Application\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the Application\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to get the subscription information of an API from storage. If the Tenant domain is not provided\ncarbon.super will be picked as the Tenant domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

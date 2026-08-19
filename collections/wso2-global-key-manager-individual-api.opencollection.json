@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Global Key Manager (Individual) API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Global Key Manager (Individual)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Global Key Manager Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/global-key-managers/:keyManagerId",
+            "params": [
+              {
+                "name": "keyManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Key Manager UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve a single Global Key Manager Configuration. We should provide the Id of the KeyManager as a path \nparameter.\n"
+        },
+        {
+          "info": {
+            "name": "Update a Global Key Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/global-key-managers/:keyManagerId",
+            "params": [
+              {
+                "name": "keyManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Key Manager UUID\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a Global Key Manager by keyManager id\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Global Key Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.wso2.com/api/am/admin/v4/global-key-managers/:keyManagerId",
+            "params": [
+              {
+                "name": "keyManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Key Manager UUID\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "https://localhost:9443/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a Global Key Manager by keyManager id\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

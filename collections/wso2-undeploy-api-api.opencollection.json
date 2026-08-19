@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Undeploy Api API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Undeploy Api",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Undeploy the API in the gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.wso2.com/api/am/admin/v4/undeploy-api",
+            "params": [
+              {
+                "name": "apiName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API\n"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "version of the API\n"
+              },
+              {
+                "name": "tenantDomain",
+                "value": "",
+                "type": "query",
+                "description": "Tenant Domain of the API\n"
+              }
+            ]
+          },
+          "docs": "This operation is used to undeploy an API in the gateway. If the Tenant domain is not provided carbon.super will\nbe picked as the Tenant domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

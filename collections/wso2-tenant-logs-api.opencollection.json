@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Tenant Logs API",
+    "version": "v4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenant Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET log level of APIs\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-logs/:tenant/apis/",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path",
+                "description": "Tenant (organization) name\n"
+              },
+              {
+                "name": "log-level",
+                "value": "",
+                "type": "query",
+                "description": "Log level of the APIs\n"
+              }
+            ]
+          },
+          "docs": "GET log level of APIs\n"
+        },
+        {
+          "info": {
+            "name": "GET log enabled API data\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-logs/:tenant/apis/:apiId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path",
+                "description": "Tenant (organization) name\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API ID for the logging operation\n"
+              }
+            ]
+          },
+          "docs": "GET log enabled API data\n"
+        },
+        {
+          "info": {
+            "name": "Set logging levels of the API with its api ID\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.wso2.com/api/am/admin/v4/tenant-logs/:tenant/apis/:apiId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path",
+                "description": "Tenant (organization) name\n"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "The API ID for the logging operation\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This operation enables you to provide the API context template(context/version) with the log level (OFF|BASIC|STANDARD|FULL). You should either provide the api ID and the api log level.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
