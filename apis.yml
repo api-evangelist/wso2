@@ -37,6 +37,14 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/wso2.png
 tags:
 - API Management
 - Gateways
+- Open-Source
+- API Lifecycle
+- GraphQL
+- SOAP
+- REST
+tags_raw:
+- API Management
+- Gateways
 - Open Source
 - API Lifecycle
 - GraphQL
@@ -597,7 +605,8 @@ apis:
   humanURL: >-
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
-  tags:
+  tags: []
+  tags_raw:
   - APIs
   properties:
   - type: OpenAPI
@@ -889,6 +898,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -1289,7 +1300,8 @@ apis:
   humanURL: >-
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
-  tags:
+  tags: []
+  tags_raw:
   - End Points
   properties:
   - type: OpenAPI
@@ -1870,6 +1882,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - LLM Providers
+  tags_raw:
   - LLMProviders
   properties:
   - type: OpenAPI
@@ -2123,6 +2137,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -2447,6 +2463,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - SDK
+  tags_raw:
   - SDKs
   properties:
   - type: OpenAPI
@@ -2702,6 +2720,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -3170,6 +3190,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -3206,6 +3228,8 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
