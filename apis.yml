@@ -16,7 +16,7 @@ deliveryModel:
   - license
   - openapi
   - pricing
-  generated: '2026-08-11'
+  generated: '2026-08-28'
   method: derived
 accessModel:
   pricing: freemium
@@ -3332,6 +3332,19 @@ apis:
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
 common:
+- type: CapabilityMap
+  url: capabilities/wso2-capability-edges.yml
+  name: WSO2 Business Capability Map
+- type: IssueTracker
+  url: https://github.com/wso2/product-apim/issues
+- type: Releases
+  url: https://github.com/wso2/product-apim/releases
+- type: SecurityPolicy
+  url: https://github.com/wso2/product-apim/blob/master/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/wso2/product-apim/blob/master/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/wso2/product-apim/blob/master/CONTRIBUTING.md
 - type: License
   name: Apache-2.0
   url: https://github.com/wso2/product-apim/blob/master/LICENSE
