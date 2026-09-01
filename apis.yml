@@ -1300,8 +1300,7 @@ apis:
   humanURL: >-
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
-  tags:
-  - End Points
+  tags: []
   tags_raw:
   - End Points
   properties:
@@ -1885,7 +1884,7 @@ apis:
     https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
   baseURL: https://apis.wso2.com
   tags:
-  - LLMProviders
+  - LLM Providers
   tags_raw:
   - LLMProviders
   properties:
