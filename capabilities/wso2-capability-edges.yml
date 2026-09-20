@@ -24,7 +24,8 @@ edges:
   reason: Operations generate, map, rotate and delete OAuth consumer key/secret pairs and grant types
     for API-consuming applications — issuance and stewardship of developer credentials and OAuth clients.
 - tag: APIKeys
-  spec_file: wso2-apikeys-api-openapi.yml
+  spec_file: wso2-api-keys-api-openapi.yml
+  reanchored_from: wso2-apikeys-api-openapi.yml
   capability_id: BC-4270.40
   capability_id_l1: BC-4270
   capability_name: Developer Identity & Credential Management
