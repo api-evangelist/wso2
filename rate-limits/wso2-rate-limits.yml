@@ -1,61 +1,46 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: WSO2
-providerId: wso2
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
-tags:
-  - Rate Limiting
-  - API Management
-  - Gateways
-description: The WSO2 Publisher / Developer Portal / Admin / Gateway / Service Catalog / DevOps /
-  DCR / Governance APIs are administrative endpoints of the on-prem (Apache 2.0) WSO2 API Manager
-  product. There is no vendor-imposed public rate limit; all throttling is whatever the operator
-  configures inside their own deployment via API Manager throttling policies. WSO2 Choreo and
-  Asgardeo enforce platform-side limits by tier (component count, build/deployment caps, MAU
-  caps, request quotas) but do not publish a per-second numeric ceiling on the management APIs.
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://apim.docs.wso2.com/en/latest/api-gateway/rate-limiting/understand-rate-limit-enforcement/
 sources:
-  - https://wso2.com/choreo/pricing/
-  - https://wso2.com/asgardeo/pricing/
+- https://apim.docs.wso2.com/en/latest/api-gateway/rate-limiting/understand-rate-limit-enforcement/
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: true
+note: Conceptual page on rate limit enforcement; numeric values come from default subscription/application/advanced
+  tiers and a burst control example. Error body code 900800 returned with HTTP 429.
+limit_count: 6
 limits:
-  - name: Operator-configured throttling (on-prem WSO2 API Manager)
-    scope: deployment
-    metric: varies
-    limit: configured by API Manager throttling tier policies
-    notes: WSO2 ships throttling tiers (Bronze / Silver / Gold / Unlimited and custom) that the
-      product operator binds to APIs and applications. The numeric values are the operator's
-      configuration choice rather than a vendor-imposed ceiling.
-  - name: Choreo platform limits per tier
-    scope: tier
-    metric: varies
-    limit: 'see https://wso2.com/choreo/pricing/'
-    notes: Choreo enforces per-month build, deployment, infrastructure, and API-request caps by
-      pricing tier (Developer / Team / Enterprise). Per-second runtime ceilings on customer APIs
-      depend on the component's resource quota, not a vendor flat rate.
-  - name: Asgardeo platform limits per tier
-    scope: tier
-    metric: monthly_active_users
-    limit: 'see https://wso2.com/asgardeo/pricing/'
-    notes: Asgardeo's tier ceiling is monthly active users (MAU). Free B2C 7,500 MAU; Free B2B
-      250 MAU; Free B2E 50 MAU. Authentication-flow throttling is not publicly disclosed.
-policies:
-  - name: Self-hosted throttling
-    description: For on-prem WSO2 API Manager, throttling is a product feature - operators define
-      Bronze/Silver/Gold/Unlimited tiers and bind them to APIs via the Publisher / Admin Portal.
-  - name: Backoff
-    description: Standard guidance is exponential backoff with jitter on 429 / 503 responses.
-  - name: Tier-driven ceilings
-    description: For Choreo and Asgardeo SaaS, the published pricing-tier caps act as the
-      effective limits; consumers exceeding them must upgrade or contact sales.
-  - name: Open-source disclaimer
-    description: WSO2 does not publish vendor-imposed rate limits on the open-source API Manager
-      management APIs because there is no vendor control plane in front of them.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-    url: https://apievangelist.com
+- name: Subscription tier Bronze
+  limit_text: Bronze (1000 req/min)
+  limit: 1000
+  window: minute
+  scope: plan
+  plan: Bronze
+- name: Subscription tier Silver
+  limit_text: Silver (2000 req/min)
+  limit: 2000
+  window: minute
+  scope: plan
+  plan: Silver
+- name: Subscription tier Gold
+  limit_text: Gold (5000 req/min)
+  limit: 5000
+  window: minute
+  scope: plan
+  plan: Gold
+- name: Subscription burst control example
+  limit_text: burst control can limit it to 25 requests per minute
+  limit: 25
+  window: minute
+  scope: plan
+  kind: burst
+- name: Application-level default tiers
+  limit_text: 'Default tiers : 10PerMin, 20PerMin, 50PerMin, Unlimited'
+  scope: plan
+- name: Resource/API-level default tiers
+  limit_text: 'Default tiers : 10KPerMin, 20KPerMin, 50KPerMin, Unlimited'
+  scope: plan
+exceeded_status: 429
