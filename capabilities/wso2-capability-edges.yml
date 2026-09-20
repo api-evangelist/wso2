@@ -1,0 +1,237 @@
+slug: wso2
+provider: WSO2
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 22
+edges:
+- tag: Application Keys
+  spec_file: wso2-application-keys-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.9
+  evidence: POST /applications/{applicationId}/generate-keys  Generate Application Keys; POST /applications/{applicationId}/keys/{keyType}/regenerate-secret  Re-Generate
+    Consumer Secret; GET /applications/{applicationId}/oauth-keys
+  reason: Operations generate, map, rotate and delete OAuth consumer key/secret pairs and grant types
+    for API-consuming applications — issuance and stewardship of developer credentials and OAuth clients.
+- tag: APIKeys
+  spec_file: wso2-apikeys-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.85
+  evidence: POST /apis/{apiId}/api-keys/generate  generateApiBoundApiKey  Generate API Key; POST /api-keys/revoke  revokeAPIKeyFromAdmin  Revoke
+    an API Key
+  reason: Operations issue, regenerate and revoke API keys bound to APIs and consuming applications —
+    issuance and stewardship of developer credentials for a platform's public APIs, i.e. Developer Identity
+    & Credential Management. Not general enterprise IAM since the subjects are API consumer keys on an
+    API management platform.
+- tag: Advanced Policy (Collection)
+  spec_file: wso2-advanced-policy-collection-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.85
+  evidence: GET /throttling/policies/advanced  Get all Advanced Throttling Policies; schemas RequestCountLimit,
+    BandwidthLimit, AIAPIQuotaLimit
+  reason: Despite the generic tag, the operations create and list throttling policies with request-count,
+    bandwidth and quota limits — this is API quota and rate-limit governance over API consumption, not
+    any business policy management.
+- tag: Advanced Policy (Individual)
+  spec_file: wso2-advanced-policy-individual-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.85
+  evidence: GET /throttling/policies/advanced/{policyId}  Get an Advanced Throttling Policy; PUT ... Update
+    an Advanced Throttling Policy
+  reason: CRUD on individual advanced throttling policies with ThrottleLimit/AIAPIQuotaLimit schemas —
+    rate-limit and quota governance for API consumption.
+- tag: Application Policy (Collection)
+  spec_file: wso2-application-policy-collection-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.85
+  evidence: GET /throttling/policies/application  Get all Application Throttling Policies; schemas RequestCountLimit,
+    BurstLimit, AIAPIQuotaLimit
+  reason: Creation and listing of per-application throttling tiers with request-count, burst and quota
+    limits — quota and rate-limit governance of API consumption, not business policy management.
+- tag: Application Secrets
+  spec_file: wso2-application-secrets-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.85
+  evidence: POST /applications/{applicationId}/oauth-keys/{keyMappingId}/generate-secret  Generate a New
+    Consumer Secret ... revokeConsumerSecret
+  reason: Issuance and revocation of OAuth consumer secrets for API consumer applications is developer
+    credential management on the API platform.
+- tag: SDKs
+  spec_file: wso2-sdks-api-openapi.yml
+  capability_id: BC-4270.20
+  capability_id_l1: BC-4270
+  capability_name: SDK & Client Library Management
+  confidence: 0.85
+  evidence: GET /apis/{apiId}/sdks/{language} Generate a SDK for an API; GET /sdk-gen/languages Get a
+    List of Supported SDK Languages
+  reason: Operations generate client SDKs for published APIs across supported languages, which is plainly
+    SDK & Client Library Management within the developer platform capability.
+- tag: Subscription Policy (Collection)
+  spec_file: wso2-subscription-policy-collection-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.85
+  evidence: 'GET /throttling/policies/subscription  Get all Subscription Throttling Policies; schemas:
+    RequestCountLimit, AIAPIQuotaLimit, MonetizationInfo, ThrottleLimit'
+  reason: Defines throttling tiers (request/bandwidth/quota limits) applied to API subscriptions, with
+    monetization info — this is quota and rate-limit governance of API consumption mapped to commercial
+    tiers.
+- tag: Subscription Policy (Individual)
+  spec_file: wso2-subscription-policy-individual-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.85
+  evidence: 'PUT /throttling/policies/subscription/{policyId}  Update a Subscription Policy; schemas:
+    RequestCountLimit, AIAPIQuotaLimit, MonetizationInfo'
+  reason: CRUD on individual subscription throttling policies (rate/quota limits per subscription tier)
+    is API consumption governance, not commercial SaaS subscription management.
+- tag: Application Tokens
+  spec_file: wso2-application-tokens-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.82
+  evidence: POST /applications/{applicationId}/keys/{keyType}/generate-token  Generate Application Token
+  reason: Generating OAuth access tokens for registered consumer applications is stewardship of developer
+    credentials/OAuth clients for the API ecosystem.
+- tag: Application Policy (Individual)
+  spec_file: wso2-application-policy-individual-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.8
+  evidence: GET /throttling/policies/application/{policyId} Get an Application Throttling Policy; schemas
+    RequestCountLimit, BandwidthLimit, AIAPIQuotaLimit
+  reason: Operations manage throttling/rate-limit policies applied to API consumer applications, which
+    is API consumption governance (quotas and rate limits) on an API management platform.
+- tag: System Scopes
+  spec_file: wso2-system-scopes-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /system-scopes  Get Role Scope Mappings; PUT /system-scopes  Update Roles For Scope; GET
+    /system-scopes/role-aliases  Retrieve Role Alias Mappings
+  reason: Operations manage OAuth2 scope-to-role mappings and role aliases governing who may invoke which
+    API operations — role-based access control administration.
+- tag: Custom Rules (Collection)
+  spec_file: wso2-custom-rules-collection-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.78
+  evidence: GET /throttling/policies/custom  Get all Custom Rules; schemas CustomRule, ThrottlePolicy
+  reason: Custom rules here are custom throttling policies under /throttling/policies, i.e. rate-limit
+    and quota governance over API consumption.
+- tag: Custom Rules (Individual)
+  spec_file: wso2-custom-rules-individual-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.78
+  evidence: PUT /throttling/policies/custom/{ruleId}  Update a Custom Rule; schema ThrottlePolicy
+  reason: CRUD on individual custom throttling policies is API rate-limit/quota governance, not business
+    rules management.
+- tag: Webhooks
+  spec_file: wso2-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.78
+  evidence: GET /webhooks/subscriptions — "Get available web hook subscriptions for a given application.";
+    schemas WebhookSubscription, WebhookSubscriptionList
+  reason: Surfaces the inventory of outbound webhook subscriptions held per application, i.e. webhook/event
+    subscription management on the API platform. Read-only only, so not maximal confidence.
+- tag: API Monetization
+  spec_file: wso2-api-monetization-api-openapi.yml
+  capability_id: BC-4250
+  capability_id_l1: BC-4250
+  capability_name: Subscription Billing & Revenue Management
+  confidence: 0.75
+  evidence: GET /subscriptions/{subscriptionId}/usage — "Get Details of a Pending Invoice for a Monetized
+    Subscription with Metered Billing" (schema APIMonetizationUsage)
+  reason: The operation returns pending invoice/usage detail for a monetized subscription under metered
+    billing, squarely subscription billing and revenue management. Evidence straddles usage metering and
+    invoicing, so L1 only.
+- tag: Monetization (Collection)
+  spec_file: wso2-monetization-collection-api-openapi.yml
+  capability_id: BC-4250.10
+  capability_id_l1: BC-4250
+  capability_name: Usage Metering
+  confidence: 0.75
+  evidence: POST /monetization/publish-usage    Publish Usage Records; schema MonetizationUsagePublishInfo
+  reason: Publishes aggregated API usage records to the monetization/billing engine and reports publisher
+    status — usage metering feeding downstream rating and billing for the API subscription model.
+- tag: Tenant Config
+  spec_file: wso2-tenant-config-api-openapi.yml
+  capability_id: BC-4230.20
+  capability_id_l1: BC-4230
+  capability_name: Tenant Configuration Management
+  confidence: 0.75
+  evidence: GET /tenant-config  exportTenantConfig  Export a tenant-Config.; PUT /tenant-config  updateTenantConfig  Update
+    a tenant-config.
+  reason: Export/update of per-tenant configuration in a multi-tenant API management platform matches
+    tenant configuration management above the shared product baseline.
+- tag: Throttling Policies
+  spec_file: wso2-throttling-policies-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.72
+  evidence: GET /throttling-policies/{policyLevel} — "Get All Available Throttling Policies"; schemas
+    ThrottlingPolicy, ThrottlingPolicyList, MonetizationInfo
+  reason: Admin-portal management of throttling (rate-limit/quota) policies applied to API consumers,
+    which is API consumption governance on an API management platform. Read-only surface and generic policy
+    schemas keep confidence moderate.
+- tag: API Documents
+  spec_file: wso2-api-documents-api-openapi.yml
+  capability_id: BC-4270.30
+  capability_id_l1: BC-4270
+  capability_name: Developer Portal Management
+  confidence: 0.7
+  evidence: '"Get a List of Documents of an API", "Get the Content of an API Document" (schemas Document,
+    DocumentList)'
+  reason: Retrieval of documentation attached to published APIs for consumers — the documentation function
+    of a developer portal in an API management platform. Some chance it is better read as generic content
+    storage, hence 0.7.
+- tag: Consumption
+  spec_file: wso2-consumption-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.7
+  evidence: GET /export-consumption  exportConsumptionData  Export API Consumption Data
+  reason: Export of API consumption/usage data supports API consumption analytics and governance; the
+    surface is a single export operation so confidence is moderate.
+- tag: Tenant Logs
+  spec_file: wso2-tenant-logs-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: 'GET /tenant-logs/{tenant}/apis/  GET log level of APIs; PUT /tenant-logs/{tenant}/apis/{apiId}  Set
+    logging levels of the API with its api ID; schemas: LoggingApiOutput, LoggingApiInput'
+  reason: Controls per-API log levels and log-enabled state for a tenant — runtime log instrumentation
+    of the running service, i.e. observability management rather than any tenant commercial function.
