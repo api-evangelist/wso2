@@ -10,6 +10,14 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: developer-api
 pricing_basis: tiered-subscription
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: WSO2 API Manager, a fully self-managed solution, is also available where both the API control
+    plane and gateway are hosted on your own infrastructure. Enterprise pricing is tailored to your specific
+    scale.
+  managed_tier: Growth
 published: true
 note: 'Page also shows a pricing calculator example: Gateway Events (5M) (Hybrid) $165.61, Metered Events
   (5M) Advanced Analytics & Monetization $608.75, APIs (2) $20.00, MCP Servers (2) $20.00, LLM Proxy (1)
