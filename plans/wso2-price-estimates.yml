@@ -9,7 +9,10 @@ note: ESTIMATES, not quotes. Computed by API Evangelist from the prices this pro
 audience_of_source_pricing: developer-api
 pricing_basis: tiered-subscription
 delivery: managed+licensed
-delivery_method: keyword
+delivery_method: page
+delivery_evidence: WSO2 API Manager, a fully self-managed solution, is also available where both the API
+  control plane and gateway are hosted on your own infrastructure. Enterprise pricing is tailored to your
+  specific scale.
 estimate_count: 2
 estimates:
 - kind: entry_cost
