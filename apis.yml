@@ -3341,6 +3341,8 @@ apis:
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/governance-apis/governance-v1/governance-v1/
 common:
+- type: Plans
+  url: plans/wso2-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/wso2-capability-edges.yml
   name: WSO2 Business Capability Map
