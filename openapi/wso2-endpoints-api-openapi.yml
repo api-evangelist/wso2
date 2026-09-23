@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v2.3
-  title: WSO2 API Manager - Gateway Undeploy API
+  title: WSO2 API Manager - Gateway End Points API
   description: 'This document specifies a **RESTful API** for WSO2 **API Manager** - Gateway.
 
     Please see full swagger definition of the API which is written using swagger 2.0 specification.'
@@ -15,15 +15,15 @@ info:
 servers:
 - url: https://apis.wso2.com/api/am/gateway/v2
 tags:
-- name: Undeploy Api
+- name: Endpoints
 paths:
-  /undeploy-api:
-    post:
-      summary: Undeploy the API in the gateway
-      description: 'This operation is used to undeploy an API in the gateway. If the Tenant domain is not provided carbon.super will
+  /end-points:
+    get:
+      summary: Get end-points from the storage for the API
+      description: 'This operation is used to get the end-points from the storage. If the Tenant domain is not provided
 
-        be picked as the Tenant domain.'
-      operationId: undeployAPI
+        carbon.super will be picked as the Tenant domain.'
+      operationId: getEndpoints
       parameters:
       - $ref: '#/components/parameters/apiName'
       - $ref: '#/components/parameters/version'
@@ -32,13 +32,13 @@ paths:
         200:
           description: 'OK.
 
-            API successfully undeployed from the Gateway.
+            End-points successfully retrieved from the storage for the API.
 
             '
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeployResponse'
+                $ref: '#/components/schemas/Endpoints'
         400:
           description: 'Bad Request.
 
@@ -61,9 +61,9 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-code-samples:
       - lang: Curl
-        source: 'curl -k -X POST "https://127.0.0.1:9443/api/am/gateway/v2/undeploy-api?apiName=PizzaAPI&version=1.0&tenantDomain=registry.com" -H "Authorization: Basic YWRtaW46YWRtaW4="'
+        source: 'curl -k "https://127.0.0.1:9443/api/am/gateway/v2/end-points?apiName=PizzaAPI&version=1.0&tenantDomain=registry.com" -H "Authorization: Basic YWRtaW46YWRtaW4="'
       tags:
-      - Undeploy Api
+      - Endpoints
 components:
   parameters:
     version:
@@ -125,26 +125,17 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    DeployResponse:
-      title: Deploy API Response
-      required:
-      - deployStatus
+    Endpoints:
+      title: Endpoints Response
       properties:
-        deployStatus:
-          description: 'This attribute declares whether deployment task is successfull or failed.
+        endpoints:
+          description: 'The end points which has been deployed in the gateway
 
             '
-          type: string
-          enum:
-          - DEPLOYED
-          - UNDEPLOYED
-          - ERROR
-          example: DEPLOYED
-        jsonPayload:
-          description: 'Attributes that returned after the api deployment
-
-            '
-          type: string
+          type: array
+          items:
+            type: string
+            example: <endpoint xmlns="http://ws.apache.org/ns/synapse" name="PizzaShackAPI--v1.0.0_APIproductionEndpoint"><http uri-template="https://localhost:9443/am/sample/pizzashack/v1/api/"><timeout><responseAction>fault</responseAction></timeout></http><property name="ENDPOINT_ADDRESS" value="https://localhost:9443/am/sample/pizzashack/v1/api/"/></endpoint>
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:

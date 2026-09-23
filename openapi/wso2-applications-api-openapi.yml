@@ -1,7 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: WSO2 API Manager - Admin Advanced Policy (Collection) Advanced Policy (Collection) Applications API
-  description: "This document specifies a **RESTful API** for WSO2 **API Manager** - **Admin Portal**.\nPlease see [full OpenAPI Specification](https://raw.githubusercontent.com/wso2/carbon-apimgt/master/components/apimgt/org.wso2.carbon.apimgt.rest.api.admin.v1/src/main/resources/admin-api.yaml) of the API which is written using [OAS 3.0](http://swagger.io/) specification.\n\n# Authentication\nThe Admin REST API is protected using OAuth2 and access control is achieved through scopes. Before you start invoking\nthe the API you need to obtain an access token with the required scopes. This guide will walk you through the steps\nthat you will need to follow to obtain an access token.\nFirst you need to obtain the consumer key/secret key pair by calling the dynamic client registration (DCR) endpoint. You can add your preferred grant types\nin the payload. A sample payload is shown below.\n```\n  {\n  \"callbackUrl\":\"www.example.com\",\n  \"clientName\":\"rest_api_admin\",\n  \"owner\":\"admin\",\n  \"grantType\":\"client_credentials password refresh_token\",\n  \"saasApp\":true\n  }\n```\nCreate a file (payload.json) with the above sample payload, and use the cURL shown bellow to invoke the DCR endpoint. Authorization header of this should contain the\nbase64 encoded admin username and password.\n**Format of the request**\n```\n  curl -X POST -H \"Authorization: Basic Base64(admin_username:admin_password)\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://<host>:<servlet_port>/client-registration/v0.17/register\n```\n**Sample request**\n```\n  curl -X POST -H \"Authorization: Basic YWRtaW46YWRtaW4=\" -H \"Content-Type: application/json\"\n  \\ -d @payload.json https://localhost:9443/client-registration/v0.17/register\n```\nFollowing is a sample response after invoking the above curl.\n```\n{\n\"clientId\": \"fOCi4vNJ59PpHucC2CAYfYuADdMa\",\n\"clientName\": \"rest_api_admin\",\n\"callBackURL\": \"www.example.com\",\n\"clientSecret\": \"a4FwHlq0iCIKVs2MPIIDnepZnYMa\",\n\"isSaasApplication\": true,\n\"appOwner\": \"admin\",\n\"jsonString\": \"{\\\"grant_types\\\":\\\"client_credentials password refresh_token\\\",\\\"redirect_uris\\\":\\\"www.example.com\\\",\\\"client_name\\\":\\\"rest_api_admin\\\"}\",\n\"jsonAppAttribute\": \"{}\",\n\"tokenType\": null\n}\n```\nNote that in a distributed deployment or IS as KM separated environment to invoke RESTful APIs (product APIs), users must generate tokens through API-M Control Plane's token endpoint.\nThe tokens generated using third party key managers, are to manage end-user authentication when accessing APIs.\n\nNext you must use the above client id and secret to obtain the access token.\nWe will be using the password grant type for this, you can use any grant type you desire.\nYou also need to add the proper **scope** when getting the access token. All possible scopes for Admin REST API can be viewed in **OAuth2 Security** section\nof this document and scope for each resource is given in **authorizations** section of resource documentation.\nFollowing is the format of the request if you are using the password grant type.\n```\ncurl -k -d \"grant_type=password&username=<admin_username>&password=<admin_passowrd>&scope=<scopes seperated by space>\"\n\\ -H \"Authorization: Basic base64(cliet_id:client_secret)\"\n\\ https://<host>:<server_port>/oauth2/token\n```\n**Sample request**\n```\ncurl https://localhost:9443/oauth2/token -k \\\n-H \"Authorization: Basic Zk9DaTR2Tko1OVBwSHVjQzJDQVlmWXVBRGRNYTphNEZ3SGxxMGlDSUtWczJNUElJRG5lcFpuWU1h\" \\\n-d \"grant_type=password&username=admin&password=admin&scope=apim:admin apim:tier_view\"\n```\nShown below is a sample response to the above request.\n```\n{\n\"access_token\": \"e79bda48-3406-3178-acce-f6e4dbdcbb12\",\n\"refresh_token\": \"a757795d-e69f-38b8-bd85-9aded677a97c\",\n\"scope\": \"apim:admin apim:tier_view\",\n\"token_type\": \"Bearer\",\n\"expires_in\": 3600\n}\n```\nNow you have a valid access token, which you can use to invoke an API.\nNavigate through the API descriptions to find the required API, obtain an access token as described above and invoke the API with the authentication header.\nIf you use a different authentication mechanism, this process may change.\n\n# Try out in Postman\nIf you want to try-out the embedded postman collection with \"Run in Postman\" option, please follow the guidelines listed below.\n* All of the OAuth2 secured endpoints have been configured with an Authorization Bearer header with a parameterized access token. Before invoking any REST API resource make sure you run the `Register DCR Application` and `Generate Access Token` requests to fetch an access token with all required scopes.\n* Make sure you have an API Manager instance up and running.\n* Update the `basepath` parameter to match the hostname and port of the APIM instance.\n\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/32294946-71bea2bc-f808-4208-a4f6-861ede6f0434)\n"
+  title: Wso2 Applications API
   contact:
     name: WSO2
     url: https://wso2.com/api-manager/
@@ -9,9 +8,11 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: v4
+  version: '1.0'
+  description: 'Operations tagged Applications across 2 of this provider''s published API definitions: wso2-admin-api.yaml, wso2-devportal-api.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://apis.wso2.com/api/am/admin/v4
+- url: https://apis.wso2.com/api/am/devportal/v3
 tags:
 - name: Applications
 paths:
@@ -19,12 +20,8 @@ paths:
     get:
       tags:
       - Applications
-      summary: 'Get the details of an Application
-
-        '
-      description: 'This operation can be used to get the details of an application by specifying its id.
-
-        '
+      summary: Get the details of an Application
+      description: This operation can be used to get the details of an application by specifying its id.
       parameters:
       - $ref: '#/components/parameters/applicationId'
       responses:
@@ -52,15 +49,13 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k -X GET -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/applications/0a043c2b-ee75-4ef3-9e1c-fc2610ccfa8b"'
+      operationId: getApplicationsByApplicationId
+      x-operation-id-source: derived
     delete:
       tags:
       - Applications
-      summary: 'Delete an Application
-
-        '
-      description: 'This operation can be used to delete an application by specifying its id.
-
-        '
+      summary: Delete an Application
+      description: This operation can be used to delete an application by specifying its id.
       parameters:
       - $ref: '#/components/parameters/applicationId'
       responses:
@@ -97,15 +92,13 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k -X DELETE -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/applications/0a043c2b-ee75-4ef3-9e1c-fc2610ccfa8b"'
+      operationId: deleteApplicationsByApplicationId
+      x-operation-id-source: derived
     put:
       tags:
       - Applications
-      summary: 'Update an Application
-
-        '
-      description: 'This operation can be used to update an application. Upon succesfull you will retrieve the updated application as the response.
-
-        '
+      summary: Update an Application
+      description: This operation can be used to update an application. Upon succesfull you will retrieve the updated application as the response.
       parameters:
       - $ref: '#/components/parameters/applicationId_2'
       - $ref: '#/components/parameters/If-Match'
@@ -163,16 +156,16 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -H "Content-Type: application/json" -X PUT -d @data.json "https://localhost:9443/api/am/devportal/v3/applications/896658a0-b4ee-4535-bbfa-806c894a4015"'
+      operationId: putApplicationsByApplicationId
+      x-operation-id-source: derived
+    servers:
+    - url: https://apis.wso2.com/api/am/admin/v4
   /applications:
     get:
       tags:
       - Applications
-      summary: 'Retrieve/Search Applications
-
-        '
-      description: 'This operation can be used to retrieve list of applications that is belonged to the user associated with the provided access token.
-
-        '
+      summary: Retrieve/Search Applications
+      description: This operation can be used to retrieve list of applications that is belonged to the user associated with the provided access token.
       parameters:
       - $ref: '#/components/parameters/groupId'
       - name: query
@@ -250,15 +243,13 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://localhost:9443/api/am/devportal/v3/applications?query=CalculatorApp"'
+      operationId: getApplications
+      x-operation-id-source: derived
     post:
       tags:
       - Applications
-      summary: 'Create a New Application
-
-        '
-      description: 'This operation can be used to create a new application specifying the details of the application in the payload.
-
-        '
+      summary: Create a New Application
+      description: This operation can be used to create a new application specifying the details of the application in the payload.
       requestBody:
         description: 'Application object that is to be created.
 
@@ -324,14 +315,16 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" -H "Content-Type: application/json" -X POST -d @data.json "https://localhost:9443/api/am/devportal/v3/applications"'
+      operationId: postApplications
+      x-operation-id-source: derived
+    servers:
+    - url: https://apis.wso2.com/api/am/devportal/v3
   /applications/{applicationId}/reset-throttle-policy:
     post:
       tags:
       - Applications
       summary: Reset Application-Level Throttle Policy
-      description: 'This operation can be used to reset the application-level throttle policy for a specific user.
-
-        '
+      description: This operation can be used to reset the application-level throttle policy for a specific user.
       parameters:
       - $ref: '#/components/parameters/applicationId_2'
       requestBody:
@@ -369,7 +362,80 @@ paths:
       x-code-samples:
       - lang: Curl
         source: 'curl -k \ -H "Authorization: Bearer 80249337-fe7c-3c66-bde6-ed431c144372" \ -H "Content-Type: application/json" -X POST \ -d @payload.json \ "https://localhost:9443/api/am/devportal/v3/application/37dd21cc-631e-4c73-bf73-c59cc7087a63/reset-throttle-policy"'
+      operationId: postApplicationsByApplicationIdResetThrottlePolicy
+      x-operation-id-source: derived
+    servers:
+    - url: https://apis.wso2.com/api/am/devportal/v3
 components:
+  parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application UUID
+
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
+    groupId:
+      name: groupId
+      in: query
+      description: 'Application Group Id
+
+        '
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    applicationId_2:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   schemas:
     WorkflowResponse:
       title: workflow Response
@@ -391,53 +457,6 @@ components:
         jsonPayload:
           type: string
           description: 'Attributes that returned after the workflow execution
-
-            '
-    Error_2:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem_2'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
 
             '
     Error:
@@ -529,33 +548,6 @@ components:
             '
           type: string
           example: admin
-    ConsumerSecret:
-      type: object
-      properties:
-        secretId:
-          type: string
-          description: Unique identifier for the secret
-          example: sec_123456
-        secretValue:
-          type: string
-          description: The actual secret string
-          example: '***r3tV@lu3'
-        additionalProperties:
-          type: object
-          description: Additional dynamic properties for the secret creation request.
-          additionalProperties:
-            type: object
-          example:
-            expiresAt: 1761568483
-            description: pizza application secret
-    ApplicationThrottleReset:
-      title: Reset application level throttling
-      type: object
-      properties:
-        userName:
-          type: string
-          description: The username for which the throttle policy needs to be reset
-          example: admin
     ScopeInfo:
       title: API Scope info object with scope details
       type: object
@@ -577,164 +569,40 @@ components:
         description:
           type: string
           description: Description of the scope
-    Pagination:
-      title: Pagination
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
-    ApplicationInfo:
-      title: Application info object with basic application details
+    ConsumerSecret:
       type: object
       properties:
-        applicationId:
+        secretId:
           type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
+          description: Unique identifier for the secret
+          example: sec_123456
+        secretValue:
           type: string
-          example: CalculatorApp
-        throttlingPolicy:
-          type: string
-          example: Unlimited
-        description:
-          type: string
-          example: Sample calculator application
-        status:
-          type: string
-          example: APPROVED
-          default: ''
-        groups:
-          type: array
-          example: ''
-          items:
-            type: string
-        subscriptionCount:
-          type: integer
-        attributes:
-          type: object
-          properties: {}
-          example: External Reference ID, Billing Tier
-        owner:
-          type: string
-          example: admin
-        tokenType:
-          type: string
-          example: JWT
-        createdTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
-        updatedTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
-    ApplicationList:
-      title: Application List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of applications returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationInfo'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    ApplicationKey:
-      title: Application key details
-      type: object
-      properties:
-        keyMappingId:
-          type: string
-          description: Key Manager Mapping UUID
-          readOnly: true
-          example: 92ab520c-8847-427a-a921-3ed19b15aad7
-        keyManager:
-          type: string
-          description: Key Manager Name
-          example: Resident Key Manager
-        consumerKey:
-          type: string
-          description: Consumer key of the application
-          readOnly: true
-          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
-        consumerSecret:
-          type: string
-          description: Consumer secret of the application
-          readOnly: true
-          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
-        consumerSecrets:
-          type: array
-          description: A list of all consumer secrets of the application When multiple consumer secrets are enabled
-          items:
-            $ref: '#/components/schemas/ConsumerSecret'
-        supportedGrantTypes:
-          type: array
-          description: The grant types that are supported by the application
-          example:
-          - client_credentials
-          - password
-          items:
-            type: string
-        callbackUrl:
-          type: string
-          description: Callback URL
-          example: http://sample.com/callback/url
-        keyState:
-          type: string
-          description: Describes the state of the key generation.
-          example: APPROVED
-        keyType:
-          type: string
-          description: Describes to which endpoint the key belongs
-          example: PRODUCTION
-          enum:
-          - PRODUCTION
-          - SANDBOX
-        mode:
-          type: string
-          description: Describe the which mode Application Mapped.
-          example: CREATED
-          enum:
-          - MAPPED
-          - CREATED
-        groupId:
-          type: string
-          description: Application group id (if any).
-          example: '2'
-        token:
-          $ref: '#/components/schemas/ApplicationToken'
+          description: The actual secret string
+          example: '***r3tV@lu3'
         additionalProperties:
           type: object
-          properties: {}
-          description: additionalProperties (if any).
+          description: Additional dynamic properties for the secret creation request.
+          additionalProperties:
+            type: object
+          example:
+            expiresAt: 1761568483
+            description: pizza application secret
     Application_2:
       title: Application
       required:
@@ -827,6 +695,49 @@ components:
           enum:
           - PRIVATE
           - SHARED_WITH_ORG
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     ApplicationToken:
       title: Application token details to invoke APIs
       type: object
@@ -849,31 +760,186 @@ components:
           description: Maximum validity time for the access token
           format: int64
           example: 3600
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
+    Error_2:
+      title: Error object returned with 4XX HTTP status
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: string
+          type: integer
+          format: int64
         message:
           type: string
-          description: 'Description about individual errors occurred
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem_2'
+    ApplicationKey:
+      title: Application key details
+      type: object
+      properties:
+        keyMappingId:
+          type: string
+          description: Key Manager Mapping UUID
+          readOnly: true
+          example: 92ab520c-8847-427a-a921-3ed19b15aad7
+        keyManager:
+          type: string
+          description: Key Manager Name
+          example: Resident Key Manager
+        consumerKey:
+          type: string
+          description: Consumer key of the application
+          readOnly: true
+          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
+        consumerSecret:
+          type: string
+          description: Consumer secret of the application
+          readOnly: true
+          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
+        consumerSecrets:
+          type: array
+          description: A list of all consumer secrets of the application When multiple consumer secrets are enabled
+          items:
+            $ref: '#/components/schemas/ConsumerSecret'
+        supportedGrantTypes:
+          type: array
+          description: The grant types that are supported by the application
+          example:
+          - client_credentials
+          - password
+          items:
+            type: string
+        callbackUrl:
+          type: string
+          description: Callback URL
+          example: http://sample.com/callback/url
+        keyState:
+          type: string
+          description: Describes the state of the key generation.
+          example: APPROVED
+        keyType:
+          type: string
+          description: Describes to which endpoint the key belongs
+          example: PRODUCTION
+          enum:
+          - PRODUCTION
+          - SANDBOX
+        mode:
+          type: string
+          description: Describe the which mode Application Mapped.
+          example: CREATED
+          enum:
+          - MAPPED
+          - CREATED
+        groupId:
+          type: string
+          description: Application group id (if any).
+          example: '2'
+        token:
+          $ref: '#/components/schemas/ApplicationToken'
+        additionalProperties:
+          type: object
+          properties: {}
+          description: additionalProperties (if any).
+    ApplicationInfo:
+      title: Application info object with basic application details
+      type: object
+      properties:
+        applicationId:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: CalculatorApp
+        throttlingPolicy:
+          type: string
+          example: Unlimited
+        description:
+          type: string
+          example: Sample calculator application
+        status:
+          type: string
+          example: APPROVED
+          default: ''
+        groups:
+          type: array
+          example: ''
+          items:
+            type: string
+        subscriptionCount:
+          type: integer
+        attributes:
+          type: object
+          properties: {}
+          example: External Reference ID, Billing Tier
+        owner:
+          type: string
+          example: admin
+        tokenType:
+          type: string
+          example: JWT
+        createdTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
+        updatedTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
+    ApplicationThrottleReset:
+      title: Reset application level throttling
+      type: object
+      properties:
+        userName:
+          type: string
+          description: The username for which the throttle policy needs to be reset
+          example: admin
+    ApplicationList:
+      title: Application List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of applications returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationInfo'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
   responses:
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error_2'
+            $ref: '#/components/schemas/Error'
           example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
             moreInfo: ''
             error: []
     NotFound:
@@ -886,6 +952,18 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
             moreInfo: ''
             error: []
     UnsupportedMediaType:
@@ -912,16 +990,16 @@ components:
             description: The server encountered an internal error. Please contact administrator.
             moreInfo: ''
             error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Error_2'
           example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
             moreInfo: ''
             error: []
     Unauthorized:
@@ -948,81 +1026,6 @@ components:
             description: Specified resource already exists
             moreInfo: ''
             error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-  parameters:
-    groupId:
-      name: groupId
-      in: query
-      description: 'Application Group Id
-
-        '
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
-      schema:
-        type: string
-    applicationId_2:
-      name: applicationId
-      in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
-
-        '
-      required: true
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application UUID
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
   securitySchemes:
     OAuth2Security:
       type: oauth2
@@ -1071,3 +1074,6 @@ components:
             apim:gov_rule_manage: Manage governance rules
             apim:organization_manage: Manage Organizations
             apim:organization_read: Read Organizations
+x-refined-from:
+- wso2-admin-api.yaml
+- wso2-devportal-api.yaml
