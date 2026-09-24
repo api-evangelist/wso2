@@ -40,11 +40,12 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/wso2.png
 tags:
 - API Management
 - Gateways
-- Open-Source
+- Open Source
 - API Lifecycle
 - GraphQL
 - SOAP
 - REST
+- Identity Federation
 tags_raw:
 - API Management
 - Gateways
@@ -53,6 +54,8 @@ tags_raw:
 - GraphQL
 - SOAP
 - REST
+- Identity Federation
+- Open-Source
 created: '2026-03-03'
 modified: '2026-09-16'
 url: https://raw.githubusercontent.com/api-evangelist/wso2/refs/heads/main/apis.yml
@@ -73,8 +76,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -110,8 +111,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -146,8 +145,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -182,8 +179,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -218,8 +213,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -254,8 +247,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -290,8 +281,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -326,8 +315,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -363,8 +350,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -400,8 +385,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -436,8 +419,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -472,8 +453,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -508,8 +487,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -544,8 +521,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -581,8 +556,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -617,8 +590,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -654,8 +625,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -690,8 +659,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -727,8 +694,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -764,8 +729,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -800,8 +763,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -836,8 +797,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -874,8 +833,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -910,8 +867,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -947,8 +902,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -983,8 +936,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1019,8 +970,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1055,8 +1004,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1091,8 +1038,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1128,8 +1073,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1165,8 +1108,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1202,8 +1143,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1239,8 +1178,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1277,8 +1214,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1313,8 +1248,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1349,8 +1282,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1385,8 +1316,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1422,8 +1351,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1459,8 +1386,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1495,8 +1420,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1531,8 +1454,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1567,8 +1488,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1604,8 +1523,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1641,8 +1558,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1677,8 +1592,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1713,8 +1626,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1749,8 +1660,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1785,8 +1694,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1821,8 +1728,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1857,8 +1762,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1895,8 +1798,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1932,8 +1833,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -1968,8 +1867,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2006,8 +1903,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2042,8 +1937,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2078,8 +1971,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2114,8 +2005,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2150,8 +2039,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2186,8 +2073,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2222,8 +2107,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2258,8 +2141,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2294,8 +2175,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2332,8 +2211,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2368,8 +2245,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2405,8 +2280,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2441,8 +2314,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2477,8 +2348,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2514,8 +2383,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2551,8 +2418,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2589,8 +2454,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2625,8 +2488,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2661,8 +2522,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2697,8 +2556,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2733,8 +2590,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2769,8 +2624,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2805,8 +2658,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2841,8 +2692,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2877,8 +2726,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2915,8 +2762,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2951,8 +2796,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -2987,8 +2830,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3023,8 +2864,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3061,8 +2900,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3099,8 +2936,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3135,8 +2970,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3171,8 +3004,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3209,8 +3040,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3246,8 +3075,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3282,8 +3109,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
@@ -3318,8 +3143,6 @@ apis:
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/publisher-apis/publisher-v4/publisher-v4/
-  - type: GraphQL
-    url: graphql/wso2-graphql.md
   - type: Documentation
     url: >-
       https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3/
