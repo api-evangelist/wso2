@@ -106,6 +106,31 @@ paths:
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/ai-service-providers/a2f1e643-9b2a-4f58-bd7a-8c2d3f1e9d6f"'
       operationId: getAIServiceProvider
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
     AIServiceProviderRequest:
       title: AIServiceProvider
@@ -149,21 +174,6 @@ components:
           format: binary
         modelProviders:
           type: string
-    ModelProvider:
-      title: Model Provider
-      type: object
-      required:
-      - name
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            type: string
-            example: gpt-4o
-        name:
-          type: string
-          example: OpenAI
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -197,6 +207,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    ModelProvider:
+      title: Model Provider
+      type: object
+      required:
+      - name
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+            example: gpt-4o
+        name:
+          type: string
+          example: OpenAI
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -261,31 +286,6 @@ components:
           type: boolean
           description: Indicates if the LLM provider is deprecated
           example: false
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   parameters:
     aiServiceProviderId:
       name: aiServiceProviderId

@@ -181,20 +181,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    AlertsSubscription:
-      title: Alerts Subscription
-      type: object
-      properties:
-        alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-        emailList:
-          type: array
-          items:
-            type: string
-            format: email
-            example: admin@wso2.com
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -210,6 +196,20 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    AlertsSubscription:
+      title: Alerts Subscription
+      type: object
+      properties:
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+        emailList:
+          type: array
+          items:
+            type: string
+            format: email
+            example: admin@wso2.com
     AlertType:
       title: Alert Type
       type: object

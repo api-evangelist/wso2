@@ -125,6 +125,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ThrottlingPolicyList:
+      title: Throttling Policy List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Throttling Policies returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThrottlingPolicy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Pagination:
       title: Pagination
       type: object
@@ -154,6 +170,60 @@ components:
 
             '
           example: ''
+    MonetizationInfo:
+      title: Monetization
+      type: object
+      properties:
+        billingType:
+          type: string
+          example: fixedPrice
+          enum:
+          - fixedPrice
+          - dynamicRate
+        billingCycle:
+          type: string
+          example: month
+        fixedPrice:
+          type: string
+          example: '10'
+        pricePerRequest:
+          type: string
+          example: '1'
+        currencyType:
+          type: string
+          example: USD
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     ThrottlingPolicy:
       title: Throttling Policy
       required:
@@ -241,38 +311,6 @@ components:
           $ref: '#/components/schemas/MonetizationInfo'
         throttlingPolicyPermissions:
           $ref: '#/components/schemas/ThrottlingPolicyPermissionInfo'
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     ThrottlingPolicyPermissionInfo:
       title: Throttling Policy Permission info object with throttling policy permission details
       type: object
@@ -304,51 +342,16 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ThrottlingPolicyList:
-      title: Throttling Policy List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Throttling Policies returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThrottlingPolicy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    MonetizationInfo:
-      title: Monetization
-      type: object
-      properties:
-        billingType:
-          type: string
-          example: fixedPrice
-          enum:
-          - fixedPrice
-          - dynamicRate
-        billingCycle:
-          type: string
-          example: month
-        fixedPrice:
-          type: string
-          example: '10'
-        pricePerRequest:
-          type: string
-          example: '1'
-        currencyType:
-          type: string
-          example: USD
   parameters:
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
       schema:
-        type: string
+        type: integer
+        default: 0
     limit:
       name: limit
       in: query
@@ -358,6 +361,25 @@ components:
       schema:
         type: integer
         default: 25
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
+    policyId:
+      name: policyId
+      in: path
+      description: 'The name of the policy
+
+        '
+      required: true
+      schema:
+        type: string
     policyLevel:
       name: policyLevel
       in: path
@@ -370,47 +392,13 @@ components:
         enum:
         - application
         - subscription
-    policyId:
-      name: policyId
-      in: path
-      description: 'The name of the policy
-
-        '
-      required: true
-      schema:
-        type: string
-    If-None-Match:
-      name: If-None-Match
+    requestedTenant:
+      name: X-WSO2-Tenant
       in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
         type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
   responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.
       content:
@@ -421,6 +409,18 @@ components:
             code: 406
             message: Not Acceptable
             description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
             moreInfo: ''
             error: []
   securitySchemes:

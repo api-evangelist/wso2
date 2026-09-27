@@ -53,43 +53,6 @@ paths:
       - lang: Curl
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/tenant-config-schema" > tenant-config-schema.json'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden. The request must be conditional but no condition has been specified.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 403
-            message: Forbidden
-            description: The request must be conditional but no condition has been specified
-            moreInfo: ''
-            error: []
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   schemas:
     Error:
       title: Error object returned with 4XX HTTP status
@@ -139,6 +102,43 @@ components:
           description: 'Description about individual errors occurred
 
             '
+  responses:
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    Forbidden:
+      description: Forbidden. The request must be conditional but no condition has been specified.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+            description: The request must be conditional but no condition has been specified
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

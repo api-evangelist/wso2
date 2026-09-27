@@ -57,6 +57,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    TopicList:
+      title: Topic List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Topics returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Pagination:
       title: Pagination
       type: object
@@ -145,38 +161,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    TopicList:
-      title: Topic List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Topics returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Topic'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-  parameters:
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
   responses:
     InternalServerError:
       description: Internal Server Error.
@@ -202,6 +186,22 @@ components:
             description: The specified resource does not exist
             moreInfo: ''
             error: []
+  parameters:
+    apiId:
+      name: apiId
+      in: path
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      required: true
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

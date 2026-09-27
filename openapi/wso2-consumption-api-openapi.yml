@@ -98,18 +98,6 @@ components:
             description: Invalid request or validation error
             moreInfo: ''
             error: []
-    Forbidden:
-      description: Forbidden. The request must be conditional but no condition has been specified.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 403
-            message: Forbidden
-            description: The request must be conditional but no condition has been specified
-            moreInfo: ''
-            error: []
     InternalServerError:
       description: Internal Server Error.
       content:
@@ -120,6 +108,18 @@ components:
             code: 500
             message: Internal Server Error
             description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    Forbidden:
+      description: Forbidden. The request must be conditional but no condition has been specified.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+            description: The request must be conditional but no condition has been specified
             moreInfo: ''
             error: []
     Unauthorized:

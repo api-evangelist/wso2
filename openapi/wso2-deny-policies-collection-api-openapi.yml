@@ -127,102 +127,6 @@ paths:
       operationId: postThrottlingDenyPolicies
       x-operation-id-source: derived
 components:
-  schemas:
-    BlockingCondition:
-      title: Blocking Conditions
-      required:
-      - conditionType
-      - conditionValue
-      type: object
-      properties:
-        conditionId:
-          type: string
-          description: Id of the blocking condition
-          example: b513eb68-69e8-4c32-92cf-852c101363cf
-        conditionType:
-          type: string
-          description: Type of the blocking condition
-          example: IP
-          enum:
-          - API
-          - APPLICATION
-          - IP
-          - IPRANGE
-          - USER
-        conditionValue:
-          type: object
-          properties: {}
-          description: Value of the blocking condition
-          example:
-            fixedIp: 192.168.1.1
-            invert: false
-        conditionStatus:
-          type: boolean
-          description: Status of the blocking condition
-          example: true
-      description: Blocking Conditions
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    BlockingConditionList:
-      title: Blocking Conditions List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Blocking Conditions returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlockingCondition'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
   responses:
     UnsupportedMediaType:
       description: Unsupported Media Type. The entity of the request was not in a supported format.
@@ -260,6 +164,102 @@ components:
             description: The requested media type is not supported
             moreInfo: ''
             error: []
+  schemas:
+    BlockingConditionList:
+      title: Blocking Conditions List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Blocking Conditions returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingCondition'
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    BlockingCondition:
+      title: Blocking Conditions
+      required:
+      - conditionType
+      - conditionValue
+      type: object
+      properties:
+        conditionId:
+          type: string
+          description: Id of the blocking condition
+          example: b513eb68-69e8-4c32-92cf-852c101363cf
+        conditionType:
+          type: string
+          description: Type of the blocking condition
+          example: IP
+          enum:
+          - API
+          - APPLICATION
+          - IP
+          - IPRANGE
+          - USER
+        conditionValue:
+          type: object
+          properties: {}
+          description: Value of the blocking condition
+          example:
+            fixedIp: 192.168.1.1
+            invert: false
+        conditionStatus:
+          type: boolean
+          description: Status of the blocking condition
+          example: true
+      description: Blocking Conditions
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
   parameters:
     Content-Type:
       name: Content-Type

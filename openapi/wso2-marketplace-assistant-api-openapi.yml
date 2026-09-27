@@ -88,35 +88,63 @@ paths:
       - lang: Curl
         source: curl -k -X POST -d request.json "https://localhost:9443/api/am/devportal/v3/apis/marketplace-assistant/chat"
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    TooManyRequests:
+      description: Too many requests.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 429
+            message: TooManyRequests
+            description: The user has exceeded the rate limit
+            moreInfo: ''
+            error: []
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
   schemas:
-    MarketplaceAssistantApiCountResponse:
+    MarketplaceAssistantApi:
       required:
-      - count
-      - limit
+      - apiId
+      - apiName
+      - version
       type: object
       properties:
-        count:
-          type: integer
-          description: no of apis stored in the vectordb.
-          example: '100'
-        limit:
-          type: integer
-          description: maximum no of apis allowed for an org.
-          example: '1000'
-    ChatMessage:
-      required:
-      - content
-      - role
-      type: object
-      properties:
-        role:
+        apiId:
           type: string
-          description: user or assistant role of a chat message.
-          example: assistant
-        content:
+          description: Uuid of the api.
+          example: 1sbdhsjd-121n-nknsjkd-1213njb
+        apiName:
           type: string
-          description: content of the message.
-          example: Hi, How can I help you?
+          description: name of the api.
+          example: PizzaShackAPI
+        version:
+          type: string
+          description: version of the api.
+          example: 1.0.0
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -149,52 +177,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    MarketplaceAssistantResponse:
-      required:
-      - response
-      type: object
-      properties:
-        response:
-          type: string
-          description: natural language response by the llm.
-          example: Hi, How can I help you?
-        apis:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketplaceAssistantApi'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    MarketplaceAssistantApi:
-      required:
-      - apiId
-      - apiName
-      - version
-      type: object
-      properties:
-        apiId:
-          type: string
-          description: Uuid of the api.
-          example: 1sbdhsjd-121n-nknsjkd-1213njb
-        apiName:
-          type: string
-          description: name of the api.
-          example: PizzaShackAPI
-        version:
-          type: string
-          description: version of the api.
-          example: 1.0.0
     MarketplaceAssistantRequest:
       required:
       - query
@@ -209,43 +191,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChatMessage'
-  responses:
-    TooManyRequests:
-      description: Too many requests.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 429
-            message: TooManyRequests
-            description: The user has exceeded the rate limit
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    Unauthorized:
-      description: Unauthorized. The user is not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 401
-            message: Unauthorized
-            description: The user is not authorized
-            moreInfo: ''
-            error: []
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    MarketplaceAssistantApiCountResponse:
+      required:
+      - count
+      - limit
+      type: object
+      properties:
+        count:
+          type: integer
+          description: no of apis stored in the vectordb.
+          example: '100'
+        limit:
+          type: integer
+          description: maximum no of apis allowed for an org.
+          example: '1000'
+    MarketplaceAssistantResponse:
+      required:
+      - response
+      type: object
+      properties:
+        response:
+          type: string
+          description: natural language response by the llm.
+          example: Hi, How can I help you?
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketplaceAssistantApi'
+    ChatMessage:
+      required:
+      - content
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: user or assistant role of a chat message.
+          example: assistant
+        content:
+          type: string
+          description: content of the message.
+          example: Hi, How can I help you?
   securitySchemes:
     OAuth2Security:
       type: oauth2

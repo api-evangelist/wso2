@@ -44,6 +44,56 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    KeyManagerApplicationConfiguration:
+      title: Key Manager application Configuration
+      type: object
+      properties:
+        name:
+          type: string
+          example: consumer_key
+        label:
+          type: string
+          example: Consumer Key
+        type:
+          type: string
+          example: select
+        required:
+          type: boolean
+          example: true
+        mask:
+          type: boolean
+          example: true
+        multiple:
+          type: boolean
+          example: true
+        tooltip:
+          type: string
+          example: Enter username to connect to key manager
+        default:
+          type: object
+          properties: {}
+          example: admin
+        values:
+          type: array
+          items:
+            type: object
+            properties: {}
+        constraint:
+          $ref: '#/components/schemas/ApplicationConfigurationConstraint'
+    KeyManagerList:
+      title: Key Manager List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Key managers returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyManagerInfo'
     KeyManagerInfo:
       title: Key Manager Info
       required:
@@ -129,42 +179,6 @@ components:
           - EXCHANGED
           - DIRECT
           - BOTH
-    KeyManagerApplicationConfiguration:
-      title: Key Manager application Configuration
-      type: object
-      properties:
-        name:
-          type: string
-          example: consumer_key
-        label:
-          type: string
-          example: Consumer Key
-        type:
-          type: string
-          example: select
-        required:
-          type: boolean
-          example: true
-        mask:
-          type: boolean
-          example: true
-        multiple:
-          type: boolean
-          example: true
-        tooltip:
-          type: string
-          example: Enter username to connect to key manager
-        default:
-          type: object
-          properties: {}
-          example: admin
-        values:
-          type: array
-          items:
-            type: object
-            properties: {}
-        constraint:
-          $ref: '#/components/schemas/ApplicationConfigurationConstraint'
     ApplicationConfigurationConstraint:
       title: Application Configuration Constraint
       type: object
@@ -176,20 +190,6 @@ components:
           type: object
           properties: {}
           example: '{ "min": 60, "max": 3600 }'
-    KeyManagerList:
-      title: Key Manager List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Key managers returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyManagerInfo'
   parameters:
     requestedTenant:
       name: X-WSO2-Tenant

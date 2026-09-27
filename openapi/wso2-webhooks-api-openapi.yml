@@ -59,7 +59,52 @@ paths:
       operationId: getWebhooksSubscriptions
       x-operation-id-source: derived
 components:
+  parameters:
+    applicationId-Q:
+      name: applicationId
+      in: query
+      description: '**Application Identifier** consisting of the UUID of the Application.
+
+        '
+      schema:
+        type: string
+    apiId-Q:
+      name: apiId
+      in: query
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   schemas:
+    WebhookSubscription:
+      title: Webhook Subscription
+      type: object
+      properties:
+        apiId:
+          type: string
+          example: faae5fcc-cbae-40c4-bf43-89931630d313
+        appId:
+          type: string
+          example: faae5fcc-cbae-40c4-bf43-89931630d313
+        topic:
+          type: string
+          example: orderBooks
+        callBackUrl:
+          type: string
+          example: www.orderbooksite.com
+        deliveryTime:
+          type: string
+          example: faae5fcc-cbae-40c4-bf43-89931630d313
+        deliveryStatus:
+          type: integer
+          example: 1
     Pagination:
       title: Pagination
       type: object
@@ -137,28 +182,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    WebhookSubscription:
-      title: Webhook Subscription
-      type: object
-      properties:
-        apiId:
-          type: string
-          example: faae5fcc-cbae-40c4-bf43-89931630d313
-        appId:
-          type: string
-          example: faae5fcc-cbae-40c4-bf43-89931630d313
-        topic:
-          type: string
-          example: orderBooks
-        callBackUrl:
-          type: string
-          example: www.orderbooksite.com
-        deliveryTime:
-          type: string
-          example: faae5fcc-cbae-40c4-bf43-89931630d313
-        deliveryStatus:
-          type: integer
-          example: 1
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -173,29 +196,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  parameters:
-    apiId-Q:
-      name: apiId
-      in: query
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    applicationId-Q:
-      name: applicationId
-      in: query
-      description: '**Application Identifier** consisting of the UUID of the Application.
-
-        '
-      schema:
-        type: string
   responses:
     InternalServerError:
       description: Internal Server Error.

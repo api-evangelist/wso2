@@ -166,27 +166,32 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
-    CustomUrlInfo:
-      title: Custom url information
-      type: object
-      properties:
-        tenantDomain:
-          type: string
-          example: carbon.super
-        tenantAdminUsername:
-          type: string
-          example: john@foo.com
-        enabled:
-          type: boolean
-          example: true
-        devPortal:
-          type: object
-          properties:
-            url:
-              type: string
-              example: http://example.com
-      description: The custom url information of the tenant domain
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -220,6 +225,40 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    CustomUrlInfo:
+      title: Custom url information
+      type: object
+      properties:
+        tenantDomain:
+          type: string
+          example: carbon.super
+        tenantAdminUsername:
+          type: string
+          example: john@foo.com
+        enabled:
+          type: boolean
+          example: true
+        devPortal:
+          type: object
+          properties:
+            url:
+              type: string
+              example: http://example.com
+      description: The custom url information of the tenant domain
+    TenantInfo:
+      title: Tenant information
+      type: object
+      properties:
+        username:
+          type: string
+          example: john
+        tenantDomain:
+          type: string
+          example: carbon.super
+        tenantId:
+          type: integer
+          example: -1234
+      description: The tenant information of the user
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -235,32 +274,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    TenantInfo:
-      title: Tenant information
-      type: object
-      properties:
-        username:
-          type: string
-          example: john
-        tenantDomain:
-          type: string
-          example: carbon.super
-        tenantId:
-          type: integer
-          example: -1234
-      description: The tenant information of the user
-    Tenant:
-      title: Tenant
-      type: object
-      properties:
-        domain:
-          type: string
-          description: tenant domain
-          example: wso2.com
-        status:
-          type: string
-          description: current status of the tenant active/inactive
-          example: active
     Pagination:
       title: Pagination
       type: object
@@ -290,6 +303,22 @@ components:
 
             '
           example: ''
+    TenantList:
+      title: Tenant list
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of tenants returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tenant'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -322,22 +351,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem_2'
-    TenantList:
-      title: Tenant list
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of tenants returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tenant'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     ErrorListItem_2:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -352,41 +365,19 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
+    Tenant:
+      title: Tenant
+      type: object
+      properties:
+        domain:
+          type: string
+          description: tenant domain
+          example: wso2.com
+        status:
+          type: string
+          description: current status of the tenant active/inactive
+          example: active
   parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
     offset:
       name: offset
       in: query
@@ -396,6 +387,15 @@ components:
       schema:
         type: integer
         default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
   securitySchemes:
     OAuth2Security:
       type: oauth2

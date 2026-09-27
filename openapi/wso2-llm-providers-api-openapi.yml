@@ -82,34 +82,6 @@ paths:
       operationId: addLLMProvider
 components:
   schemas:
-    LLMProviderRequest:
-      title: LLMProvider
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: OpenAI
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
-        configurations:
-          type: string
-          description: LLM Provider configurations
-        apiDefinition:
-          type: string
-          description: OpenAPI specification
-          format: binary
-        modelList:
-          type: string
-          description: List of models supported by the LLM Provider as a stringified JSON array
     LLMProviderSummaryResponseList:
       title: LLMProviderSummaryResponseList
       type: object
@@ -157,6 +129,31 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    LLMProviderSummaryResponse:
+      title: LLMProviderSummaryResponse
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: open-ai
+        apiVersion:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: 1.0.0
+        builtInSupport:
+          type: boolean
+          description: Is built-in support
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM Provider
     LLMProviderResponse:
       title: LLMProviderResponse
       type: object
@@ -208,31 +205,34 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    LLMProviderSummaryResponse:
-      title: LLMProviderSummaryResponse
+    LLMProviderRequest:
+      title: LLMProvider
       type: object
       properties:
-        id:
-          type: string
-          readOnly: true
-          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
         name:
           maxLength: 255
           minLength: 1
           type: string
-          example: open-ai
+          example: OpenAI
         apiVersion:
           maxLength: 255
           minLength: 1
           type: string
           example: 1.0.0
-        builtInSupport:
-          type: boolean
-          description: Is built-in support
         description:
           maxLength: 1023
           type: string
-          example: OpenAI LLM Provider
+          example: OpenAI LLM
+        configurations:
+          type: string
+          description: LLM Provider configurations
+        apiDefinition:
+          type: string
+          description: OpenAPI specification
+          format: binary
+        modelList:
+          type: string
+          description: List of models supported by the LLM Provider as a stringified JSON array
   responses:
     BadRequest:
       description: Bad Request. Invalid request or validation error.

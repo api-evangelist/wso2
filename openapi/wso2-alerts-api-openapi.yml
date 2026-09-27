@@ -84,6 +84,18 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    AlertTypesList:
+      title: Alert Types List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The number of alerts
+          example: 3
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -99,18 +111,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    AlertTypesList:
-      title: Alert Types List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: The number of alerts
-          example: 3
-        alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
     AlertType:
       title: Alert Type
       type: object

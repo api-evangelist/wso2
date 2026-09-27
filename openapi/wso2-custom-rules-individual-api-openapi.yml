@@ -168,43 +168,64 @@ paths:
       operationId: deleteThrottlingPoliciesCustomByRuleId
       x-operation-id-source: derived
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+  parameters:
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: 'Media type of the entity in the body. Default is application/json.
+
+        '
+      required: true
+      schema:
+        type: string
+        default: application/json
+    ruleId:
+      name: ruleId
+      in: path
+      description: 'Custom rule UUID
+
+        '
+      required: true
+      schema:
+        type: string
   schemas:
-    ThrottlePolicy:
-      title: Generic Throttling Policy
-      required:
-      - policyName
-      type: object
-      properties:
-        policyId:
-          type: string
-          description: Id of policy
-          readOnly: true
-          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
-        policyName:
-          maxLength: 60
-          minLength: 1
-          type: string
-          description: Name of policy
-          example: 30PerMin
-        displayName:
-          type: string
-          description: Display name of the policy
-          example: 30PerMin
-          maxLength: 512
-        description:
-          maxLength: 1024
-          type: string
-          description: Description of the policy
-          example: Allows 30 request per minute
-        isDeployed:
-          type: boolean
-          description: Indicates whether the policy is deployed successfully or not.
-          default: false
-        type:
-          type: string
-          description: Indicates the type of throttle policy
-      discriminator:
-        propertyName: type
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -257,6 +278,42 @@ components:
             type: string
             description: The specific combination of attributes that are checked in the policy.
             example: $userId
+    ThrottlePolicy:
+      title: Generic Throttling Policy
+      required:
+      - policyName
+      type: object
+      properties:
+        policyId:
+          type: string
+          description: Id of policy
+          readOnly: true
+          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
+        policyName:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: Name of policy
+          example: 30PerMin
+        displayName:
+          type: string
+          description: Display name of the policy
+          example: 30PerMin
+          maxLength: 512
+        description:
+          maxLength: 1024
+          type: string
+          description: Description of the policy
+          example: Allows 30 request per minute
+        isDeployed:
+          type: boolean
+          description: Indicates whether the policy is deployed successfully or not.
+          default: false
+        type:
+          type: string
+          description: Indicates the type of throttle policy
+      discriminator:
+        propertyName: type
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -272,63 +329,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  parameters:
-    ruleId:
-      name: ruleId
-      in: path
-      description: 'Custom rule UUID
-
-        '
-      required: true
-      schema:
-        type: string
-    Content-Type:
-      name: Content-Type
-      in: header
-      description: 'Media type of the entity in the body. Default is application/json.
-
-        '
-      required: true
-      schema:
-        type: string
-        default: application/json
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

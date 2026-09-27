@@ -93,29 +93,32 @@ paths:
       operationId: postApplicationsByApplicationIdChangeOwner
       x-operation-id-source: derived
 components:
-  parameters:
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application UUID
-
-        '
-      required: true
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
-    ApplicationUpdateRequest:
-      type: object
-      description: Request body to update application attributes
-      properties:
-        owner:
-          type: string
-          description: The new owner of the application
-        tokenType:
-          type: string
-          description: The type of token for the application (e.g., JWT)
-          enum:
-          - JWT
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -241,31 +244,28 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+    ApplicationUpdateRequest:
+      type: object
+      description: Request body to update application attributes
+      properties:
+        owner:
+          type: string
+          description: The new owner of the application
+        tokenType:
+          type: string
+          description: The type of token for the application (e.g., JWT)
+          enum:
+          - JWT
+  parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application UUID
+
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

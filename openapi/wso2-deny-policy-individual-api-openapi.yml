@@ -123,39 +123,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    BlockingCondition:
-      title: Blocking Conditions
+    BlockingConditionStatus:
+      title: Blocking Conditions Status
       required:
-      - conditionType
-      - conditionValue
+      - conditionStatus
       type: object
       properties:
         conditionId:
           type: string
           description: Id of the blocking condition
           example: b513eb68-69e8-4c32-92cf-852c101363cf
-        conditionType:
-          type: string
-          description: Type of the blocking condition
-          example: IP
-          enum:
-          - API
-          - APPLICATION
-          - IP
-          - IPRANGE
-          - USER
-        conditionValue:
-          type: object
-          properties: {}
-          description: Value of the blocking condition
-          example:
-            fixedIp: 192.168.1.1
-            invert: false
         conditionStatus:
           type: boolean
           description: Status of the blocking condition
           example: true
-      description: Blocking Conditions
+      description: Blocking Conditions Status
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -189,21 +171,39 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    BlockingConditionStatus:
-      title: Blocking Conditions Status
+    BlockingCondition:
+      title: Blocking Conditions
       required:
-      - conditionStatus
+      - conditionType
+      - conditionValue
       type: object
       properties:
         conditionId:
           type: string
           description: Id of the blocking condition
           example: b513eb68-69e8-4c32-92cf-852c101363cf
+        conditionType:
+          type: string
+          description: Type of the blocking condition
+          example: IP
+          enum:
+          - API
+          - APPLICATION
+          - IP
+          - IPRANGE
+          - USER
+        conditionValue:
+          type: object
+          properties: {}
+          description: Value of the blocking condition
+          example:
+            fixedIp: 192.168.1.1
+            invert: false
         conditionStatus:
           type: boolean
           description: Status of the blocking condition
           example: true
-      description: Blocking Conditions Status
+      description: Blocking Conditions
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -219,6 +219,43 @@ components:
           description: 'Description about individual errors occurred
 
             '
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   parameters:
     conditionId:
       name: conditionId
@@ -239,43 +276,6 @@ components:
       schema:
         type: string
         default: application/json
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

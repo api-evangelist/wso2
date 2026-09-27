@@ -65,43 +65,7 @@ paths:
       tags:
       - Api Artifact
 components:
-  parameters:
-    version:
-      name: version
-      in: query
-      description: 'version of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string
   schemas:
-    APIArtifact:
-      title: API Artifact Response
-      properties:
-        api:
-          type: string
-          description: 'API Artifact deployed in Gateway.
-
-            '
-          example: ''
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -148,3 +112,39 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    APIArtifact:
+      title: API Artifact Response
+      properties:
+        api:
+          type: string
+          description: 'API Artifact deployed in Gateway.
+
+            '
+          example: ''
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string

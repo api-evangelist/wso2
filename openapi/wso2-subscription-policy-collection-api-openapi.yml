@@ -129,6 +129,18 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
     UnsupportedMediaType:
       description: Unsupported Media Type. The entity of the request was not in a supported format.
       content:
@@ -153,47 +165,7 @@ components:
             description: Invalid request or validation error
             moreInfo: ''
             error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   schemas:
-    EventCountLimit:
-      title: Event Count Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - eventCount
-        type: object
-        properties:
-          eventCount:
-            type: integer
-            description: Maximum number of events allowed
-            format: int64
-            example: 3000
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     MonetizationInfo:
       title: API monetization details object
       required:
@@ -212,8 +184,23 @@ components:
           additionalProperties:
             type: string
           description: Map of custom properties related to each monetization plan
-    RequestCountLimit:
-      title: Request Count Limit object
+    CustomAttribute:
+      title: Name-Value pair
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the custom attribute
+          example: customAttr1
+        value:
+          type: string
+          description: Value of the custom attribute
+          example: value1
+    AIAPIQuotaLimit:
+      title: AI API Quota Limit object
       allOf:
       - $ref: '#/components/schemas/ThrottleLimitBase'
       - required:
@@ -224,7 +211,95 @@ components:
             type: integer
             description: Maximum number of requests allowed
             format: int64
-            example: 30
+            example: 300
+          totalTokenCount:
+            type: integer
+            description: Maximum number of total tokens allowed
+            format: int64
+            example: 800
+          promptTokenCount:
+            type: integer
+            description: Maximum number of prompt tokens allowed
+            format: int64
+            example: 400
+          completionTokenCount:
+            type: integer
+            description: Maximum number of completion tokens allowed
+            format: int64
+            example: 500
+    SubscriptionThrottlePolicyPermission:
+      title: SubscriptionThrottlePolicyPermission
+      required:
+      - permissionType
+      - roles
+      type: object
+      properties:
+        permissionType:
+          type: string
+          example: deny
+          enum:
+          - ALLOW
+          - DENY
+        roles:
+          type: array
+          example:
+          - Internal/everyone
+          items:
+            type: string
+    ThrottlePolicy:
+      title: Generic Throttling Policy
+      required:
+      - policyName
+      type: object
+      properties:
+        policyId:
+          type: string
+          description: Id of policy
+          readOnly: true
+          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
+        policyName:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: Name of policy
+          example: 30PerMin
+        displayName:
+          type: string
+          description: Display name of the policy
+          example: 30PerMin
+          maxLength: 512
+        description:
+          maxLength: 1024
+          type: string
+          description: Description of the policy
+          example: Allows 30 request per minute
+        isDeployed:
+          type: boolean
+          description: Indicates whether the policy is deployed successfully or not.
+          default: false
+        type:
+          type: string
+          description: Indicates the type of throttle policy
+      discriminator:
+        propertyName: type
+    BandwidthLimit:
+      title: Bandwidth Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - dataAmount
+        - dataUnit
+        type: object
+        properties:
+          dataAmount:
+            type: integer
+            description: Amount of data allowed to be transfered
+            format: int64
+            example: 1000
+          dataUnit:
+            type: string
+            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
+            example: KB
     ThrottleLimitBase:
       title: Throttle Limit Base
       required:
@@ -301,42 +376,31 @@ components:
             example: FREE
           permissions:
             $ref: '#/components/schemas/SubscriptionThrottlePolicyPermission'
-    ThrottlePolicy:
-      title: Generic Throttling Policy
-      required:
-      - policyName
+    GraphQLQuery:
+      title: GraphQL Query
       type: object
       properties:
-        policyId:
-          type: string
-          description: Id of policy
-          readOnly: true
-          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
-        policyName:
-          maxLength: 60
-          minLength: 1
-          type: string
-          description: Name of policy
-          example: 30PerMin
-        displayName:
-          type: string
-          description: Display name of the policy
-          example: 30PerMin
-          maxLength: 512
-        description:
-          maxLength: 1024
-          type: string
-          description: Description of the policy
-          example: Allows 30 request per minute
-        isDeployed:
-          type: boolean
-          description: Indicates whether the policy is deployed successfully or not.
-          default: false
-        type:
-          type: string
-          description: Indicates the type of throttle policy
-      discriminator:
-        propertyName: type
+        graphQLMaxComplexity:
+          type: integer
+          description: Maximum Complexity of the GraphQL query
+          example: 400
+        graphQLMaxDepth:
+          type: integer
+          description: Maximum Depth of the GraphQL query
+          example: 10
+    EventCountLimit:
+      title: Event Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - eventCount
+        type: object
+        properties:
+          eventCount:
+            type: integer
+            description: Maximum number of events allowed
+            format: int64
+            example: 3000
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -370,37 +434,34 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    GraphQLQuery:
-      title: GraphQL Query
-      type: object
-      properties:
-        graphQLMaxComplexity:
-          type: integer
-          description: Maximum Complexity of the GraphQL query
-          example: 400
-        graphQLMaxDepth:
-          type: integer
-          description: Maximum Depth of the GraphQL query
-          example: 10
-    SubscriptionThrottlePolicyPermission:
-      title: SubscriptionThrottlePolicyPermission
+    RequestCountLimit:
+      title: Request Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 30
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
-      - permissionType
-      - roles
+      - code
+      - message
       type: object
       properties:
-        permissionType:
+        code:
           type: string
-          example: deny
-          enum:
-          - ALLOW
-          - DENY
-        roles:
-          type: array
-          example:
-          - Internal/everyone
-          items:
-            type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     ThrottleLimit:
       title: Throttle Limit
       required:
@@ -424,77 +485,7 @@ components:
           $ref: '#/components/schemas/EventCountLimit'
         aiApiQuota:
           $ref: '#/components/schemas/AIAPIQuotaLimit'
-    AIAPIQuotaLimit:
-      title: AI API Quota Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - requestCount
-        type: object
-        properties:
-          requestCount:
-            type: integer
-            description: Maximum number of requests allowed
-            format: int64
-            example: 300
-          totalTokenCount:
-            type: integer
-            description: Maximum number of total tokens allowed
-            format: int64
-            example: 800
-          promptTokenCount:
-            type: integer
-            description: Maximum number of prompt tokens allowed
-            format: int64
-            example: 400
-          completionTokenCount:
-            type: integer
-            description: Maximum number of completion tokens allowed
-            format: int64
-            example: 500
-    BandwidthLimit:
-      title: Bandwidth Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - dataAmount
-        - dataUnit
-        type: object
-        properties:
-          dataAmount:
-            type: integer
-            description: Amount of data allowed to be transfered
-            format: int64
-            example: 1000
-          dataUnit:
-            type: string
-            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
-            example: KB
-    CustomAttribute:
-      title: Name-Value pair
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the custom attribute
-          example: customAttr1
-        value:
-          type: string
-          description: Value of the custom attribute
-          example: value1
   parameters:
-    Accept:
-      name: Accept
-      in: header
-      description: 'Media types acceptable for the response. Default is application/json.
-
-        '
-      schema:
-        type: string
-        default: application/json
     Content-Type:
       name: Content-Type
       in: header
@@ -502,6 +493,15 @@ components:
 
         '
       required: true
+      schema:
+        type: string
+        default: application/json
+    Accept:
+      name: Accept
+      in: header
+      description: 'Media types acceptable for the response. Default is application/json.
+
+        '
       schema:
         type: string
         default: application/json

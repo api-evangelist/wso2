@@ -403,83 +403,21 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ApplicationInfo:
-      title: Application info object with basic application details
+    APIBusinessInformation:
       type: object
       properties:
-        applicationId:
+        businessOwner:
           type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
+          example: businessowner
+        businessOwnerEmail:
           type: string
-          example: CalculatorApp
-        throttlingPolicy:
+          example: businessowner@wso2.com
+        technicalOwner:
           type: string
-          example: Unlimited
-        description:
+          example: technicalowner
+        technicalOwnerEmail:
           type: string
-          example: Sample calculator application
-        status:
-          type: string
-          example: APPROVED
-          default: ''
-        groups:
-          type: array
-          example: ''
-          items:
-            type: string
-        subscriptionCount:
-          type: integer
-        attributes:
-          type: object
-          properties: {}
-          example: External Reference ID, Billing Tier
-        owner:
-          type: string
-          example: admin
-        tokenType:
-          type: string
-          example: JWT
-        createdTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
-        updatedTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
-    Error_2:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem_2'
+          example: technicalowner@wso2.com
     APIInfo:
       title: API Info object with basic API details.
       type: object
@@ -584,21 +522,38 @@ components:
           default: DEFAULT
           example: AIAPI
           readOnly: true
-    APIBusinessInformation:
+    Error_2:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
       type: object
       properties:
-        businessOwner:
+        code:
+          type: integer
+          format: int64
+        message:
           type: string
-          example: businessowner
-        businessOwnerEmail:
+          description: Error message.
+        description:
           type: string
-          example: businessowner@wso2.com
-        technicalOwner:
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
           type: string
-          example: technicalowner
-        technicalOwnerEmail:
-          type: string
-          example: technicalowner@wso2.com
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem_2'
     AdvertiseInfo:
       title: API Advertise info object with advertise details
       type: object
@@ -624,20 +579,6 @@ components:
           enum:
           - WSO2
           - AWS
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     APIInfoList:
       title: API Info List
       type: object
@@ -652,31 +593,66 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/APIInfo'
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ApplicationInfo:
+      title: Application info object with basic application details
+      type: object
+      properties:
+        applicationId:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: CalculatorApp
+        throttlingPolicy:
+          type: string
+          example: Unlimited
+        description:
+          type: string
+          example: Sample calculator application
+        status:
+          type: string
+          example: APPROVED
+          default: ''
+        groups:
+          type: array
+          example: ''
+          items:
+            type: string
+        subscriptionCount:
+          type: integer
+        attributes:
+          type: object
+          properties: {}
+          example: External Reference ID, Billing Tier
+        owner:
+          type: string
+          example: admin
+        tokenType:
+          type: string
+          example: JWT
+        createdTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
+        updatedTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
   responses:
-    Forbidden:
-      description: Forbidden. The request must be conditional but no condition has been specified.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 403
-            message: Forbidden
-            description: The request must be conditional but no condition has been specified
-            moreInfo: ''
-            error: []
-    Conflict:
-      description: Conflict. Specified resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
-            moreInfo: ''
-            error: []
     InternalServerError:
       description: Internal Server Error.
       content:
@@ -699,6 +675,30 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    Forbidden:
+      description: Forbidden. The request must be conditional but no condition has been specified.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+            description: The request must be conditional but no condition has been specified
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
             moreInfo: ''
             error: []
     BadRequest:

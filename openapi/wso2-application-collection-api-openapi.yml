@@ -99,44 +99,32 @@ paths:
       operationId: getApplications
       x-operation-id-source: derived
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
   schemas:
-    KeyManagerInfo:
-      title: Key Manager Info
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
-          type: string
-          example: WSO2 IS
-        type:
-          type: string
-          example: IS
-        description:
-          type: string
-          example: This is a key manager for Developers
-        enabled:
-          type: boolean
-          example: true
-        isGlobal:
-          type: boolean
-          example: true
-        isUsed:
-          type: boolean
-          example: true
-        tokenType:
-          type: string
-          description: The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.
-          example: EXCHANGED
-          default: DIRECT
-          enum:
-          - EXCHANGED
-          - DIRECT
-          - BOTH
     Pagination:
       title: Pagination
       type: object
@@ -168,38 +156,6 @@ components:
             example: ""
 
             '
-    ApplicationInfo:
-      title: Application info object with basic application details
-      type: object
-      properties:
-        applicationId:
-          type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
-          type: string
-          example: CalculatorApp
-        owner:
-          type: string
-          example: admin
-        tokenType:
-          type: string
-          enum:
-          - OAUTH
-          - JWT
-        createdTime:
-          type: string
-          readOnly: true
-          example: '1651555310208'
-        keyManagers:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyManagerInfo'
-        status:
-          type: string
-          example: APPROVED
-        groupId:
-          type: string
-          example: ''
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -264,7 +220,85 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    ApplicationInfo:
+      title: Application info object with basic application details
+      type: object
+      properties:
+        applicationId:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: CalculatorApp
+        owner:
+          type: string
+          example: admin
+        tokenType:
+          type: string
+          enum:
+          - OAUTH
+          - JWT
+        createdTime:
+          type: string
+          readOnly: true
+          example: '1651555310208'
+        keyManagers:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyManagerInfo'
+        status:
+          type: string
+          example: APPROVED
+        groupId:
+          type: string
+          example: ''
+    KeyManagerInfo:
+      title: Key Manager Info
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: WSO2 IS
+        type:
+          type: string
+          example: IS
+        description:
+          type: string
+          example: This is a key manager for Developers
+        enabled:
+          type: boolean
+          example: true
+        isGlobal:
+          type: boolean
+          example: true
+        isUsed:
+          type: boolean
+          example: true
+        tokenType:
+          type: string
+          description: The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.
+          example: EXCHANGED
+          default: DIRECT
+          enum:
+          - EXCHANGED
+          - DIRECT
+          - BOTH
   parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
     Accept:
       name: Accept
       in: header
@@ -291,40 +325,6 @@ components:
         '
       schema:
         type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

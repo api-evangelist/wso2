@@ -205,39 +205,6 @@ components:
 
             '
           example: ''
-    SearchResultList:
-      title: Search Result List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of results returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            type: object
-          example:
-          - id: abcff4cf-24c5-4298-a7b4-39a1fbd34693
-            name: PizzaShackAPI
-            type: API
-            transportType: null
-            description: null
-            context: /pizzashack
-            version: 1.0.0
-            provider: admin
-            status: PUBLISHED
-            thumbnailUri: null
-            businessInformation:
-              businessOwner: Jane Roe
-              businessOwnerEmail: businessowner@wso2.com
-              technicalOwner: John Doe
-              technicalOwnerEmail: technicalowner@wso2.com
-            avgRating: '4.0'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -284,7 +251,49 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    SearchResultList:
+      title: Search Result List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of results returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            type: object
+          example:
+          - id: abcff4cf-24c5-4298-a7b4-39a1fbd34693
+            name: PizzaShackAPI
+            type: API
+            transportType: null
+            description: null
+            context: /pizzashack
+            version: 1.0.0
+            provider: admin
+            status: PUBLISHED
+            thumbnailUri: null
+            businessInformation:
+              businessOwner: Jane Roe
+              businessOwnerEmail: businessowner@wso2.com
+              technicalOwner: John Doe
+              technicalOwnerEmail: technicalowner@wso2.com
+            avgRating: '4.0'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
   parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
     limit:
       name: limit
       in: query
@@ -310,15 +319,6 @@ components:
       description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
         type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
   responses:
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.

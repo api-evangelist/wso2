@@ -224,52 +224,76 @@ paths:
       operationId: getEnvironmentsByEnvironmentIdGateways
       x-operation-id-source: derived
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
-    VHost:
-      title: Virtual Host
+    GatewayInstance:
+      title: Gateway instance in the gateway environment
+      type: object
       required:
-      - host
+      - gatewayId
+      properties:
+        gatewayId:
+          type: string
+          example: Env1_1372344
+        lastActive:
+          type: string
+          example: '2025-06-26T06:47:50Z'
+        status:
+          type: string
+          example: ACTIVE
+          default: ACTIVE
+          enum:
+          - ACTIVE
+          - EXPIRED
+    GatewayEnvironmentProtocolURI:
+      title: Gateway Environment protocols and URIs
+      required:
+      - protocol
+      - endpointURI
       type: object
       properties:
-        host:
-          maxLength: 255
-          minLength: 1
+        protocol:
           type: string
-          example: mg.wso2.com
-        httpContext:
-          maxLength: 255
-          minLength: 0
-          pattern: ^\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])*$
+          example: default
+        endpointURI:
           type: string
-          example: pets
-        httpPort:
-          type: integer
-          example: 80
-        httpsPort:
-          type: integer
-          example: 443
-        wsPort:
-          type: integer
-          example: 9099
-        wsHost:
-          type: string
-          example: mg.wso2.com
-        wssPort:
-          type: integer
-          example: 8099
-        wssHost:
-          type: string
-          example: mg.wso2.com
-    AdditionalProperty:
-      title: Additional Gateway Properties
-      type: object
-      properties:
-        key:
-          type: string
-          example: Organization
-        value:
-          type: string
-          example: wso2
+          example: default
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -303,20 +327,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    GatewayInstanceList:
-      title: Gateway instance list
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Gateway Instances returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/GatewayInstance'
     Environment:
       title: Environment
       required:
@@ -435,38 +445,41 @@ components:
           items:
             type: string
             example: 1.0.0
-    GatewayEnvironmentProtocolURI:
-      title: Gateway Environment protocols and URIs
+    VHost:
+      title: Virtual Host
       required:
-      - protocol
-      - endpointURI
+      - host
       type: object
       properties:
-        protocol:
+        host:
+          maxLength: 255
+          minLength: 1
           type: string
-          example: default
-        endpointURI:
+          example: mg.wso2.com
+        httpContext:
+          maxLength: 255
+          minLength: 0
+          pattern: ^\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])*$
           type: string
-          example: default
-    GatewayInstance:
-      title: Gateway instance in the gateway environment
-      type: object
-      required:
-      - gatewayId
-      properties:
-        gatewayId:
+          example: pets
+        httpPort:
+          type: integer
+          example: 80
+        httpsPort:
+          type: integer
+          example: 443
+        wsPort:
+          type: integer
+          example: 9099
+        wsHost:
           type: string
-          example: Env1_1372344
-        lastActive:
+          example: mg.wso2.com
+        wssPort:
+          type: integer
+          example: 8099
+        wssHost:
           type: string
-          example: '2025-06-26T06:47:50Z'
-        status:
-          type: string
-          example: ACTIVE
-          default: ACTIVE
-          enum:
-          - ACTIVE
-          - EXPIRED
+          example: mg.wso2.com
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -482,6 +495,30 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    AdditionalProperty:
+      title: Additional Gateway Properties
+      type: object
+      properties:
+        key:
+          type: string
+          example: Organization
+        value:
+          type: string
+          example: wso2
+    GatewayInstanceList:
+      title: Gateway instance list
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Gateway Instances returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayInstance'
     EnvironmentList:
       title: Environment List
       type: object
@@ -508,43 +545,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

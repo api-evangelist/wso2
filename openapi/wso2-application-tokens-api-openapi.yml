@@ -107,46 +107,66 @@ paths:
       operationId: postApplicationsByApplicationIdOauthKeysByKeyMappingIdGenerateToken
       x-operation-id-source: derived
 components:
-  parameters:
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
-
-        '
-      required: true
-      schema:
-        type: string
-    keyType:
-      name: keyType
-      in: path
-      description: '**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).
-
-        '
-      required: true
-      schema:
-        type: string
-        enum:
-        - PRODUCTION
-        - SANDBOX
-    keyMappingId:
-      name: keyMappingId
-      in: path
-      description: 'OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.
-
-        '
-      required: true
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
+            moreInfo: ''
+            error: []
   schemas:
+    ApplicationToken:
+      title: Application token details to invoke APIs
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token
+          example: 1.2345678901234568E30
+        tokenScopes:
+          type: array
+          description: Valid comma seperated scopes for the access token
+          example:
+          - default
+          - read_api
+          - write_api
+          items:
+            type: string
+        validityTime:
+          type: integer
+          description: Maximum validity time for the access token
+          format: int64
+          example: 3600
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -179,28 +199,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ApplicationToken:
-      title: Application token details to invoke APIs
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: Access token
-          example: 1.2345678901234568E30
-        tokenScopes:
-          type: array
-          description: Valid comma seperated scopes for the access token
-          example:
-          - default
-          - read_api
-          - write_api
-          items:
-            type: string
-        validityTime:
-          type: integer
-          description: Maximum validity time for the access token
-          format: int64
-          example: 3600
     ApplicationTokenGenerateRequest:
       title: Application access token generation request object
       type: object
@@ -249,43 +247,45 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  responses:
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+  parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    keyType:
+      name: keyType
+      in: path
+      description: '**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).
+
+        '
+      required: true
+      schema:
+        type: string
+        enum:
+        - PRODUCTION
+        - SANDBOX
+    keyMappingId:
+      name: keyMappingId
+      in: path
+      description: 'OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.
+
+        '
+      required: true
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

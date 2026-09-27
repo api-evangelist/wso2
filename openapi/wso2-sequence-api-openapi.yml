@@ -65,33 +65,6 @@ paths:
       tags:
       - Sequence
 components:
-  parameters:
-    version:
-      name: version
-      in: query
-      description: 'version of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string
   schemas:
     Sequences:
       title: Sequences Response
@@ -150,3 +123,30 @@ components:
           description: 'Description about individual errors occurred
 
             '
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string

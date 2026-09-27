@@ -367,98 +367,104 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
-  parameters:
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application UUID
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
-      schema:
-        type: string
-    groupId:
-      name: groupId
-      in: query
-      description: 'Application Group Id
-
-        '
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    applicationId_2:
-      name: applicationId
-      in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
-
-        '
-      required: true
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
+            moreInfo: ''
+            error: []
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
+            moreInfo: ''
+            error: []
   schemas:
-    WorkflowResponse:
-      title: workflow Response
-      required:
-      - workflowStatus
-      type: object
-      properties:
-        workflowStatus:
-          type: string
-          description: 'This attribute declares whether this workflow task is approved or rejected.
-
-            '
-          example: APPROVED
-          enum:
-          - CREATED
-          - APPROVED
-          - REJECTED
-          - REGISTERED
-        jsonPayload:
-          type: string
-          description: 'Attributes that returned after the workflow execution
-
-            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -584,25 +590,73 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ConsumerSecret:
+    WorkflowResponse:
+      title: workflow Response
+      required:
+      - workflowStatus
       type: object
       properties:
-        secretId:
+        workflowStatus:
           type: string
-          description: Unique identifier for the secret
-          example: sec_123456
-        secretValue:
+          description: 'This attribute declares whether this workflow task is approved or rejected.
+
+            '
+          example: APPROVED
+          enum:
+          - CREATED
+          - APPROVED
+          - REJECTED
+          - REGISTERED
+        jsonPayload:
           type: string
-          description: The actual secret string
-          example: '***r3tV@lu3'
-        additionalProperties:
-          type: object
-          description: Additional dynamic properties for the secret creation request.
-          additionalProperties:
-            type: object
-          example:
-            expiresAt: 1761568483
-            description: pizza application secret
+          description: 'Attributes that returned after the workflow execution
+
+            '
+    ApplicationList:
+      title: Application List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of applications returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationInfo'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     Application_2:
       title: Application
       required:
@@ -695,49 +749,51 @@ components:
           enum:
           - PRIVATE
           - SHARED_WITH_ORG
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    ApplicationInfo:
+      title: Application info object with basic application details
       type: object
       properties:
-        code:
+        applicationId:
           type: string
-        message:
+          example: 01234567-0123-0123-0123-012345678901
+        name:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+          example: CalculatorApp
+        throttlingPolicy:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
+          example: Unlimited
+        description:
+          type: string
+          example: Sample calculator application
+        status:
+          type: string
+          example: APPROVED
+          default: ''
+        groups:
+          type: array
           example: ''
-        previous:
+          items:
+            type: string
+        subscriptionCount:
+          type: integer
+        attributes:
+          type: object
+          properties: {}
+          example: External Reference ID, Billing Tier
+        owner:
           type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
+          example: admin
+        tokenType:
+          type: string
+          example: JWT
+        createdTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
+        updatedTime:
+          type: string
+          readOnly: true
+          example: 1651555310208
     ApplicationToken:
       title: Application token details to invoke APIs
       type: object
@@ -760,6 +816,25 @@ components:
           description: Maximum validity time for the access token
           format: int64
           example: 3600
+    ConsumerSecret:
+      type: object
+      properties:
+        secretId:
+          type: string
+          description: Unique identifier for the secret
+          example: sec_123456
+        secretValue:
+          type: string
+          description: The actual secret string
+          example: '***r3tV@lu3'
+        additionalProperties:
+          type: object
+          description: Additional dynamic properties for the secret creation request.
+          additionalProperties:
+            type: object
+          example:
+            expiresAt: 1761568483
+            description: pizza application secret
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -860,51 +935,20 @@ components:
           type: object
           properties: {}
           description: additionalProperties (if any).
-    ApplicationInfo:
-      title: Application info object with basic application details
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        applicationId:
+        code:
           type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
+        message:
           type: string
-          example: CalculatorApp
-        throttlingPolicy:
-          type: string
-          example: Unlimited
-        description:
-          type: string
-          example: Sample calculator application
-        status:
-          type: string
-          example: APPROVED
-          default: ''
-        groups:
-          type: array
-          example: ''
-          items:
-            type: string
-        subscriptionCount:
-          type: integer
-        attributes:
-          type: object
-          properties: {}
-          example: External Reference ID, Billing Tier
-        owner:
-          type: string
-          example: admin
-        tokenType:
-          type: string
-          example: JWT
-        createdTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
-        updatedTime:
-          type: string
-          readOnly: true
-          example: 1651555310208
+          description: 'Description about individual errors occurred
+
+            '
     ApplicationThrottleReset:
       title: Reset application level throttling
       type: object
@@ -913,119 +957,75 @@ components:
           type: string
           description: The username for which the throttle policy needs to be reset
           example: admin
-    ApplicationList:
-      title: Application List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of applications returned.
+  parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application UUID
 
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationInfo'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    UnsupportedMediaType:
-      description: Unsupported Media Type. The entity of the request was not in a supported format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 415
-            message: Unsupported media type
-            description: The entity of the request was not in a supported format
-            moreInfo: ''
-            error: []
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
-    Unauthorized:
-      description: Unauthorized. The user is not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 401
-            message: Unauthorized
-            description: The user is not authorized
-            moreInfo: ''
-            error: []
-    Conflict:
-      description: Conflict. Specified resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
-            moreInfo: ''
-            error: []
+        '
+      required: true
+      schema:
+        type: string
+    applicationId_2:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    groupId:
+      name: groupId
+      in: query
+      description: 'Application Group Id
+
+        '
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

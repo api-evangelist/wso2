@@ -42,7 +42,28 @@ paths:
       operationId: getApiCategories
       x-operation-id-source: derived
 components:
+  parameters:
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   schemas:
+    APICategoryList:
+      title: API Category List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API categories returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APICategory'
     APICategory:
       title: API Category
       required:
@@ -58,27 +79,6 @@ components:
         description:
           type: string
           example: Finance related APIs
-    APICategoryList:
-      title: API Category List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API categories returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APICategory'
-  parameters:
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

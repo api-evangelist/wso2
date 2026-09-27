@@ -459,145 +459,88 @@ paths:
       operationId: deleteSubscriptionsBySubscriptionId
       x-operation-id-source: derived
 components:
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
-      schema:
-        type: string
-    subscriptionId:
-      name: subscriptionId
-      in: path
-      description: 'Subscription Id
-
-        '
-      required: true
-      schema:
-        type: string
-    groupId:
-      name: groupId
-      in: query
-      description: 'Application Group Id
-
-        '
-      schema:
-        type: string
-    apiId-Q:
-      name: apiId
-      in: query
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    applicationId-Q:
-      name: applicationId
-      in: query
-      description: '**Application Identifier** consisting of the UUID of the Application.
-
-        '
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
+            moreInfo: ''
+            error: []
   schemas:
-    SubscriptionList:
-      title: Subscription List
+    WorkflowResponse:
+      title: workflow Response
+      required:
+      - workflowStatus
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of Subscriptions returned.
+        workflowStatus:
+          type: string
+          description: 'This attribute declares whether this workflow task is approved or rejected.
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Subscription'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    AdvertiseInfo:
-      title: API Advertise info object with advertise details
-      type: object
-      properties:
-        advertised:
-          type: boolean
-          example: true
-        apiExternalProductionEndpoint:
-          type: string
-          example: https://localhost:9443/devportal
-        apiExternalSandboxEndpoint:
-          type: string
-          example: https://localhost:9443/devportal
-        originalDevPortalUrl:
-          type: string
-          example: https://localhost:9443/devportal
-        apiOwner:
-          type: string
-          example: admin
-        vendor:
-          type: string
-          default: WSO2
+          example: APPROVED
           enum:
-          - WSO2
-          - AWS
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
+          - CREATED
+          - APPROVED
+          - REJECTED
+          - REGISTERED
+        jsonPayload:
           type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+          description: 'Attributes that returned after the workflow execution
 
             '
     AdditionalSubscriptionInfoList:
@@ -616,6 +559,95 @@ components:
             $ref: '#/components/schemas/AdditionalSubscriptionInfo'
         pagination:
           $ref: '#/components/schemas/Pagination'
+    SubscriptionList:
+      title: Subscription List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Subscriptions returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Subscription:
+      title: Subscription
+      required:
+      - applicationId
+      - throttlingPolicy
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+          description: The UUID of the subscription
+          readOnly: true
+          example: faae5fcc-cbae-40c4-bf43-89931630d313
+        applicationId:
+          type: string
+          description: The UUID of the application
+          example: b3ade481-30b0-4b38-9a67-498a40873a6d
+        apiId:
+          type: string
+          description: The unique identifier of the API.
+          example: 2962f3bb-8330-438e-baee-0ee1d6434ba4
+        apiInfo:
+          $ref: '#/components/schemas/APIInfo'
+        applicationInfo:
+          $ref: '#/components/schemas/ApplicationInfo'
+        throttlingPolicy:
+          type: string
+          example: Unlimited
+        requestedThrottlingPolicy:
+          type: string
+          example: Unlimited
+        status:
+          type: string
+          example: UNBLOCKED
+          enum:
+          - BLOCKED
+          - PROD_ONLY_BLOCKED
+          - UNBLOCKED
+          - ON_HOLD
+          - REJECTED
+          - TIER_UPDATE_PENDING
+          - DELETE_PENDING
+        redirectionParams:
+          type: string
+          description: A url and other parameters the subscriber can be redirected.
+          readOnly: true
+          example: ''
+    SolaceTopics:
+      title: SolaceTopics
+      type: object
+      properties:
+        publishTopics:
+          type: array
+          items:
+            type: string
+        subscribeTopics:
+          type: array
+          items:
+            type: string
+    APIBusinessInformation:
+      type: object
+      properties:
+        businessOwner:
+          type: string
+          example: businessowner
+        businessOwnerEmail:
+          type: string
+          example: businessowner@wso2.com
+        technicalOwner:
+          type: string
+          example: technicalowner
+        technicalOwnerEmail:
+          type: string
+          example: technicalowner@wso2.com
     Pagination:
       title: Pagination
       type: object
@@ -749,21 +781,6 @@ components:
           default: DEFAULT
           example: AIAPI
           readOnly: true
-    APIBusinessInformation:
-      type: object
-      properties:
-        businessOwner:
-          type: string
-          example: businessowner
-        businessOwnerEmail:
-          type: string
-          example: businessowner@wso2.com
-        technicalOwner:
-          type: string
-          example: technicalowner
-        technicalOwnerEmail:
-          type: string
-          example: technicalowner@wso2.com
     AdditionalSubscriptionInfo:
       title: Additional Information of subscriptions related to an API
       type: object
@@ -820,106 +837,6 @@ components:
                     $ref: '#/components/schemas/SolaceTopics'
                   mqttSyntax:
                     $ref: '#/components/schemas/SolaceTopics'
-    Subscription:
-      title: Subscription
-      required:
-      - applicationId
-      - throttlingPolicy
-      type: object
-      properties:
-        subscriptionId:
-          type: string
-          description: The UUID of the subscription
-          readOnly: true
-          example: faae5fcc-cbae-40c4-bf43-89931630d313
-        applicationId:
-          type: string
-          description: The UUID of the application
-          example: b3ade481-30b0-4b38-9a67-498a40873a6d
-        apiId:
-          type: string
-          description: The unique identifier of the API.
-          example: 2962f3bb-8330-438e-baee-0ee1d6434ba4
-        apiInfo:
-          $ref: '#/components/schemas/APIInfo'
-        applicationInfo:
-          $ref: '#/components/schemas/ApplicationInfo'
-        throttlingPolicy:
-          type: string
-          example: Unlimited
-        requestedThrottlingPolicy:
-          type: string
-          example: Unlimited
-        status:
-          type: string
-          example: UNBLOCKED
-          enum:
-          - BLOCKED
-          - PROD_ONLY_BLOCKED
-          - UNBLOCKED
-          - ON_HOLD
-          - REJECTED
-          - TIER_UPDATE_PENDING
-          - DELETE_PENDING
-        redirectionParams:
-          type: string
-          description: A url and other parameters the subscriber can be redirected.
-          readOnly: true
-          example: ''
-    WorkflowResponse:
-      title: workflow Response
-      required:
-      - workflowStatus
-      type: object
-      properties:
-        workflowStatus:
-          type: string
-          description: 'This attribute declares whether this workflow task is approved or rejected.
-
-            '
-          example: APPROVED
-          enum:
-          - CREATED
-          - APPROVED
-          - REJECTED
-          - REGISTERED
-        jsonPayload:
-          type: string
-          description: 'Attributes that returned after the workflow execution
-
-            '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     ApplicationInfo:
       title: Application info object with basic application details
       type: object
@@ -965,79 +882,162 @@ components:
           type: string
           readOnly: true
           example: 1651555310208
-    SolaceTopics:
-      title: SolaceTopics
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
       type: object
       properties:
-        publishTopics:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
           type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
           items:
-            type: string
-        subscribeTopics:
-          type: array
-          items:
-            type: string
-  responses:
-    UnsupportedMediaType:
-      description: Unsupported Media Type. The entity of the request was not in a supported format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 415
-            message: Unsupported media type
-            description: The entity of the request was not in a supported format
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+            $ref: '#/components/schemas/ErrorListItem'
+    AdvertiseInfo:
+      title: API Advertise info object with advertise details
+      type: object
+      properties:
+        advertised:
+          type: boolean
+          example: true
+        apiExternalProductionEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        apiExternalSandboxEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        originalDevPortalUrl:
+          type: string
+          example: https://localhost:9443/devportal
+        apiOwner:
+          type: string
+          example: admin
+        vendor:
+          type: string
+          default: WSO2
+          enum:
+          - WSO2
+          - AWS
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    groupId:
+      name: groupId
+      in: query
+      description: 'Application Group Id
+
+        '
+      schema:
+        type: string
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      description: 'Subscription Id
+
+        '
+      required: true
+      schema:
+        type: string
+    applicationId-Q:
+      name: applicationId
+      in: query
+      description: '**Application Identifier** consisting of the UUID of the Application.
+
+        '
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      required: true
+      schema:
+        type: string
+    apiId-Q:
+      name: apiId
+      in: query
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

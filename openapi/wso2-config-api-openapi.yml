@@ -91,6 +91,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CorrelationComponentsList:
+      title: correlation-components
+      properties:
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorrelationComponent'
     Error:
       title: Error object returned with 4XX HTTP Status
       required:
@@ -122,6 +129,17 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    CorrelationComponentProperty:
+      title: Properties for correlation components
+      properties:
+        name:
+          type: string
+          example: deniedThreads
+        value:
+          type: array
+          items:
+            type: string
+            example: MessageDeliveryTaskPool
     CorrelationComponent:
       title: Correlation Component INFO object
       properties:
@@ -153,21 +171,3 @@ components:
           description: 'A detail description about the error message.
 
             '
-    CorrelationComponentsList:
-      title: correlation-components
-      properties:
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/CorrelationComponent'
-    CorrelationComponentProperty:
-      title: Properties for correlation components
-      properties:
-        name:
-          type: string
-          example: deniedThreads
-        value:
-          type: array
-          items:
-            type: string
-            example: MessageDeliveryTaskPool

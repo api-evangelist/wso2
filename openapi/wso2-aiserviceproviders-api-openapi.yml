@@ -75,6 +75,20 @@ paths:
       operationId: addAIServiceProvider
 components:
   schemas:
+    AIServiceProviderSummaryResponseList:
+      title: AIServiceProviderSummaryResponseList
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of LLM Providers returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
     AIServiceProviderRequest:
       title: AIServiceProvider
       required:
@@ -149,21 +163,6 @@ components:
           type: boolean
           description: Indicates if the LLM provider is deprecated
           example: false
-    ModelProvider:
-      title: Model Provider
-      type: object
-      required:
-      - name
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            type: string
-            example: gpt-4o
-        name:
-          type: string
-          example: OpenAI
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -197,20 +196,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    AIServiceProviderSummaryResponseList:
-      title: AIServiceProviderSummaryResponseList
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of LLM Providers returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -275,6 +260,21 @@ components:
           type: boolean
           description: Indicates if the LLM provider is deprecated
           example: false
+    ModelProvider:
+      title: Model Provider
+      type: object
+      required:
+      - name
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+            example: gpt-4o
+        name:
+          type: string
+          example: OpenAI
   responses:
     BadRequest:
       description: Bad Request. Invalid request or validation error.

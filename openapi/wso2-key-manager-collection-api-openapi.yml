@@ -119,54 +119,39 @@ paths:
       operationId: postKeyManagersDiscover
       x-operation-id-source: derived
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
-    KeyManagerInfo:
-      title: Key Manager Info
-      required:
-      - name
-      - type
+    TokenValidation:
+      title: Token handling Configuration
       type: object
       properties:
         id:
-          type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
-          type: string
-          example: WSO2 IS
+          type: integer
+        enable:
+          type: boolean
+          example: false
+          default: true
         type:
           type: string
-          example: IS
-        description:
-          type: string
-          example: This is a key manager for Developers
-        enabled:
-          type: boolean
-          example: true
-        isGlobal:
-          type: boolean
-          example: true
-        isUsed:
-          type: boolean
-          example: true
-        tokenType:
-          type: string
-          description: The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.
-          example: EXCHANGED
-          default: DIRECT
           enum:
-          - EXCHANGED
-          - DIRECT
-          - BOTH
-    KeyManagerWellKnownResponse:
-      title: Key Manager Well-Known Response.
-      type: object
-      properties:
-        valid:
-          type: boolean
-          example: true
-          default: false
+          - REFERENCE
+          - JWT
+          - CUSTOM
         value:
-          $ref: '#/components/schemas/KeyManager'
+          type: object
+          properties: {}
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -200,39 +185,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    TokenValidation:
-      title: Token handling Configuration
-      type: object
-      properties:
-        id:
-          type: integer
-        enable:
-          type: boolean
-          example: false
-          default: true
-        type:
-          type: string
-          enum:
-          - REFERENCE
-          - JWT
-          - CUSTOM
-        value:
-          type: object
-          properties: {}
-    KeyManagerList:
-      title: Key Manager List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Key managers returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyManagerInfo'
     KeyManagerEndpoint:
       title: Key Manager Endpoint.
       required:
@@ -246,31 +198,6 @@ components:
         value:
           type: string
           example: https://localhost:9443/oauth2/token
-    ClaimMappingEntry:
-      title: Claim Mapping Configuration
-      type: object
-      properties:
-        remoteClaim:
-          type: string
-          example: http://idp.org/username
-        localClaim:
-          type: string
-          example: http://wso2.org/username
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     KeyManager:
       title: Key Manager
       required:
@@ -454,19 +381,92 @@ components:
           type: array
           items:
             type: string
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
+    KeyManagerWellKnownResponse:
+      title: Key Manager Well-Known Response.
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+          default: false
+        value:
+          $ref: '#/components/schemas/KeyManager'
+    KeyManagerList:
+      title: Key Manager List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Key managers returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyManagerInfo'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ClaimMappingEntry:
+      title: Claim Mapping Configuration
+      type: object
+      properties:
+        remoteClaim:
+          type: string
+          example: http://idp.org/username
+        localClaim:
+          type: string
+          example: http://wso2.org/username
+    KeyManagerInfo:
+      title: Key Manager Info
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: WSO2 IS
+        type:
+          type: string
+          example: IS
+        description:
+          type: string
+          example: This is a key manager for Developers
+        enabled:
+          type: boolean
+          example: true
+        isGlobal:
+          type: boolean
+          example: true
+        isUsed:
+          type: boolean
+          example: true
+        tokenType:
+          type: string
+          description: The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.
+          example: EXCHANGED
+          default: DIRECT
+          enum:
+          - EXCHANGED
+          - DIRECT
+          - BOTH
   securitySchemes:
     OAuth2Security:
       type: oauth2

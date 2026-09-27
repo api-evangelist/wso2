@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: WSO2 API Manager - Developer Portal SD Ks API
+  title: WSO2 API Manager - Developer Portal SDKs API
   description: This document specifies a **RESTful API** for WSO2 **API Manager** - **Developer Portal**.
   contact:
     name: WSO2

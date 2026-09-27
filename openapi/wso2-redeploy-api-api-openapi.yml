@@ -65,34 +65,27 @@ paths:
       tags:
       - Redeploy Api
 components:
-  parameters:
-    version:
-      name: version
-      in: query
-      description: 'version of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string
   schemas:
+    DeployResponse:
+      title: Deploy API Response
+      required:
+      - deployStatus
+      properties:
+        deployStatus:
+          description: 'This attribute declares whether deployment task is successfull or failed.
+
+            '
+          type: string
+          enum:
+          - DEPLOYED
+          - UNDEPLOYED
+          - ERROR
+          example: DEPLOYED
+        jsonPayload:
+          description: 'Attributes that returned after the api deployment
+
+            '
+          type: string
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -125,26 +118,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    DeployResponse:
-      title: Deploy API Response
-      required:
-      - deployStatus
-      properties:
-        deployStatus:
-          description: 'This attribute declares whether deployment task is successfull or failed.
-
-            '
-          type: string
-          enum:
-          - DEPLOYED
-          - UNDEPLOYED
-          - ERROR
-          example: DEPLOYED
-        jsonPayload:
-          description: 'Attributes that returned after the api deployment
-
-            '
-          type: string
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -159,3 +132,30 @@ components:
           description: 'Description about individual errors occurred
 
             '
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string

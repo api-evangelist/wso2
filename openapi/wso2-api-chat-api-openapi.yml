@@ -63,27 +63,31 @@ paths:
       - lang: Curl
         source: 'curl -k -X POST -H "Content-Type: application/json" -d @request.json "https://localhost:9443/api/am/devportal/v3/apis/e93fb282-b456-48fc-8981-003fb89086ae/api-chat?apiChatAction=EXECUTE"'
 components:
-  parameters:
-    action:
-      name: apiChatAction
-      in: query
-      description: 'Action to be performed on API Chat AI Agent. Specifies whether ''prepare'' or ''execute''
-
-        '
-      schema:
-        type: string
-        enum:
-        - PREPARE
-        - EXECUTE
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
   schemas:
     ApiChatRequest:
       title: API Chat request
@@ -186,18 +190,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    SampleQuery:
-      title: API Chat sample query record
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
-      - scenario
-      - query
+      - code
+      - message
+      type: object
       properties:
-        scenario:
+        code:
           type: string
-          description: scenario
-        query:
+        message:
           type: string
-          description: generated query
+          description: 'Description about individual errors occurred
+
+            '
     ApiChatResponse:
       title: API Chat response
       properties:
@@ -265,45 +271,39 @@ components:
           description: list of sample queries
           items:
             $ref: '#/components/schemas/SampleQuery'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    SampleQuery:
+      title: API Chat sample query record
       required:
-      - code
-      - message
-      type: object
+      - scenario
+      - query
       properties:
-        code:
+        scenario:
           type: string
-        message:
+          description: scenario
+        query:
           type: string
-          description: 'Description about individual errors occurred
+          description: generated query
+  parameters:
+    apiId:
+      name: apiId
+      in: path
+      description: '**API ID** consisting of the **UUID** of the API.
 
-            '
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    Unauthorized:
-      description: Unauthorized. The user is not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 401
-            message: Unauthorized
-            description: The user is not authorized
-            moreInfo: ''
-            error: []
+        '
+      required: true
+      schema:
+        type: string
+    action:
+      name: apiChatAction
+      in: query
+      description: 'Action to be performed on API Chat AI Agent. Specifies whether ''prepare'' or ''execute''
+
+        '
+      schema:
+        type: string
+        enum:
+        - PREPARE
+        - EXECUTE
   securitySchemes:
     OAuth2Security:
       type: oauth2

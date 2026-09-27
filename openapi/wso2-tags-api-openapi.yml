@@ -73,6 +73,41 @@ paths:
       operationId: getTags
       x-operation-id-source: derived
 components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   schemas:
     Pagination:
       title: Pagination
@@ -175,54 +210,7 @@ components:
         count:
           type: integer
           example: 5
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
   responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.
       content:
@@ -233,6 +221,18 @@ components:
             code: 406
             message: Not Acceptable
             description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
             moreInfo: ''
             error: []
   securitySchemes:

@@ -209,34 +209,6 @@ paths:
       operationId: getKeyManagersByKeyManagerIdAppUsages
       x-operation-id-source: derived
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    keyManagerId:
-      name: keyManagerId
-      in: path
-      description: 'Key Manager UUID
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
     APIInfoKeyManager:
       type: object
@@ -286,20 +258,6 @@ components:
       - name
       - version
       - provider
-    KeyManagerAppUsages:
-      title: Key Manager Application Usages.
-      required:
-      - applicationCount
-      - applications
-      type: object
-      properties:
-        applicationCount:
-          type: integer
-          description: The total count of applications.
-        applications:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationInfoKeyManager'
     ApplicationInfoKeyManager:
       type: object
       properties:
@@ -325,6 +283,38 @@ components:
       - uuid
       - owner
       - organization
+    TokenValidation:
+      title: Token handling Configuration
+      type: object
+      properties:
+        id:
+          type: integer
+        enable:
+          type: boolean
+          example: false
+          default: true
+        type:
+          type: string
+          enum:
+          - REFERENCE
+          - JWT
+          - CUSTOM
+        value:
+          type: object
+          properties: {}
+    KeyManagerEndpoint:
+      title: Key Manager Endpoint.
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          example: token_endpoint
+        value:
+          type: string
+          example: https://localhost:9443/oauth2/token
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -358,77 +348,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    TokenValidation:
-      title: Token handling Configuration
+    KeyManagerAppUsages:
+      title: Key Manager Application Usages.
+      required:
+      - applicationCount
+      - applications
       type: object
       properties:
-        id:
+        applicationCount:
           type: integer
-        enable:
-          type: boolean
-          example: false
-          default: true
-        type:
-          type: string
-          enum:
-          - REFERENCE
-          - JWT
-          - CUSTOM
-        value:
-          type: object
-          properties: {}
-    KeyManagerEndpoint:
-      title: Key Manager Endpoint.
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          type: string
-          example: token_endpoint
-        value:
-          type: string
-          example: https://localhost:9443/oauth2/token
-    ClaimMappingEntry:
-      title: Claim Mapping Configuration
-      type: object
-      properties:
-        remoteClaim:
-          type: string
-          example: http://idp.org/username
-        localClaim:
-          type: string
-          example: http://wso2.org/username
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    KeyManagerAPIUsages:
-      title: Key Manager API Usages.
-      required:
-      - apiCount
-      - apis
-      type: object
-      properties:
-        apiCount:
-          type: integer
-          description: The total count of APIs.
-        apis:
+          description: The total count of applications.
+        applications:
           type: array
           items:
-            $ref: '#/components/schemas/APIInfoKeyManager'
+            $ref: '#/components/schemas/ApplicationInfoKeyManager'
     KeyManager:
       title: Key Manager
       required:
@@ -612,7 +545,86 @@ components:
           type: array
           items:
             type: string
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    KeyManagerAPIUsages:
+      title: Key Manager API Usages.
+      required:
+      - apiCount
+      - apis
+      type: object
+      properties:
+        apiCount:
+          type: integer
+          description: The total count of APIs.
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIInfoKeyManager'
+    ClaimMappingEntry:
+      title: Claim Mapping Configuration
+      type: object
+      properties:
+        remoteClaim:
+          type: string
+          example: http://idp.org/username
+        localClaim:
+          type: string
+          example: http://wso2.org/username
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    keyManagerId:
+      name: keyManagerId
+      in: path
+      description: 'Key Manager UUID
+
+        '
+      required: true
+      schema:
+        type: string
   responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
     BadRequest:
       description: Bad Request. Invalid request or validation error.
       content:
@@ -635,18 +647,6 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
             moreInfo: ''
             error: []
   securitySchemes:

@@ -172,6 +172,34 @@ components:
             moreInfo: ''
             error: []
   schemas:
+    BotDetectionAlertSubscriptionList:
+      title: Bot Detection Alert Subscription List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Bot Detection Alert Subscriptions returned.
+
+            '
+          example: 3
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotDetectionAlertSubscription'
+    BotDetectionAlertSubscription:
+      title: Bot Detection Alert Subscription
+      required:
+      - email
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: UUID of the subscription
+          example: urn:uuid:1ed6d2de-29df-4fed-a96a-46d2329dce65
+        email:
+          type: string
+          description: email
+          example: abc@gmail.com
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -205,20 +233,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    BotDetectionAlertSubscription:
-      title: Bot Detection Alert Subscription
-      required:
-      - email
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: UUID of the subscription
-          example: urn:uuid:1ed6d2de-29df-4fed-a96a-46d2329dce65
-        email:
-          type: string
-          description: email
-          example: abc@gmail.com
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -234,20 +248,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    BotDetectionAlertSubscriptionList:
-      title: Bot Detection Alert Subscription List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Bot Detection Alert Subscriptions returned.
-
-            '
-          example: 3
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/BotDetectionAlertSubscription'
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -244,6 +244,34 @@ paths:
       - OAuth2Security:
         - apim:gov_policy_manage
 components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    policyId:
+      name: policyId
+      in: path
+      description: '**UUID** of the Policy.
+
+        '
+      required: true
+      schema:
+        type: string
   schemas:
     Pagination:
       title: Pagination
@@ -270,6 +298,23 @@ components:
           description: 'Link to the previous subset of resources qualified.
 
             Empty if current subset is the first subset returned.
+
+            '
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
     APIMGovernancePolicy:
@@ -385,23 +430,6 @@ components:
           - BLOCK
           - NOTIFY
           example: BLOCK
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
     APIMGovernancePolicyList:
       type: object
       description: A list of governance policies.
@@ -417,34 +445,6 @@ components:
             $ref: '#/components/schemas/APIMGovernancePolicy'
         pagination:
           $ref: '#/components/schemas/Pagination'
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    policyId:
-      name: policyId
-      in: path
-      description: '**UUID** of the Policy.
-
-        '
-      required: true
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
   securitySchemes:
     OAuth2Security:
       type: oauth2

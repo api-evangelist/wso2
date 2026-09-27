@@ -553,85 +553,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ConsumerSecret:
-      type: object
-      properties:
-        secretId:
-          type: string
-          description: Unique identifier for the secret
-          example: sec_123456
-        secretValue:
-          type: string
-          description: The actual secret string
-          example: '***r3tV@lu3'
-        additionalProperties:
-          type: object
-          description: Additional dynamic properties for the secret creation request.
-          additionalProperties:
-            type: object
-          example:
-            expiresAt: 1761568483
-            description: pizza application secret
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    ApplicationKeyMappingRequest:
-      title: Application key provision request object
-      required:
-      - consumerKey
-      - keyType
-      type: object
-      properties:
-        consumerKey:
-          type: string
-          description: Consumer key of the application
-          example: oYhwZu4P2ThDmiDprBk6c0YfjR8a
-        consumerSecret:
-          type: string
-          description: Consumer secret of the application
-          example: ondWGtFTCOVM4sfPyOfZ7fel610a
-        keyManager:
-          type: string
-          description: Key Manager Name
-          example: Resident Key Manager
-        keyType:
-          type: string
-          enum:
-          - PRODUCTION
-          - SANDBOX
-    ApplicationToken:
-      title: Application token details to invoke APIs
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: Access token
-          example: 1.2345678901234568E30
-        tokenScopes:
-          type: array
-          description: Valid comma seperated scopes for the access token
-          example:
-          - default
-          - read_api
-          - write_api
-          items:
-            type: string
-        validityTime:
-          type: integer
-          description: Maximum validity time for the access token
-          format: int64
-          example: 3600
     ApplicationKeyGenerateRequest:
       title: Application key generation request object
       required:
@@ -686,18 +607,71 @@ components:
           properties: {}
           description: Additional properties needed.
           example: {}
-    ApplicationKeyReGenerateResponse:
-      title: Application key details after re generating consumer secret
+    ApplicationKeyMappingRequest:
+      title: Application key provision request object
+      required:
+      - consumerKey
+      - keyType
       type: object
       properties:
         consumerKey:
           type: string
-          description: The consumer key associated with the application, used to indetify the client
-          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
+          description: Consumer key of the application
+          example: oYhwZu4P2ThDmiDprBk6c0YfjR8a
         consumerSecret:
           type: string
-          description: The client secret that is used to authenticate the client with the authentication server
-          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
+          description: Consumer secret of the application
+          example: ondWGtFTCOVM4sfPyOfZ7fel610a
+        keyManager:
+          type: string
+          description: Key Manager Name
+          example: Resident Key Manager
+        keyType:
+          type: string
+          enum:
+          - PRODUCTION
+          - SANDBOX
+    ApplicationToken:
+      title: Application token details to invoke APIs
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token
+          example: 1.2345678901234568E30
+        tokenScopes:
+          type: array
+          description: Valid comma seperated scopes for the access token
+          example:
+          - default
+          - read_api
+          - write_api
+          items:
+            type: string
+        validityTime:
+          type: integer
+          description: Maximum validity time for the access token
+          format: int64
+          example: 3600
+    ConsumerSecret:
+      type: object
+      properties:
+        secretId:
+          type: string
+          description: Unique identifier for the secret
+          example: sec_123456
+        secretValue:
+          type: string
+          description: The actual secret string
+          example: '***r3tV@lu3'
+        additionalProperties:
+          type: object
+          description: Additional dynamic properties for the secret creation request.
+          additionalProperties:
+            type: object
+          example:
+            expiresAt: 1761568483
+            description: pizza application secret
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -812,7 +786,45 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationKey'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ApplicationKeyReGenerateResponse:
+      title: Application key details after re generating consumer secret
+      type: object
+      properties:
+        consumerKey:
+          type: string
+          description: The consumer key associated with the application, used to indetify the client
+          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
+        consumerSecret:
+          type: string
+          description: The client secret that is used to authenticate the client with the authentication server
+          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
   responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
     BadRequest:
       description: Bad Request. Invalid request or validation error.
       content:
@@ -849,25 +861,26 @@ components:
             description: The user does not have permission to perform this action
             moreInfo: ''
             error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   parameters:
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
+    keyType:
+      name: keyType
+      in: path
+      description: '**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).
 
         '
+      required: true
+      schema:
+        type: string
+        enum:
+        - PRODUCTION
+        - SANDBOX
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
       schema:
         type: string
     groupId:
@@ -876,15 +889,6 @@ components:
       description: 'Application Group Id
 
         '
-      schema:
-        type: string
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
-
-        '
-      required: true
       schema:
         type: string
     requestedTenant:
@@ -902,18 +906,14 @@ components:
       required: true
       schema:
         type: string
-    keyType:
-      name: keyType
-      in: path
-      description: '**Application Key Type** standing for the type of the keys (i.e. Production or Sandbox).
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
 
         '
-      required: true
       schema:
         type: string
-        enum:
-        - PRODUCTION
-        - SANDBOX
   securitySchemes:
     OAuth2Security:
       type: oauth2

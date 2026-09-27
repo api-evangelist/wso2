@@ -165,20 +165,44 @@ paths:
       operationId: deleteThrottlingPoliciesAdvancedByPolicyId
       x-operation-id-source: derived
 components:
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
-    JWTClaimsCondition:
-      title: JWT claim attibute based throttling condition
-      required:
-      - attribute
-      - claimUrl
-      type: object
-      properties:
-        claimUrl:
-          type: string
-          description: JWT claim URL
-        attribute:
-          type: string
-          description: Attribute to be matched
     HeaderCondition:
       title: HTTP Header based throttling condition
       required:
@@ -192,6 +216,70 @@ components:
         headerValue:
           type: string
           description: Value of the header
+    IPCondition:
+      title: IP based throttling condition
+      type: object
+      properties:
+        ipConditionType:
+          type: string
+          description: Type of the IP condition. Allowed values are "IPRANGE" and "IPSPECIFIC"
+          enum:
+          - IPRANGE
+          - IPSPECIFIC
+        specificIP:
+          type: string
+          description: Specific IP when "IPSPECIFIC" is used as the ipConditionType
+        startingIP:
+          type: string
+          description: Staring IP when "IPRANGE" is used as the ipConditionType
+        endingIP:
+          type: string
+          description: Ending IP when "IPRANGE" is used as the ipConditionType
+    AIAPIQuotaLimit:
+      title: AI API Quota Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 300
+          totalTokenCount:
+            type: integer
+            description: Maximum number of total tokens allowed
+            format: int64
+            example: 800
+          promptTokenCount:
+            type: integer
+            description: Maximum number of prompt tokens allowed
+            format: int64
+            example: 400
+          completionTokenCount:
+            type: integer
+            description: Maximum number of completion tokens allowed
+            format: int64
+            example: 500
+    AdvancedThrottlePolicy:
+      title: Advanced Throttling Policy
+      allOf:
+      - $ref: '#/components/schemas/ThrottlePolicy'
+      - required:
+        - defaultLimit
+        type: object
+        properties:
+          defaultLimit:
+            $ref: '#/components/schemas/ThrottleLimit'
+          conditionalGroups:
+            type: array
+            description: 'Group of conditions which allow adding different parameter conditions to the throttling limit.
+
+              '
+            items:
+              $ref: '#/components/schemas/ConditionalGroup'
     ThrottleCondition:
       title: Throttling Conditions
       required:
@@ -230,92 +318,6 @@ components:
         queryParameterCondition:
           $ref: '#/components/schemas/QueryParameterCondition'
       description: Conditions used for Throttling
-    EventCountLimit:
-      title: Event Count Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - eventCount
-        type: object
-        properties:
-          eventCount:
-            type: integer
-            description: Maximum number of events allowed
-            format: int64
-            example: 3000
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    QueryParameterCondition:
-      title: Query parameter based throttling condition
-      required:
-      - parameterName
-      - parameterValue
-      type: object
-      properties:
-        parameterName:
-          type: string
-          description: Name of the query parameter
-        parameterValue:
-          type: string
-          description: Value of the query parameter to be matched
-    RequestCountLimit:
-      title: Request Count Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - requestCount
-        type: object
-        properties:
-          requestCount:
-            type: integer
-            description: Maximum number of requests allowed
-            format: int64
-            example: 30
-    ThrottleLimitBase:
-      title: Throttle Limit Base
-      required:
-      - timeUnit
-      - unitTime
-      type: object
-      properties:
-        timeUnit:
-          type: string
-          description: Unit of the time. Allowed values are "sec", "min", "hour", "day"
-          example: min
-        unitTime:
-          type: integer
-          description: Time limit that the throttling limit applies.
-          example: 10
-    AdvancedThrottlePolicy:
-      title: Advanced Throttling Policy
-      allOf:
-      - $ref: '#/components/schemas/ThrottlePolicy'
-      - required:
-        - defaultLimit
-        type: object
-        properties:
-          defaultLimit:
-            $ref: '#/components/schemas/ThrottleLimit'
-          conditionalGroups:
-            type: array
-            description: 'Group of conditions which allow adding different parameter conditions to the throttling limit.
-
-              '
-            items:
-              $ref: '#/components/schemas/ConditionalGroup'
     ThrottlePolicy:
       title: Generic Throttling Policy
       required:
@@ -352,6 +354,74 @@ components:
           description: Indicates the type of throttle policy
       discriminator:
         propertyName: type
+    BandwidthLimit:
+      title: Bandwidth Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - dataAmount
+        - dataUnit
+        type: object
+        properties:
+          dataAmount:
+            type: integer
+            description: Amount of data allowed to be transfered
+            format: int64
+            example: 1000
+          dataUnit:
+            type: string
+            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
+            example: KB
+    ThrottleLimitBase:
+      title: Throttle Limit Base
+      required:
+      - timeUnit
+      - unitTime
+      type: object
+      properties:
+        timeUnit:
+          type: string
+          description: Unit of the time. Allowed values are "sec", "min", "hour", "day"
+          example: min
+        unitTime:
+          type: integer
+          description: Time limit that the throttling limit applies.
+          example: 10
+    ConditionalGroup:
+      title: Conditional Groups for Throttling
+      required:
+      - conditions
+      - limit
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the Conditional Group
+        conditions:
+          type: array
+          description: 'Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition
+
+            Please see schemas of each of those throttling condition in Definitions section.
+
+            '
+          example: "[\n  {\n    \"type\": \"HEADERCONDITION\",\n    \"invertCondition\": false,\n    \"headerCondition\":\n    {\n      \"headerName\": \"Host\",\n      \"headerValue\": \"10.100.7.77\"\n    }\n  },\n  {\n    \"type\": \"IPCONDITION\",\n    \"invertCondition\": false,\n    \"ipCondition\":\n    {\n      \"ipConditionType\": \"IPSPECIFIC\",\n      \"specificIP\": \"10.100.1.22\",\n      \"startingIP\": null,\n      \"endingIP\": null\n    }\n  },\n  {\n    \"type\": \"QUERYPARAMETERCONDITION\",\n    \"invertCondition\": false,\n    \"queryParameterCondition\":\n    {\n      \"parameterName\": \"name\",\n      \"parameterValue\": \"admin\"\n    }\n  },\n  {\n    \"type\": \"JWTCLAIMSCONDITION\",\n    \"invertCondition\": true,\n    \"jwtClaimsCondition\":\n    {\n      \"claimUrl\": \"claimUrl0\",\n      \"attribute\": \"claimAttr0\"\n    }\n  }\n]\n"
+          items:
+            $ref: '#/components/schemas/ThrottleCondition'
+        limit:
+          $ref: '#/components/schemas/ThrottleLimit'
+    EventCountLimit:
+      title: Event Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - eventCount
+        type: object
+        properties:
+          eventCount:
+            type: integer
+            description: Maximum number of events allowed
+            format: int64
+            example: 3000
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -385,28 +455,60 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ConditionalGroup:
-      title: Conditional Groups for Throttling
+    JWTClaimsCondition:
+      title: JWT claim attibute based throttling condition
       required:
-      - conditions
-      - limit
+      - attribute
+      - claimUrl
       type: object
       properties:
-        description:
+        claimUrl:
           type: string
-          description: Description of the Conditional Group
-        conditions:
-          type: array
-          description: 'Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition
-
-            Please see schemas of each of those throttling condition in Definitions section.
+          description: JWT claim URL
+        attribute:
+          type: string
+          description: Attribute to be matched
+    QueryParameterCondition:
+      title: Query parameter based throttling condition
+      required:
+      - parameterName
+      - parameterValue
+      type: object
+      properties:
+        parameterName:
+          type: string
+          description: Name of the query parameter
+        parameterValue:
+          type: string
+          description: Value of the query parameter to be matched
+    RequestCountLimit:
+      title: Request Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 30
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: "[\n  {\n    \"type\": \"HEADERCONDITION\",\n    \"invertCondition\": false,\n    \"headerCondition\":\n    {\n      \"headerName\": \"Host\",\n      \"headerValue\": \"10.100.7.77\"\n    }\n  },\n  {\n    \"type\": \"IPCONDITION\",\n    \"invertCondition\": false,\n    \"ipCondition\":\n    {\n      \"ipConditionType\": \"IPSPECIFIC\",\n      \"specificIP\": \"10.100.1.22\",\n      \"startingIP\": null,\n      \"endingIP\": null\n    }\n  },\n  {\n    \"type\": \"QUERYPARAMETERCONDITION\",\n    \"invertCondition\": false,\n    \"queryParameterCondition\":\n    {\n      \"parameterName\": \"name\",\n      \"parameterValue\": \"admin\"\n    }\n  },\n  {\n    \"type\": \"JWTCLAIMSCONDITION\",\n    \"invertCondition\": true,\n    \"jwtClaimsCondition\":\n    {\n      \"claimUrl\": \"claimUrl0\",\n      \"attribute\": \"claimAttr0\"\n    }\n  }\n]\n"
-          items:
-            $ref: '#/components/schemas/ThrottleCondition'
-        limit:
-          $ref: '#/components/schemas/ThrottleLimit'
     ThrottleLimit:
       title: Throttle Limit
       required:
@@ -430,109 +532,16 @@ components:
           $ref: '#/components/schemas/EventCountLimit'
         aiApiQuota:
           $ref: '#/components/schemas/AIAPIQuotaLimit'
-    AIAPIQuotaLimit:
-      title: AI API Quota Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - requestCount
-        type: object
-        properties:
-          requestCount:
-            type: integer
-            description: Maximum number of requests allowed
-            format: int64
-            example: 300
-          totalTokenCount:
-            type: integer
-            description: Maximum number of total tokens allowed
-            format: int64
-            example: 800
-          promptTokenCount:
-            type: integer
-            description: Maximum number of prompt tokens allowed
-            format: int64
-            example: 400
-          completionTokenCount:
-            type: integer
-            description: Maximum number of completion tokens allowed
-            format: int64
-            example: 500
-    BandwidthLimit:
-      title: Bandwidth Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - dataAmount
-        - dataUnit
-        type: object
-        properties:
-          dataAmount:
-            type: integer
-            description: Amount of data allowed to be transfered
-            format: int64
-            example: 1000
-          dataUnit:
-            type: string
-            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
-            example: KB
-    IPCondition:
-      title: IP based throttling condition
-      type: object
-      properties:
-        ipConditionType:
-          type: string
-          description: Type of the IP condition. Allowed values are "IPRANGE" and "IPSPECIFIC"
-          enum:
-          - IPRANGE
-          - IPSPECIFIC
-        specificIP:
-          type: string
-          description: Specific IP when "IPSPECIFIC" is used as the ipConditionType
-        startingIP:
-          type: string
-          description: Staring IP when "IPRANGE" is used as the ipConditionType
-        endingIP:
-          type: string
-          description: Ending IP when "IPRANGE" is used as the ipConditionType
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   parameters:
+    policyId:
+      name: policyId
+      in: path
+      description: 'Thorttle policy UUID
+
+        '
+      required: true
+      schema:
+        type: string
     Content-Type:
       name: Content-Type
       in: header
@@ -543,15 +552,6 @@ components:
       schema:
         type: string
         default: application/json
-    policyId:
-      name: policyId
-      in: path
-      description: 'Thorttle policy UUID
-
-        '
-      required: true
-      schema:
-        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

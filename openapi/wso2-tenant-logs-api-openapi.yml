@@ -132,29 +132,35 @@ paths:
       operationId: putTenantLogsByTenantApisByApiId
       x-operation-id-source: derived
 components:
+  parameters:
+    tenant:
+      name: tenant
+      in: path
+      description: 'Tenant (organization) name
+
+        '
+      required: true
+      schema:
+        type: string
+    logLevel:
+      name: log-level
+      in: query
+      description: 'Log level of the APIs
+
+        '
+      required: false
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: 'The API ID for the logging operation
+
+        '
+      required: true
+      schema:
+        type: string
   schemas:
-    LoggingApiOutput:
-      title: API Info object with log details
-      required:
-      - context
-      - logLevel
-      - apiId
-      properties:
-        context:
-          type: string
-          example: pizashack/v1.0.0
-        logLevel:
-          type: string
-          example: FULL
-        apiId:
-          type: string
-          example: 12d6e73c-778d-45ac-b57d-117c6c5092a4
-        resourceMethod:
-          type: string
-          example: GET
-        resourcePath:
-          type: string
-          example: /v1.0.0/pizza
     Error:
       title: Error object returned with 4XX HTTP Status
       required:
@@ -186,6 +192,13 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    LoggingApiOutputList:
+      title: apis
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoggingApiOutput'
     LoggingApiInput:
       title: API Info object with log details
       required:
@@ -218,38 +231,25 @@ components:
           description: 'A detail description about the error message.
 
             '
-    LoggingApiOutputList:
-      title: apis
+    LoggingApiOutput:
+      title: API Info object with log details
+      required:
+      - context
+      - logLevel
+      - apiId
       properties:
-        apis:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoggingApiOutput'
-  parameters:
-    logLevel:
-      name: log-level
-      in: query
-      description: 'Log level of the APIs
-
-        '
-      required: false
-      schema:
-        type: string
-    tenant:
-      name: tenant
-      in: path
-      description: 'Tenant (organization) name
-
-        '
-      required: true
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: 'The API ID for the logging operation
-
-        '
-      required: true
-      schema:
-        type: string
+        context:
+          type: string
+          example: pizashack/v1.0.0
+        logLevel:
+          type: string
+          example: FULL
+        apiId:
+          type: string
+          example: 12d6e73c-778d-45ac-b57d-117c6c5092a4
+        resourceMethod:
+          type: string
+          example: GET
+        resourcePath:
+          type: string
+          example: /v1.0.0/pizza

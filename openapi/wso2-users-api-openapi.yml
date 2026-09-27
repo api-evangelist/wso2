@@ -77,21 +77,16 @@ paths:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    OrganizationInfo:
+      title: Organization Info
       type: object
       properties:
-        code:
+        organizationId:
           type: string
-          description: Error code
-        message:
+          example: 01234567-0123-0123-0123-012345678901
+        name:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
+          example: My Organization
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -125,16 +120,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    OrganizationInfo:
-      title: Organization Info
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        organizationId:
+        code:
           type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
+          description: Error code
+        message:
           type: string
-          example: My Organization
+          description: 'Description about individual errors occurred
+
+            '
     CurrentAndNewPasswords:
       title: Current and new passowrd of the user
       type: object

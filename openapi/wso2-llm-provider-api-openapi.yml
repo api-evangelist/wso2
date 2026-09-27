@@ -110,35 +110,32 @@ paths:
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/llm-providers/a2f1e643-9b2a-4f58-bd7a-8c2d3f1e9d6f"'
       operationId: getLLMProvider
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
-    LLMProviderRequest:
-      title: LLMProvider
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: OpenAI
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
-        configurations:
-          type: string
-          description: LLM Provider configurations
-        apiDefinition:
-          type: string
-          description: OpenAPI specification
-          format: binary
-        modelList:
-          type: string
-          description: List of models supported by the LLM Provider as a stringified JSON array
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -223,31 +220,34 @@ components:
           description: 'Description about individual errors occurred
 
             '
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+    LLMProviderRequest:
+      title: LLMProvider
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: OpenAI
+        apiVersion:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: 1.0.0
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
+        configurations:
+          type: string
+          description: LLM Provider configurations
+        apiDefinition:
+          type: string
+          description: OpenAPI specification
+          format: binary
+        modelList:
+          type: string
+          description: List of models supported by the LLM Provider as a stringified JSON array
   parameters:
     llmProviderId:
       name: llmProviderId

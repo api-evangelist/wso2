@@ -189,55 +189,115 @@ paths:
       - OAuth2Security:
         - apim:admin
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    Conflict:
-      description: Conflict. Specified resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   schemas:
-    GatewayList:
-      title: Gateway List
+    PlatformGatewayResponse:
+      title: Platform Gateway Response
+      description: Platform gateway response (without registration token). Used for list and get.
       type: object
       properties:
-        count:
+        id:
+          type: string
+          readOnly: true
+          description: Gateway UUID
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        properties:
+          type: object
+          additionalProperties: true
+          description: Custom key-value properties
+        vhost:
+          type: string
+          format: uri
+          readOnly: true
+          description: Gateway URL (e.g. https://host or https://host:9443). Same name as platform API; type is URL.
+        isActive:
+          type: boolean
+          readOnly: true
+          description: Indicates if the gateway is currently connected to the control plane via WebSocket
+        permissions:
+          type: object
+          description: Gateway visibility permissions configuration
+          properties:
+            permissionType:
+              type: string
+              enum:
+              - PUBLIC
+              - ALLOW
+              - DENY
+              default: PUBLIC
+              description: 'Permission type for gateway visibility:
+
+                - PUBLIC: Gateway is visible to all users
+
+                - ALLOW: Gateway is visible only to specified roles
+
+                - DENY: Gateway is hidden from specified roles
+
+                '
+            roles:
+              type: array
+              items:
+                type: string
+              description: List of roles for ALLOW/DENY permission types
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
           type: integer
-          description: Number of platform gateways returned
-        list:
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
           type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
           items:
-            $ref: '#/components/schemas/PlatformGatewayResponse'
+            $ref: '#/components/schemas/ErrorListItem'
+    GatewayResponseWithToken:
+      title: Gateway Response With Token
+      description: Platform gateway response including the one-time registration token (POST create or regenerate-token).
+      allOf:
+      - $ref: '#/components/schemas/PlatformGatewayResponse'
+      - type: object
+        properties:
+          registrationToken:
+            type: string
+            description: 'Registration token (returned only once on create or regenerate). Use as api-key when connecting
+
+              the gateway to the control plane WebSocket. Store e.g. as GATEWAY_REGISTRATION_TOKEN.
+
+              '
     UpdatePlatformGatewayRequest:
       title: Update Platform Gateway Request
       description: 'Request body for PUT /gateways/{gatewayId}. Per PUT semantics, send the full resource
@@ -295,39 +355,6 @@ components:
               items:
                 type: string
               description: List of roles for ALLOW/DENY permission types
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     CreatePlatformGatewayRequest:
       title: Create Platform Gateway Request
       description: Request body for creating a platform gateway (name, displayName, vhost as URL, optional properties). Same property name as platform API; type is URL.
@@ -399,67 +426,17 @@ components:
             roles:
             - admin
             - publisher
-    PlatformGatewayResponse:
-      title: Platform Gateway Response
-      description: Platform gateway response (without registration token). Used for list and get.
+    GatewayList:
+      title: Gateway List
       type: object
       properties:
-        id:
-          type: string
-          readOnly: true
-          description: Gateway UUID
-        name:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        properties:
-          type: object
-          additionalProperties: true
-          description: Custom key-value properties
-        vhost:
-          type: string
-          format: uri
-          readOnly: true
-          description: Gateway URL (e.g. https://host or https://host:9443). Same name as platform API; type is URL.
-        isActive:
-          type: boolean
-          readOnly: true
-          description: Indicates if the gateway is currently connected to the control plane via WebSocket
-        permissions:
-          type: object
-          description: Gateway visibility permissions configuration
-          properties:
-            permissionType:
-              type: string
-              enum:
-              - PUBLIC
-              - ALLOW
-              - DENY
-              default: PUBLIC
-              description: 'Permission type for gateway visibility:
-
-                - PUBLIC: Gateway is visible to all users
-
-                - ALLOW: Gateway is visible only to specified roles
-
-                - DENY: Gateway is hidden from specified roles
-
-                '
-            roles:
-              type: array
-              items:
-                type: string
-              description: List of roles for ALLOW/DENY permission types
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
+        count:
+          type: integer
+          description: Number of platform gateways returned
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformGatewayResponse'
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -475,20 +452,43 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    GatewayResponseWithToken:
-      title: Gateway Response With Token
-      description: Platform gateway response including the one-time registration token (POST create or regenerate-token).
-      allOf:
-      - $ref: '#/components/schemas/PlatformGatewayResponse'
-      - type: object
-        properties:
-          registrationToken:
-            type: string
-            description: 'Registration token (returned only once on create or regenerate). Use as api-key when connecting
-
-              the gateway to the control plane WebSocket. Store e.g. as GATEWAY_REGISTRATION_TOKEN.
-
-              '
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -75,6 +75,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    MonetizationUsagePublishInfo:
+      title: Usage publish status
+      type: object
+      properties:
+        state:
+          type: string
+          description: State of usage publish job
+          example: RUNNING
+        status:
+          type: string
+          description: Status of usage publish job
+          example: SUCCESSFULL
+        startedTime:
+          type: string
+          description: Timestamp of the started time of the Job
+          example: '1599196134000'
+        lastPublsihedTime:
+          type: string
+          description: Timestamp of the last published time
+          example: '1599196134000'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -108,38 +128,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    MonetizationUsagePublishInfo:
-      title: Usage publish status
-      type: object
-      properties:
-        state:
-          type: string
-          description: State of usage publish job
-          example: RUNNING
-        status:
-          type: string
-          description: Status of usage publish job
-          example: SUCCESSFULL
-        startedTime:
-          type: string
-          description: Timestamp of the started time of the Job
-          example: '1599196134000'
-        lastPublsihedTime:
-          type: string
-          description: Timestamp of the last published time
-          example: '1599196134000'
-    PublishStatus:
-      title: Usage publish status
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the usage publish request
-          example: successfull
-        message:
-          type: string
-          description: detailed message of the status
-          example: Records published successfully
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -155,6 +143,18 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    PublishStatus:
+      title: Usage publish status
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the usage publish request
+          example: successfull
+        message:
+          type: string
+          description: detailed message of the status
+          example: Records published successfully
   responses:
     InternalServerError:
       description: Internal Server Error.

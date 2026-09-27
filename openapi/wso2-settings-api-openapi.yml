@@ -83,108 +83,6 @@ paths:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
   schemas:
-    KeyManagerConfiguration:
-      title: Key Manager Configuration
-      type: object
-      properties:
-        name:
-          type: string
-          example: consumer_key
-        label:
-          type: string
-          example: Consumer Key
-        type:
-          type: string
-          example: select
-        required:
-          type: boolean
-          example: true
-        mask:
-          type: boolean
-          example: true
-        multiple:
-          type: boolean
-          example: true
-        tooltip:
-          type: string
-          example: Enter username to connect to key manager
-        default:
-          type: object
-          properties: {}
-          example: admin
-        values:
-          type: array
-          items:
-            type: object
-            properties: {}
-        updateDisabled:
-          type: boolean
-          description: Indicates that this configuration field cannot be modified once the Key Manager is created.
-          default: false
-          example: true
-    ConfigurationConstraint:
-      title: Configurable Configuration Constraints
-      type: object
-      properties:
-        name:
-          type: string
-          example: application_access_token_expiry_time
-        label:
-          type: string
-          example: Access Token Expiry
-        type:
-          type: string
-          example: input
-        multiple:
-          type: boolean
-          example: true
-        tooltip:
-          type: string
-          example: Define the valid range for token expiration in seconds.
-        constraintType:
-          type: string
-          example: RANGE
-        values:
-          type: array
-          items:
-            type: object
-            properties: {}
-        default:
-          type: object
-          properties: {}
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     Settings:
       title: Settings
       type: object
@@ -284,6 +182,69 @@ components:
           type: boolean
           description: Whether the ConsumptionDataExportService OSGi service is available
           example: false
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ConfigurationConstraint:
+      title: Configurable Configuration Constraints
+      type: object
+      properties:
+        name:
+          type: string
+          example: application_access_token_expiry_time
+        label:
+          type: string
+          example: Access Token Expiry
+        type:
+          type: string
+          example: input
+        multiple:
+          type: boolean
+          example: true
+        tooltip:
+          type: string
+          example: Define the valid range for token expiration in seconds.
+        constraintType:
+          type: string
+          example: RANGE
+        values:
+          type: array
+          items:
+            type: object
+            properties: {}
+        default:
+          type: object
+          properties: {}
     GatewayConfiguration:
       title: Gateway Configuration
       type: object
@@ -333,80 +294,45 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ApplicationAttributeList:
-      title: Application Attributes List
+    KeyManagerConfiguration:
+      title: Key Manager Configuration
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of application attributes returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationAttribute'
-    ApplicationAttribute:
-      title: Application attributes
-      type: object
-      properties:
-        description:
+        name:
           type: string
-          description: description of the application attribute
-          example: Sample description of the attribute
+          example: consumer_key
+        label:
+          type: string
+          example: Consumer Key
         type:
           type: string
-          description: type of the input element to display
-          example: text
+          example: select
+        required:
+          type: boolean
+          example: true
+        mask:
+          type: boolean
+          example: true
+        multiple:
+          type: boolean
+          example: true
         tooltip:
           type: string
-          description: tooltop to display for the input element
-          example: Sample tooltip
-        required:
-          type: string
-          description: whether this is a required attribute
-          example: 'false'
-        attribute:
-          type: string
-          description: the name of the attribute
-          example: External Reference Id
-        hidden:
-          type: string
-          description: whether this is a hidden attribute
-          example: 'false'
-    Error_2:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
+          example: Enter username to connect to key manager
+        default:
+          type: object
+          properties: {}
+          example: admin
+        values:
           type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
           items:
-            $ref: '#/components/schemas/ErrorListItem_2'
+            type: object
+            properties: {}
+        updateDisabled:
+          type: boolean
+          description: Indicates that this configuration field cannot be modified once the Key Manager is created.
+          default: false
+          example: true
     Settings_2:
       title: Settings
       type: object
@@ -516,6 +442,38 @@ components:
           - MCP_ONLY
           - API_ONLY
           default: HYBRID
+    Error_2:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem_2'
     ErrorListItem_2:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -530,6 +488,48 @@ components:
           description: 'Description about individual errors occurred
 
             '
+    ApplicationAttributeList:
+      title: Application Attributes List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of application attributes returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationAttribute'
+    ApplicationAttribute:
+      title: Application attributes
+      type: object
+      properties:
+        description:
+          type: string
+          description: description of the application attribute
+          example: Sample description of the attribute
+        type:
+          type: string
+          description: type of the input element to display
+          example: text
+        tooltip:
+          type: string
+          description: tooltop to display for the input element
+          example: Sample tooltip
+        required:
+          type: string
+          description: whether this is a required attribute
+          example: 'false'
+        attribute:
+          type: string
+          description: the name of the attribute
+          example: External Reference Id
+        hidden:
+          type: string
+          description: whether this is a hidden attribute
+          example: 'false'
     Settings_3:
       title: SettingsDTO
       properties:

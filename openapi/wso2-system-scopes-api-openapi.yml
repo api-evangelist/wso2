@@ -240,13 +240,38 @@ components:
             moreInfo: ''
             error: []
   schemas:
-    ScopeSettings:
-      title: Settings
+    Scope:
+      title: Scope Role
       type: object
       properties:
+        tag:
+          type: string
+          description: 'Portal name.
+
+            '
+          example: publisher
         name:
           type: string
-          example: apim:subscribe
+          description: 'Scope name.
+
+            '
+          example: apim:api_publish
+        description:
+          type: string
+          description: 'About scope.
+
+            '
+          example: Publish API
+        roles:
+          type: array
+          description: 'Roles for the particular scope.
+
+            '
+          example:
+          - admin
+          - Internal/publisher
+          items:
+            type: string
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -295,6 +320,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Scope'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     RoleAliasList:
       title: Role alias list
       type: object
@@ -323,53 +363,13 @@ components:
           - Internal/subscriber
           items:
             type: string
-    Scope:
-      title: Scope Role
+    ScopeSettings:
+      title: Settings
       type: object
       properties:
-        tag:
-          type: string
-          description: 'Portal name.
-
-            '
-          example: publisher
         name:
           type: string
-          description: 'Scope name.
-
-            '
-          example: apim:api_publish
-        description:
-          type: string
-          description: 'About scope.
-
-            '
-          example: Publish API
-        roles:
-          type: array
-          description: 'Roles for the particular scope.
-
-            '
-          example:
-          - admin
-          - Internal/publisher
-          items:
-            type: string
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
+          example: apim:subscribe
   parameters:
     scopeName:
       name: scopeName
