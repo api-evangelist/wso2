@@ -640,89 +640,16 @@ paths:
         source: curl -k -H "Authorization:Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://localhost:9443/api/am/devportal/v3/mcp-servers/e93fb282-b456-48fc-8981-003fb89086ae/comments/d4cf1704-5d09-491c-bc48-4d19ce6ea9b4/replies"
       operationId: getRepliesOfCommentOfMCPServer
 components:
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    Unauthorized:
-      description: Unauthorized. The user is not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 401
-            message: Unauthorized
-            description: The user is not authorized
-            moreInfo: ''
-            error: []
-    UnsupportedMediaType:
-      description: Unsupported Media Type. The entity of the request was not in a supported format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 415
-            message: Unsupported media type
-            description: The entity of the request was not in a supported format
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   parameters:
-    includeCommenterInfo:
-      name: includeCommenterInfo
+    offset:
+      name: offset
       in: query
-      description: 'Whether we need to display commentor details.
+      description: 'Starting point within the complete list of items qualified.
 
         '
       schema:
-        type: boolean
-        default: false
+        type: integer
+        default: 0
     limit:
       name: limit
       in: query
@@ -741,30 +668,10 @@ components:
       required: true
       schema:
         type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    replyOffset:
-      name: replyOffset
-      in: query
-      description: 'Starting point within the complete list of replies.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    If-None-Match:
-      name: If-None-Match
+    If-Match:
+      name: If-Match
       in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
+      description: 'Validator for conditional requests; based on ETag.
 
         '
       schema:
@@ -775,6 +682,24 @@ components:
       description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
         type: string
+    commentId:
+      name: commentId
+      in: path
+      description: 'Comment Id
+
+        '
+      required: true
+      schema:
+        type: string
+    replyOffset:
+      name: replyOffset
+      in: query
+      description: 'Starting point within the complete list of replies.
+
+        '
+      schema:
+        type: integer
+        default: 0
     replyLimit:
       name: replyLimit
       in: query
@@ -784,13 +709,12 @@ components:
       schema:
         type: integer
         default: 25
-    commentId:
-      name: commentId
-      in: path
-      description: 'Comment Id
+    parentCommentId:
+      name: replyTo
+      in: query
+      description: 'ID of the perent comment.
 
         '
-      required: true
       schema:
         type: string
     apiId:
@@ -802,23 +726,113 @@ components:
       required: true
       schema:
         type: string
-    If-Match:
-      name: If-Match
+    If-None-Match:
+      name: If-None-Match
       in: header
-      description: 'Validator for conditional requests; based on ETag.
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
 
         '
       schema:
         type: string
-    parentCommentId:
-      name: replyTo
+    includeCommenterInfo:
+      name: includeCommenterInfo
       in: query
-      description: 'ID of the perent comment.
+      description: 'Whether we need to display commentor details.
 
         '
       schema:
-        type: string
+        type: boolean
+        default: false
+  responses:
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Comment:
       title: Comment
       required:
@@ -864,43 +878,6 @@ components:
           $ref: '#/components/schemas/CommenterInfo'
         replies:
           $ref: '#/components/schemas/CommentList'
-    CommentList:
-      title: Comments List
-      type: object
-      properties:
-        count:
-          type: integer
-          readOnly: true
-          description: 'Number of Comments returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/Comment'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    PostRequestBody:
-      title: Post request body
-      type: object
-      properties:
-        content:
-          type: string
-          maxLength: 512
-          description: 'Content of the comment
-
-            '
-          example: This is a comment
-        category:
-          type: string
-          description: 'Category of the comment
-
-            '
-          example: general
-      required:
-      - content
     Pagination:
       title: Pagination
       type: object
@@ -930,8 +907,8 @@ components:
 
             '
           example: ''
-    PatchRequestBody:
-      title: Patch request body
+    PostRequestBody:
+      title: Post request body
       type: object
       properties:
         content:
@@ -947,6 +924,8 @@ components:
 
             '
           example: general
+      required:
+      - content
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -979,6 +958,41 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    PatchRequestBody:
+      title: Patch request body
+      type: object
+      properties:
+        content:
+          type: string
+          maxLength: 512
+          description: 'Content of the comment
+
+            '
+          example: This is a comment
+        category:
+          type: string
+          description: 'Category of the comment
+
+            '
+          example: general
+    CommentList:
+      title: Comments List
+      type: object
+      properties:
+        count:
+          type: integer
+          readOnly: true
+          description: 'Number of Comments returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Comment'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     CommenterInfo:
       type: object
       properties:
@@ -991,20 +1005,6 @@ components:
         fullName:
           type: string
           example: John David
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

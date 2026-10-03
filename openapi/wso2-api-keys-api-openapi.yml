@@ -687,100 +687,7 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
   schemas:
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    APIKeyList:
-      title: API Keys List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API keys returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIKey'
-    APIKeyRevokeRequest:
-      title: API Key revoke request object
-      type: object
-      required:
-      - keyUUID
-      properties:
-        keyUUID:
-          type: string
-          description: The UUID of the API key
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -842,21 +749,49 @@ components:
           format: int64
           description: Last used time in Unix epoch milliseconds
           example: 1599196134000
-    SubscribedAPIWithApiKeyList:
-      title: Subscribed APIs with non-associated API keys
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
+        code:
           type: integer
-          description: 'Number of subscribed APIs with API keys returned.
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
-          example: 1
-        list:
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
           type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
           items:
-            $ref: '#/components/schemas/APIWithKeyInfo'
-    APIAPIKeyList:
+            $ref: '#/components/schemas/ErrorListItem'
+    APIKeyRevokeRequest:
+      title: API Key revoke request object
+      type: object
+      required:
+      - keyUUID
+      properties:
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+    APIKeyList:
       title: API Keys List
       type: object
       properties:
@@ -869,9 +804,32 @@ components:
         list:
           type: array
           items:
-            $ref: '#/components/schemas/APIAPIKeyInfo'
+            $ref: '#/components/schemas/APIKey'
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     APIAPIKeyRevokeRequest:
       title: API Key revoke request object
+      type: object
+      required:
+      - keyUUID
+      properties:
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+    APIKeyDissociateRequest:
+      title: API Key dissociation request object
       type: object
       required:
       - keyUUID
@@ -908,68 +866,6 @@ components:
           format: int64
           description: Last used time as epoch milliseconds.
           example: 2026-02-06 23:45:07
-    APIKeyList_2:
-      title: API Keys List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API keys returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIKeyInfo'
-    AppAPIKeyAssociateRequest:
-      title: API Key association request object
-      type: object
-      required:
-      - keyUUID
-      - apiUUID
-      properties:
-        apiUUID:
-          type: string
-          description: The unique identifier of the API.
-          example: 2962f3bb-8330-438e-baee-0ee1d6434ba4
-        keyUUID:
-          type: string
-          description: The UUID of the API key
-    APIKeyInfo:
-      title: API Key details to invoke APIs
-      type: object
-      properties:
-        keyUUID:
-          type: string
-          description: The UUID of the API key
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        issuedOn:
-          type: integer
-          format: int64
-          description: Created Time
-          example: 3600
-        validityPeriod:
-          type: integer
-          format: int64
-          example: 3600
-        lastUsed:
-          type: integer
-          format: int64
-          description: Last used time as epoch milliseconds.
-          example: 3600
-    APIKeyRenewRequest:
-      title: API Key renewal request object
-      type: object
-      required:
-      - keyUUID
-      properties:
-        keyUUID:
-          type: string
-          description: The UUID of the API key
     APIKeyRevokeRequest_2:
       title: API Key revoke request object
       type: object
@@ -986,179 +882,6 @@ components:
         keyUUID:
           type: string
           description: The UUID of the API key
-    APIKeyGenerateRequest:
-      title: API Key generation request object
-      type: object
-      properties:
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        validityPeriod:
-          type: integer
-          description: API key validity period
-          format: int64
-          example: 3600
-        additionalProperties:
-          type: object
-          properties: {}
-          description: Additional parameters if Authorization server needs any
-    APIKeyDissociateRequest:
-      title: API Key dissociation request object
-      type: object
-      required:
-      - keyUUID
-      properties:
-        keyUUID:
-          type: string
-          description: The UUID of the API key
-    APIAPIKeyAssociateRequest:
-      title: API Key association request object
-      type: object
-      required:
-      - keyUUID
-      - applicationUUID
-      properties:
-        keyUUID:
-          type: string
-          description: The UUID of the API key
-        applicationUUID:
-          type: string
-          description: The UUID of the Application to be associated
-    APIAPIKeyGenerateRequest:
-      title: API Key generation request object
-      type: object
-      properties:
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        keyType:
-          type: string
-          description: Type of the API key
-          example: PRODUCTION
-          enum:
-          - PRODUCTION
-          - SANDBOX
-        validityPeriod:
-          type: integer
-          description: API key validity period
-          format: int64
-          example: 3600
-        additionalProperties:
-          type: object
-          properties: {}
-          description: Additional parameters if Authorization server needs any
-    APIKeyAssociationList:
-      title: API Key Associations List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API key associations returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIKeyAssociationInfo'
-    Error_2:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem_2'
-    APIKeyAssociation:
-      title: API Key association
-      type: object
-      properties:
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        apiName:
-          type: string
-          description: API name
-          example: NotificationAPI
-        applicationName:
-          type: string
-          description: Application name
-          example: DefaultApplication
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    APIWithKeyInfo:
-      title: API with API Key
-      type: object
-      properties:
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        keyUUID:
-          type: string
-          description: The UUID of the API key
-        apiName:
-          type: string
-          description: API name
-          example: NotificationAPI
-        apiUUID:
-          type: string
-          description: The UUID of the associated API
-    APIKey_2:
-      title: API Key details to invoke APIs
-      type: object
-      properties:
-        keyName:
-          type: string
-          description: API Key name
-          example: Test_Key
-        apikey:
-          type: string
-          description: API Key
-          example: eyJoZWxsbyI6IndvcmxkIn0=.eyJ3c28yIjoiYXBpbSJ9.eyJ3c28yIjoic2lnbmF0dXJlIn0=
-        validityPeriod:
-          type: integer
-          format: int64
-          example: 3600
     APIKeyAssociationInfo:
       title: API Key association
       type: object
@@ -1191,7 +914,301 @@ components:
           format: int64
           description: Last used time as epoch milliseconds.
           example: null
+    APIKeyAssociation:
+      title: API Key association
+      type: object
+      properties:
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        apiName:
+          type: string
+          description: API name
+          example: NotificationAPI
+        applicationName:
+          type: string
+          description: Application name
+          example: DefaultApplication
+    APIKeyInfo:
+      title: API Key details to invoke APIs
+      type: object
+      properties:
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        issuedOn:
+          type: integer
+          format: int64
+          description: Created Time
+          example: 3600
+        validityPeriod:
+          type: integer
+          format: int64
+          example: 3600
+        lastUsed:
+          type: integer
+          format: int64
+          description: Last used time as epoch milliseconds.
+          example: 3600
+    Error_2:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem_2'
+    APIKeyRenewRequest:
+      title: API Key renewal request object
+      type: object
+      required:
+      - keyUUID
+      properties:
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+    APIAPIKeyGenerateRequest:
+      title: API Key generation request object
+      type: object
+      properties:
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        keyType:
+          type: string
+          description: Type of the API key
+          example: PRODUCTION
+          enum:
+          - PRODUCTION
+          - SANDBOX
+        validityPeriod:
+          type: integer
+          description: API key validity period
+          format: int64
+          example: 3600
+        additionalProperties:
+          type: object
+          properties: {}
+          description: Additional parameters if Authorization server needs any
+    APIAPIKeyList:
+      title: API Keys List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API keys returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIAPIKeyInfo'
+    APIAPIKeyAssociateRequest:
+      title: API Key association request object
+      type: object
+      required:
+      - keyUUID
+      - applicationUUID
+      properties:
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+        applicationUUID:
+          type: string
+          description: The UUID of the Application to be associated
+    AppAPIKeyAssociateRequest:
+      title: API Key association request object
+      type: object
+      required:
+      - keyUUID
+      - apiUUID
+      properties:
+        apiUUID:
+          type: string
+          description: The unique identifier of the API.
+          example: 2962f3bb-8330-438e-baee-0ee1d6434ba4
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+    APIKeyAssociationList:
+      title: API Key Associations List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API key associations returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIKeyAssociationInfo'
+    APIWithKeyInfo:
+      title: API with API Key
+      type: object
+      properties:
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        keyUUID:
+          type: string
+          description: The UUID of the API key
+        apiName:
+          type: string
+          description: API name
+          example: NotificationAPI
+        apiUUID:
+          type: string
+          description: The UUID of the associated API
+    APIKeyList_2:
+      title: API Keys List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API keys returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIKeyInfo'
+    SubscribedAPIWithApiKeyList:
+      title: Subscribed APIs with non-associated API keys
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of subscribed APIs with API keys returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIWithKeyInfo'
+    APIKeyGenerateRequest:
+      title: API Key generation request object
+      type: object
+      properties:
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        validityPeriod:
+          type: integer
+          description: API key validity period
+          format: int64
+          example: 3600
+        additionalProperties:
+          type: object
+          properties: {}
+          description: Additional parameters if Authorization server needs any
+    APIKey_2:
+      title: API Key details to invoke APIs
+      type: object
+      properties:
+        keyName:
+          type: string
+          description: API Key name
+          example: Test_Key
+        apikey:
+          type: string
+          description: API Key
+          example: eyJoZWxsbyI6IndvcmxkIn0=.eyJ3c28yIjoiYXBpbSJ9.eyJ3c28yIjoic2lnbmF0dXJlIn0=
+        validityPeriod:
+          type: integer
+          format: int64
+          example: 3600
+  responses:
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
     keyType:
       name: keyType
       in: path
@@ -1204,10 +1221,10 @@ components:
         enum:
         - PRODUCTION
         - SANDBOX
-    applicationId:
-      name: applicationId
+    apiId:
+      name: apiId
       in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
+      description: '**API ID** consisting of the **UUID** of the API.
 
         '
       required: true
@@ -1219,23 +1236,6 @@ components:
       description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
 
         variant of the resourec.
-
-        '
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
 
         '
       schema:

@@ -40,6 +40,25 @@ paths:
       operationId: getAllLabels
 components:
   schemas:
+    Label:
+      title: Label
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: d7cf8523-9180-4255-84fa-6cb171c1f779
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: Health
+        description:
+          maxLength: 1024
+          type: string
+          example: Health related APIs
     LabelList:
       title: Label List
       type: object
@@ -86,25 +105,6 @@ components:
             example: ""
 
             '
-    Label:
-      title: Label
-      required:
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-          example: d7cf8523-9180-4255-84fa-6cb171c1f779
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: Health
-        description:
-          maxLength: 1024
-          type: string
-          example: Health related APIs
   securitySchemes:
     OAuth2Security:
       type: oauth2

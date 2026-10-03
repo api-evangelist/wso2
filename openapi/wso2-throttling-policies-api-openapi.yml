@@ -124,74 +124,77 @@ paths:
       operationId: getThrottlingPoliciesByPolicyLevelByPolicyId
       x-operation-id-source: derived
 components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    policyId:
+      name: policyId
+      in: path
+      description: 'The name of the policy
+
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    policyLevel:
+      name: policyLevel
+      in: path
+      description: 'List Application or Subscription type thro.
+
+        '
+      required: true
+      schema:
+        type: string
+        enum:
+        - application
+        - subscription
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
   schemas:
-    ThrottlingPolicyList:
-      title: Throttling Policy List
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of Throttling Policies returned.
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThrottlingPolicy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
-    MonetizationInfo:
-      title: Monetization
-      type: object
-      properties:
-        billingType:
-          type: string
-          example: fixedPrice
-          enum:
-          - fixedPrice
-          - dynamicRate
-        billingCycle:
-          type: string
-          example: month
-        fixedPrice:
-          type: string
-          example: '10'
-        pricePerRequest:
-          type: string
-          example: '1'
-        currencyType:
-          type: string
-          example: USD
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -328,76 +331,73 @@ components:
           - developer
           items:
             type: string
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    ThrottlingPolicyList:
+      title: Throttling Policy List
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+        count:
+          type: integer
+          description: 'Number of Throttling Policies returned.
 
             '
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThrottlingPolicy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    MonetizationInfo:
+      title: Monetization
+      type: object
+      properties:
+        billingType:
+          type: string
+          example: fixedPrice
+          enum:
+          - fixedPrice
+          - dynamicRate
+        billingCycle:
+          type: string
+          example: month
+        fixedPrice:
+          type: string
+          example: '10'
+        pricePerRequest:
+          type: string
+          example: '1'
+        currencyType:
+          type: string
+          example: USD
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
 
-        '
-      schema:
-        type: integer
-        default: 0
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
+            Empty if no more resources are to be returned.
 
-        '
-      schema:
-        type: integer
-        default: 25
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
 
-        variant of the resourec.
+            Empty if current subset is the first subset returned.
 
-        '
-      schema:
-        type: string
-    policyId:
-      name: policyId
-      in: path
-      description: 'The name of the policy
-
-        '
-      required: true
-      schema:
-        type: string
-    policyLevel:
-      name: policyLevel
-      in: path
-      description: 'List Application or Subscription type thro.
-
-        '
-      required: true
-      schema:
-        type: string
-        enum:
-        - application
-        - subscription
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
+            '
+          example: ''
   responses:
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.

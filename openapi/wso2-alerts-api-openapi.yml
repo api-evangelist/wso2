@@ -51,6 +51,45 @@ paths:
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/alert-types"'
 components:
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    AlertType:
+      title: Alert Type
+      type: object
+      properties:
+        id:
+          type: string
+          description: The alert Id
+          example: '1'
+        name:
+          type: string
+          description: The name of the alert.
+          example: AbnormalResponseTime
+    AlertTypesList:
+      title: Alert Types List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The number of alerts
+          example: 3
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -84,45 +123,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    AlertTypesList:
-      title: Alert Types List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: The number of alerts
-          example: 3
-        alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    AlertType:
-      title: Alert Type
-      type: object
-      properties:
-        id:
-          type: string
-          description: The alert Id
-          example: '1'
-        name:
-          type: string
-          description: The name of the alert.
-          example: AbnormalResponseTime
   responses:
     InternalServerError:
       description: Internal Server Error.

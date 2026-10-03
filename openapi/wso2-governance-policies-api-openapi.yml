@@ -254,15 +254,6 @@ components:
       schema:
         type: integer
         default: 0
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
     policyId:
       name: policyId
       in: path
@@ -272,34 +263,31 @@ components:
       required: true
       schema:
         type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
   schemas:
-    Pagination:
-      title: Pagination
+    APIMGovernancePolicyList:
       type: object
+      description: A list of governance policies.
       properties:
-        offset:
+        count:
           type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
+          description: Number of governance policies returned.
           example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
+        list:
+          type: array
+          description: List of governance policies.
+          items:
+            $ref: '#/components/schemas/APIMGovernancePolicy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Error:
       title: Error object returned with 4XX HTTP Status
       required:
@@ -430,21 +418,33 @@ components:
           - BLOCK
           - NOTIFY
           example: BLOCK
-    APIMGovernancePolicyList:
+    Pagination:
+      title: Pagination
       type: object
-      description: A list of governance policies.
       properties:
-        count:
+        offset:
           type: integer
-          description: Number of governance policies returned.
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
           example: 10
-        list:
-          type: array
-          description: List of governance policies.
-          items:
-            $ref: '#/components/schemas/APIMGovernancePolicy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

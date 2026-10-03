@@ -343,6 +343,21 @@ paths:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     ExportThrottlePolicy:
       title: Export Throttling Policy
       type: object
@@ -388,36 +403,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    APIBusinessInformation:
-      type: object
-      properties:
-        businessOwner:
-          type: string
-          example: businessowner
-        businessOwnerEmail:
-          type: string
-          example: businessowner@wso2.com
-        technicalOwner:
-          type: string
-          example: technicalowner
-        technicalOwnerEmail:
-          type: string
-          example: technicalowner@wso2.com
     APIInfo:
       title: API Info object with basic API details.
       type: object
@@ -522,6 +507,60 @@ components:
           default: DEFAULT
           example: AIAPI
           readOnly: true
+    APIBusinessInformation:
+      type: object
+      properties:
+        businessOwner:
+          type: string
+          example: businessowner
+        businessOwnerEmail:
+          type: string
+          example: businessowner@wso2.com
+        technicalOwner:
+          type: string
+          example: technicalowner
+        technicalOwnerEmail:
+          type: string
+          example: technicalowner@wso2.com
+    AdvertiseInfo:
+      title: API Advertise info object with advertise details
+      type: object
+      properties:
+        advertised:
+          type: boolean
+          example: true
+        apiExternalProductionEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        apiExternalSandboxEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        originalDevPortalUrl:
+          type: string
+          example: https://localhost:9443/devportal
+        apiOwner:
+          type: string
+          example: admin
+        vendor:
+          type: string
+          default: WSO2
+          enum:
+          - WSO2
+          - AWS
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -554,59 +593,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem_2'
-    AdvertiseInfo:
-      title: API Advertise info object with advertise details
-      type: object
-      properties:
-        advertised:
-          type: boolean
-          example: true
-        apiExternalProductionEndpoint:
-          type: string
-          example: https://localhost:9443/devportal
-        apiExternalSandboxEndpoint:
-          type: string
-          example: https://localhost:9443/devportal
-        originalDevPortalUrl:
-          type: string
-          example: https://localhost:9443/devportal
-        apiOwner:
-          type: string
-          example: admin
-        vendor:
-          type: string
-          default: WSO2
-          enum:
-          - WSO2
-          - AWS
-    APIInfoList:
-      title: API Info List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API Info objects returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIInfo'
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     ApplicationInfo:
       title: Application info object with basic application details
       type: object
@@ -652,6 +638,20 @@ components:
           type: string
           readOnly: true
           example: 1651555310208
+    APIInfoList:
+      title: API Info List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API Info objects returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIInfo'
   responses:
     InternalServerError:
       description: Internal Server Error.
@@ -663,6 +663,18 @@ components:
             code: 500
             message: Internal Server Error
             description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
             moreInfo: ''
             error: []
     NotFound:
@@ -689,16 +701,16 @@ components:
             description: The request must be conditional but no condition has been specified
             moreInfo: ''
             error: []
-    Conflict:
-      description: Conflict. Specified resource already exists.
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Error_2'
           example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
             moreInfo: ''
             error: []
     BadRequest:
@@ -711,18 +723,6 @@ components:
             code: 400
             message: Bad Request
             description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
             moreInfo: ''
             error: []
   securitySchemes:

@@ -44,6 +44,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ApplicationConfigurationConstraint:
+      title: Application Configuration Constraint
+      type: object
+      properties:
+        type:
+          type: string
+          example: RANGE
+        value:
+          type: object
+          properties: {}
+          example: '{ "min": 60, "max": 3600 }'
     KeyManagerApplicationConfiguration:
       title: Key Manager application Configuration
       type: object
@@ -179,17 +190,6 @@ components:
           - EXCHANGED
           - DIRECT
           - BOTH
-    ApplicationConfigurationConstraint:
-      title: Application Configuration Constraint
-      type: object
-      properties:
-        type:
-          type: string
-          example: RANGE
-        value:
-          type: object
-          properties: {}
-          example: '{ "min": 60, "max": 3600 }'
   parameters:
     requestedTenant:
       name: X-WSO2-Tenant

@@ -316,176 +316,65 @@ paths:
         source: curl -k "https://localhost:9443/api/am/devportal/v3/mcp-servers/268c9e55-3dc1-4f47-82e7-977e5343d077/subscription-policies"
       operationId: getMCPServerSubscriptionPolicies
 components:
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    mcpServerId:
+      name: mcpServerId
+      in: path
+      description: '**MCP Server ID** consisting of the **UUID** of the MCP Server.
+
+        '
+      required: true
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
   schemas:
-    APIOperations:
-      title: Operation
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        id:
+        code:
           type: string
-          example: apioperation
-        target:
+        message:
           type: string
-        verb:
-          type: string
-    MonetizationInfo:
-      title: Monetization
-      type: object
-      properties:
-        billingType:
-          type: string
-          example: fixedPrice
-          enum:
-          - fixedPrice
-          - dynamicRate
-        billingCycle:
-          type: string
-          example: month
-        fixedPrice:
-          type: string
-          example: '10'
-        pricePerRequest:
-          type: string
-          example: '1'
-        currencyType:
-          type: string
-          example: USD
-    ScopeInfo:
-      title: API Scope info object with scope details
-      type: object
-      properties:
-        key:
-          type: string
-          example: admin_scope
-        name:
-          type: string
-          example: admin scope
-        roles:
-          type: array
-          description: Allowed roles for the scope
-          example:
-          - manager
-          - developer
-          items:
-            type: string
-        description:
-          type: string
-          description: Description of the scope
-    APIList:
-      title: API List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of APIs returned.
+          description: 'Description about individual errors occurred
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIInfo'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      example:
-        count: 2
-        list:
-        - id: 01234567-0123-0123-0123-012345678901
-          name: CalculatorAPI
-          description: A calculator API that supports basic operations
-          context: /CalculatorAPI
-          version: 1.0.0
-          type: HTTP
-          provider: admin
-          lifeCycleStatus: PUBLISHED
-          thumbnailUri: /apis/01234567-0123-0123-0123-012345678901/thumbnail
-          avgRating: 4.3
-          throttlingPolicies:
-          - Unlimited
-          advertiseInfo:
-            advertised: false,
-            apiExternalProductionEndpoint: null,
-            apiExternalSandboxEndpoint: null,
-            originalDevPortalUrl: null,
-            apiOwner: null
-          businessInformation:
-            businessOwner: Jane Roe
-            businessOwnerEmail: businessowner@wso2.com
-            technicalOwner: John Doe
-            technicalOwnerEmail: technicalowner@wso2.com
-          isSubscriptionAvailable: true
-          monetizationLabel: null
-        - id: 01123567-1233-5453-0212-12353678901
-          name: PizzaShackAPI
-          description: A Pizza ordering API
-          context: /PizzaShackAPI
-          version: 1.0.0
-          type: HTTP
-          provider: admin
-          lifeCycleStatus: PUBLISHED
-          thumbnailUri: /apis/01123567-1233-5453-0212-12353678901/thumbnail
-          avgRating: 4.3
-          throttlingPolicies:
-          - Unlimited
-          advertiseInfo:
-            advertised: false,
-            apiExternalProductionEndpoint: null,
-            apiExternalSandboxEndpoint: null,
-            originalDevPortalUrl: null,
-            apiOwner: null
-          businessInformation:
-            businessOwner: Jane Roe
-            businessOwnerEmail: businessowner@wso2.com
-            technicalOwner: John Doe
-            technicalOwnerEmail: technicalowner@wso2.com
-          isSubscriptionAvailable: true
-          monetizationLabel: null
-        pagination:
-          offset: 2
-          limit: 2
-          total: 10
-          next: /apis?limit=2&offset=4
-          previous: /apis?limit=2&offset=0
-    APIBusinessInformation:
-      type: object
-      properties:
-        businessOwner:
-          type: string
-          example: businessowner
-        businessOwnerEmail:
-          type: string
-          example: businessowner@wso2.com
-        technicalOwner:
-          type: string
-          example: technicalowner
-        technicalOwnerEmail:
-          type: string
-          example: technicalowner@wso2.com
     Pagination:
       title: Pagination
       type: object
@@ -619,23 +508,6 @@ components:
           default: DEFAULT
           example: AIAPI
           readOnly: true
-    ThrottlingPolicyPermissionInfo:
-      title: Throttling Policy Permission info object with throttling policy permission details
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - allow
-          - deny
-        roles:
-          type: array
-          description: roles for this permission
-          example:
-          - manager
-          - developer
-          items:
-            type: string
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -668,118 +540,45 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    AdvertiseInfo:
-      title: API Advertise info object with advertise details
+    ThrottlingPolicyPermissionInfo:
+      title: Throttling Policy Permission info object with throttling policy permission details
       type: object
       properties:
-        advertised:
-          type: boolean
-          example: true
-        apiExternalProductionEndpoint:
+        type:
           type: string
-          example: https://localhost:9443/devportal
-        apiExternalSandboxEndpoint:
-          type: string
-          example: https://localhost:9443/devportal
-        originalDevPortalUrl:
-          type: string
-          example: https://localhost:9443/devportal
-        apiOwner:
-          type: string
-          example: admin
-        vendor:
-          type: string
-          default: WSO2
           enum:
-          - WSO2
-          - AWS
-    ThrottlingPolicy:
-      title: Throttling Policy
-      required:
-      - name
-      - requestCount
-      - stopOnQuotaReach
-      - tierPlan
-      - unitTime
-      type: object
-      properties:
-        name:
-          type: string
-          example: Platinum
-        description:
-          type: string
-          example: Allows 50 request(s) per minute.
-        policyLevel:
-          type: string
-          example: subscription
-          enum:
-          - application
-          - subscription
-        attributes:
-          type: object
-          additionalProperties:
+          - allow
+          - deny
+        roles:
+          type: array
+          description: roles for this permission
+          example:
+          - manager
+          - developer
+          items:
             type: string
-          description: 'Custom attributes added to the throttling policy
-
-            '
-          example: {}
-        requestCount:
-          type: integer
-          description: 'Maximum number of requests which can be sent within a provided unit time
-
-            '
-          format: int64
-          example: 50
-        dataUnit:
-          description: 'Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
-
-            '
+    MonetizationInfo:
+      title: Monetization
+      type: object
+      properties:
+        billingType:
           type: string
-          example: KB
-        unitTime:
-          type: integer
-          format: int64
-          example: 60000
-        timeUnit:
-          type: string
-          example: min
-        rateLimitCount:
-          type: integer
-          default: 0
-          description: Burst control request count
-          example: 10
-        rateLimitTimeUnit:
-          type: string
-          description: Burst control time unit
-          example: min
-        quotaPolicyType:
-          type: string
-          description: Default quota limit type
+          example: fixedPrice
           enum:
-          - REQUESTCOUNT
-          - BANDWIDTHVOLUME
-          example: REQUESTCOUNT
-        tierPlan:
+          - fixedPrice
+          - dynamicRate
+        billingCycle:
           type: string
-          description: 'This attribute declares whether this tier is available under commercial or free
-
-            '
-          example: FREE
-          enum:
-          - FREE
-          - COMMERCIAL
-        stopOnQuotaReach:
-          type: boolean
-          description: 'If this attribute is set to false, you are capabale of sending requests
-
-            even if the request count exceeded within a unit time
-
-            '
-          example: true
-        monetizationAttributes:
-          $ref: '#/components/schemas/MonetizationInfo'
-        throttlingPolicyPermissions:
-          $ref: '#/components/schemas/ThrottlingPolicyPermissionInfo'
+          example: month
+        fixedPrice:
+          type: string
+          example: '10'
+        pricePerRequest:
+          type: string
+          example: '1'
+        currencyType:
+          type: string
+          example: USD
     API:
       title: API object
       required:
@@ -1077,6 +876,240 @@ components:
           default: DEFAULT
           example: AIAPI
           readOnly: true
+    APIBusinessInformation:
+      type: object
+      properties:
+        businessOwner:
+          type: string
+          example: businessowner
+        businessOwnerEmail:
+          type: string
+          example: businessowner@wso2.com
+        technicalOwner:
+          type: string
+          example: technicalowner
+        technicalOwnerEmail:
+          type: string
+          example: technicalowner@wso2.com
+    APIOperations:
+      title: Operation
+      type: object
+      properties:
+        id:
+          type: string
+          example: apioperation
+        target:
+          type: string
+        verb:
+          type: string
+    ThrottlingPolicy:
+      title: Throttling Policy
+      required:
+      - name
+      - requestCount
+      - stopOnQuotaReach
+      - tierPlan
+      - unitTime
+      type: object
+      properties:
+        name:
+          type: string
+          example: Platinum
+        description:
+          type: string
+          example: Allows 50 request(s) per minute.
+        policyLevel:
+          type: string
+          example: subscription
+          enum:
+          - application
+          - subscription
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Custom attributes added to the throttling policy
+
+            '
+          example: {}
+        requestCount:
+          type: integer
+          description: 'Maximum number of requests which can be sent within a provided unit time
+
+            '
+          format: int64
+          example: 50
+        dataUnit:
+          description: 'Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
+
+            '
+          type: string
+          example: KB
+        unitTime:
+          type: integer
+          format: int64
+          example: 60000
+        timeUnit:
+          type: string
+          example: min
+        rateLimitCount:
+          type: integer
+          default: 0
+          description: Burst control request count
+          example: 10
+        rateLimitTimeUnit:
+          type: string
+          description: Burst control time unit
+          example: min
+        quotaPolicyType:
+          type: string
+          description: Default quota limit type
+          enum:
+          - REQUESTCOUNT
+          - BANDWIDTHVOLUME
+          example: REQUESTCOUNT
+        tierPlan:
+          type: string
+          description: 'This attribute declares whether this tier is available under commercial or free
+
+            '
+          example: FREE
+          enum:
+          - FREE
+          - COMMERCIAL
+        stopOnQuotaReach:
+          type: boolean
+          description: 'If this attribute is set to false, you are capabale of sending requests
+
+            even if the request count exceeded within a unit time
+
+            '
+          example: true
+        monetizationAttributes:
+          $ref: '#/components/schemas/MonetizationInfo'
+        throttlingPolicyPermissions:
+          $ref: '#/components/schemas/ThrottlingPolicyPermissionInfo'
+    ScopeInfo:
+      title: API Scope info object with scope details
+      type: object
+      properties:
+        key:
+          type: string
+          example: admin_scope
+        name:
+          type: string
+          example: admin scope
+        roles:
+          type: array
+          description: Allowed roles for the scope
+          example:
+          - manager
+          - developer
+          items:
+            type: string
+        description:
+          type: string
+          description: Description of the scope
+    AdvertiseInfo:
+      title: API Advertise info object with advertise details
+      type: object
+      properties:
+        advertised:
+          type: boolean
+          example: true
+        apiExternalProductionEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        apiExternalSandboxEndpoint:
+          type: string
+          example: https://localhost:9443/devportal
+        originalDevPortalUrl:
+          type: string
+          example: https://localhost:9443/devportal
+        apiOwner:
+          type: string
+          example: admin
+        vendor:
+          type: string
+          default: WSO2
+          enum:
+          - WSO2
+          - AWS
+    APIList:
+      title: API List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of APIs returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIInfo'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      example:
+        count: 2
+        list:
+        - id: 01234567-0123-0123-0123-012345678901
+          name: CalculatorAPI
+          description: A calculator API that supports basic operations
+          context: /CalculatorAPI
+          version: 1.0.0
+          type: HTTP
+          provider: admin
+          lifeCycleStatus: PUBLISHED
+          thumbnailUri: /apis/01234567-0123-0123-0123-012345678901/thumbnail
+          avgRating: 4.3
+          throttlingPolicies:
+          - Unlimited
+          advertiseInfo:
+            advertised: false,
+            apiExternalProductionEndpoint: null,
+            apiExternalSandboxEndpoint: null,
+            originalDevPortalUrl: null,
+            apiOwner: null
+          businessInformation:
+            businessOwner: Jane Roe
+            businessOwnerEmail: businessowner@wso2.com
+            technicalOwner: John Doe
+            technicalOwnerEmail: technicalowner@wso2.com
+          isSubscriptionAvailable: true
+          monetizationLabel: null
+        - id: 01123567-1233-5453-0212-12353678901
+          name: PizzaShackAPI
+          description: A Pizza ordering API
+          context: /PizzaShackAPI
+          version: 1.0.0
+          type: HTTP
+          provider: admin
+          lifeCycleStatus: PUBLISHED
+          thumbnailUri: /apis/01123567-1233-5453-0212-12353678901/thumbnail
+          avgRating: 4.3
+          throttlingPolicies:
+          - Unlimited
+          advertiseInfo:
+            advertised: false,
+            apiExternalProductionEndpoint: null,
+            apiExternalSandboxEndpoint: null,
+            originalDevPortalUrl: null,
+            apiOwner: null
+          businessInformation:
+            businessOwner: Jane Roe
+            businessOwnerEmail: businessowner@wso2.com
+            technicalOwner: John Doe
+            technicalOwnerEmail: technicalowner@wso2.com
+          isSubscriptionAvailable: true
+          monetizationLabel: null
+        pagination:
+          offset: 2
+          limit: 2
+          total: 10
+          next: /apis?limit=2&offset=4
+          previous: /apis?limit=2&offset=0
     APIMonetizationInfo:
       title: API monetization object
       required:
@@ -1087,64 +1120,31 @@ components:
           type: boolean
           description: Flag to indicate the monetization status
           example: true
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    mcpServerId:
-      name: mcpServerId
-      in: path
-      description: '**MCP Server ID** consisting of the **UUID** of the MCP Server.
-
-        '
-      required: true
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -209,159 +209,64 @@ paths:
       operationId: getKeyManagersByKeyManagerIdAppUsages
       x-operation-id-source: derived
 components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    keyManagerId:
+      name: keyManagerId
+      in: path
+      description: 'Key Manager UUID
+
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
   schemas:
-    APIInfoKeyManager:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the API.
-        type:
-          type: string
-          description: The type of the entry (e.g., "API").
-        name:
-          type: string
-          description: The name of the API.
-        transportType:
-          type: string
-          description: The transport type of the API.
-        description:
-          type:
-          - string
-          - 'null'
-          description: The description of the API.
-        context:
-          type: string
-          description: The context of the API.
-        version:
-          type: string
-          description: The version of the API.
-        provider:
-          type: string
-          description: The provider of the API.
-        status:
-          type: string
-          description: The status of the API.
-        thumbnailUri:
-          type:
-          - string
-          - 'null'
-          description: The URI of the thumbnail of the API.
-        advertiseOnly:
-          type: boolean
-          description: Indicates if the API is advertised only.
-        keyManagerEntry:
-          type: string
-          description: The key manager entry related to the API.
+    KeyManagerAPIUsages:
+      title: Key Manager API Usages.
       required:
-      - id
-      - name
-      - version
-      - provider
-    ApplicationInfoKeyManager:
+      - apiCount
+      - apis
       type: object
       properties:
-        name:
-          type: string
-          description: The name of the application.
-        uuid:
-          type: string
-          description: The UUID of the application.
-        organizationId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the organization to which the application belongs.
-        owner:
-          type: string
-          description: The owner of the application.
-        organization:
-          type: string
-          description: The organization of the application.
-      required:
-      - name
-      - uuid
-      - owner
-      - organization
-    TokenValidation:
-      title: Token handling Configuration
-      type: object
-      properties:
-        id:
+        apiCount:
           type: integer
-        enable:
-          type: boolean
-          example: false
-          default: true
-        type:
-          type: string
-          enum:
-          - REFERENCE
-          - JWT
-          - CUSTOM
-        value:
-          type: object
-          properties: {}
-    KeyManagerEndpoint:
-      title: Key Manager Endpoint.
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          type: string
-          example: token_endpoint
-        value:
-          type: string
-          example: https://localhost:9443/oauth2/token
-    Error:
-      title: Error object returned with 4XX HTTP status
+          description: The total count of APIs.
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIInfoKeyManager'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: integer
+          type: string
           description: Error code
-          format: int64
         message:
           type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+          description: 'Description about individual errors occurred
 
             '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    KeyManagerAppUsages:
-      title: Key Manager Application Usages.
-      required:
-      - applicationCount
-      - applications
-      type: object
-      properties:
-        applicationCount:
-          type: integer
-          description: The total count of applications.
-        applications:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationInfoKeyManager'
     KeyManager:
       title: Key Manager
       required:
@@ -545,35 +450,126 @@ components:
           type: array
           items:
             type: string
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    ApplicationInfoKeyManager:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the application.
+        uuid:
+          type: string
+          description: The UUID of the application.
+        organizationId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the organization to which the application belongs.
+        owner:
+          type: string
+          description: The owner of the application.
+        organization:
+          type: string
+          description: The organization of the application.
+      required:
+      - name
+      - uuid
+      - owner
+      - organization
+    Error:
+      title: Error object returned with 4XX HTTP status
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: string
+          type: integer
           description: Error code
+          format: int64
         message:
           type: string
-          description: 'Description about individual errors occurred
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
-    KeyManagerAPIUsages:
-      title: Key Manager API Usages.
-      required:
-      - apiCount
-      - apis
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    APIInfoKeyManager:
       type: object
       properties:
-        apiCount:
+        id:
+          type: string
+          description: The ID of the API.
+        type:
+          type: string
+          description: The type of the entry (e.g., "API").
+        name:
+          type: string
+          description: The name of the API.
+        transportType:
+          type: string
+          description: The transport type of the API.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the API.
+        context:
+          type: string
+          description: The context of the API.
+        version:
+          type: string
+          description: The version of the API.
+        provider:
+          type: string
+          description: The provider of the API.
+        status:
+          type: string
+          description: The status of the API.
+        thumbnailUri:
+          type:
+          - string
+          - 'null'
+          description: The URI of the thumbnail of the API.
+        advertiseOnly:
+          type: boolean
+          description: Indicates if the API is advertised only.
+        keyManagerEntry:
+          type: string
+          description: The key manager entry related to the API.
+      required:
+      - id
+      - name
+      - version
+      - provider
+    KeyManagerAppUsages:
+      title: Key Manager Application Usages.
+      required:
+      - applicationCount
+      - applications
+      type: object
+      properties:
+        applicationCount:
           type: integer
-          description: The total count of APIs.
-        apis:
+          description: The total count of applications.
+        applications:
           type: array
           items:
-            $ref: '#/components/schemas/APIInfoKeyManager'
+            $ref: '#/components/schemas/ApplicationInfoKeyManager'
     ClaimMappingEntry:
       title: Claim Mapping Configuration
       type: object
@@ -584,34 +580,38 @@ components:
         localClaim:
           type: string
           example: http://wso2.org/username
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    keyManagerId:
-      name: keyManagerId
-      in: path
-      description: 'Key Manager UUID
-
-        '
-      required: true
-      schema:
-        type: string
+    TokenValidation:
+      title: Token handling Configuration
+      type: object
+      properties:
+        id:
+          type: integer
+        enable:
+          type: boolean
+          example: false
+          default: true
+        type:
+          type: string
+          enum:
+          - REFERENCE
+          - JWT
+          - CUSTOM
+        value:
+          type: object
+          properties: {}
+    KeyManagerEndpoint:
+      title: Key Manager Endpoint.
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          example: token_endpoint
+        value:
+          type: string
+          example: https://localhost:9443/oauth2/token
   responses:
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.
@@ -625,18 +625,6 @@ components:
             description: The requested media type is not supported
             moreInfo: ''
             error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
     NotFound:
       description: Not Found. The specified resource does not exist.
       content:
@@ -647,6 +635,18 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
             moreInfo: ''
             error: []
   securitySchemes:

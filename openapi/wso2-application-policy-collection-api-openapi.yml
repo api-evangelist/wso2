@@ -123,89 +123,53 @@ paths:
       operationId: postThrottlingPoliciesApplication
       x-operation-id-source: derived
 components:
-  responses:
-    UnsupportedMediaType:
-      description: Unsupported Media Type. The entity of the request was not in a supported format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 415
-            message: Unsupported media type
-            description: The entity of the request was not in a supported format
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
   schemas:
-    ApplicationThrottlePolicy:
-      title: Application Throttling Policy
+    EventCountLimit:
+      title: Event Count Limit object
       allOf:
-      - $ref: '#/components/schemas/ThrottlePolicy'
+      - $ref: '#/components/schemas/ThrottleLimitBase'
       - required:
-        - defaultLimit
+        - eventCount
         type: object
         properties:
-          defaultLimit:
-            $ref: '#/components/schemas/ThrottleLimit'
-          burstLimit:
-            $ref: '#/components/schemas/BurstLimit'
-    Error:
-      title: Error object returned with 4XX HTTP status
+          eventCount:
+            type: integer
+            description: Maximum number of events allowed
+            format: int64
+            example: 3000
+    BandwidthLimit:
+      title: Bandwidth Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - dataAmount
+        - dataUnit
+        type: object
+        properties:
+          dataAmount:
+            type: integer
+            description: Amount of data allowed to be transfered
+            format: int64
+            example: 1000
+          dataUnit:
+            type: string
+            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
+            example: KB
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: integer
+          type: string
           description: Error code
-          format: int64
         message:
           type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+          description: 'Description about individual errors occurred
 
             '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     ThrottlePolicy:
       title: Generic Throttling Policy
       required:
@@ -242,78 +206,39 @@ components:
           description: Indicates the type of throttle policy
       discriminator:
         propertyName: type
-    BurstLimit:
-      title: Burst Limit object
-      type: object
-      properties:
-        rateLimitCount:
-          type: integer
-          description: Burst control request count
-          example: 10
-        rateLimitTimeUnit:
-          type: string
-          description: Burst control time unit
-          example: min
-    RequestCountLimit:
-      title: Request Count Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - requestCount
-        type: object
-        properties:
-          requestCount:
-            type: integer
-            description: Maximum number of requests allowed
-            format: int64
-            example: 30
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    Error:
+      title: Error object returned with 4XX HTTP status
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: string
+          type: integer
           description: Error code
+          format: int64
         message:
           type: string
-          description: 'Description about individual errors occurred
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
-    ApplicationThrottlePolicyList:
-      title: Application Level Throttling Policy List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Application Throttling Policies returned.
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
 
             '
-          example: 1
-        list:
+        error:
           type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
           items:
-            $ref: '#/components/schemas/ApplicationThrottlePolicy'
-    BandwidthLimit:
-      title: Bandwidth Limit object
-      allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
-      - required:
-        - dataAmount
-        - dataUnit
-        type: object
-        properties:
-          dataAmount:
-            type: integer
-            description: Amount of data allowed to be transfered
-            format: int64
-            example: 1000
-          dataUnit:
-            type: string
-            description: Unit of data allowed to be transfered. Allowed values are "KB", "MB" and "GB"
-            example: KB
+            $ref: '#/components/schemas/ErrorListItem'
     ThrottleLimit:
       title: Throttle Limit
       required:
@@ -337,6 +262,34 @@ components:
           $ref: '#/components/schemas/EventCountLimit'
         aiApiQuota:
           $ref: '#/components/schemas/AIAPIQuotaLimit'
+    RequestCountLimit:
+      title: Request Count Limit object
+      allOf:
+      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - required:
+        - requestCount
+        type: object
+        properties:
+          requestCount:
+            type: integer
+            description: Maximum number of requests allowed
+            format: int64
+            example: 30
+    ThrottleLimitBase:
+      title: Throttle Limit Base
+      required:
+      - timeUnit
+      - unitTime
+      type: object
+      properties:
+        timeUnit:
+          type: string
+          description: Unit of the time. Allowed values are "sec", "min", "hour", "day"
+          example: min
+        unitTime:
+          type: integer
+          description: Time limit that the throttling limit applies.
+          example: 10
     AIAPIQuotaLimit:
       title: AI API Quota Limit object
       allOf:
@@ -365,35 +318,91 @@ components:
             description: Maximum number of completion tokens allowed
             format: int64
             example: 500
-    ThrottleLimitBase:
-      title: Throttle Limit Base
-      required:
-      - timeUnit
-      - unitTime
-      type: object
-      properties:
-        timeUnit:
-          type: string
-          description: Unit of the time. Allowed values are "sec", "min", "hour", "day"
-          example: min
-        unitTime:
-          type: integer
-          description: Time limit that the throttling limit applies.
-          example: 10
-    EventCountLimit:
-      title: Event Count Limit object
+    ApplicationThrottlePolicy:
+      title: Application Throttling Policy
       allOf:
-      - $ref: '#/components/schemas/ThrottleLimitBase'
+      - $ref: '#/components/schemas/ThrottlePolicy'
       - required:
-        - eventCount
+        - defaultLimit
         type: object
         properties:
-          eventCount:
-            type: integer
-            description: Maximum number of events allowed
-            format: int64
-            example: 3000
+          defaultLimit:
+            $ref: '#/components/schemas/ThrottleLimit'
+          burstLimit:
+            $ref: '#/components/schemas/BurstLimit'
+    BurstLimit:
+      title: Burst Limit object
+      type: object
+      properties:
+        rateLimitCount:
+          type: integer
+          description: Burst control request count
+          example: 10
+        rateLimitTimeUnit:
+          type: string
+          description: Burst control time unit
+          example: min
+    ApplicationThrottlePolicyList:
+      title: Application Level Throttling Policy List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Application Throttling Policies returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationThrottlePolicy'
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
   parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: 'Media types acceptable for the response. Default is application/json.
+
+        '
+      schema:
+        type: string
+        default: application/json
     Content-Type:
       name: Content-Type
       in: header
@@ -401,15 +410,6 @@ components:
 
         '
       required: true
-      schema:
-        type: string
-        default: application/json
-    Accept:
-      name: Accept
-      in: header
-      description: 'Media types acceptable for the response. Default is application/json.
-
-        '
       schema:
         type: string
         default: application/json

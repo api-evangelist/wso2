@@ -553,157 +553,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ApplicationKeyGenerateRequest:
-      title: Application key generation request object
-      required:
-      - grantTypesToBeSupported
-      - keyType
-      type: object
-      properties:
-        keyType:
-          type: string
-          enum:
-          - PRODUCTION
-          - SANDBOX
-        keyManager:
-          type: string
-          description: key Manager to Generate Keys
-          example: Resident Key Manager
-        grantTypesToBeSupported:
-          type: array
-          description: Grant types that should be supported by the application
-          example:
-          - password
-          - client_credentials
-          items:
-            type: string
-        callbackUrl:
-          type: string
-          description: Callback URL
-          example: http://sample.com/callback/url
-        scopes:
-          type: array
-          description: Allowed scopes for the access token
-          example:
-          - am_application_scope
-          - default
-          items:
-            type: string
-        validityTime:
-          type: string
-          example: '3600'
-        clientId:
-          type: string
-          description: Client ID for generating access token.
-          readOnly: true
-          example: sZzoeSCI_vL2cjSXZQmsmV8JEyga
-        clientSecret:
-          type: string
-          description: Client secret for generating access token. This is given together with the client Id.
-          readOnly: true
-          example: nrs3YAP4htxnz_DqpvGhf9Um04oa
-        additionalProperties:
-          type: object
-          properties: {}
-          description: Additional properties needed.
-          example: {}
-    ApplicationKeyMappingRequest:
-      title: Application key provision request object
-      required:
-      - consumerKey
-      - keyType
-      type: object
-      properties:
-        consumerKey:
-          type: string
-          description: Consumer key of the application
-          example: oYhwZu4P2ThDmiDprBk6c0YfjR8a
-        consumerSecret:
-          type: string
-          description: Consumer secret of the application
-          example: ondWGtFTCOVM4sfPyOfZ7fel610a
-        keyManager:
-          type: string
-          description: Key Manager Name
-          example: Resident Key Manager
-        keyType:
-          type: string
-          enum:
-          - PRODUCTION
-          - SANDBOX
-    ApplicationToken:
-      title: Application token details to invoke APIs
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: Access token
-          example: 1.2345678901234568E30
-        tokenScopes:
-          type: array
-          description: Valid comma seperated scopes for the access token
-          example:
-          - default
-          - read_api
-          - write_api
-          items:
-            type: string
-        validityTime:
-          type: integer
-          description: Maximum validity time for the access token
-          format: int64
-          example: 3600
-    ConsumerSecret:
-      type: object
-      properties:
-        secretId:
-          type: string
-          description: Unique identifier for the secret
-          example: sec_123456
-        secretValue:
-          type: string
-          description: The actual secret string
-          example: '***r3tV@lu3'
-        additionalProperties:
-          type: object
-          description: Additional dynamic properties for the secret creation request.
-          additionalProperties:
-            type: object
-          example:
-            expiresAt: 1761568483
-            description: pizza application secret
-    Error:
-      title: Error object returned with 4XX HTTP status
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: integer
-          format: int64
+          type: string
         message:
           type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+          description: 'Description about individual errors occurred
 
             '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     ApplicationKey:
       title: Application key details
       type: object
@@ -772,6 +635,91 @@ components:
           type: object
           properties: {}
           description: additionalProperties (if any).
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ApplicationToken:
+      title: Application token details to invoke APIs
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token
+          example: 1.2345678901234568E30
+        tokenScopes:
+          type: array
+          description: Valid comma seperated scopes for the access token
+          example:
+          - default
+          - read_api
+          - write_api
+          items:
+            type: string
+        validityTime:
+          type: integer
+          description: Maximum validity time for the access token
+          format: int64
+          example: 3600
+    ApplicationKeyReGenerateResponse:
+      title: Application key details after re generating consumer secret
+      type: object
+      properties:
+        consumerKey:
+          type: string
+          description: The consumer key associated with the application, used to indetify the client
+          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
+        consumerSecret:
+          type: string
+          description: The client secret that is used to authenticate the client with the authentication server
+          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
+    ConsumerSecret:
+      type: object
+      properties:
+        secretId:
+          type: string
+          description: Unique identifier for the secret
+          example: sec_123456
+        secretValue:
+          type: string
+          description: The actual secret string
+          example: '***r3tV@lu3'
+        additionalProperties:
+          type: object
+          description: Additional dynamic properties for the secret creation request.
+          additionalProperties:
+            type: object
+          example:
+            expiresAt: 1761568483
+            description: pizza application secret
     ApplicationKeyList:
       title: Application Keys List
       type: object
@@ -786,43 +734,95 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationKey'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    ApplicationKeyMappingRequest:
+      title: Application key provision request object
       required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    ApplicationKeyReGenerateResponse:
-      title: Application key details after re generating consumer secret
+      - consumerKey
+      - keyType
       type: object
       properties:
         consumerKey:
           type: string
-          description: The consumer key associated with the application, used to indetify the client
-          example: vYDoc9s7IgAFdkSyNDaswBX7ejoa
+          description: Consumer key of the application
+          example: oYhwZu4P2ThDmiDprBk6c0YfjR8a
         consumerSecret:
           type: string
-          description: The client secret that is used to authenticate the client with the authentication server
-          example: TIDlOFkpzB7WjufO3OJUhy1fsvAa
+          description: Consumer secret of the application
+          example: ondWGtFTCOVM4sfPyOfZ7fel610a
+        keyManager:
+          type: string
+          description: Key Manager Name
+          example: Resident Key Manager
+        keyType:
+          type: string
+          enum:
+          - PRODUCTION
+          - SANDBOX
+    ApplicationKeyGenerateRequest:
+      title: Application key generation request object
+      required:
+      - grantTypesToBeSupported
+      - keyType
+      type: object
+      properties:
+        keyType:
+          type: string
+          enum:
+          - PRODUCTION
+          - SANDBOX
+        keyManager:
+          type: string
+          description: key Manager to Generate Keys
+          example: Resident Key Manager
+        grantTypesToBeSupported:
+          type: array
+          description: Grant types that should be supported by the application
+          example:
+          - password
+          - client_credentials
+          items:
+            type: string
+        callbackUrl:
+          type: string
+          description: Callback URL
+          example: http://sample.com/callback/url
+        scopes:
+          type: array
+          description: Allowed scopes for the access token
+          example:
+          - am_application_scope
+          - default
+          items:
+            type: string
+        validityTime:
+          type: string
+          example: '3600'
+        clientId:
+          type: string
+          description: Client ID for generating access token.
+          readOnly: true
+          example: sZzoeSCI_vL2cjSXZQmsmV8JEyga
+        clientSecret:
+          type: string
+          description: Client secret for generating access token. This is given together with the client Id.
+          readOnly: true
+          example: nrs3YAP4htxnz_DqpvGhf9Um04oa
+        additionalProperties:
+          type: object
+          properties: {}
+          description: Additional properties needed.
+          example: {}
   responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
             moreInfo: ''
             error: []
     BadRequest:
@@ -837,18 +837,6 @@ components:
             description: Invalid request or validation error
             moreInfo: ''
             error: []
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
     Forbidden:
       description: Forbidden. The user does not have permission to perform this action.
       content:
@@ -861,7 +849,42 @@ components:
             description: The user does not have permission to perform this action
             moreInfo: ''
             error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   parameters:
+    applicationId:
+      name: applicationId
+      in: path
+      description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
     keyType:
       name: keyType
       in: path
@@ -874,27 +897,12 @@ components:
         enum:
         - PRODUCTION
         - SANDBOX
-    applicationId:
-      name: applicationId
-      in: path
-      description: 'Application Identifier consisting of the UUID of the Application.
-
-        '
-      required: true
-      schema:
-        type: string
     groupId:
       name: groupId
       in: query
       description: 'Application Group Id
 
         '
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
         type: string
     keyMappingId:
@@ -904,14 +912,6 @@ components:
 
         '
       required: true
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
       schema:
         type: string
   securitySchemes:

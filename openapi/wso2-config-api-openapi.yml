@@ -91,6 +91,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
     CorrelationComponentsList:
       title: correlation-components
       properties:
@@ -98,6 +116,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CorrelationComponent'
+    CorrelationComponentProperty:
+      title: Properties for correlation components
+      properties:
+        name:
+          type: string
+          example: deniedThreads
+        value:
+          type: array
+          items:
+            type: string
+            example: MessageDeliveryTaskPool
+    CorrelationComponent:
+      title: Correlation Component INFO object
+      properties:
+        name:
+          type: string
+          example: http
+        enabled:
+          type: string
+          example: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorrelationComponentProperty'
     Error:
       title: Error object returned with 4XX HTTP Status
       required:
@@ -129,45 +171,3 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    CorrelationComponentProperty:
-      title: Properties for correlation components
-      properties:
-        name:
-          type: string
-          example: deniedThreads
-        value:
-          type: array
-          items:
-            type: string
-            example: MessageDeliveryTaskPool
-    CorrelationComponent:
-      title: Correlation Component INFO object
-      properties:
-        name:
-          type: string
-          example: http
-        enabled:
-          type: string
-          example: true
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/CorrelationComponentProperty'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '

@@ -40,21 +40,22 @@ paths:
       - lang: Curl
         source: 'curl -k -I -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/roles/SW50ZXJuYWwvcHVibGlzaGVyCQ"'
 components:
-  parameters:
-    roleId:
-      name: roleId
-      in: path
-      description: 'The Base 64 URL encoded role name with domain. If the given role is in PRIMARY user-store, role ID should be
-
-        derived as Base64URLEncode(role-name). If the given role is in secondary user-store, role ID should be
-
-        derived as Base64URLEncode({user-store-name}/{role-name}).
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -88,21 +89,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
   responses:
     InternalServerError:
       description: Internal Server Error.
@@ -128,6 +114,20 @@ components:
             description: The specified resource does not exist
             moreInfo: ''
             error: []
+  parameters:
+    roleId:
+      name: roleId
+      in: path
+      description: 'The Base 64 URL encoded role name with domain. If the given role is in PRIMARY user-store, role ID should be
+
+        derived as Base64URLEncode(role-name). If the given role is in secondary user-store, role ID should be
+
+        derived as Base64URLEncode({user-store-name}/{role-name}).
+
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -75,29 +75,14 @@ paths:
       operationId: addAIServiceProvider
 components:
   schemas:
-    AIServiceProviderSummaryResponseList:
-      title: AIServiceProviderSummaryResponseList
+    AIServiceProviderResponse:
+      title: AIServiceProviderResponse
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of LLM Providers returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
-    AIServiceProviderRequest:
-      title: AIServiceProvider
-      required:
-      - name
-      - apiVersion
-      - configurations
-      - apiDefinition
-      type: object
-      properties:
+        id:
+          type: string
+          readOnly: true
+          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
         name:
           maxLength: 255
           minLength: 1
@@ -108,12 +93,11 @@ components:
           minLength: 1
           type: string
           example: 1.0.0
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
+        builtInSupport:
+          type: boolean
+          description: Is built-in support
         multipleModelProviderSupport:
-          type: string
+          type: boolean
           description: 'Indicates whether the AI Service Provider supports multiple model providers.
 
             If true, the AI Service Provider can support multiple model providers.
@@ -121,16 +105,55 @@ components:
             If false, the AI Service Provider supports only one model provider.
 
             '
-          default: 'false'
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
         configurations:
           type: string
           description: LLM Provider configurations
         apiDefinition:
           type: string
           description: OpenAPI specification
-          format: binary
         modelProviders:
+          type: array
+          description: List of model providers supported by the AI Service Provider
+          items:
+            $ref: '#/components/schemas/ModelProvider'
+        deprecated:
+          type: boolean
+          description: Indicates if the LLM provider is deprecated
+          example: false
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
           type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ModelProvider:
+      title: Model Provider
+      type: object
+      required:
+      - name
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+            example: gpt-4o
+        name:
+          type: string
+          example: OpenAI
     AIServiceProviderSummaryResponse:
       title: AIServiceProviderSummaryResponse
       type: object
@@ -196,29 +219,15 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    AIServiceProviderRequest:
+      title: AIServiceProvider
       required:
-      - code
-      - message
+      - name
+      - apiVersion
+      - configurations
+      - apiDefinition
       type: object
       properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    AIServiceProviderResponse:
-      title: AIServiceProviderResponse
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
         name:
           maxLength: 255
           minLength: 1
@@ -229,11 +238,12 @@ components:
           minLength: 1
           type: string
           example: 1.0.0
-        builtInSupport:
-          type: boolean
-          description: Is built-in support
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
         multipleModelProviderSupport:
-          type: boolean
+          type: string
           description: 'Indicates whether the AI Service Provider supports multiple model providers.
 
             If true, the AI Service Provider can support multiple model providers.
@@ -241,40 +251,30 @@ components:
             If false, the AI Service Provider supports only one model provider.
 
             '
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
+          default: 'false'
         configurations:
           type: string
           description: LLM Provider configurations
         apiDefinition:
           type: string
           description: OpenAPI specification
+          format: binary
         modelProviders:
-          type: array
-          description: List of model providers supported by the AI Service Provider
-          items:
-            $ref: '#/components/schemas/ModelProvider'
-        deprecated:
-          type: boolean
-          description: Indicates if the LLM provider is deprecated
-          example: false
-    ModelProvider:
-      title: Model Provider
-      type: object
-      required:
-      - name
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            type: string
-            example: gpt-4o
-        name:
           type: string
-          example: OpenAI
+    AIServiceProviderSummaryResponseList:
+      title: AIServiceProviderSummaryResponseList
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of LLM Providers returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
   responses:
     BadRequest:
       description: Bad Request. Invalid request or validation error.

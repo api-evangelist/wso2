@@ -168,64 +168,41 @@ paths:
       operationId: deleteThrottlingPoliciesCustomByRuleId
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-  parameters:
-    Content-Type:
-      name: Content-Type
-      in: header
-      description: 'Media type of the entity in the body. Default is application/json.
-
-        '
-      required: true
-      schema:
-        type: string
-        default: application/json
-    ruleId:
-      name: ruleId
-      in: path
-      description: 'Custom rule UUID
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
+    CustomRule:
+      title: Custom Rule
+      allOf:
+      - $ref: '#/components/schemas/ThrottlePolicy'
+      - required:
+        - keyTemplate
+        - siddhiQuery
+        type: object
+        properties:
+          siddhiQuery:
+            type: string
+            description: Siddhi query which represents the custom throttling policy
+            example: 'FROM RequestStream\nSELECT userId, ( userId == ''admin@carbon.super'' ) AS isEligible , str:concat(''admin@carbon.super'','''') as throttleKey\nINSERT INTO EligibilityStream; \n\nFROM EligibilityStream[isEligible==true]#throttler:timeBatch(1 min) \nSELECT throttleKey, (count(userId) >= 10) as isThrottled, expiryTimeStamp group by throttleKey \nINSERT ALL EVENTS into ResultStream;
+
+              '
+          keyTemplate:
+            type: string
+            description: The specific combination of attributes that are checked in the policy.
+            example: $userId
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -259,25 +236,6 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    CustomRule:
-      title: Custom Rule
-      allOf:
-      - $ref: '#/components/schemas/ThrottlePolicy'
-      - required:
-        - keyTemplate
-        - siddhiQuery
-        type: object
-        properties:
-          siddhiQuery:
-            type: string
-            description: Siddhi query which represents the custom throttling policy
-            example: 'FROM RequestStream\nSELECT userId, ( userId == ''admin@carbon.super'' ) AS isEligible , str:concat(''admin@carbon.super'','''') as throttleKey\nINSERT INTO EligibilityStream; \n\nFROM EligibilityStream[isEligible==true]#throttler:timeBatch(1 min) \nSELECT throttleKey, (count(userId) >= 10) as isThrottled, expiryTimeStamp group by throttleKey \nINSERT ALL EVENTS into ResultStream;
-
-              '
-          keyTemplate:
-            type: string
-            description: The specific combination of attributes that are checked in the policy.
-            example: $userId
     ThrottlePolicy:
       title: Generic Throttling Policy
       required:
@@ -314,21 +272,63 @@ components:
           description: Indicates the type of throttle policy
       discriminator:
         propertyName: type
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+  parameters:
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: 'Media type of the entity in the body. Default is application/json.
 
-            '
+        '
+      required: true
+      schema:
+        type: string
+        default: application/json
+    ruleId:
+      name: ruleId
+      in: path
+      description: 'Custom rule UUID
+
+        '
+      required: true
+      schema:
+        type: string
+  responses:
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -76,6 +76,19 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
     OrganizationInfo:
       title: Organization Info
@@ -135,16 +148,20 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    CurrentAndNewPasswords:
-      title: Current and new passowrd of the user
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        currentPassword:
+        code:
           type: string
-          example: password123
-        newPassword:
+        message:
           type: string
-          example: newpassword1234
+          description: 'Description about individual errors occurred
+
+            '
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -177,33 +194,16 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem_2'
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    CurrentAndNewPasswords:
+      title: Current and new passowrd of the user
       type: object
       properties:
-        code:
+        currentPassword:
           type: string
-        message:
+          example: password123
+        newPassword:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
+          example: newpassword1234
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -132,73 +132,7 @@ paths:
       operationId: putTenantLogsByTenantApisByApiId
       x-operation-id-source: derived
 components:
-  parameters:
-    tenant:
-      name: tenant
-      in: path
-      description: 'Tenant (organization) name
-
-        '
-      required: true
-      schema:
-        type: string
-    logLevel:
-      name: log-level
-      in: query
-      description: 'Log level of the APIs
-
-        '
-      required: false
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: 'The API ID for the logging operation
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    LoggingApiOutputList:
-      title: apis
-      properties:
-        apis:
-          type: array
-          items:
-            $ref: '#/components/schemas/LoggingApiOutput'
     LoggingApiInput:
       title: API Info object with log details
       required:
@@ -253,3 +187,69 @@ components:
         resourcePath:
           type: string
           example: /v1.0.0/pizza
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    LoggingApiOutputList:
+      title: apis
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoggingApiOutput'
+  parameters:
+    apiId:
+      name: apiId
+      in: path
+      description: 'The API ID for the logging operation
+
+        '
+      required: true
+      schema:
+        type: string
+    tenant:
+      name: tenant
+      in: path
+      description: 'Tenant (organization) name
+
+        '
+      required: true
+      schema:
+        type: string
+    logLevel:
+      name: log-level
+      in: query
+      description: 'Log level of the APIs
+
+        '
+      required: false
+      schema:
+        type: string

@@ -66,17 +66,21 @@ paths:
       operationId: getSubscriptionsBySubscriptionIdUsage
       x-operation-id-source: derived
 components:
-  parameters:
-    subscriptionId:
-      name: subscriptionId
-      in: path
-      description: 'Subscription Id
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -118,20 +122,16 @@ components:
           additionalProperties:
             type: string
           description: Map of custom properties related to monetization usage
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+  parameters:
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      description: 'Subscription Id
 
-            '
+        '
+      required: true
+      schema:
+        type: string
   responses:
     NotFound:
       description: Not Found. The specified resource does not exist.

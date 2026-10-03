@@ -338,15 +338,6 @@ paths:
         - apim:gov_rule_read
 components:
   parameters:
-    rulesetId:
-      name: rulesetId
-      in: path
-      description: '**UUID** of the Ruleset.
-
-        '
-      required: true
-      schema:
-        type: string
     offset:
       name: offset
       in: query
@@ -356,6 +347,15 @@ components:
       schema:
         type: integer
         default: 0
+    rulesetId:
+      name: rulesetId
+      in: path
+      description: '**UUID** of the Ruleset.
+
+        '
+      required: true
+      schema:
+        type: string
     limit:
       name: limit
       in: query
@@ -442,50 +442,6 @@ components:
       - ruleType
       - artifactType
       - provider
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
     RulesetInput:
       type: object
       description: Detailed information about a ruleset.
@@ -560,6 +516,50 @@ components:
             $ref: '#/components/schemas/RulesetInfo'
         pagination:
           $ref: '#/components/schemas/Pagination'
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

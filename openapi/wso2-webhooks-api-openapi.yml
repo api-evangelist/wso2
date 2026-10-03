@@ -60,14 +60,6 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    applicationId-Q:
-      name: applicationId
-      in: query
-      description: '**Application Identifier** consisting of the UUID of the Application.
-
-        '
-      schema:
-        type: string
     apiId-Q:
       name: apiId
       in: query
@@ -82,7 +74,29 @@ components:
       description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
         type: string
+    applicationId-Q:
+      name: applicationId
+      in: query
+      description: '**Application Identifier** consisting of the UUID of the Application.
+
+        '
+      schema:
+        type: string
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     WebhookSubscription:
       title: Webhook Subscription
       type: object
@@ -105,51 +119,6 @@ components:
         deliveryStatus:
           type: integer
           example: 1
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
-    WebhookSubscriptionList:
-      title: Subscribed Webhook List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of webhook subscriptions returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookSubscription'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -182,20 +151,51 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    WebhookSubscriptionList:
+      title: Subscribed Webhook List
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+        count:
+          type: integer
+          description: 'Number of webhook subscriptions returned.
 
             '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookSubscription'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
   responses:
     InternalServerError:
       description: Internal Server Error.

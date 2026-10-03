@@ -107,98 +107,21 @@ paths:
       operationId: postApplicationsByApplicationIdOauthKeysByKeyMappingIdGenerateToken
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    PreconditionFailed:
-      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 412
-            message: Precondition Failed
-            description: The request has not been performed because one of the preconditions is not met
-            moreInfo: ''
-            error: []
   schemas:
-    ApplicationToken:
-      title: Application token details to invoke APIs
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: Access token
-          example: 1.2345678901234568E30
-        tokenScopes:
-          type: array
-          description: Valid comma seperated scopes for the access token
-          example:
-          - default
-          - read_api
-          - write_api
-          items:
-            type: string
-        validityTime:
-          type: integer
-          description: Maximum validity time for the access token
-          format: int64
-          example: 3600
-    Error:
-      title: Error object returned with 4XX HTTP status
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: integer
-          format: int64
+          type: string
         message:
           type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+          description: 'Description about individual errors occurred
 
             '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     ApplicationTokenGenerateRequest:
       title: Application access token generation request object
       type: object
@@ -233,25 +156,119 @@ components:
           type: object
           properties: {}
           description: Additional parameters if Authorization server needs any
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    Error:
+      title: Error object returned with 4XX HTTP status
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: string
+          type: integer
+          format: int64
         message:
           type: string
-          description: 'Description about individual errors occurred
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
 
             '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ApplicationToken:
+      title: Application token details to invoke APIs
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token
+          example: 1.2345678901234568E30
+        tokenScopes:
+          type: array
+          description: Valid comma seperated scopes for the access token
+          example:
+          - default
+          - read_api
+          - write_api
+          items:
+            type: string
+        validityTime:
+          type: integer
+          description: Maximum validity time for the access token
+          format: int64
+          example: 3600
+  responses:
+    PreconditionFailed:
+      description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 412
+            message: Precondition Failed
+            description: The request has not been performed because one of the preconditions is not met
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   parameters:
+    If-Match:
+      name: If-Match
+      in: header
+      description: 'Validator for conditional requests; based on ETag.
+
+        '
+      schema:
+        type: string
     applicationId:
       name: applicationId
       in: path
       description: 'Application Identifier consisting of the UUID of the Application.
+
+        '
+      required: true
+      schema:
+        type: string
+    keyMappingId:
+      name: keyMappingId
+      in: path
+      description: 'OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.
 
         '
       required: true
@@ -269,23 +286,6 @@ components:
         enum:
         - PRODUCTION
         - SANDBOX
-    keyMappingId:
-      name: keyMappingId
-      in: path
-      description: 'OAuth Key Identifier consisting of the UUID of the Oauth Key Mapping.
-
-        '
-      required: true
-      schema:
-        type: string
-    If-Match:
-      name: If-Match
-      in: header
-      description: 'Validator for conditional requests; based on ETag.
-
-        '
-      schema:
-        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

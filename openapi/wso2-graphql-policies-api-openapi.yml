@@ -99,6 +99,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    GraphQLSchemaType:
+      title: Single type and corresponding fields found within the GraphQL Schema
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type found within the GraphQL Schema
+
+            '
+          example: Country
+        fieldList:
+          type: array
+          description: 'Array of fields under current type
+
+            '
+          example:
+          - code
+          - name
+          items:
+            type: string
     GraphQLSchemaTypeList:
       title: List of types and corresponding fields of the GraphQL Schema
       type: object
@@ -141,26 +161,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GraphQLCustomComplexityInfo'
-    GraphQLSchemaType:
-      title: Single type and corresponding fields found within the GraphQL Schema
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Type found within the GraphQL Schema
-
-            '
-          example: Country
-        fieldList:
-          type: array
-          description: 'Array of fields under current type
-
-            '
-          example:
-          - code
-          - name
-          items:
-            type: string
   parameters:
     apiId:
       name: apiId

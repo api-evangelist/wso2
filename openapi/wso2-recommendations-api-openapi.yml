@@ -51,6 +51,34 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    recommendedAPI:
+      title: Recommended API
+      type: object
+      properties:
+        id:
+          type: string
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          type: string
+          example: CalculatorAPI
+        avgRating:
+          type: string
+          description: Average rating of the API
+          example: '4.5'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -97,34 +125,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/recommendedAPI'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    recommendedAPI:
-      title: Recommended API
-      type: object
-      properties:
-        id:
-          type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
-          type: string
-          example: CalculatorAPI
-        avgRating:
-          type: string
-          description: Average rating of the API
-          example: '4.5'
   responses:
     NotFound:
       description: Not Found. The specified resource does not exist.

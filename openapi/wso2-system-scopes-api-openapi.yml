@@ -202,76 +202,34 @@ paths:
       operationId: putSystemScopesRoleAliases
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   schemas:
-    Scope:
-      title: Scope Role
+    RoleAliasList:
+      title: Role alias list
       type: object
       properties:
-        tag:
-          type: string
-          description: 'Portal name.
-
-            '
-          example: publisher
-        name:
-          type: string
-          description: 'Scope name.
-
-            '
-          example: apim:api_publish
-        description:
-          type: string
-          description: 'About scope.
-
-            '
-          example: Publish API
-        roles:
+        count:
+          type: integer
+          description: The number of role aliases
+          example: 1
+        list:
           type: array
-          description: 'Roles for the particular scope.
+          items:
+            $ref: '#/components/schemas/RoleAlias'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example:
-          - admin
-          - Internal/publisher
-          items:
-            type: string
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -320,33 +278,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Scope'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    Scope:
+      title: Scope Role
       type: object
       properties:
-        code:
+        tag:
           type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+          description: 'Portal name.
 
             '
-    RoleAliasList:
-      title: Role alias list
-      type: object
-      properties:
-        count:
-          type: integer
-          description: The number of role aliases
-          example: 1
-        list:
+          example: publisher
+        name:
+          type: string
+          description: 'Scope name.
+
+            '
+          example: apim:api_publish
+        description:
+          type: string
+          description: 'About scope.
+
+            '
+          example: Publish API
+        roles:
           type: array
+          description: 'Roles for the particular scope.
+
+            '
+          example:
+          - admin
+          - Internal/publisher
           items:
-            $ref: '#/components/schemas/RoleAlias'
+            type: string
     RoleAlias:
       title: Role alias
       type: object
@@ -370,6 +333,43 @@ components:
         name:
           type: string
           example: apim:subscribe
+  responses:
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   parameters:
     scopeName:
       name: scopeName

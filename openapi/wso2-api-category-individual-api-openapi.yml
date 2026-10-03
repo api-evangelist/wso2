@@ -123,55 +123,22 @@ paths:
       operationId: deleteApiCategoriesByApiCategoryId
       x-operation-id-source: derived
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   schemas:
-    APICategory:
-      title: API Category
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
-      - name
+      - code
+      - message
       type: object
       properties:
-        id:
+        code:
           type: string
-          readOnly: true
-          example: 01234567-0123-0123-0123-012345678901
-        name:
-          maxLength: 255
-          minLength: 1
+          description: Error code
+        message:
           type: string
-          example: Finance
-        description:
-          maxLength: 1024
-          type: string
-          example: Finance related APIs
-        numberOfAPIs:
-          type: integer
-          readOnly: true
-          example: 1
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -205,21 +172,29 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    APICategory:
+      title: API Category
       required:
-      - code
-      - message
+      - name
       type: object
       properties:
-        code:
+        id:
           type: string
-          description: Error code
-        message:
+          readOnly: true
+          example: 01234567-0123-0123-0123-012345678901
+        name:
+          maxLength: 255
+          minLength: 1
           type: string
-          description: 'Description about individual errors occurred
-
-            '
+          example: Finance
+        description:
+          maxLength: 1024
+          type: string
+          example: Finance related APIs
+        numberOfAPIs:
+          type: integer
+          readOnly: true
+          example: 1
   parameters:
     apiCategoryId:
       name: apiCategoryId
@@ -230,6 +205,31 @@ components:
       required: true
       schema:
         type: string
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

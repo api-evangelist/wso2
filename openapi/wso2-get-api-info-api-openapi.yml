@@ -113,25 +113,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    URLMapping:
-      properties:
-        authScheme:
-          type: string
-          example: Application & Application User
-        throttlingPolicy:
-          type: string
-          example: Unlimited
-        httpMethod:
-          type: string
-          example: GET
-        urlPattern:
-          type: string
-          example: /menu
-        scopes:
-          type: array
-          items:
-            type: string
-            example: read
     APIInfo:
       title: Subscription Information for API.
       properties:
@@ -182,64 +163,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SubscriptionInfo'
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-          description: Error code
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    APIList:
-      title: API List
-      properties:
-        count:
-          type: integer
-          description: 'Number of APIs returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIMetaData'
-    SubscriptionInfo:
-      properties:
-        subscriptionUUID:
-          type: string
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        subscriptionPolicy:
-          type: string
-          example: Gold
-        status:
-          type: string
-          example: UnBlocked
-        application:
-          $ref: '#/components/schemas/ApplicationInfo'
     ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
@@ -254,47 +177,25 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ApplicationInfo:
+    URLMapping:
       properties:
-        uuid:
+        authScheme:
           type: string
-          example: d290f1ee-6c54-4b01-90e6-d701848f0851
-        id:
-          type: integer
-          example: 1
-        name:
+          example: Application & Application User
+        throttlingPolicy:
           type: string
-          example: PizzaAPP
-        subName:
+          example: Unlimited
+        httpMethod:
           type: string
-          example: admin
-        policy:
+          example: GET
+        urlPattern:
           type: string
-          description: Application level throtting policy.
-          example: Gold
-        tokenType:
-          type: string
-          description: type of the token.
-          example: JWT
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-        keys:
+          example: /menu
+        scopes:
           type: array
           items:
-            $ref: '#/components/schemas/ApplicationKeyMapping'
-    ApplicationKeyMapping:
-      properties:
-        consumerKey:
-          type: string
-          example: d290f1ee-6c54-4b01-90e6-d701848f0851
-        keyType:
-          type: string
-          example: Production
-        keyManager:
-          type: string
-          example: Resident Key Manager
+            type: string
+            example: read
     APIMetaData:
       properties:
         apiUUID:
@@ -336,19 +237,106 @@ components:
           type: string
           description: Status of API.
           example: Published
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+          description: Error code
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    SubscriptionInfo:
+      properties:
+        subscriptionUUID:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        subscriptionPolicy:
+          type: string
+          example: Gold
+        status:
+          type: string
+          example: UnBlocked
+        application:
+          $ref: '#/components/schemas/ApplicationInfo'
+    ApplicationInfo:
+      properties:
+        uuid:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701848f0851
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: PizzaAPP
+        subName:
+          type: string
+          example: admin
+        policy:
+          type: string
+          description: Application level throtting policy.
+          example: Gold
+        tokenType:
+          type: string
+          description: type of the token.
+          example: JWT
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationKeyMapping'
+    ApplicationKeyMapping:
+      properties:
+        consumerKey:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701848f0851
+        keyType:
+          type: string
+          example: Production
+        keyManager:
+          type: string
+          example: Resident Key Manager
+    APIList:
+      title: API List
+      properties:
+        count:
+          type: integer
+          description: 'Number of APIs returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIMetaData'
   responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
     NotFound:
       description: Not Found. The specified resource does not exist.
       content:
@@ -359,5 +347,17 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
             moreInfo: ''
             error: []
