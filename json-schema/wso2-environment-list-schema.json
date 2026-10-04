@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-environment-list-schema.json",
+  "title": "Environment List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-environments-api-openapi.yml#/components/schemas/EnvironmentList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Environments returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Environment"
+      }
+    }
+  },
+  "$defs": {
+    "AdditionalProperty": {
+      "title": "Additional Gateway Properties",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "Environment": {
+      "title": "Environment",
+      "required": [
+        "name",
+        "vhosts"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "type": "string"
+        },
+        "displayName": {
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "default": "hybrid"
+        },
+        "gatewayType": {
+          "type": "string",
+          "default": "Regular"
+        },
+        "description": {
+          "maxLength": 1023,
+          "type": "string"
+        },
+        "isReadOnly": {
+          "type": "boolean",
+          "default": false,
+          "deprecated": true
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "READ_ONLY",
+            "READ_WRITE",
+            "WRITE_ONLY"
+          ],
+          "default": "WRITE_ONLY",
+          "description": "The mode of the environment. This indicates whether the environment is in read-only or read-write mode.\n**READ_ONLY:** The environment is in read-only mode. API cannot be deployed, only discovery is possible.\n**READ_WRITE:** The environment is in read-write mode. APIs can be deployed and discovered.\n**WRITE_ONLY:** The environment is in write-only mode/ APIs only can be deployed.\n"
+        },
+        "apiDiscoveryScheduledWindow": {
+          "type": "integer",
+          "description": "The time window in minutes to schedule the API discovery task.\nThis is used to discover APIs from the API Gateway and update the API list in the environment.\n",
+          "default": 60
+        },
+        "vhosts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/VHost"
+          }
+        },
+        "endpointURIs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GatewayEnvironmentProtocolURI"
+          }
+        },
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AdditionalProperty"
+          }
+        },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "permissionType": {
+              "type": "string",
+              "default": "PUBLIC",
+              "enum": [
+                "PUBLIC",
+                "ALLOW",
+                "DENY"
+              ]
+            },
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "readOnly": true,
+          "description": "For platform gateway environments (gatewayType APIPlatform), connection status to the control plane (Active or Inactive).",
+          "default": "Active",
+          "enum": [
+            "Active",
+            "Inactive"
+          ]
+        },
+        "vhost": {
+          "type": "string",
+          "format": "uri",
+          "readOnly": true,
+          "description": "For platform gateway environments, the gateway URL (e.g. https://host:9443). Same as Platform Gateways API; only set when this environment represents a platform gateway."
+        },
+        "platformGatewayVersions": {
+          "type": "array",
+          "readOnly": true,
+          "description": "API Platform Gateway versions from config. Set for deploy targets so UI can show version choices in the quick-start guide.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GatewayEnvironmentProtocolURI": {
+      "title": "Gateway Environment protocols and URIs",
+      "required": [
+        "protocol",
+        "endpointURI"
+      ],
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "string"
+        },
+        "endpointURI": {
+          "type": "string"
+        }
+      }
+    },
+    "VHost": {
+      "title": "Virtual Host",
+      "required": [
+        "host"
+      ],
+      "type": "object",
+      "properties": {
+        "host": {
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        },
+        "httpContext": {
+          "maxLength": 255,
+          "minLength": 0,
+          "pattern": "^\\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])*$",
+          "type": "string"
+        },
+        "httpPort": {
+          "type": "integer"
+        },
+        "httpsPort": {
+          "type": "integer"
+        },
+        "wsPort": {
+          "type": "integer"
+        },
+        "wsHost": {
+          "type": "string"
+        },
+        "wssPort": {
+          "type": "integer"
+        },
+        "wssHost": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -40,6 +40,37 @@ paths:
       operationId: getAllLabels
 components:
   schemas:
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            example: ""
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            example: ""
+
+            '
     Label:
       title: Label
       required:
@@ -74,37 +105,6 @@ components:
             $ref: '#/components/schemas/Label'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            example: ""
-
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            example: ""
-
-            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

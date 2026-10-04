@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-local-entry-schema.json",
+  "title": "LocalEntry Response",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-local-entry-api-openapi.yml#/components/schemas/LocalEntry",
+  "properties": {
+    "localEntries": {
+      "description": "The local entries which has been deployed in the gateway\n",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

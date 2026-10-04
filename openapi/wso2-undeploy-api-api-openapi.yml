@@ -65,7 +65,66 @@ paths:
       tags:
       - Undeploy Api
 components:
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string
   schemas:
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+          description: Error code
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     DeployResponse:
       title: Deploy API Response
       required:
@@ -100,62 +159,3 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-          description: Error code
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-  parameters:
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    version:
-      name: version
-      in: query
-      description: 'version of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string

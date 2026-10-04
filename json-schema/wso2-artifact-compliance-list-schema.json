@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-artifact-compliance-list-schema.json",
+  "title": "ArtifactComplianceList",
+  "description": "Compliance status of a list of artifacts.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-artifact-compliance-api-openapi.yml#/components/schemas/ArtifactComplianceList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of artifact returned."
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ArtifactComplianceStatus"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "ArtifactComplianceStatus": {
+      "type": "object",
+      "description": "Provides compliance status of an artifact.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the API."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the API's governance compliance.",
+          "enum": [
+            "COMPLIANT",
+            "NON-COMPLIANT",
+            "NOT-APPLICABLE",
+            "PENDING"
+          ]
+        },
+        "info": {
+          "$ref": "#/$defs/ArtifactInfo"
+        },
+        "policyAdherenceSummary": {
+          "$ref": "#/$defs/PolicyAdherenceSummary"
+        },
+        "severityBasedRuleViolationSummary": {
+          "type": "array",
+          "description": "Summary of severity based rule violations.",
+          "items": {
+            "$ref": "#/$defs/SeverityBasedRuleViolationCount"
+          }
+        }
+      }
+    },
+    "ArtifactInfo": {
+      "type": "object",
+      "description": "Detailed information about an artifact.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the artifact."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the artifact.",
+          "enum": [
+            "API"
+          ]
+        },
+        "extendedType": {
+          "type": "string",
+          "description": "Extended type of the artifact.",
+          "enum": [
+            "REST_API",
+            "ASYNC_API",
+            "MCP"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the artifact."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the artifact."
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "PolicyAdherenceSummary": {
+      "type": "object",
+      "description": "Summary of governance policy adherence in the organization.",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "Total number of policies."
+        },
+        "followed": {
+          "type": "integer",
+          "description": "Number of policies followed to."
+        },
+        "violated": {
+          "type": "integer",
+          "description": "Number of policies violated."
+        },
+        "unApplied": {
+          "type": "integer",
+          "description": "Number of policies unApplied."
+        }
+      }
+    },
+    "SeverityBasedRuleViolationCount": {
+      "type": "object",
+      "description": "List of rules violated by the artifact under each severity.",
+      "properties": {
+        "severity": {
+          "type": "string",
+          "description": "Severity level of the rule violation.",
+          "enum": [
+            "ERROR",
+            "WARN",
+            "INFO"
+          ]
+        },
+        "violatedRulesCount": {
+          "type": "integer",
+          "description": "Number of rules violated by the artifact under each severity."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+generated: '2026-10-04'
+method: derived
+source: openapi/wso2-mcp-servers-api-openapi.yml
+deployment:
+  mode: remote
+  endpoint: https://apis.wso2.com/api/am/devportal/v3/mcp-servers
+  auth: oauth
+  verified: derived

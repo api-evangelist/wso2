@@ -1,0 +1,30 @@
+generated: '2026-10-04'
+method: generated
+generator: extract-docs-artifacts.py skills (local)
+source: openapi/wso2-apis-api-openapi.yml
+skills:
+- file: skills/wso2-get-api-definition.md
+  name: wso2-get-api-definition
+  api: openapi/wso2-apis-api-openapi.yml
+  operations:
+  - getAllAPIs
+  - getApisByApiId
+  - getApisByApiIdSwagger
+- file: skills/wso2-generate-and-associate-api-key.md
+  name: wso2-generate-and-associate-api-key
+  api: openapi/wso2-api-keys-api-openapi.yml
+  operations:
+  - generateApiBoundApiKey
+  - associateAPIKeyToApp
+- file: skills/wso2-modify-application.md
+  name: wso2-modify-application
+  api: openapi/wso2-application-api-openapi.yml
+  operations:
+  - postApplicationsByApplicationIdChangeOwner
+  - updateApplicationSettings
+- file: skills/wso2-generate-application-token.md
+  name: wso2-generate-application-token
+  api: openapi/wso2-application-tokens-api-openapi.yml
+  operations:
+  - postApplicationsByApplicationIdKeysByKeyTypeGenerateToken
+  - postApplicationsByApplicationIdOauthKeysByKeyMappingIdGenerateToken

@@ -1,0 +1,367 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-advanced-throttle-policy-schema.json",
+  "title": "Advanced Throttling Policy",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/AdvancedThrottlePolicy",
+  "allOf": [
+    {
+      "$ref": "#/$defs/ThrottlePolicy"
+    },
+    {
+      "required": [
+        "defaultLimit"
+      ],
+      "type": "object",
+      "properties": {
+        "defaultLimit": {
+          "$ref": "#/$defs/ThrottleLimit"
+        },
+        "conditionalGroups": {
+          "type": "array",
+          "description": "Group of conditions which allow adding different parameter conditions to the throttling limit.\n",
+          "items": {
+            "$ref": "#/$defs/ConditionalGroup"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "AIAPIQuotaLimit": {
+      "title": "AI API Quota Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "requestCount"
+          ],
+          "type": "object",
+          "properties": {
+            "requestCount": {
+              "type": "integer",
+              "description": "Maximum number of requests allowed",
+              "format": "int64"
+            },
+            "totalTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of total tokens allowed",
+              "format": "int64"
+            },
+            "promptTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of prompt tokens allowed",
+              "format": "int64"
+            },
+            "completionTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of completion tokens allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "BandwidthLimit": {
+      "title": "Bandwidth Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "dataAmount",
+            "dataUnit"
+          ],
+          "type": "object",
+          "properties": {
+            "dataAmount": {
+              "type": "integer",
+              "description": "Amount of data allowed to be transfered",
+              "format": "int64"
+            },
+            "dataUnit": {
+              "type": "string",
+              "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\""
+            }
+          }
+        }
+      ]
+    },
+    "ConditionalGroup": {
+      "title": "Conditional Groups for Throttling",
+      "required": [
+        "conditions",
+        "limit"
+      ],
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the Conditional Group"
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Individual throttling conditions. They can be defined as either HeaderCondition, IPCondition, JWTClaimsCondition, QueryParameterCondition\nPlease see schemas of each of those throttling condition in Definitions section.\n",
+          "items": {
+            "$ref": "#/$defs/ThrottleCondition"
+          }
+        },
+        "limit": {
+          "$ref": "#/$defs/ThrottleLimit"
+        }
+      }
+    },
+    "EventCountLimit": {
+      "title": "Event Count Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "eventCount"
+          ],
+          "type": "object",
+          "properties": {
+            "eventCount": {
+              "type": "integer",
+              "description": "Maximum number of events allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "HeaderCondition": {
+      "title": "HTTP Header based throttling condition",
+      "required": [
+        "headerName",
+        "headerValue"
+      ],
+      "type": "object",
+      "properties": {
+        "headerName": {
+          "type": "string",
+          "description": "Name of the header"
+        },
+        "headerValue": {
+          "type": "string",
+          "description": "Value of the header"
+        }
+      }
+    },
+    "IPCondition": {
+      "title": "IP based throttling condition",
+      "type": "object",
+      "properties": {
+        "ipConditionType": {
+          "type": "string",
+          "description": "Type of the IP condition. Allowed values are \"IPRANGE\" and \"IPSPECIFIC\"",
+          "enum": [
+            "IPRANGE",
+            "IPSPECIFIC"
+          ]
+        },
+        "specificIP": {
+          "type": "string",
+          "description": "Specific IP when \"IPSPECIFIC\" is used as the ipConditionType"
+        },
+        "startingIP": {
+          "type": "string",
+          "description": "Staring IP when \"IPRANGE\" is used as the ipConditionType"
+        },
+        "endingIP": {
+          "type": "string",
+          "description": "Ending IP when \"IPRANGE\" is used as the ipConditionType"
+        }
+      }
+    },
+    "JWTClaimsCondition": {
+      "title": "JWT claim attibute based throttling condition",
+      "required": [
+        "attribute",
+        "claimUrl"
+      ],
+      "type": "object",
+      "properties": {
+        "claimUrl": {
+          "type": "string",
+          "description": "JWT claim URL"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Attribute to be matched"
+        }
+      }
+    },
+    "QueryParameterCondition": {
+      "title": "Query parameter based throttling condition",
+      "required": [
+        "parameterName",
+        "parameterValue"
+      ],
+      "type": "object",
+      "properties": {
+        "parameterName": {
+          "type": "string",
+          "description": "Name of the query parameter"
+        },
+        "parameterValue": {
+          "type": "string",
+          "description": "Value of the query parameter to be matched"
+        }
+      }
+    },
+    "RequestCountLimit": {
+      "title": "Request Count Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "requestCount"
+          ],
+          "type": "object",
+          "properties": {
+            "requestCount": {
+              "type": "integer",
+              "description": "Maximum number of requests allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "ThrottleCondition": {
+      "title": "Throttling Conditions",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of the throttling condition. Allowed values are \"HEADERCONDITION\", \"IPCONDITION\", \"JWTCLAIMSCONDITION\"\nand \"QUERYPARAMETERCONDITION\".\n",
+          "enum": [
+            "HEADERCONDITION",
+            "IPCONDITION",
+            "JWTCLAIMSCONDITION",
+            "QUERYPARAMETERCONDITION"
+          ]
+        },
+        "invertCondition": {
+          "type": "boolean",
+          "description": "Specifies whether inversion of the condition to be matched against the request.\n\n**Note:** When you add conditional groups for advanced throttling policies, this paramater should have the\nsame value ('true' or 'false') for the same type of conditional group.\n",
+          "default": false
+        },
+        "headerCondition": {
+          "$ref": "#/$defs/HeaderCondition"
+        },
+        "ipCondition": {
+          "$ref": "#/$defs/IPCondition"
+        },
+        "jwtClaimsCondition": {
+          "$ref": "#/$defs/JWTClaimsCondition"
+        },
+        "queryParameterCondition": {
+          "$ref": "#/$defs/QueryParameterCondition"
+        }
+      },
+      "description": "Conditions used for Throttling"
+    },
+    "ThrottleLimit": {
+      "title": "Throttle Limit",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of the throttling limit. Allowed values are \"REQUESTCOUNTLIMIT\", \"BANDWIDTHLIMIT\", \"EVENTCOUNTLIMIT\"\nand \"AIAPIQUOTALIMIT\".\nPlease see schemas of \"RequestCountLimit\", \"BandwidthLimit\", \"EventCountLimit\" and \"AIAPIQuotaLimit\" \nthrottling limit types in Definitions section.\n",
+          "enum": [
+            "REQUESTCOUNTLIMIT",
+            "BANDWIDTHLIMIT",
+            "EVENTCOUNTLIMIT",
+            "AIAPIQUOTALIMIT"
+          ]
+        },
+        "requestCount": {
+          "$ref": "#/$defs/RequestCountLimit"
+        },
+        "bandwidth": {
+          "$ref": "#/$defs/BandwidthLimit"
+        },
+        "eventCount": {
+          "$ref": "#/$defs/EventCountLimit"
+        },
+        "aiApiQuota": {
+          "$ref": "#/$defs/AIAPIQuotaLimit"
+        }
+      }
+    },
+    "ThrottleLimitBase": {
+      "title": "Throttle Limit Base",
+      "required": [
+        "timeUnit",
+        "unitTime"
+      ],
+      "type": "object",
+      "properties": {
+        "timeUnit": {
+          "type": "string",
+          "description": "Unit of the time. Allowed values are \"sec\", \"min\", \"hour\", \"day\""
+        },
+        "unitTime": {
+          "type": "integer",
+          "description": "Time limit that the throttling limit applies."
+        }
+      }
+    },
+    "ThrottlePolicy": {
+      "title": "Generic Throttling Policy",
+      "required": [
+        "policyName"
+      ],
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "description": "Id of policy",
+          "readOnly": true
+        },
+        "policyName": {
+          "maxLength": 60,
+          "minLength": 1,
+          "type": "string",
+          "description": "Name of policy"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the policy",
+          "maxLength": 512
+        },
+        "description": {
+          "maxLength": 1024,
+          "type": "string",
+          "description": "Description of the policy"
+        },
+        "isDeployed": {
+          "type": "boolean",
+          "description": "Indicates whether the policy is deployed successfully or not.",
+          "default": false
+        },
+        "type": {
+          "type": "string",
+          "description": "Indicates the type of throttle policy"
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-10-03'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -11,7 +11,7 @@ hosts:
 - host: apim.docs.wso2.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep  1 04:29:12 2026 GMT
+  cert_expires: Dec 28 04:58:39 2026 GMT
   hsts: true
   hsts_max_age: 31536000
 - host: apis.wso2.com
@@ -23,12 +23,12 @@ domains:
 - domain: wso2.com
   dnssec: true
   caa:
-  - 0 issue "digicert.com"
-  - 0 issue "letsencrypt.org"
-  - 0 issue "pki.goog"
-  - 0 issuewild "amazon.com"
   - 0 issuewild "digicert.com"
   - 0 issuewild "letsencrypt.org"
+  - 0 issuewild "pki.goog"
+  - 0 issue "amazon.com"
+  - 0 issue "amazontrust.com"
+  - 0 issue "digicert.com"
   spf: true
   dmarc: true
   dmarc_policy: reject

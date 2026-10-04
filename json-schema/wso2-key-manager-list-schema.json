@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-key-manager-list-schema.json",
+  "title": "Key Manager List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-global-key-manager-collection-api-openapi.yml#/components/schemas/KeyManagerList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Key managers returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/KeyManagerInfo"
+      }
+    }
+  },
+  "$defs": {
+    "KeyManagerInfo": {
+      "title": "Key Manager Info",
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "isGlobal": {
+          "type": "boolean"
+        },
+        "isUsed": {
+          "type": "boolean"
+        },
+        "tokenType": {
+          "type": "string",
+          "description": "The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.",
+          "default": "DIRECT",
+          "enum": [
+            "EXCHANGED",
+            "DIRECT",
+            "BOTH"
+          ]
+        }
+      }
+    }
+  }
+}

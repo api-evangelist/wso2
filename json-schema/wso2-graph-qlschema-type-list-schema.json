@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-graph-qlschema-type-list-schema.json",
+  "title": "List of types and corresponding fields of the GraphQL Schema",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-graphql-policies-api-openapi.yml#/components/schemas/GraphQLSchemaTypeList",
+  "type": "object",
+  "properties": {
+    "typeList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GraphQLSchemaType"
+      }
+    }
+  },
+  "$defs": {
+    "GraphQLSchemaType": {
+      "title": "Single type and corresponding fields found within the GraphQL Schema",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type found within the GraphQL Schema\n"
+        },
+        "fieldList": {
+          "type": "array",
+          "description": "Array of fields under current type\n",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

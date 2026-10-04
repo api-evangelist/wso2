@@ -93,88 +93,32 @@ paths:
       operationId: postApplicationsByApplicationIdChangeOwner
       x-operation-id-source: derived
 components:
-  schemas:
-    ScopeInfo:
-      title: API Scope info object with scope details
-      type: object
-      properties:
-        key:
-          type: string
-          example: admin_scope
-        name:
-          type: string
-          example: admin scope
-        roles:
-          type: array
-          items:
-            type: string
-          description: Allowed roles for the scope
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
           example:
-          - manager
-          - developer
-        description:
-          type: string
-          description: Description of the scope
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    ApplicationUpdateRequest:
-      type: object
-      description: Request body to update application attributes
-      properties:
-        owner:
-          type: string
-          description: The new owner of the application
-        tokenType:
-          type: string
-          description: The type of token for the application (e.g., JWT)
-          enum:
-          - JWT
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+  schemas:
     Application:
       title: Application object with all the application details
       type: object
@@ -231,6 +175,87 @@ components:
             '
           type: string
           example: admin
+    ScopeInfo:
+      title: API Scope info object with scope details
+      type: object
+      properties:
+        key:
+          type: string
+          example: admin_scope
+        name:
+          type: string
+          example: admin scope
+        roles:
+          type: array
+          items:
+            type: string
+          description: Allowed roles for the scope
+          example:
+          - manager
+          - developer
+        description:
+          type: string
+          description: Description of the scope
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    ApplicationUpdateRequest:
+      type: object
+      description: Request body to update application attributes
+      properties:
+        owner:
+          type: string
+          description: The new owner of the application
+        tokenType:
+          type: string
+          description: The type of token for the application (e.g., JWT)
+          enum:
+          - JWT
   parameters:
     applicationId:
       name: applicationId
@@ -241,31 +266,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

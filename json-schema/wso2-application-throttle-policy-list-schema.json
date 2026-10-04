@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-throttle-policy-list-schema.json",
+  "title": "Application Level Throttling Policy List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-application-policy-collection-api-openapi.yml#/components/schemas/ApplicationThrottlePolicyList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Application Throttling Policies returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ApplicationThrottlePolicy"
+      }
+    }
+  },
+  "$defs": {
+    "AIAPIQuotaLimit": {
+      "title": "AI API Quota Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "requestCount"
+          ],
+          "type": "object",
+          "properties": {
+            "requestCount": {
+              "type": "integer",
+              "description": "Maximum number of requests allowed",
+              "format": "int64"
+            },
+            "totalTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of total tokens allowed",
+              "format": "int64"
+            },
+            "promptTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of prompt tokens allowed",
+              "format": "int64"
+            },
+            "completionTokenCount": {
+              "type": "integer",
+              "description": "Maximum number of completion tokens allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationThrottlePolicy": {
+      "title": "Application Throttling Policy",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottlePolicy"
+        },
+        {
+          "required": [
+            "defaultLimit"
+          ],
+          "type": "object",
+          "properties": {
+            "defaultLimit": {
+              "$ref": "#/$defs/ThrottleLimit"
+            },
+            "burstLimit": {
+              "$ref": "#/$defs/BurstLimit"
+            }
+          }
+        }
+      ]
+    },
+    "BandwidthLimit": {
+      "title": "Bandwidth Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "dataAmount",
+            "dataUnit"
+          ],
+          "type": "object",
+          "properties": {
+            "dataAmount": {
+              "type": "integer",
+              "description": "Amount of data allowed to be transfered",
+              "format": "int64"
+            },
+            "dataUnit": {
+              "type": "string",
+              "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\""
+            }
+          }
+        }
+      ]
+    },
+    "BurstLimit": {
+      "title": "Burst Limit object",
+      "type": "object",
+      "properties": {
+        "rateLimitCount": {
+          "type": "integer",
+          "description": "Burst control request count"
+        },
+        "rateLimitTimeUnit": {
+          "type": "string",
+          "description": "Burst control time unit"
+        }
+      }
+    },
+    "EventCountLimit": {
+      "title": "Event Count Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "eventCount"
+          ],
+          "type": "object",
+          "properties": {
+            "eventCount": {
+              "type": "integer",
+              "description": "Maximum number of events allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "RequestCountLimit": {
+      "title": "Request Count Limit object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/ThrottleLimitBase"
+        },
+        {
+          "required": [
+            "requestCount"
+          ],
+          "type": "object",
+          "properties": {
+            "requestCount": {
+              "type": "integer",
+              "description": "Maximum number of requests allowed",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "ThrottleLimit": {
+      "title": "Throttle Limit",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of the throttling limit. Allowed values are \"REQUESTCOUNTLIMIT\", \"BANDWIDTHLIMIT\", \"EVENTCOUNTLIMIT\"\nand \"AIAPIQUOTALIMIT\".\nPlease see schemas of \"RequestCountLimit\", \"BandwidthLimit\", \"EventCountLimit\" and \"AIAPIQuotaLimit\" \nthrottling limit types in Definitions section.\n",
+          "enum": [
+            "REQUESTCOUNTLIMIT",
+            "BANDWIDTHLIMIT",
+            "EVENTCOUNTLIMIT",
+            "AIAPIQUOTALIMIT"
+          ]
+        },
+        "requestCount": {
+          "$ref": "#/$defs/RequestCountLimit"
+        },
+        "bandwidth": {
+          "$ref": "#/$defs/BandwidthLimit"
+        },
+        "eventCount": {
+          "$ref": "#/$defs/EventCountLimit"
+        },
+        "aiApiQuota": {
+          "$ref": "#/$defs/AIAPIQuotaLimit"
+        }
+      }
+    },
+    "ThrottleLimitBase": {
+      "title": "Throttle Limit Base",
+      "required": [
+        "timeUnit",
+        "unitTime"
+      ],
+      "type": "object",
+      "properties": {
+        "timeUnit": {
+          "type": "string",
+          "description": "Unit of the time. Allowed values are \"sec\", \"min\", \"hour\", \"day\""
+        },
+        "unitTime": {
+          "type": "integer",
+          "description": "Time limit that the throttling limit applies."
+        }
+      }
+    },
+    "ThrottlePolicy": {
+      "title": "Generic Throttling Policy",
+      "required": [
+        "policyName"
+      ],
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "description": "Id of policy",
+          "readOnly": true
+        },
+        "policyName": {
+          "maxLength": 60,
+          "minLength": 1,
+          "type": "string",
+          "description": "Name of policy"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the policy",
+          "maxLength": 512
+        },
+        "description": {
+          "maxLength": 1024,
+          "type": "string",
+          "description": "Description of the policy"
+        },
+        "isDeployed": {
+          "type": "boolean",
+          "description": "Indicates whether the policy is deployed successfully or not.",
+          "default": false
+        },
+        "type": {
+          "type": "string",
+          "description": "Indicates the type of throttle policy"
+        }
+      }
+    }
+  }
+}

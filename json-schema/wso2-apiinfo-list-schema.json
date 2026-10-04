@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apiinfo-list-schema.json",
+  "title": "API Info List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-import-export-api-openapi.yml#/components/schemas/APIInfoList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of API Info objects returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/APIInfo"
+      }
+    }
+  },
+  "$defs": {
+    "APIBusinessInformation": {
+      "type": "object",
+      "properties": {
+        "businessOwner": {
+          "type": "string"
+        },
+        "businessOwnerEmail": {
+          "type": "string"
+        },
+        "technicalOwner": {
+          "type": "string"
+        },
+        "technicalOwnerEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "APIInfo": {
+      "title": "API Info object with basic API details.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the API.\nThis is the name that will be displayed in the Publisher and DevPortal.\nIf not provided, the name will be used as the display name.\n"
+        },
+        "description": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "createdTime": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string",
+          "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n"
+        },
+        "lifeCycleStatus": {
+          "type": "string"
+        },
+        "thumbnailUri": {
+          "type": "string"
+        },
+        "avgRating": {
+          "type": "string",
+          "description": "Average rating of the API"
+        },
+        "throttlingPolicies": {
+          "type": "array",
+          "description": "List of throttling policies of the API",
+          "items": {
+            "type": "string"
+          }
+        },
+        "advertiseInfo": {
+          "$ref": "#/$defs/AdvertiseInfo"
+        },
+        "businessInformation": {
+          "$ref": "#/$defs/APIBusinessInformation"
+        },
+        "isSubscriptionAvailable": {
+          "type": "boolean"
+        },
+        "monetizationLabel": {
+          "type": "string"
+        },
+        "gatewayType": {
+          "type": "string"
+        },
+        "gatewayVendor": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "display": {
+                "type": "boolean"
+              }
+            }
+          },
+          "description": "Custom(user defined) properties of API\n"
+        },
+        "monetizedInfo": {
+          "type": "boolean"
+        },
+        "egress": {
+          "type": "boolean",
+          "description": "Whether the API is Egress or not",
+          "default": false
+        },
+        "subtype": {
+          "type": "string",
+          "description": "Subtype of the API.",
+          "default": "DEFAULT",
+          "readOnly": true
+        }
+      }
+    },
+    "AdvertiseInfo": {
+      "title": "API Advertise info object with advertise details",
+      "type": "object",
+      "properties": {
+        "advertised": {
+          "type": "boolean"
+        },
+        "apiExternalProductionEndpoint": {
+          "type": "string"
+        },
+        "apiExternalSandboxEndpoint": {
+          "type": "string"
+        },
+        "originalDevPortalUrl": {
+          "type": "string"
+        },
+        "apiOwner": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string",
+          "default": "WSO2",
+          "enum": [
+            "WSO2",
+            "AWS"
+          ]
+        }
+      }
+    }
+  }
+}

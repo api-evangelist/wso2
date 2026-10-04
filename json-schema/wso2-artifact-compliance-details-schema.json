@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-artifact-compliance-details-schema.json",
+  "title": "ArtifactComplianceDetails",
+  "description": "Provides compliance details of an artifact.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-artifact-compliance-api-openapi.yml#/components/schemas/ArtifactComplianceDetails",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the artifact."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the artifact's governance compliance.",
+      "enum": [
+        "COMPLIANT",
+        "NON-COMPLIANT",
+        "NOT-APPLICABLE",
+        "PENDING"
+      ]
+    },
+    "info": {
+      "$ref": "#/$defs/ArtifactInfo"
+    },
+    "governedPolicies": {
+      "type": "array",
+      "description": "List of policies under which the artifact was governed.",
+      "items": {
+        "$ref": "#/$defs/PolicyAdherenceWithRulesets"
+      }
+    }
+  },
+  "$defs": {
+    "ArtifactInfo": {
+      "type": "object",
+      "description": "Detailed information about an artifact.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the artifact."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the artifact.",
+          "enum": [
+            "API"
+          ]
+        },
+        "extendedType": {
+          "type": "string",
+          "description": "Extended type of the artifact.",
+          "enum": [
+            "REST_API",
+            "ASYNC_API",
+            "MCP"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the artifact."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the artifact."
+        }
+      }
+    },
+    "PolicyAdherenceWithRulesets": {
+      "type": "object",
+      "description": "Adherence status of a policy with ruleset details.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the policy."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the policy."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the policy's governance compliance.",
+          "enum": [
+            "FOLLOWED",
+            "VIOLATED",
+            "UNAPPLIED",
+            "PENDING"
+          ]
+        },
+        "rulesetValidationResults": {
+          "type": "array",
+          "description": "List of ruleset validation information.",
+          "items": {
+            "$ref": "#/$defs/RulesetValidationResultWithoutRules"
+          }
+        }
+      }
+    },
+    "RulesetValidationResultWithoutRules": {
+      "type": "object",
+      "description": "Result of the ruleset validation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the ruleset."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the ruleset."
+        },
+        "ruleType": {
+          "type": "string",
+          "description": "Context or area to which the ruleset applies.",
+          "enum": [
+            "API_METADATA",
+            "API_DEFINITION",
+            "API_DOCUMENTATION"
+          ],
+          "x-enum-varnames": [
+            "API_METADATA",
+            "API_DEFINITION",
+            "API_DOCUMENTATION"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the ruleset validation.",
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "UNAPPLIED"
+          ]
+        }
+      }
+    }
+  }
+}

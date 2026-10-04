@@ -166,6 +166,31 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
   schemas:
     TenantInfo:
       title: Tenant information
@@ -181,21 +206,26 @@ components:
           type: integer
           example: -1234
       description: The tenant information of the user
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    CustomUrlInfo:
+      title: Custom url information
       type: object
       properties:
-        code:
+        tenantDomain:
           type: string
-          description: Error code
-        message:
+          example: carbon.super
+        tenantAdminUsername:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
+          example: john@foo.com
+        enabled:
+          type: boolean
+          example: true
+        devPortal:
+          type: object
+          properties:
+            url:
+              type: string
+              example: http://example.com
+      description: The custom url information of the tenant domain
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -229,27 +259,7 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    CustomUrlInfo:
-      title: Custom url information
-      type: object
-      properties:
-        tenantDomain:
-          type: string
-          example: carbon.super
-        tenantAdminUsername:
-          type: string
-          example: john@foo.com
-        enabled:
-          type: boolean
-          example: true
-        devPortal:
-          type: object
-          properties:
-            url:
-              type: string
-              example: http://example.com
-      description: The custom url information of the tenant domain
-    ErrorListItem_2:
+    ErrorListItem:
       title: Description of individual errors that may have occurred during a request.
       required:
       - code
@@ -258,11 +268,57 @@ components:
       properties:
         code:
           type: string
+          description: Error code
         message:
           type: string
           description: 'Description about individual errors occurred
 
             '
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
+    TenantList:
+      title: Tenant list
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of tenants returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tenant'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -307,86 +363,21 @@ components:
           type: string
           description: current status of the tenant active/inactive
           example: active
-    TenantList:
-      title: Tenant list
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of tenants returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tenant'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-          example: ''
-        previous:
+        message:
           type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
     limit:
       name: limit
       in: query
@@ -396,6 +387,15 @@ components:
       schema:
         type: integer
         default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -1,0 +1,30 @@
+generated: '2026-10-04'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://wso2.com/integration-platform/integrator/
+sources:
+- https://wso2.com/integration-platform/integrator/
+- https://wso2.com/terms-of-use/health-tools/
+- https://wso2.com/library/blogs/Introducing-the-choreo-cli/
+- https://wso2.com/solutions/financial-services/open-banking/solutions-partners/
+install:
+- method: Linux and macOS
+  command: curl -o- https://cli.choreo.dev/install.sh | bash
+- method: Windows (PowerShell)
+  command: iwr https://cli.choreo.dev/install.ps1 -useb | iex
+commands:
+- group: Project and component management
+  commands:
+  - choreo create component
+  - choreo list components
+  - choreo describe component
+- group: Builds and deployments
+  commands:
+  - choreo create build
+  - choreo describe build
+  - choreo create deployment
+- group: Access to logs
+  commands:
+  - choreo logs
+binary: choreo
+docs: https://wso2.com/integration-platform/integrator/

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-app-apikey-associate-request-schema.json",
+  "title": "API Key association request object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-keys-api-openapi.yml#/components/schemas/AppAPIKeyAssociateRequest",
+  "type": "object",
+  "required": [
+    "keyUUID",
+    "apiUUID"
+  ],
+  "properties": {
+    "apiUUID": {
+      "type": "string",
+      "description": "The unique identifier of the API."
+    },
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    }
+  }
+}

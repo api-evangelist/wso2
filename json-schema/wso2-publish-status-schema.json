@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-publish-status-schema.json",
+  "title": "Usage publish status",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-monetization-collection-api-openapi.yml#/components/schemas/PublishStatus",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Status of the usage publish request"
+    },
+    "message": {
+      "type": "string",
+      "description": "detailed message of the status"
+    }
+  }
+}

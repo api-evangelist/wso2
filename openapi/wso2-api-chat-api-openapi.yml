@@ -89,52 +89,18 @@ components:
             moreInfo: ''
             error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    SampleQuery:
+      title: API Chat sample query record
       required:
-      - code
-      - message
-      type: object
+      - scenario
+      - query
       properties:
-        code:
+        scenario:
           type: string
-        message:
+          description: scenario
+        query:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
+          description: generated query
     ApiChatRequest:
       title: API Chat request
       properties:
@@ -271,28 +237,53 @@ components:
           description: list of sample queries
           items:
             $ref: '#/components/schemas/SampleQuery'
-    SampleQuery:
-      title: API Chat sample query record
+    Error:
+      title: Error object returned with 4XX HTTP status
       required:
-      - scenario
-      - query
+      - code
+      - message
+      type: object
       properties:
-        scenario:
+        code:
+          type: integer
+          format: int64
+        message:
           type: string
-          description: scenario
-        query:
+          description: Error message.
+        description:
           type: string
-          description: generated query
-  parameters:
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
+          description: 'A detail description about the error message.
 
-        '
-      required: true
-      schema:
-        type: string
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+  parameters:
     action:
       name: apiChatAction
       in: query
@@ -304,6 +295,15 @@ components:
         enum:
         - PREPARE
         - EXECUTE
+    apiId:
+      name: apiId
+      in: path
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

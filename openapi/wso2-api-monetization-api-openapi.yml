@@ -66,21 +66,39 @@ paths:
       operationId: getSubscriptionsBySubscriptionIdUsage
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+  parameters:
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      description: 'Subscription Id
+
+        '
+      required: true
+      schema:
+        type: string
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    APIMonetizationUsage:
+      title: API monetization usage object
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of custom properties related to monetization usage
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -113,38 +131,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    APIMonetizationUsage:
-      title: API monetization usage object
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        properties:
-          type: object
-          additionalProperties:
-            type: string
-          description: Map of custom properties related to monetization usage
-  parameters:
-    subscriptionId:
-      name: subscriptionId
-      in: path
-      description: 'Subscription Id
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
-        '
-      required: true
-      schema:
-        type: string
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

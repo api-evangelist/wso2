@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-document-schema.json",
+  "title": "Document",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-documents-api-openapi.yml#/components/schemas/Document",
+  "required": [
+    "name",
+    "sourceType",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "documentId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "HOWTO",
+        "SAMPLES",
+        "PUBLIC_FORUM",
+        "SUPPORT_FORUM",
+        "API_MESSAGE_FORMAT",
+        "SWAGGER_DOC",
+        "OTHER"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": [
+        "INLINE",
+        "MARKDOWN",
+        "URL",
+        "FILE"
+      ]
+    },
+    "sourceUrl": {
+      "type": "string"
+    },
+    "otherTypeName": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-ruleset-input-schema.json",
+  "title": "RulesetInput",
+  "description": "Detailed information about a ruleset.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-rulesets-api-openapi.yml#/components/schemas/RulesetInput",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Name of the ruleset."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "A brief description of the ruleset."
+    },
+    "rulesetContent": {
+      "type": "string",
+      "description": "The content of the ruleset file (YAML or JSON).",
+      "format": "binary"
+    },
+    "ruleCategory": {
+      "type": "string",
+      "description": "Category the rules included in ruleset.",
+      "enum": [
+        "SPECTRAL"
+      ],
+      "default": "SPECTRAL"
+    },
+    "ruleType": {
+      "type": "string",
+      "description": "Context or area to which the ruleset applies.",
+      "enum": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ],
+      "x-enum-varnames": [
+        "API_METADATA",
+        "API_DEFINITION",
+        "API_DOCUMENTATION"
+      ]
+    },
+    "artifactType": {
+      "type": "string",
+      "description": "The type of artifact that the ruleset validates.",
+      "enum": [
+        "REST_API",
+        "ASYNC_API",
+        "MCP"
+      ]
+    },
+    "documentationLink": {
+      "type": "string",
+      "description": "URL to the documentation related to the ruleset."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Entity or individual providing the ruleset."
+    }
+  },
+  "required": [
+    "name",
+    "rulesetContent",
+    "ruleType",
+    "artifactType"
+  ]
+}

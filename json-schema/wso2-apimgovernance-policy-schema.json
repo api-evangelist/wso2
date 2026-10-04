@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apimgovernance-policy-schema.json",
+  "title": "APIMGovernancePolicy",
+  "description": "Detailed information about a governance policy.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-governance-policies-api-openapi.yml#/components/schemas/APIMGovernancePolicy",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the governance policy.",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the governance policy.",
+      "maxLength": 256
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of the governance policy.",
+      "maxLength": 1024
+    },
+    "governableStates": {
+      "type": "array",
+      "description": "List of states at which the governance policy should be enforced.",
+      "items": {
+        "type": "string",
+        "description": "The state at which an governance policy should be enforced.",
+        "enum": [
+          "API_CREATE",
+          "API_UPDATE",
+          "API_DEPLOY",
+          "API_PUBLISH"
+        ],
+        "x-enum-varnames": [
+          "API_CREATE",
+          "API_UPDATE",
+          "API_DEPLOY",
+          "API_PUBLISH"
+        ]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "List of actions taken when the governance policy is violated. An action is defined by the state and rule severity. If an action is not specified to each state and rule severity, the default action is `NOTIFY`.",
+      "items": {
+        "$ref": "#/$defs/Action"
+      }
+    },
+    "rulesets": {
+      "type": "array",
+      "description": "List of rulesets associated with the governance policy.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "List of labels IDs associated with the governance policy.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "Identifier of the user who created the governance policy.",
+      "readOnly": true
+    },
+    "createdTime": {
+      "type": "string",
+      "description": "Timestamp when the governance policy was created.",
+      "readOnly": true
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "Identifier of the user who last updated the governance policy.",
+      "readOnly": true
+    },
+    "updatedTime": {
+      "type": "string",
+      "description": "Timestamp when the governance policy was last updated.",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "name",
+    "rulesets",
+    "labels",
+    "governableStates",
+    "actions"
+  ],
+  "$defs": {
+    "Action": {
+      "type": "object",
+      "description": "Action to be taken when a governance policy is violated.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "The state of the artifact to which the action is linked to.",
+          "enum": [
+            "API_CREATE",
+            "API_UPDATE",
+            "API_DEPLOY",
+            "API_PUBLISH"
+          ],
+          "x-enum-varnames": [
+            "API_CREATE",
+            "API_UPDATE",
+            "API_DEPLOY",
+            "API_PUBLISH"
+          ]
+        },
+        "ruleSeverity": {
+          "type": "string",
+          "description": "The severity of the rule to which the action is linked to.",
+          "enum": [
+            "ERROR",
+            "WARN",
+            "INFO"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of action to be taken when a governance policy is violated in the given state withe given rule severity.",
+          "enum": [
+            "BLOCK",
+            "NOTIFY"
+          ]
+        }
+      }
+    }
+  }
+}

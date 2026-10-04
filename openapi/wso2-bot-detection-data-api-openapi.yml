@@ -80,21 +80,20 @@ components:
           type: string
           description: The IP of the client
           example: 127.0.0.1
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    BotDetectionDataList:
+      title: Bot Detection Data List
       type: object
       properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+        count:
+          type: integer
+          description: 'Number of Bot Detection Data returned.
 
             '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BotDetectionData'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -128,20 +127,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    BotDetectionDataList:
-      title: Bot Detection Data List
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of Bot Detection Data returned.
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/BotDetectionData'
   responses:
     NotFound:
       description: Not Found. The specified resource does not exist.

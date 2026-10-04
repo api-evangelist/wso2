@@ -123,20 +123,6 @@ paths:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
   schemas:
-    ThrottlePolicyDetailsList:
-      title: Policy List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Throttling Policies returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThrottlePolicyDetails'
     ThrottlePolicyDetails:
       title: Generic Policy
       required:
@@ -176,20 +162,49 @@ components:
         type:
           type: string
           description: Indicates the type of throttle policy
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    ThrottlePolicyDetailsList:
+      title: Policy List
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+        count:
+          type: integer
+          description: 'Number of Throttling Policies returned.
 
             '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThrottlePolicyDetails'
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     SearchResultList:
       title: Search Result List
       type: object
@@ -255,45 +270,27 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    Pagination:
-      title: Pagination
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
   parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
       schema:
-        type: integer
-        default: 0
+        type: string
     limit:
       name: limit
       in: query
@@ -303,12 +300,15 @@ components:
       schema:
         type: integer
         default: 25
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
       schema:
-        type: string
+        type: integer
+        default: 0
     If-None-Match:
       name: If-None-Match
       in: header

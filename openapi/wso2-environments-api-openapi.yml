@@ -224,48 +224,57 @@ paths:
       operationId: getEnvironmentsByEnvironmentIdGateways
       x-operation-id-source: derived
 components:
-  parameters:
-    environmentId:
-      name: environmentId
-      in: path
-      description: 'Environment UUID (or Environment name defined in config), in case the ID contains special characters it should
-
-        be base64 encoded
-
-        '
-      required: true
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
+    GatewayEnvironmentProtocolURI:
+      title: Gateway Environment protocols and URIs
       required:
-      - code
-      - message
+      - protocol
+      - endpointURI
       type: object
       properties:
-        code:
+        protocol:
           type: string
-          description: Error code
-        message:
+          example: default
+        endpointURI:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-    GatewayInstanceList:
-      title: Gateway instance list
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Gateway Instances returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/GatewayInstance'
+          example: default
     GatewayInstance:
       title: Gateway instance in the gateway environment
       type: object
@@ -285,98 +294,6 @@ components:
           enum:
           - ACTIVE
           - EXPIRED
-    AdditionalProperty:
-      title: Additional Gateway Properties
-      type: object
-      properties:
-        key:
-          type: string
-          example: Organization
-        value:
-          type: string
-          example: wso2
-    EnvironmentList:
-      title: Environment List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Environments returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Environment'
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    VHost:
-      title: Virtual Host
-      required:
-      - host
-      type: object
-      properties:
-        host:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: mg.wso2.com
-        httpContext:
-          maxLength: 255
-          minLength: 0
-          pattern: ^\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])*$
-          type: string
-          example: pets
-        httpPort:
-          type: integer
-          example: 80
-        httpsPort:
-          type: integer
-          example: 443
-        wsPort:
-          type: integer
-          example: 9099
-        wsHost:
-          type: string
-          example: mg.wso2.com
-        wssPort:
-          type: integer
-          example: 8099
-        wssHost:
-          type: string
-          example: mg.wso2.com
     Environment:
       title: Environment
       required:
@@ -495,56 +412,139 @@ components:
           items:
             type: string
             example: 1.0.0
-    GatewayEnvironmentProtocolURI:
-      title: Gateway Environment protocols and URIs
-      required:
-      - protocol
-      - endpointURI
+    EnvironmentList:
+      title: Environment List
       type: object
       properties:
-        protocol:
+        count:
+          type: integer
+          description: 'Number of Environments returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
           type: string
-          example: default
-        endpointURI:
+          description: Error message.
+        description:
           type: string
-          example: default
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    GatewayInstanceList:
+      title: Gateway instance list
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Gateway Instances returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayInstance'
+    AdditionalProperty:
+      title: Additional Gateway Properties
+      type: object
+      properties:
+        key:
+          type: string
+          example: Organization
+        value:
+          type: string
+          example: wso2
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+    VHost:
+      title: Virtual Host
+      required:
+      - host
+      type: object
+      properties:
+        host:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: mg.wso2.com
+        httpContext:
+          maxLength: 255
+          minLength: 0
+          pattern: ^\/?([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])*$
+          type: string
+          example: pets
+        httpPort:
+          type: integer
+          example: 80
+        httpsPort:
+          type: integer
+          example: 443
+        wsPort:
+          type: integer
+          example: 9099
+        wsHost:
+          type: string
+          example: mg.wso2.com
+        wssPort:
+          type: integer
+          example: 8099
+        wssHost:
+          type: string
+          example: mg.wso2.com
+  parameters:
+    environmentId:
+      name: environmentId
+      in: path
+      description: 'Environment UUID (or Environment name defined in config), in case the ID contains special characters it should
+
+        be base64 encoded
+
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -147,7 +147,107 @@ paths:
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/labels/d7cf8523-9180-4255-84fa-6cb171c1f779/usage"'
       operationId: getLabelUsage
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
+    Label:
+      title: Label
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: d7cf8523-9180-4255-84fa-6cb171c1f779
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: Health
+        description:
+          maxLength: 1024
+          type: string
+          example: Health related APIs
+    ApiResult:
+      type: object
+      properties:
+        provider:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        id:
+          type: string
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     LabelUsage:
       title: Label Usage
       type: object
@@ -182,69 +282,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    Label:
-      title: Label
-      required:
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-          example: d7cf8523-9180-4255-84fa-6cb171c1f779
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: Health
-        description:
-          maxLength: 1024
-          type: string
-          example: Health related APIs
-    ApiResult:
-      type: object
-      properties:
-        provider:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        id:
-          type: string
   parameters:
     labelId:
       name: labelId
@@ -255,43 +292,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    Conflict:
-      description: Conflict. Specified resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

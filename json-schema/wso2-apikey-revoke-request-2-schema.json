@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apikey-revoke-request-2-schema.json",
+  "title": "API Key revoke request object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyRevokeRequest_2",
+  "type": "object",
+  "oneOf": [
+    {
+      "required": [
+        "apikey"
+      ]
+    },
+    {
+      "required": [
+        "keyUUID"
+      ]
+    }
+  ],
+  "properties": {
+    "apikey": {
+      "type": "string",
+      "description": "API Key to revoke"
+    },
+    "keyUUID": {
+      "type": "string",
+      "description": "The UUID of the API key"
+    }
+  }
+}

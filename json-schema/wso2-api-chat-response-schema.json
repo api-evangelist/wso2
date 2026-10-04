@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-api-chat-response-schema.json",
+  "title": "API Chat response",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-chat-api-openapi.yml#/components/schemas/ApiChatResponse",
+  "properties": {
+    "apiSpec": {
+      "type": "object",
+      "title": "Enriched API spec",
+      "required": [
+        "tools"
+      ],
+      "properties": {
+        "serviceUrl": {
+          "type": "string",
+          "description": "Extracted service URL from the OpenAPI specification if there is any"
+        },
+        "tools": {
+          "type": "array",
+          "description": "Extracted Http tools from the OpenAPI specification",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "taskStatus": {
+      "type": "string",
+      "description": "Task status (IN_PROGRESS, TERMINATED or COMPLETED)",
+      "enum": [
+        "IN_PROGRESS",
+        "TERMINATED",
+        "COMPLETED"
+      ]
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "HTTP method of the resource"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path of the resource"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Input parameters for the resource"
+        }
+      }
+    },
+    "result": {
+      "type": "string",
+      "description": "completion result"
+    },
+    "queries": {
+      "type": "array",
+      "description": "list of sample queries",
+      "items": {
+        "$ref": "#/$defs/SampleQuery"
+      }
+    }
+  },
+  "$defs": {
+    "SampleQuery": {
+      "title": "API Chat sample query record",
+      "required": [
+        "scenario",
+        "query"
+      ],
+      "properties": {
+        "scenario": {
+          "type": "string",
+          "description": "scenario"
+        },
+        "query": {
+          "type": "string",
+          "description": "generated query"
+        }
+      }
+    }
+  }
+}

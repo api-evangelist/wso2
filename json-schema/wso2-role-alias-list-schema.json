@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-role-alias-list-schema.json",
+  "title": "Role alias list",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-system-scopes-api-openapi.yml#/components/schemas/RoleAliasList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "The number of role aliases"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RoleAlias"
+      }
+    }
+  },
+  "$defs": {
+    "RoleAlias": {
+      "title": "Role alias",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "The original role"
+        },
+        "aliases": {
+          "type": "array",
+          "description": "The role mapping for role alias",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-marketplace-assistant-api-count-response-schema.json",
+  "title": "MarketplaceAssistantApiCountResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-marketplace-assistant-api-openapi.yml#/components/schemas/MarketplaceAssistantApiCountResponse",
+  "required": [
+    "count",
+    "limit"
+  ],
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "no of apis stored in the vectordb."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "maximum no of apis allowed for an org."
+    }
+  }
+}

@@ -124,77 +124,94 @@ paths:
       operationId: getThrottlingPoliciesByPolicyLevelByPolicyId
       x-operation-id-source: derived
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    policyId:
-      name: policyId
-      in: path
-      description: 'The name of the policy
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    policyLevel:
-      name: policyLevel
-      in: path
-      description: 'List Application or Subscription type thro.
-
-        '
-      required: true
-      schema:
-        type: string
-        enum:
-        - application
-        - subscription
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    Pagination:
+      title: Pagination
       type: object
       properties:
-        code:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
           type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
 
             '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
+    ThrottlingPolicyList:
+      title: Throttling Policy List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of Throttling Policies returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThrottlingPolicy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ThrottlingPolicyPermissionInfo:
+      title: Throttling Policy Permission info object with throttling policy permission details
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - allow
+          - deny
+        roles:
+          type: array
+          description: roles for this permission
+          example:
+          - manager
+          - developer
+          items:
+            type: string
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -314,39 +331,6 @@ components:
           $ref: '#/components/schemas/MonetizationInfo'
         throttlingPolicyPermissions:
           $ref: '#/components/schemas/ThrottlingPolicyPermissionInfo'
-    ThrottlingPolicyPermissionInfo:
-      title: Throttling Policy Permission info object with throttling policy permission details
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - allow
-          - deny
-        roles:
-          type: array
-          description: roles for this permission
-          example:
-          - manager
-          - developer
-          items:
-            type: string
-    ThrottlingPolicyList:
-      title: Throttling Policy List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of Throttling Policies returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThrottlingPolicy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     MonetizationInfo:
       title: Monetization
       type: object
@@ -369,60 +353,76 @@ components:
         currencyType:
           type: string
           example: USD
-    Pagination:
-      title: Pagination
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
+  parameters:
+    policyId:
+      name: policyId
+      in: path
+      description: 'The name of the policy
 
-            Empty if current subset is the first subset returned.
+        '
+      required: true
+      schema:
+        type: string
+    policyLevel:
+      name: policyLevel
+      in: path
+      description: 'List Application or Subscription type thro.
 
-            '
-          example: ''
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+        '
+      required: true
+      schema:
+        type: string
+        enum:
+        - application
+        - subscription
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

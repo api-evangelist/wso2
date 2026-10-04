@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-rating-schema.json",
+  "title": "Rating",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-ratings-api-openapi.yml#/components/schemas/Rating",
+  "required": [
+    "rating"
+  ],
+  "type": "object",
+  "properties": {
+    "ratingId": {
+      "type": "string",
+      "readOnly": true
+    },
+    "apiId": {
+      "type": "string",
+      "readOnly": true
+    },
+    "ratedBy": {
+      "maxLength": 50,
+      "type": "string",
+      "readOnly": true
+    },
+    "rating": {
+      "type": "integer"
+    }
+  }
+}

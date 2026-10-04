@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-key-manager-well-known-response-schema.json",
+  "title": "Key Manager Well-Known Response.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-key-manager-collection-api-openapi.yml#/components/schemas/KeyManagerWellKnownResponse",
+  "type": "object",
+  "properties": {
+    "valid": {
+      "type": "boolean",
+      "default": false
+    },
+    "value": {
+      "$ref": "#/$defs/KeyManager"
+    }
+  },
+  "$defs": {
+    "ClaimMappingEntry": {
+      "title": "Claim Mapping Configuration",
+      "type": "object",
+      "properties": {
+        "remoteClaim": {
+          "type": "string"
+        },
+        "localClaim": {
+          "type": "string"
+        }
+      }
+    },
+    "KeyManager": {
+      "title": "Key Manager",
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        "displayName": {
+          "maxLength": 100,
+          "type": "string",
+          "description": "display name of Key Manager to  show in UI\n"
+        },
+        "type": {
+          "maxLength": 45,
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 256,
+          "type": "string"
+        },
+        "wellKnownEndpoint": {
+          "type": "string",
+          "description": "Well-Known Endpoint of Identity Provider.\n"
+        },
+        "introspectionEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "clientRegistrationEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "tokenEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "displayTokenEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "revokeEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "displayRevokeEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "userInfoEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "authorizeEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KeyManagerEndpoint"
+          }
+        },
+        "certificates": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "JWKS",
+                "PEM"
+              ]
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string",
+          "description": "The alias of Identity Provider.\nIf the tokenType is EXCHANGED, the alias value should be inclusive in the audience values of the JWT token\n"
+        },
+        "scopeManagementEndpoint": {
+          "type": "string",
+          "deprecated": true
+        },
+        "availableGrantTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "enableTokenGeneration": {
+          "type": "boolean"
+        },
+        "enableTokenEncryption": {
+          "type": "boolean",
+          "default": false
+        },
+        "enableTokenHashing": {
+          "type": "boolean",
+          "default": false
+        },
+        "enableMapOAuthConsumerApps": {
+          "type": "boolean",
+          "default": false
+        },
+        "enableOAuthAppCreation": {
+          "type": "boolean",
+          "default": false
+        },
+        "enableSelfValidationJWT": {
+          "type": "boolean",
+          "default": true
+        },
+        "claimMapping": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClaimMappingEntry"
+          }
+        },
+        "consumerKeyClaim": {
+          "type": "string"
+        },
+        "scopesClaim": {
+          "type": "string"
+        },
+        "tokenValidation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TokenValidation"
+          }
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "properties": {}
+        },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "permissionType": {
+              "type": "string",
+              "default": "PUBLIC",
+              "enum": [
+                "PUBLIC",
+                "ALLOW",
+                "DENY"
+              ]
+            },
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "tokenType": {
+          "type": "string",
+          "description": "The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.",
+          "default": "DIRECT",
+          "enum": [
+            "EXCHANGED",
+            "DIRECT",
+            "BOTH"
+          ]
+        },
+        "allowedOrganizations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "KeyManagerEndpoint": {
+      "title": "Key Manager Endpoint.",
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "TokenValidation": {
+      "title": "Token handling Configuration",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "enable": {
+          "type": "boolean",
+          "default": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "REFERENCE",
+            "JWT",
+            "CUSTOM"
+          ]
+        },
+        "value": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    }
+  }
+}

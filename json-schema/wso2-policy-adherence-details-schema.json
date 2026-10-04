@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-policy-adherence-details-schema.json",
+  "title": "PolicyAdherenceDetails",
+  "description": "Provides adherence details of a policy.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-policy-adherence-api-openapi.yml#/components/schemas/PolicyAdherenceDetails",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the policy."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the policy."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the policy's governance compliance.",
+      "enum": [
+        "FOLLOWED",
+        "VIOLATED",
+        "UNAPPLIED"
+      ]
+    },
+    "evaluatedArtifacts": {
+      "type": "array",
+      "description": "Compliance status of the artifacts evaluated against the policy.",
+      "items": {
+        "$ref": "#/$defs/ArtifactComplianceForPolicy"
+      }
+    }
+  },
+  "$defs": {
+    "ArtifactComplianceForPolicy": {
+      "type": "object",
+      "description": "Compliance status of an artifact for a specific policy.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the artifact."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the artifact's compliance to the policy.",
+          "enum": [
+            "COMPLIANT",
+            "NON-COMPLIANT",
+            "NOT-APPLICABLE"
+          ]
+        },
+        "info": {
+          "$ref": "#/$defs/ArtifactInfo"
+        }
+      }
+    },
+    "ArtifactInfo": {
+      "type": "object",
+      "description": "Detailed information about an artifact.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the artifact."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the artifact.",
+          "enum": [
+            "API"
+          ]
+        },
+        "extendedType": {
+          "type": "string",
+          "description": "Extended type of the artifact.",
+          "enum": [
+            "REST_API",
+            "ASYNC_API",
+            "MCP"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the artifact."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the artifact."
+        }
+      }
+    }
+  }
+}

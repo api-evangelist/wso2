@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-bot-detection-data-list-schema.json",
+  "title": "Bot Detection Data List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-bot-detection-data-api-openapi.yml#/components/schemas/BotDetectionDataList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Bot Detection Data returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BotDetectionData"
+      }
+    }
+  },
+  "$defs": {
+    "BotDetectionData": {
+      "title": "Bot Detection Data",
+      "type": "object",
+      "properties": {
+        "recordedTime": {
+          "type": "integer",
+          "description": "The time of detection",
+          "format": "int64"
+        },
+        "messageID": {
+          "type": "string",
+          "description": "The message ID"
+        },
+        "apiMethod": {
+          "type": "string",
+          "description": "The api method"
+        },
+        "headerSet": {
+          "type": "string",
+          "description": "The header set"
+        },
+        "messageBody": {
+          "type": "string",
+          "description": "The content of the message body"
+        },
+        "clientIp": {
+          "type": "string",
+          "description": "The IP of the client"
+        }
+      }
+    }
+  }
+}

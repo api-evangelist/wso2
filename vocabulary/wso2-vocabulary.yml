@@ -1,0 +1,424 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/wso2-advanced-policy-collection-api-openapi.yml
+- openapi/wso2-advanced-policy-individual-api-openapi.yml
+- openapi/wso2-aiserviceprovider-api-openapi.yml
+- openapi/wso2-aiserviceproviders-api-openapi.yml
+- openapi/wso2-alert-subscriptions-api-openapi.yml
+vocabulary:
+  name: WSO2 Domain Vocabulary
+  description: 'Terms declared by WSO2''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions. Derived,
+    not authored.'
+  version: '2026-10-04'
+  terms:
+  - term: Artifact Compliance
+    definition: for accessing artifact compliance.
+    tags:
+    - Resource Group
+    source: openapi/wso2-artifact-compliance-api-openapi.yml
+  - term: Governance Policies
+    definition: for managing governance policies.
+    tags:
+    - Resource Group
+    source: openapi/wso2-governance-policies-api-openapi.yml
+  - term: Policy Adherence
+    definition: for accessing policy adherence.
+    tags:
+    - Resource Group
+    source: openapi/wso2-policy-adherence-api-openapi.yml
+  - term: Rulesets
+    definition: for managing rulesets.
+    tags:
+    - Resource Group
+    source: openapi/wso2-rulesets-api-openapi.yml
+  - term: Description of individual errors that may have occurred during a request.
+    definition: 'Object declared by the contract with fields: code, message.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ErrorListItem
+  - term: Query parameter based throttling condition
+    definition: 'Object declared by the contract with fields: parameterName, parameterValue.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/QueryParameterCondition
+  - term: Throttling Conditions
+    definition: Conditions used for Throttling
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ThrottleCondition
+  - term: Throttle Limit
+    definition: 'Object declared by the contract with fields: type, requestCount, bandwidth, eventCount, aiApiQuota.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ThrottleLimit
+  - term: IP based throttling condition
+    definition: 'Object declared by the contract with fields: ipConditionType, specificIP, startingIP, endingIP.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/IPCondition
+  - term: Error object returned with 4XX HTTP status
+    definition: 'Object declared by the contract with fields: code, message, description, moreInfo, error.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/Error
+  - term: JWT claim attibute based throttling condition
+    definition: 'Object declared by the contract with fields: claimUrl, attribute.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/JWTClaimsCondition
+  - term: Generic Throttling Policy
+    definition: 'Object declared by the contract with fields: policyId, policyName, displayName, description, isDeployed, type.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ThrottlePolicy
+  - term: Conditional Groups for Throttling
+    definition: 'Object declared by the contract with fields: description, conditions, limit.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ConditionalGroup
+  - term: HTTP Header based throttling condition
+    definition: 'Object declared by the contract with fields: headerName, headerValue.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/HeaderCondition
+  - term: Throttle Limit Base
+    definition: 'Object declared by the contract with fields: timeUnit, unitTime.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/ThrottleLimitBase
+  - term: Advanced Throttling Policy List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-advanced-policy-collection-api-openapi.yml#/components/schemas/AdvancedThrottlePolicyList
+  - term: AIServiceProviderResponse
+    definition: 'Object declared by the contract with fields: id, name, apiVersion, builtInSupport, multipleModelProviderSupport, description,
+      configurations, apiDefinition, modelProviders, deprecated.'
+    tags:
+    - Object
+    source: openapi/wso2-aiserviceprovider-api-openapi.yml#/components/schemas/AIServiceProviderResponse
+  - term: Model Provider
+    definition: 'Object declared by the contract with fields: models, name.'
+    tags:
+    - Object
+    source: openapi/wso2-aiserviceprovider-api-openapi.yml#/components/schemas/ModelProvider
+  - term: AIServiceProvider
+    definition: 'Object declared by the contract with fields: name, apiVersion, description, multipleModelProviderSupport, configurations, apiDefinition,
+      modelProviders.'
+    tags:
+    - Object
+    source: openapi/wso2-aiserviceprovider-api-openapi.yml#/components/schemas/AIServiceProviderRequest
+  - term: AIServiceProviderSummaryResponse
+    definition: 'Object declared by the contract with fields: id, name, apiVersion, builtInSupport, description, deprecated.'
+    tags:
+    - Object
+    source: openapi/wso2-aiserviceproviders-api-openapi.yml#/components/schemas/AIServiceProviderSummaryResponse
+  - term: AIServiceProviderSummaryResponseList
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-aiserviceproviders-api-openapi.yml#/components/schemas/AIServiceProviderSummaryResponseList
+  - term: Alert Type
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/wso2-alert-subscriptions-api-openapi.yml#/components/schemas/AlertType
+  - term: Alerts Subscription
+    definition: 'Object declared by the contract with fields: alerts, emailList.'
+    tags:
+    - Object
+    source: openapi/wso2-alert-subscriptions-api-openapi.yml#/components/schemas/AlertsSubscription
+  - term: Alert Types List
+    definition: 'Object declared by the contract with fields: count, alerts.'
+    tags:
+    - Object
+    source: openapi/wso2-alerts-api-openapi.yml#/components/schemas/AlertTypesList
+  - term: API Artifact Response
+    definition: 'Object declared by the contract with fields: api.'
+    tags:
+    - Object
+    source: openapi/wso2-api-artifact-api-openapi.yml#/components/schemas/APIArtifact
+  - term: API Category
+    definition: 'Object declared by the contract with fields: id, name, description.'
+    tags:
+    - Object
+    source: openapi/wso2-api-categories-api-openapi.yml#/components/schemas/APICategory
+  - term: API Category List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-categories-api-openapi.yml#/components/schemas/APICategoryList
+  - term: API Chat request
+    definition: 'Object declared by the contract with fields: apiChatRequestId, command, apiSpec, response.'
+    tags:
+    - Object
+    source: openapi/wso2-api-chat-api-openapi.yml#/components/schemas/ApiChatRequest
+  - term: API Chat response
+    definition: 'Object declared by the contract with fields: apiSpec, taskStatus, resource, result, queries.'
+    tags:
+    - Object
+    source: openapi/wso2-api-chat-api-openapi.yml#/components/schemas/ApiChatResponse
+  - term: API Chat sample query record
+    definition: 'Object declared by the contract with fields: scenario, query.'
+    tags:
+    - Object
+    source: openapi/wso2-api-chat-api-openapi.yml#/components/schemas/SampleQuery
+  - term: Document List
+    definition: 'Object declared by the contract with fields: count, list, pagination.'
+    tags:
+    - Object
+    source: openapi/wso2-api-documents-api-openapi.yml#/components/schemas/DocumentList
+  - term: Pagination
+    definition: 'Object declared by the contract with fields: offset, limit, total, next, previous.'
+    tags:
+    - Object
+    source: openapi/wso2-api-documents-api-openapi.yml#/components/schemas/Pagination
+  - term: Document
+    definition: 'Object declared by the contract with fields: documentId, name, type, summary, sourceType, sourceUrl, otherTypeName.'
+    tags:
+    - Object
+    source: openapi/wso2-api-documents-api-openapi.yml#/components/schemas/Document
+  - term: API Key details to invoke APIs
+    definition: 'Object declared by the contract with fields: keyUUID, keyName, apiName, applicationName, keyType, user, issuedOn, validityPeriod,
+      lastUsed.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKey
+  - term: API Key revoke request object
+    definition: 'Object declared by the contract with fields: keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyRevokeRequest
+  - term: API Keys List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyList
+  - term: Description of individual errors that may have occurred during a request.
+    definition: 'Object declared by the contract with fields: code, message.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/ErrorListItem_2
+  - term: API Key revoke request object
+    definition: 'Object declared by the contract with fields: keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIAPIKeyRevokeRequest
+  - term: API Key dissociation request object
+    definition: 'Object declared by the contract with fields: keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyDissociateRequest
+  - term: API Key details to invoke APIs
+    definition: 'Object declared by the contract with fields: keyUUID, keyName, associatedApp, issuedOn, validityPeriod, lastUsed.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIAPIKeyInfo
+  - term: API Key revoke request object
+    definition: 'Object declared by the contract with fields: apikey, keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyRevokeRequest_2
+  - term: API Key association
+    definition: 'Object declared by the contract with fields: keyUUID, keyName, apiName, apiUUID, issuedOn, validityPeriod, lastUsed.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyAssociationInfo
+  - term: API Key association
+    definition: 'Object declared by the contract with fields: keyName, apiName, applicationName.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyAssociation
+  - term: API Key details to invoke APIs
+    definition: 'Object declared by the contract with fields: keyUUID, keyName, issuedOn, validityPeriod, lastUsed.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyInfo
+  - term: Error object returned with 4XX HTTP status
+    definition: 'Object declared by the contract with fields: code, message, description, moreInfo, error.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/Error_2
+  - term: API Key renewal request object
+    definition: 'Object declared by the contract with fields: keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyRenewRequest
+  - term: API Key generation request object
+    definition: 'Object declared by the contract with fields: keyName, keyType, validityPeriod, additionalProperties.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIAPIKeyGenerateRequest
+  - term: API Keys List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIAPIKeyList
+  - term: API Key association request object
+    definition: 'Object declared by the contract with fields: keyUUID, applicationUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIAPIKeyAssociateRequest
+  - term: API Key association request object
+    definition: 'Object declared by the contract with fields: apiUUID, keyUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/AppAPIKeyAssociateRequest
+  - term: API Key Associations List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyAssociationList
+  - term: API with API Key
+    definition: 'Object declared by the contract with fields: keyName, keyUUID, apiName, apiUUID.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIWithKeyInfo
+  - term: API Keys List
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyList_2
+  - term: Subscribed APIs with non-associated API keys
+    definition: 'Object declared by the contract with fields: count, list.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/SubscribedAPIWithApiKeyList
+  - term: API Key generation request object
+    definition: 'Object declared by the contract with fields: keyName, validityPeriod, additionalProperties.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKeyGenerateRequest
+  - term: API Key details to invoke APIs
+    definition: 'Object declared by the contract with fields: keyName, apikey, validityPeriod.'
+    tags:
+    - Object
+    source: openapi/wso2-api-keys-api-openapi.yml#/components/schemas/APIKey_2
+  - term: API monetization usage object
+    definition: 'Object declared by the contract with fields: properties.'
+    tags:
+    - Object
+    source: openapi/wso2-api-monetization-api-openapi.yml#/components/schemas/APIMonetizationUsage
+  - term: Unified Search Result List
+    definition: 'Object declared by the contract with fields: apis, count, pagination.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/SearchResultList
+  - term: ApiResult
+    definition: 'Object declared by the contract with fields: provider, name, version, id.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/ApiResult
+  - term: Pagination
+    definition: 'Object declared by the contract with fields: offset, limit, total, next, previous.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/Pagination_2
+  - term: API Info object with basic API details.
+    definition: 'Object declared by the contract with fields: id, name, displayName, description, context, version, type, createdTime, provider,
+      lifeCycleStatus, thumbnailUri, avgRating. (11 more)'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/APIInfo
+  - term: Throttling Policy Permission info object with throttling policy permission details
+    definition: 'Object declared by the contract with fields: type, roles.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/ThrottlingPolicyPermissionInfo
+  - term: Monetization
+    definition: 'Object declared by the contract with fields: billingType, billingCycle, fixedPrice, pricePerRequest, currencyType.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/MonetizationInfo
+  - term: API object
+    definition: 'Object declared by the contract with fields: id, name, displayName, description, context, version, provider, apiDefinition, wsdlUri,
+      lifeCycleStatus, isDefaultVersion, type. (28 more)'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/API
+  - term: APIBusinessInformation
+    definition: 'Object declared by the contract with fields: businessOwner, businessOwnerEmail, technicalOwner, technicalOwnerEmail.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/APIBusinessInformation
+  - term: Operation
+    definition: 'Object declared by the contract with fields: id, target, verb.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/APIOperations
+  - term: Throttling Policy
+    definition: 'Object declared by the contract with fields: name, description, policyLevel, attributes, requestCount, dataUnit, unitTime, timeUnit,
+      rateLimitCount, rateLimitTimeUnit, quotaPolicyType, tierPlan. (3 more)'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/ThrottlingPolicy
+  - term: API Scope info object with scope details
+    definition: 'Object declared by the contract with fields: key, name, roles, description.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/ScopeInfo
+  - term: API Advertise info object with advertise details
+    definition: 'Object declared by the contract with fields: advertised, apiExternalProductionEndpoint, apiExternalSandboxEndpoint, originalDevPortalUrl,
+      apiOwner, vendor.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/AdvertiseInfo
+  - term: API List
+    definition: 'Object declared by the contract with fields: count, list, pagination.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/APIList
+  - term: API monetization object
+    definition: 'Object declared by the contract with fields: enabled.'
+    tags:
+    - Object
+    source: openapi/wso2-apis-api-openapi.yml#/components/schemas/APIMonetizationInfo
+  - term: ApplicationUpdateRequest
+    definition: Request body to update application attributes
+    tags:
+    - Object
+    source: openapi/wso2-application-api-openapi.yml#/components/schemas/ApplicationUpdateRequest
+  - term: Application object with all the application details
+    definition: 'Object declared by the contract with fields: applicationId, name, throttlingPolicy, description, tokenType, status, groups, subscriptionCount,
+      attributes, subscriptionScopes, owner.'
+    tags:
+    - Object
+    source: openapi/wso2-application-api-openapi.yml#/components/schemas/Application
+  - term: Application List
+    definition: 'Object declared by the contract with fields: count, list, pagination.'
+    tags:
+    - Object
+    source: openapi/wso2-application-collection-api-openapi.yml#/components/schemas/ApplicationList
+  - term: Application info object with basic application details
+    definition: 'Object declared by the contract with fields: applicationId, name, owner, tokenType, createdTime, keyManagers, status, groupId.'
+    tags:
+    - Object
+    source: openapi/wso2-application-collection-api-openapi.yml#/components/schemas/ApplicationInfo
+  - term: Key Manager Info
+    definition: 'Object declared by the contract with fields: id, name, type, description, enabled, isGlobal, isUsed, tokenType.'
+    tags:
+    - Object
+    source: openapi/wso2-application-collection-api-openapi.yml#/components/schemas/KeyManagerInfo
+  - term: Application key details
+    definition: 'Object declared by the contract with fields: keyMappingId, keyManager, consumerKey, consumerSecret, consumerSecrets, supportedGrantTypes,
+      callbackUrl, keyState, keyType, mode, groupId, token. (1 more)'
+    tags:
+    - Object
+    source: openapi/wso2-application-keys-api-openapi.yml#/components/schemas/ApplicationKey
+  - term: Application token details to invoke APIs
+    definition: 'Object declared by the contract with fields: accessToken, tokenScopes, validityTime.'
+    tags:
+    - Object
+    source: openapi/wso2-application-keys-api-openapi.yml#/components/schemas/ApplicationToken
+  - term: Application key details after re generating consumer secret
+    definition: 'Object declared by the contract with fields: consumerKey, consumerSecret.'
+    tags:
+    - Object
+    source: openapi/wso2-application-keys-api-openapi.yml#/components/schemas/ApplicationKeyReGenerateResponse
+  - term: ConsumerSecret
+    definition: 'Object declared by the contract with fields: secretId, secretValue, additionalProperties.'
+    tags:
+    - Object
+    source: openapi/wso2-application-keys-api-openapi.yml#/components/schemas/ConsumerSecret

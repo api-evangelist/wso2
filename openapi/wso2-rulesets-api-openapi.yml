@@ -337,35 +337,125 @@ paths:
       - OAuth2Security:
         - apim:gov_rule_read
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    rulesetId:
-      name: rulesetId
-      in: path
-      description: '**UUID** of the Ruleset.
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
   schemas:
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    RulesetInput:
+      type: object
+      description: Detailed information about a ruleset.
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          description: Name of the ruleset.
+          example: API Security Ruleset
+        description:
+          type: string
+          maxLength: 1024
+          description: A brief description of the ruleset.
+          example: A ruleset designed to enforce security standards for APIs.
+        rulesetContent:
+          type: string
+          description: The content of the ruleset file (YAML or JSON).
+          format: binary
+          example: "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n"
+        ruleCategory:
+          type: string
+          description: Category the rules included in ruleset.
+          enum:
+          - SPECTRAL
+          example: SPECTRAL
+          default: SPECTRAL
+        ruleType:
+          type: string
+          description: Context or area to which the ruleset applies.
+          enum:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+          example: API_DEFINITION
+          x-enum-varnames:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+        artifactType:
+          type: string
+          description: The type of artifact that the ruleset validates.
+          enum:
+          - REST_API
+          - ASYNC_API
+          - MCP
+          example: REST_API
+        documentationLink:
+          type: string
+          description: URL to the documentation related to the ruleset.
+          example: https://example.com/docs/api-security-ruleset
+        provider:
+          type: string
+          description: Entity or individual providing the ruleset.
+          example: TechWave
+      required:
+      - name
+      - rulesetContent
+      - ruleType
+      - artifactType
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+    RulesetList:
+      type: object
+      description: A list of rulesets.
+      properties:
+        count:
+          type: integer
+          description: Number of rulesets returned.
+          example: 2
+        list:
+          type: array
+          description: List of rulesets.
+          items:
+            $ref: '#/components/schemas/RulesetInfo'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     RulesetInfo:
       type: object
       description: Detailed information about a ruleset.
@@ -442,124 +532,34 @@ components:
       - ruleType
       - artifactType
       - provider
-    RulesetInput:
-      type: object
-      description: Detailed information about a ruleset.
-      properties:
-        name:
-          type: string
-          maxLength: 256
-          description: Name of the ruleset.
-          example: API Security Ruleset
-        description:
-          type: string
-          maxLength: 1024
-          description: A brief description of the ruleset.
-          example: A ruleset designed to enforce security standards for APIs.
-        rulesetContent:
-          type: string
-          description: The content of the ruleset file (YAML or JSON).
-          format: binary
-          example: "rules:\n  oas2-always-use-https:\n    given:\n      - '$.schemes[*]'\n    severity: error\n    then:\n      function: enumeration\n      functionOptions:\n        values:\n          - https\n    description: >-\n      Host schemes must use the HTTPS protocol. Applies to: OpenAPI 2.0`\n    message: API host schemes must use the HTTPS protocol.\n    formats:\n      - oas2\n"
-        ruleCategory:
-          type: string
-          description: Category the rules included in ruleset.
-          enum:
-          - SPECTRAL
-          example: SPECTRAL
-          default: SPECTRAL
-        ruleType:
-          type: string
-          description: Context or area to which the ruleset applies.
-          enum:
-          - API_METADATA
-          - API_DEFINITION
-          - API_DOCUMENTATION
-          example: API_DEFINITION
-          x-enum-varnames:
-          - API_METADATA
-          - API_DEFINITION
-          - API_DOCUMENTATION
-        artifactType:
-          type: string
-          description: The type of artifact that the ruleset validates.
-          enum:
-          - REST_API
-          - ASYNC_API
-          - MCP
-          example: REST_API
-        documentationLink:
-          type: string
-          description: URL to the documentation related to the ruleset.
-          example: https://example.com/docs/api-security-ruleset
-        provider:
-          type: string
-          description: Entity or individual providing the ruleset.
-          example: TechWave
-      required:
-      - name
-      - rulesetContent
-      - ruleType
-      - artifactType
-    RulesetList:
-      type: object
-      description: A list of rulesets.
-      properties:
-        count:
-          type: integer
-          description: Number of rulesets returned.
-          example: 2
-        list:
-          type: array
-          description: List of rulesets.
-          items:
-            $ref: '#/components/schemas/RulesetInfo'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
 
-            '
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
+        '
+      schema:
+        type: integer
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
 
-            Empty if no more resources are to be returned.
+        '
+      schema:
+        type: integer
+        default: 0
+    rulesetId:
+      name: rulesetId
+      in: path
+      description: '**UUID** of the Ruleset.
 
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -44,17 +44,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ApplicationConfigurationConstraint:
-      title: Application Configuration Constraint
-      type: object
-      properties:
-        type:
-          type: string
-          example: RANGE
-        value:
-          type: object
-          properties: {}
-          example: '{ "min": 60, "max": 3600 }'
     KeyManagerApplicationConfiguration:
       title: Key Manager application Configuration
       type: object
@@ -105,6 +94,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/KeyManagerInfo'
+    ApplicationConfigurationConstraint:
+      title: Application Configuration Constraint
+      type: object
+      properties:
+        type:
+          type: string
+          example: RANGE
+        value:
+          type: object
+          properties: {}
+          example: '{ "min": 60, "max": 3600 }'
     KeyManagerInfo:
       title: Key Manager Info
       required:

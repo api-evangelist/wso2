@@ -189,44 +189,64 @@ paths:
       - OAuth2Security:
         - apim:gov_result_read
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    rulesetId:
-      name: rulesetId
-      in: path
-      description: '**UUID** of the Ruleset.
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    apiId:
-      name: apiId
-      in: path
-      description: '**UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
   schemas:
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    RulesetValidationResult:
+      type: object
+      description: Result of the ruleset validation.
+      properties:
+        id:
+          type: string
+          description: UUID of the ruleset.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the ruleset.
+          example: API Security Ruleset
+        status:
+          type: string
+          description: Status of the ruleset validation.
+          enum:
+          - PASSED
+          - FAILED
+          - UNAPPLIED
+          example: PASSED
+        violatedRules:
+          type: array
+          description: List of violated rules.
+          items:
+            $ref: '#/components/schemas/RuleValidationResult'
+        followedRules:
+          type: array
+          description: List of followed rules.
+          items:
+            $ref: '#/components/schemas/RuleValidationResult'
     PolicyAdherenceWithRulesets:
       type: object
       description: Adherence status of a policy with ruleset details.
@@ -253,6 +273,68 @@ components:
           description: List of ruleset validation information.
           items:
             $ref: '#/components/schemas/RulesetValidationResultWithoutRules'
+    RulesetValidationResultWithoutRules:
+      type: object
+      description: Result of the ruleset validation.
+      properties:
+        id:
+          type: string
+          description: UUID of the ruleset.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the ruleset.
+          example: API Security Ruleset
+        ruleType:
+          type: string
+          description: Context or area to which the ruleset applies.
+          enum:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+          example: API_DEFINITION
+          x-enum-varnames:
+          - API_METADATA
+          - API_DEFINITION
+          - API_DOCUMENTATION
+        status:
+          type: string
+          description: Status of the ruleset validation.
+          enum:
+          - PASSED
+          - FAILED
+          - UNAPPLIED
+          example: PASSED
+    ArtifactInfo:
+      type: object
+      description: Detailed information about an artifact.
+      properties:
+        name:
+          type: string
+          description: Name of the artifact.
+          example: Test API
+        type:
+          type: string
+          description: Type of the artifact.
+          enum:
+          - API
+          example: API
+        extendedType:
+          type: string
+          description: Extended type of the artifact.
+          enum:
+          - REST_API
+          - ASYNC_API
+          - MCP
+          example: REST_API
+        version:
+          type: string
+          description: Version of the artifact.
+          example: 1.0.0
+        owner:
+          type: string
+          description: Owner of the artifact.
+          example: admin
     RuleValidationResult:
       type: object
       description: Result of the rule validation.
@@ -300,6 +382,23 @@ components:
           type: string
           description: Description of the rule.
           example: API name should be between 5 to 50 characters
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
     PolicyAdherenceSummary:
       type: object
       description: Summary of governance policy adherence in the organization.
@@ -320,85 +419,6 @@ components:
           type: integer
           description: Number of policies unApplied.
           example: 0
-    RulesetValidationResult:
-      type: object
-      description: Result of the ruleset validation.
-      properties:
-        id:
-          type: string
-          description: UUID of the ruleset.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the ruleset.
-          example: API Security Ruleset
-        status:
-          type: string
-          description: Status of the ruleset validation.
-          enum:
-          - PASSED
-          - FAILED
-          - UNAPPLIED
-          example: PASSED
-        violatedRules:
-          type: array
-          description: List of violated rules.
-          items:
-            $ref: '#/components/schemas/RuleValidationResult'
-        followedRules:
-          type: array
-          description: List of followed rules.
-          items:
-            $ref: '#/components/schemas/RuleValidationResult'
-    RulesetValidationResultWithoutRules:
-      type: object
-      description: Result of the ruleset validation.
-      properties:
-        id:
-          type: string
-          description: UUID of the ruleset.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the ruleset.
-          example: API Security Ruleset
-        ruleType:
-          type: string
-          description: Context or area to which the ruleset applies.
-          enum:
-          - API_METADATA
-          - API_DEFINITION
-          - API_DOCUMENTATION
-          example: API_DEFINITION
-          x-enum-varnames:
-          - API_METADATA
-          - API_DEFINITION
-          - API_DOCUMENTATION
-        status:
-          type: string
-          description: Status of the ruleset validation.
-          enum:
-          - PASSED
-          - FAILED
-          - UNAPPLIED
-          example: PASSED
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
     SeverityBasedRuleViolationCount:
       type: object
       description: List of rules violated by the artifact under each severity.
@@ -439,20 +459,30 @@ components:
           description: List of policies under which the artifact was governed.
           items:
             $ref: '#/components/schemas/PolicyAdherenceWithRulesets'
-    ArtifactComplianceList:
+    ArtifactComplianceSummary:
       type: object
-      description: Compliance status of a list of artifacts.
+      description: Summary of compliance of certain artifact in the organization.
       properties:
-        count:
+        total:
           type: integer
-          description: Number of artifact returned.
+          description: Total number of artifacts.
           example: 10
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArtifactComplianceStatus'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+        compliant:
+          type: integer
+          description: Number of compliant artifacts.
+          example: 6
+        nonCompliant:
+          type: integer
+          description: Number of non-compliant artifacts.
+          example: 4
+        pending:
+          type: integer
+          description: Number of artifacts pending for compliance.
+          example: 0
+        notApplicable:
+          type: integer
+          description: Number of artifacts not applicable for compliance yet.
+          example: 0
     ArtifactComplianceStatus:
       type: object
       description: Provides compliance status of an artifact.
@@ -479,87 +509,57 @@ components:
           description: Summary of severity based rule violations.
           items:
             $ref: '#/components/schemas/SeverityBasedRuleViolationCount'
-    ArtifactComplianceSummary:
+    ArtifactComplianceList:
       type: object
-      description: Summary of compliance of certain artifact in the organization.
+      description: Compliance status of a list of artifacts.
       properties:
-        total:
+        count:
           type: integer
-          description: Total number of artifacts.
+          description: Number of artifact returned.
           example: 10
-        compliant:
-          type: integer
-          description: Number of compliant artifacts.
-          example: 6
-        nonCompliant:
-          type: integer
-          description: Number of non-compliant artifacts.
-          example: 4
-        pending:
-          type: integer
-          description: Number of artifacts pending for compliance.
-          example: 0
-        notApplicable:
-          type: integer
-          description: Number of artifacts not applicable for compliance yet.
-          example: 0
-    ArtifactInfo:
-      type: object
-      description: Detailed information about an artifact.
-      properties:
-        name:
-          type: string
-          description: Name of the artifact.
-          example: Test API
-        type:
-          type: string
-          description: Type of the artifact.
-          enum:
-          - API
-          example: API
-        extendedType:
-          type: string
-          description: Extended type of the artifact.
-          enum:
-          - REST_API
-          - ASYNC_API
-          - MCP
-          example: REST_API
-        version:
-          type: string
-          description: Version of the artifact.
-          example: 1.0.0
-        owner:
-          type: string
-          description: Owner of the artifact.
-          example: admin
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactComplianceStatus'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
 
-            Empty if no more resources are to be returned.
+        '
+      schema:
+        type: integer
+        default: 25
+    apiId:
+      name: apiId
+      in: path
+      description: '**UUID** of the API.
 
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
+        '
+      required: true
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
 
-            Empty if current subset is the first subset returned.
+        '
+      schema:
+        type: integer
+        default: 0
+    rulesetId:
+      name: rulesetId
+      in: path
+      description: '**UUID** of the Ruleset.
 
-            '
+        '
+      required: true
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

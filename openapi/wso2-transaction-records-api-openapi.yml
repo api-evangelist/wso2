@@ -54,12 +54,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    TransactionCount:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          example: 120
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -93,21 +102,12 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    TransactionCount:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
+        count:
+          type: integer
+          example: 120
   securitySchemes:
     OAuth2Security:
       type: oauth2

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-recommendations-schema.json",
+  "title": "API recommendations",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-recommendations-api-openapi.yml#/components/schemas/Recommendations",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of APIs returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recommendedAPI"
+      }
+    }
+  },
+  "$defs": {
+    "recommendedAPI": {
+      "title": "Recommended API",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "avgRating": {
+          "type": "string",
+          "description": "Average rating of the API"
+        }
+      }
+    }
+  }
+}

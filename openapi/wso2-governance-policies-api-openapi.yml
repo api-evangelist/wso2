@@ -244,35 +244,67 @@ paths:
       - OAuth2Security:
         - apim:gov_policy_manage
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    policyId:
-      name: policyId
-      in: path
-      description: '**UUID** of the Policy.
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
   schemas:
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    Action:
+      type: object
+      description: Action to be taken when a governance policy is violated.
+      properties:
+        state:
+          type: string
+          description: The state of the artifact to which the action is linked to.
+          enum:
+          - API_CREATE
+          - API_UPDATE
+          - API_DEPLOY
+          - API_PUBLISH
+          example: API_DEPLOY
+          x-enum-varnames:
+          - API_CREATE
+          - API_UPDATE
+          - API_DEPLOY
+          - API_PUBLISH
+        ruleSeverity:
+          type: string
+          description: The severity of the rule to which the action is linked to.
+          enum:
+          - ERROR
+          - WARN
+          - INFO
+          example: ERROR
+        type:
+          type: string
+          description: The type of action to be taken when a governance policy is violated in the given state withe given rule severity.
+          enum:
+          - BLOCK
+          - NOTIFY
+          example: BLOCK
     APIMGovernancePolicyList:
       type: object
       description: A list of governance policies.
@@ -385,66 +417,34 @@ components:
       - labels
       - governableStates
       - actions
-    Action:
-      type: object
-      description: Action to be taken when a governance policy is violated.
-      properties:
-        state:
-          type: string
-          description: The state of the artifact to which the action is linked to.
-          enum:
-          - API_CREATE
-          - API_UPDATE
-          - API_DEPLOY
-          - API_PUBLISH
-          example: API_DEPLOY
-          x-enum-varnames:
-          - API_CREATE
-          - API_UPDATE
-          - API_DEPLOY
-          - API_PUBLISH
-        ruleSeverity:
-          type: string
-          description: The severity of the rule to which the action is linked to.
-          enum:
-          - ERROR
-          - WARN
-          - INFO
-          example: ERROR
-        type:
-          type: string
-          description: The type of action to be taken when a governance policy is violated in the given state withe given rule severity.
-          enum:
-          - BLOCK
-          - NOTIFY
-          example: BLOCK
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
+  parameters:
+    policyId:
+      name: policyId
+      in: path
+      description: '**UUID** of the Policy.
 
-            Empty if no more resources are to be returned.
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
 
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
+        '
+      schema:
+        type: integer
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
 
-            Empty if current subset is the first subset returned.
-
-            '
+        '
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     OAuth2Security:
       type: oauth2

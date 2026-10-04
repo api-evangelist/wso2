@@ -145,35 +145,66 @@ paths:
       - OAuth2Security:
         - apim:gov_result_read
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    policyId:
-      name: policyId
-      in: path
-      description: '**UUID** of the Policy.
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
   schemas:
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 1
+        total:
+          type: integer
+          example: 10
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
+
+            '
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+    ArtifactComplianceForPolicy:
+      type: object
+      description: Compliance status of an artifact for a specific policy.
+      properties:
+        id:
+          type: string
+          description: UUID of the artifact.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Status of the artifact's compliance to the policy.
+          enum:
+          - COMPLIANT
+          - NON-COMPLIANT
+          - NOT-APPLICABLE
+          example: COMPLIANT
+        info:
+          $ref: '#/components/schemas/ArtifactInfo'
+    PolicyAdherenceList:
+      type: object
+      description: Policy adherence status of a list of policies.
+      properties:
+        count:
+          type: integer
+          description: Number of policies returned.
+          example: 10
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyAdherenceStatus'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     PolicyAdherenceDetails:
       type: object
       description: Provides adherence details of a policy.
@@ -199,97 +230,6 @@ components:
           description: Compliance status of the artifacts evaluated against the policy.
           items:
             $ref: '#/components/schemas/ArtifactComplianceForPolicy'
-    PolicyAdherenceList:
-      type: object
-      description: Policy adherence status of a list of policies.
-      properties:
-        count:
-          type: integer
-          description: Number of policies returned.
-          example: 10
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyAdherenceStatus'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    PolicyAdherenceSummary:
-      type: object
-      description: Summary of governance policy adherence in the organization.
-      properties:
-        total:
-          type: integer
-          description: Total number of policies.
-          example: 10
-        followed:
-          type: integer
-          description: Number of policies followed to.
-          example: 6
-        violated:
-          type: integer
-          description: Number of policies violated.
-          example: 4
-        unApplied:
-          type: integer
-          description: Number of policies unApplied.
-          example: 0
-    Error:
-      title: Error object returned with 4XX HTTP Status
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-    ArtifactComplianceForPolicy:
-      type: object
-      description: Compliance status of an artifact for a specific policy.
-      properties:
-        id:
-          type: string
-          description: UUID of the artifact.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        status:
-          type: string
-          description: Status of the artifact's compliance to the policy.
-          enum:
-          - COMPLIANT
-          - NON-COMPLIANT
-          - NOT-APPLICABLE
-          example: COMPLIANT
-        info:
-          $ref: '#/components/schemas/ArtifactInfo'
-    PolicyAdherenceStatus:
-      type: object
-      description: Provides adherence status of a policy.
-      properties:
-        id:
-          type: string
-          description: UUID of the policy.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        name:
-          type: string
-          description: Name of the policy.
-          example: Policy1
-        status:
-          type: string
-          description: Status of the policy's governance compliance.
-          enum:
-          - FOLLOWED
-          - VIOLATED
-          - UNAPPLIED
-          example: FOLLOWED
-        artifactComplianceSummary:
-          $ref: '#/components/schemas/ArtifactComplianceSummaryForPolicy'
     ArtifactInfo:
       type: object
       description: Detailed information about an artifact.
@@ -320,6 +260,65 @@ components:
           type: string
           description: Owner of the artifact.
           example: admin
+    Error:
+      title: Error object returned with 4XX HTTP Status
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+    PolicyAdherenceSummary:
+      type: object
+      description: Summary of governance policy adherence in the organization.
+      properties:
+        total:
+          type: integer
+          description: Total number of policies.
+          example: 10
+        followed:
+          type: integer
+          description: Number of policies followed to.
+          example: 6
+        violated:
+          type: integer
+          description: Number of policies violated.
+          example: 4
+        unApplied:
+          type: integer
+          description: Number of policies unApplied.
+          example: 0
+    PolicyAdherenceStatus:
+      type: object
+      description: Provides adherence status of a policy.
+      properties:
+        id:
+          type: string
+          description: UUID of the policy.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Name of the policy.
+          example: Policy1
+        status:
+          type: string
+          description: Status of the policy's governance compliance.
+          enum:
+          - FOLLOWED
+          - VIOLATED
+          - UNAPPLIED
+          example: FOLLOWED
+        artifactComplianceSummary:
+          $ref: '#/components/schemas/ArtifactComplianceSummaryForPolicy'
     ArtifactComplianceSummaryForPolicy:
       type: object
       description: Summary of compliance of artifacts evaluated against a specific policy.
@@ -332,33 +331,34 @@ components:
           type: integer
           description: Number of non-compliant artifacts.
           example: 4
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 1
-        total:
-          type: integer
-          example: 10
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
+  parameters:
+    policyId:
+      name: policyId
+      in: path
+      description: '**UUID** of the Policy.
 
-            Empty if no more resources are to be returned.
+        '
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
 
-            '
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
+        '
+      schema:
+        type: integer
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
 
-            Empty if current subset is the first subset returned.
-
-            '
+        '
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     OAuth2Security:
       type: oauth2

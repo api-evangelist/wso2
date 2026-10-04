@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apicategory-schema.json",
+  "title": "API Category",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-category-individual-api-openapi.yml#/components/schemas/APICategory",
+  "required": [
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "description": {
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "numberOfAPIs": {
+      "type": "integer",
+      "readOnly": true
+    }
+  }
+}

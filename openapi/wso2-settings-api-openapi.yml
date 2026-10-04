@@ -82,7 +82,158 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
+    Unauthorized:
+      description: Unauthorized. The user is not authorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_3'
+          example:
+            code: 401
+            message: Unauthorized
+            description: The user is not authorized
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_3'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
   schemas:
+    ConfigurationConstraint:
+      title: Configurable Configuration Constraints
+      type: object
+      properties:
+        name:
+          type: string
+          example: application_access_token_expiry_time
+        label:
+          type: string
+          example: Access Token Expiry
+        type:
+          type: string
+          example: input
+        multiple:
+          type: boolean
+          example: true
+        tooltip:
+          type: string
+          example: Define the valid range for token expiration in seconds.
+        constraintType:
+          type: string
+          example: RANGE
+        values:
+          type: array
+          items:
+            type: object
+            properties: {}
+        default:
+          type: object
+          properties: {}
+    KeyManagerConfiguration:
+      title: Key Manager Configuration
+      type: object
+      properties:
+        name:
+          type: string
+          example: consumer_key
+        label:
+          type: string
+          example: Consumer Key
+        type:
+          type: string
+          example: select
+        required:
+          type: boolean
+          example: true
+        mask:
+          type: boolean
+          example: true
+        multiple:
+          type: boolean
+          example: true
+        tooltip:
+          type: string
+          example: Enter username to connect to key manager
+        default:
+          type: object
+          properties: {}
+          example: admin
+        values:
+          type: array
+          items:
+            type: object
+            properties: {}
+        updateDisabled:
+          type: boolean
+          description: Indicates that this configuration field cannot be modified once the Key Manager is created.
+          default: false
+          example: true
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     GatewayConfiguration:
       title: Gateway Configuration
       type: object
@@ -132,39 +283,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     Settings:
       title: Settings
       type: object
@@ -264,75 +382,6 @@ components:
           type: boolean
           description: Whether the ConsumptionDataExportService OSGi service is available
           example: false
-    KeyManagerConfiguration:
-      title: Key Manager Configuration
-      type: object
-      properties:
-        name:
-          type: string
-          example: consumer_key
-        label:
-          type: string
-          example: Consumer Key
-        type:
-          type: string
-          example: select
-        required:
-          type: boolean
-          example: true
-        mask:
-          type: boolean
-          example: true
-        multiple:
-          type: boolean
-          example: true
-        tooltip:
-          type: string
-          example: Enter username to connect to key manager
-        default:
-          type: object
-          properties: {}
-          example: admin
-        values:
-          type: array
-          items:
-            type: object
-            properties: {}
-        updateDisabled:
-          type: boolean
-          description: Indicates that this configuration field cannot be modified once the Key Manager is created.
-          default: false
-          example: true
-    ConfigurationConstraint:
-      title: Configurable Configuration Constraints
-      type: object
-      properties:
-        name:
-          type: string
-          example: application_access_token_expiry_time
-        label:
-          type: string
-          example: Access Token Expiry
-        type:
-          type: string
-          example: input
-        multiple:
-          type: boolean
-          example: true
-        tooltip:
-          type: string
-          example: Define the valid range for token expiration in seconds.
-        constraintType:
-          type: string
-          example: RANGE
-        values:
-          type: array
-          items:
-            type: object
-            properties: {}
-        default:
-          type: object
-          properties: {}
     ApplicationAttributeList:
       title: Application Attributes List
       type: object
@@ -347,20 +396,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationAttribute'
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -393,6 +428,34 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem_2'
+    ApplicationAttribute:
+      title: Application attributes
+      type: object
+      properties:
+        description:
+          type: string
+          description: description of the application attribute
+          example: Sample description of the attribute
+        type:
+          type: string
+          description: type of the input element to display
+          example: text
+        tooltip:
+          type: string
+          description: tooltop to display for the input element
+          example: Sample tooltip
+        required:
+          type: string
+          description: whether this is a required attribute
+          example: 'false'
+        attribute:
+          type: string
+          description: the name of the attribute
+          example: External Reference Id
+        hidden:
+          type: string
+          description: whether this is a hidden attribute
+          example: 'false'
     Settings_2:
       title: Settings
       type: object
@@ -502,51 +565,18 @@ components:
           - MCP_ONLY
           - API_ONLY
           default: HYBRID
-    ApplicationAttribute:
-      title: Application attributes
-      type: object
-      properties:
-        description:
-          type: string
-          description: description of the application attribute
-          example: Sample description of the attribute
-        type:
-          type: string
-          description: type of the input element to display
-          example: text
-        tooltip:
-          type: string
-          description: tooltop to display for the input element
-          example: Sample tooltip
-        required:
-          type: string
-          description: whether this is a required attribute
-          example: 'false'
-        attribute:
-          type: string
-          description: the name of the attribute
-          example: External Reference Id
-        hidden:
-          type: string
-          description: whether this is a hidden attribute
-          example: 'false'
-    ErrorListItem_3:
-      type: object
+    ErrorListItem_2:
       title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
+      type: object
       properties:
         code:
           type: string
         message:
           type: string
           description: 'Description about individual errors occurred
-
-            '
-        description:
-          type: string
-          description: 'A detail description about the error message.
 
             '
     Error_3:
@@ -589,55 +619,25 @@ components:
           items:
             type: string
             example: service_catalog:service_view
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    Unauthorized:
-      description: Unauthorized. The user is not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_3'
-          example:
-            code: 401
-            message: Unauthorized
-            description: The user is not authorized
-            moreInfo: ''
-            error: []
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_3'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
+    ErrorListItem_3:
+      type: object
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
   parameters:
     requestedTenant:
       name: X-WSO2-Tenant

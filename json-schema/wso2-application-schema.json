@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-schema.json",
+  "title": "Application object with all the application details",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-application-api-openapi.yml#/components/schemas/Application",
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "throttlingPolicy": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "tokenType": {
+      "type": "string",
+      "enum": [
+        "OAUTH",
+        "JWT"
+      ],
+      "description": "Type of the access token generated for this application.\n**OAUTH:** A UUID based access token which is issued by default.\n**JWT:** A self-contained, signed JWT based access token. **Note:** This can be only used in Microgateway environments.\n",
+      "default": "JWT"
+    },
+    "status": {
+      "type": "string",
+      "default": ""
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscriptionCount": {
+      "type": "integer"
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "subscriptionScopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScopeInfo"
+      }
+    },
+    "owner": {
+      "description": "Application created user\n",
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "ScopeInfo": {
+      "title": "API Scope info object with scope details",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Allowed roles for the scope"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the scope"
+        }
+      }
+    }
+  }
+}

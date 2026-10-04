@@ -96,54 +96,59 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LLMProviderSummaryResponse'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    LLMProviderSummaryResponse:
+      title: LLMProviderSummaryResponse
       type: object
       properties:
-        code:
+        id:
           type: string
-          description: Error code
-        message:
+          readOnly: true
+          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
+        name:
+          maxLength: 255
+          minLength: 1
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
+          example: open-ai
+        apiVersion:
+          maxLength: 255
+          minLength: 1
           type: string
-          description: Error message.
+          example: 1.0.0
+        builtInSupport:
+          type: boolean
+          description: Is built-in support
         description:
+          maxLength: 1023
           type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
+          example: OpenAI LLM Provider
+    LLMProviderRequest:
+      title: LLMProvider
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
           type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
+          example: OpenAI
+        apiVersion:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: 1.0.0
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
+        configurations:
+          type: string
+          description: LLM Provider configurations
+        apiDefinition:
+          type: string
+          description: OpenAPI specification
+          format: binary
+        modelList:
+          type: string
+          description: List of models supported by the LLM Provider as a stringified JSON array
     LLMProviderResponse:
       title: LLMProviderResponse
       type: object
@@ -180,59 +185,54 @@ components:
           items:
             type: string
           description: List of models supported by the LLM Provider
-    LLMProviderRequest:
-      title: LLMProvider
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
       type: object
       properties:
-        name:
-          maxLength: 255
-          minLength: 1
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
           type: string
-          example: OpenAI
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
+          description: Error message.
         description:
-          maxLength: 1023
           type: string
-          example: OpenAI LLM
-        configurations:
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
           type: string
-          description: LLM Provider configurations
-        apiDefinition:
-          type: string
-          description: OpenAPI specification
-          format: binary
-        modelList:
-          type: string
-          description: List of models supported by the LLM Provider as a stringified JSON array
-    LLMProviderSummaryResponse:
-      title: LLMProviderSummaryResponse
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        id:
+        code:
           type: string
-          readOnly: true
-          example: ece92bdc-e1e6-325c-b6f4-656208a041e9
-        name:
-          maxLength: 255
-          minLength: 1
+          description: Error code
+        message:
           type: string
-          example: open-ai
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
-        builtInSupport:
-          type: boolean
-          description: Is built-in support
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM Provider
+          description: 'Description about individual errors occurred
+
+            '
   responses:
     BadRequest:
       description: Bad Request. Invalid request or validation error.

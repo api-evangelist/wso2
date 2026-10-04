@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-rating-list-schema.json",
+  "title": "Rating List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-ratings-api-openapi.yml#/components/schemas/RatingList",
+  "type": "object",
+  "properties": {
+    "avgRating": {
+      "type": "string",
+      "description": "Average Rating of the API\n"
+    },
+    "userRating": {
+      "type": "integer",
+      "description": "Rating given by the user\n"
+    },
+    "count": {
+      "type": "integer",
+      "description": "Number of Subscriber Ratings returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Rating"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "Rating": {
+      "title": "Rating",
+      "required": [
+        "rating"
+      ],
+      "type": "object",
+      "properties": {
+        "ratingId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "apiId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "ratedBy": {
+          "maxLength": 50,
+          "type": "string",
+          "readOnly": true
+        },
+        "rating": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

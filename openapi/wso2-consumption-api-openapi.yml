@@ -135,21 +135,6 @@ components:
             moreInfo: ''
             error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -183,6 +168,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

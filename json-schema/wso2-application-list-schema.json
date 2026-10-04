@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-list-schema.json",
+  "title": "Application List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-application-collection-api-openapi.yml#/components/schemas/ApplicationList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of applications returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ApplicationInfo"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "ApplicationInfo": {
+      "title": "Application info object with basic application details",
+      "type": "object",
+      "properties": {
+        "applicationId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "tokenType": {
+          "type": "string",
+          "enum": [
+            "OAUTH",
+            "JWT"
+          ]
+        },
+        "createdTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "keyManagers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KeyManagerInfo"
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "string"
+        }
+      }
+    },
+    "KeyManagerInfo": {
+      "title": "Key Manager Info",
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "isGlobal": {
+          "type": "boolean"
+        },
+        "isUsed": {
+          "type": "boolean"
+        },
+        "tokenType": {
+          "type": "string",
+          "description": "The type of the tokens to be used (exchanged or without exchanged). Accepted values are EXCHANGED, DIRECT and BOTH.",
+          "default": "DIRECT",
+          "enum": [
+            "EXCHANGED",
+            "DIRECT",
+            "BOTH"
+          ]
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\nexample: \"\"\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\nexample: \"\"\n"
+        }
+      }
+    }
+  }
+}

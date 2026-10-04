@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-api-schema.json",
+  "title": "API object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-apis-api-openapi.yml#/components/schemas/API",
+  "required": [
+    "context",
+    "lifeCycleStatus",
+    "name",
+    "provider",
+    "version"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the api\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the API"
+    },
+    "displayName": {
+      "description": "Human-friendly name shown in UI. Length limited to DB column size.",
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description about the API"
+    },
+    "context": {
+      "type": "string",
+      "description": "A string that represents thecontext of the user's request"
+    },
+    "version": {
+      "type": "string",
+      "description": "The version of the API"
+    },
+    "provider": {
+      "type": "string",
+      "description": "If the provider value is not given user invoking the api will be used as the provider.\n"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "Swagger definition of the API which contains details about URI templates and scopes\n"
+    },
+    "wsdlUri": {
+      "type": "string",
+      "description": "WSDL URL if the API is based on a WSDL endpoint\n"
+    },
+    "lifeCycleStatus": {
+      "type": "string",
+      "description": "This describes in which status of the lifecycle the API is."
+    },
+    "isDefaultVersion": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string",
+      "description": "This describes the transport type of the API"
+    },
+    "transport": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Supported transports for the API (http and/or https).\n"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/APIOperations"
+      }
+    },
+    "authorizationHeader": {
+      "type": "string",
+      "description": "Name of the Authorization header used for invoking the API. If it is not set, Authorization header name specified\nin tenant or system level will be used.\n"
+    },
+    "apiKeyHeader": {
+      "type": "string",
+      "description": "Name of the API key header used for invoking the API. If it is not set, default value `apiKey` will be used.\n"
+    },
+    "securityScheme": {
+      "type": "array",
+      "description": "Types of API security, the current API secured with. It can be either OAuth2 or mutual SSL or both. If\nit is not set OAuth2 will be set as the security for the current API.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Search keywords related to the API",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tiers": {
+      "type": "array",
+      "description": "The subscription tiers selected for the particular API",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tierName": {
+            "type": "string"
+          },
+          "tierPlan": {
+            "type": "string"
+          },
+          "monetizationAttributes": {
+            "type": "object",
+            "properties": {
+              "fixedPrice": {
+                "type": "string"
+              },
+              "pricePerRequest": {
+                "type": "string"
+              },
+              "currencyType": {
+                "type": "string"
+              },
+              "billingCycle": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "hasThumbnail": {
+      "type": "boolean",
+      "default": false
+    },
+    "additionalProperties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "display": {
+            "type": "boolean"
+          }
+        }
+      },
+      "description": "Custom(user defined) properties of API\n"
+    },
+    "monetization": {
+      "$ref": "#/$defs/APIMonetizationInfo"
+    },
+    "endpointURLs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "environmentName": {
+            "type": "string"
+          },
+          "environmentDisplayName": {
+            "type": "string"
+          },
+          "environmentType": {
+            "type": "string"
+          },
+          "URLs": {
+            "type": "object",
+            "properties": {
+              "http": {
+                "type": "string",
+                "description": "HTTP environment URL"
+              },
+              "https": {
+                "type": "string",
+                "description": "HTTPS environment URL"
+              },
+              "ws": {
+                "type": "string",
+                "description": "WS environment URL"
+              },
+              "wss": {
+                "type": "string",
+                "description": "WSS environment URL"
+              }
+            }
+          },
+          "defaultVersionURLs": {
+            "type": "object",
+            "properties": {
+              "http": {
+                "type": "string",
+                "description": "HTTP environment default URL"
+              },
+              "https": {
+                "type": "string",
+                "description": "HTTPS environment default URL"
+              },
+              "ws": {
+                "type": "string",
+                "description": "WS environment default URL"
+              },
+              "wss": {
+                "type": "string",
+                "description": "WSS environment default URL"
+              }
+            }
+          }
+        }
+      }
+    },
+    "businessInformation": {
+      "$ref": "#/$defs/APIBusinessInformation"
+    },
+    "environmentList": {
+      "type": "array",
+      "description": "The environment list configured with non empty endpoint URLs for the particular API.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScopeInfo"
+      }
+    },
+    "avgRating": {
+      "type": "string",
+      "description": "The average rating of the API"
+    },
+    "subscriptions": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of subscriptions for the API"
+    },
+    "advertiseInfo": {
+      "$ref": "#/$defs/AdvertiseInfo"
+    },
+    "isSubscriptionAvailable": {
+      "type": "boolean"
+    },
+    "initiatedFromGateway": {
+      "type": "boolean",
+      "description": "Flag indicating this API was discovered/initiated via the gateway (federated discovery) rather than created in the Control Plane."
+    },
+    "categories": {
+      "type": "array",
+      "description": "API categories\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "keyManagers": {
+      "type": "object",
+      "properties": {},
+      "description": "API Key Managers\n"
+    },
+    "createdTime": {
+      "type": "string"
+    },
+    "lastUpdatedTime": {
+      "type": "string"
+    },
+    "gatewayType": {
+      "title": "Gateway type of the API",
+      "type": "string"
+    },
+    "gatewayVendor": {
+      "title": "Gateway vendor of the API",
+      "type": "string"
+    },
+    "asyncTransportProtocols": {
+      "type": "array",
+      "description": "Supported transports for the aync API.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "egress": {
+      "type": "boolean",
+      "description": "Whether the API is egress or not",
+      "default": false
+    },
+    "subtype": {
+      "type": "string",
+      "description": "Subtype of the API.",
+      "default": "DEFAULT",
+      "readOnly": true
+    }
+  },
+  "$defs": {
+    "APIBusinessInformation": {
+      "type": "object",
+      "properties": {
+        "businessOwner": {
+          "type": "string"
+        },
+        "businessOwnerEmail": {
+          "type": "string"
+        },
+        "technicalOwner": {
+          "type": "string"
+        },
+        "technicalOwnerEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "APIMonetizationInfo": {
+      "title": "API monetization object",
+      "required": [
+        "enabled"
+      ],
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Flag to indicate the monetization status"
+        }
+      }
+    },
+    "APIOperations": {
+      "title": "Operation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "verb": {
+          "type": "string"
+        }
+      }
+    },
+    "AdvertiseInfo": {
+      "title": "API Advertise info object with advertise details",
+      "type": "object",
+      "properties": {
+        "advertised": {
+          "type": "boolean"
+        },
+        "apiExternalProductionEndpoint": {
+          "type": "string"
+        },
+        "apiExternalSandboxEndpoint": {
+          "type": "string"
+        },
+        "originalDevPortalUrl": {
+          "type": "string"
+        },
+        "apiOwner": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string",
+          "default": "WSO2",
+          "enum": [
+            "WSO2",
+            "AWS"
+          ]
+        }
+      }
+    },
+    "ScopeInfo": {
+      "title": "API Scope info object with scope details",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "description": "Allowed roles for the scope",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the scope"
+        }
+      }
+    }
+  }
+}

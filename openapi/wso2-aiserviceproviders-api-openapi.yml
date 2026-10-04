@@ -75,6 +75,110 @@ paths:
       operationId: addAIServiceProvider
 components:
   schemas:
+    AIServiceProviderRequest:
+      title: AIServiceProvider
+      required:
+      - name
+      - apiVersion
+      - configurations
+      - apiDefinition
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: OpenAI
+        apiVersion:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: 1.0.0
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
+        multipleModelProviderSupport:
+          type: string
+          description: 'Indicates whether the AI Service Provider supports multiple model providers.
+
+            If true, the AI Service Provider can support multiple model providers.
+
+            If false, the AI Service Provider supports only one model provider.
+
+            '
+          default: 'false'
+        configurations:
+          type: string
+          description: LLM Provider configurations
+        apiDefinition:
+          type: string
+          description: OpenAPI specification
+          format: binary
+        modelProviders:
+          type: string
+    ModelProvider:
+      title: Model Provider
+      type: object
+      required:
+      - name
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+            example: gpt-4o
+        name:
+          type: string
+          example: OpenAI
+    AIServiceProviderSummaryResponseList:
+      title: AIServiceProviderSummaryResponseList
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of LLM Providers returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     AIServiceProviderResponse:
       title: AIServiceProviderResponse
       type: object
@@ -124,36 +228,6 @@ components:
           type: boolean
           description: Indicates if the LLM provider is deprecated
           example: false
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    ModelProvider:
-      title: Model Provider
-      type: object
-      required:
-      - name
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            type: string
-            example: gpt-4o
-        name:
-          type: string
-          example: OpenAI
     AIServiceProviderSummaryResponse:
       title: AIServiceProviderSummaryResponse
       type: object
@@ -186,95 +260,21 @@ components:
           type: boolean
           description: Indicates if the LLM provider is deprecated
           example: false
-    Error:
-      title: Error object returned with 4XX HTTP status
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
       required:
       - code
       - message
       type: object
       properties:
         code:
-          type: integer
+          type: string
           description: Error code
-          format: int64
         message:
           type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
+          description: 'Description about individual errors occurred
 
             '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    AIServiceProviderRequest:
-      title: AIServiceProvider
-      required:
-      - name
-      - apiVersion
-      - configurations
-      - apiDefinition
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: OpenAI
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
-        multipleModelProviderSupport:
-          type: string
-          description: 'Indicates whether the AI Service Provider supports multiple model providers.
-
-            If true, the AI Service Provider can support multiple model providers.
-
-            If false, the AI Service Provider supports only one model provider.
-
-            '
-          default: 'false'
-        configurations:
-          type: string
-          description: LLM Provider configurations
-        apiDefinition:
-          type: string
-          description: OpenAPI specification
-          format: binary
-        modelProviders:
-          type: string
-    AIServiceProviderSummaryResponseList:
-      title: AIServiceProviderSummaryResponseList
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of LLM Providers returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIServiceProviderSummaryResponse'
   responses:
     BadRequest:
       description: Bad Request. Invalid request or validation error.

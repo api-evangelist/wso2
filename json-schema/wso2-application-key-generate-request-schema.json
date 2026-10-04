@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-key-generate-request-schema.json",
+  "title": "Application key generation request object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-application-keys-api-openapi.yml#/components/schemas/ApplicationKeyGenerateRequest",
+  "required": [
+    "grantTypesToBeSupported",
+    "keyType"
+  ],
+  "type": "object",
+  "properties": {
+    "keyType": {
+      "type": "string",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ]
+    },
+    "keyManager": {
+      "type": "string",
+      "description": "key Manager to Generate Keys"
+    },
+    "grantTypesToBeSupported": {
+      "type": "array",
+      "description": "Grant types that should be supported by the application",
+      "items": {
+        "type": "string"
+      }
+    },
+    "callbackUrl": {
+      "type": "string",
+      "description": "Callback URL"
+    },
+    "scopes": {
+      "type": "array",
+      "description": "Allowed scopes for the access token",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validityTime": {
+      "type": "string"
+    },
+    "clientId": {
+      "type": "string",
+      "description": "Client ID for generating access token.",
+      "readOnly": true
+    },
+    "clientSecret": {
+      "type": "string",
+      "description": "Client secret for generating access token. This is given together with the client Id.",
+      "readOnly": true
+    },
+    "additionalProperties": {
+      "type": "object",
+      "properties": {},
+      "description": "Additional properties needed."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-alert-types-list-schema.json",
+  "title": "Alert Types List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-alerts-api-openapi.yml#/components/schemas/AlertTypesList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "The number of alerts"
+    },
+    "alerts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AlertType"
+      }
+    }
+  },
+  "$defs": {
+    "AlertType": {
+      "title": "Alert Type",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The alert Id"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the alert."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-subscription-list-schema.json",
+  "title": "Subscription List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-subscriptions-api-openapi.yml#/components/schemas/SubscriptionList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Subscriptions returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Subscription"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "APIBusinessInformation": {
+      "type": "object",
+      "properties": {
+        "businessOwner": {
+          "type": "string"
+        },
+        "businessOwnerEmail": {
+          "type": "string"
+        },
+        "technicalOwner": {
+          "type": "string"
+        },
+        "technicalOwnerEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "APIInfo": {
+      "title": "API Info object with basic API details.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the API.\nThis is the name that will be displayed in the Publisher and DevPortal.\nIf not provided, the name will be used as the display name.\n"
+        },
+        "description": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "createdTime": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string",
+          "description": "If the provider value is not given, the user invoking the API will be used as the provider.\n"
+        },
+        "lifeCycleStatus": {
+          "type": "string"
+        },
+        "thumbnailUri": {
+          "type": "string"
+        },
+        "avgRating": {
+          "type": "string",
+          "description": "Average rating of the API"
+        },
+        "throttlingPolicies": {
+          "type": "array",
+          "description": "List of throttling policies of the API",
+          "items": {
+            "type": "string"
+          }
+        },
+        "advertiseInfo": {
+          "$ref": "#/$defs/AdvertiseInfo"
+        },
+        "businessInformation": {
+          "$ref": "#/$defs/APIBusinessInformation"
+        },
+        "isSubscriptionAvailable": {
+          "type": "boolean"
+        },
+        "monetizationLabel": {
+          "type": "string"
+        },
+        "gatewayType": {
+          "type": "string"
+        },
+        "gatewayVendor": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "display": {
+                "type": "boolean"
+              }
+            }
+          },
+          "description": "Custom(user defined) properties of API\n"
+        },
+        "monetizedInfo": {
+          "type": "boolean"
+        },
+        "egress": {
+          "type": "boolean",
+          "description": "Whether the API is Egress or not",
+          "default": false
+        },
+        "subtype": {
+          "type": "string",
+          "description": "Subtype of the API.",
+          "default": "DEFAULT",
+          "readOnly": true
+        }
+      }
+    },
+    "AdvertiseInfo": {
+      "title": "API Advertise info object with advertise details",
+      "type": "object",
+      "properties": {
+        "advertised": {
+          "type": "boolean"
+        },
+        "apiExternalProductionEndpoint": {
+          "type": "string"
+        },
+        "apiExternalSandboxEndpoint": {
+          "type": "string"
+        },
+        "originalDevPortalUrl": {
+          "type": "string"
+        },
+        "apiOwner": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string",
+          "default": "WSO2",
+          "enum": [
+            "WSO2",
+            "AWS"
+          ]
+        }
+      }
+    },
+    "ApplicationInfo": {
+      "title": "Application info object with basic application details",
+      "type": "object",
+      "properties": {
+        "applicationId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "throttlingPolicy": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "default": ""
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subscriptionCount": {
+          "type": "integer"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {}
+        },
+        "owner": {
+          "type": "string"
+        },
+        "tokenType": {
+          "type": "string"
+        },
+        "createdTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "updatedTime": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "required": [
+        "applicationId",
+        "throttlingPolicy"
+      ],
+      "type": "object",
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "The UUID of the subscription",
+          "readOnly": true
+        },
+        "applicationId": {
+          "type": "string",
+          "description": "The UUID of the application"
+        },
+        "apiId": {
+          "type": "string",
+          "description": "The unique identifier of the API."
+        },
+        "apiInfo": {
+          "$ref": "#/$defs/APIInfo"
+        },
+        "applicationInfo": {
+          "$ref": "#/$defs/ApplicationInfo"
+        },
+        "throttlingPolicy": {
+          "type": "string"
+        },
+        "requestedThrottlingPolicy": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "BLOCKED",
+            "PROD_ONLY_BLOCKED",
+            "UNBLOCKED",
+            "ON_HOLD",
+            "REJECTED",
+            "TIER_UPDATE_PENDING",
+            "DELETE_PENDING"
+          ]
+        },
+        "redirectionParams": {
+          "type": "string",
+          "description": "A url and other parameters the subscriber can be redirected.",
+          "readOnly": true
+        }
+      }
+    }
+  }
+}

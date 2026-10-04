@@ -1,0 +1,6 @@
+generated: '2026-10-04'
+method: probed
+generator: harvest-llms.py
+source: https://wso2.com/llms.txt
+bytes: 350872
+note: saved verbatim; the provider's own document

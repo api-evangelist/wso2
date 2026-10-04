@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-organization-info-schema.json",
+  "title": "Organization Info",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-users-api-openapi.yml#/components/schemas/OrganizationInfo",
+  "type": "object",
+  "properties": {
+    "organizationId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

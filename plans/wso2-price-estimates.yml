@@ -1,6 +1,7 @@
 # ESTIMATES computed by API Evangelist — not published by the provider. See `note` and `replace_by`.
 generated: '2026-09-20'
 method: estimated
+name: WSO2 API Plans
 estimator: 'planning/api-economics/estimate_prices.py — design: ESTIMATION.md'
 note: ESTIMATES, not quotes. Computed by API Evangelist from the prices this provider publishes on https://wso2.com/api-platform/pricing/
   (transcribed in plans/wso2-plans-pricing.yml). Nothing here overrides a published price. Each estimate
@@ -40,3 +41,4 @@ estimates:
     included_text: Up to 10 Managed Interfaces, Up to 10M Gateway Events; Managed LLM APIs up to 5,
   replace_by: 'API Commons Plans — plans[].entries[] with type: metered, `metric` (request | token | transaction
     | message), `unit` and a numeric `price`; and FinOps `primaryUnit` + `meters[]`'
+plans: []

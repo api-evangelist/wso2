@@ -59,44 +59,61 @@ paths:
       operationId: getWebhooksSubscriptions
       x-operation-id-source: derived
 components:
-  parameters:
-    apiId-Q:
-      name: apiId
-      in: query
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      schema:
-        type: string
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    applicationId-Q:
-      name: applicationId
-      in: query
-      description: '**Application Identifier** consisting of the UUID of the Application.
-
-        '
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    Pagination:
+      title: Pagination
       type: object
       properties:
-        code:
+        offset:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
           type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
 
             '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     WebhookSubscription:
       title: Webhook Subscription
       type: object
@@ -119,6 +136,22 @@ components:
         deliveryStatus:
           type: integer
           example: 1
+    WebhookSubscriptionList:
+      title: Subscribed Webhook List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of webhook subscriptions returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookSubscription'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -151,76 +184,43 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    WebhookSubscriptionList:
-      title: Subscribed Webhook List
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of webhook subscriptions returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookSubscription'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Pagination:
-      title: Pagination
-      type: object
-      properties:
-        offset:
-          type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 1
-        next:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-          example: ''
-        previous:
+        message:
           type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-  responses:
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+  parameters:
+    applicationId-Q:
+      name: applicationId
+      in: query
+      description: '**Application Identifier** consisting of the UUID of the Application.
+
+        '
+      schema:
+        type: string
+    apiId-Q:
+      name: apiId
+      in: query
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

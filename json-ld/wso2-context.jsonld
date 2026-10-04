@@ -1,0 +1,1071 @@
+{
+  "@context": {
+    "@vocab": "https://wso2.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "wso2": "https://wso2.com/schema#",
+    "ErrorListItem": "wso2:ErrorListItem",
+    "code": {
+      "@id": "wso2:code",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "wso2:message",
+      "@type": "xsd:string"
+    },
+    "QueryParameterCondition": "wso2:QueryParameterCondition",
+    "parameterName": {
+      "@id": "wso2:parameterName",
+      "@type": "xsd:string"
+    },
+    "parameterValue": {
+      "@id": "wso2:parameterValue",
+      "@type": "xsd:string"
+    },
+    "ThrottleCondition": "wso2:ThrottleCondition",
+    "type": {
+      "@id": "wso2:type",
+      "@type": "xsd:string"
+    },
+    "invertCondition": {
+      "@id": "wso2:invertCondition",
+      "@type": "xsd:boolean"
+    },
+    "headerCondition": {
+      "@id": "wso2:headerCondition",
+      "@type": "@id"
+    },
+    "ipCondition": {
+      "@id": "wso2:ipCondition",
+      "@type": "@id"
+    },
+    "jwtClaimsCondition": {
+      "@id": "wso2:jwtClaimsCondition",
+      "@type": "@id"
+    },
+    "queryParameterCondition": {
+      "@id": "wso2:queryParameterCondition",
+      "@type": "@id"
+    },
+    "ThrottleLimit": "wso2:ThrottleLimit",
+    "requestCount": {
+      "@id": "wso2:requestCount",
+      "@type": "@id"
+    },
+    "bandwidth": {
+      "@id": "wso2:bandwidth",
+      "@type": "@id"
+    },
+    "eventCount": {
+      "@id": "wso2:eventCount",
+      "@type": "@id"
+    },
+    "aiApiQuota": {
+      "@id": "wso2:aiApiQuota",
+      "@type": "@id"
+    },
+    "IPCondition": "wso2:IPCondition",
+    "ipConditionType": {
+      "@id": "wso2:ipConditionType",
+      "@type": "xsd:string"
+    },
+    "specificIP": {
+      "@id": "wso2:specificIP",
+      "@type": "xsd:string"
+    },
+    "startingIP": {
+      "@id": "wso2:startingIP",
+      "@type": "xsd:string"
+    },
+    "endingIP": {
+      "@id": "wso2:endingIP",
+      "@type": "xsd:string"
+    },
+    "Error": "wso2:Error",
+    "description": {
+      "@id": "wso2:description",
+      "@type": "xsd:string"
+    },
+    "moreInfo": {
+      "@id": "wso2:moreInfo",
+      "@type": "xsd:string"
+    },
+    "error": {
+      "@id": "wso2:error",
+      "@container": "@list"
+    },
+    "JWTClaimsCondition": "wso2:JWTClaimsCondition",
+    "claimUrl": {
+      "@id": "wso2:claimUrl",
+      "@type": "xsd:string"
+    },
+    "attribute": {
+      "@id": "wso2:attribute",
+      "@type": "xsd:string"
+    },
+    "ThrottlePolicy": "wso2:ThrottlePolicy",
+    "policyId": {
+      "@id": "wso2:policyId",
+      "@type": "xsd:string"
+    },
+    "policyName": {
+      "@id": "wso2:policyName",
+      "@type": "xsd:string"
+    },
+    "displayName": {
+      "@id": "wso2:displayName",
+      "@type": "xsd:string"
+    },
+    "isDeployed": {
+      "@id": "wso2:isDeployed",
+      "@type": "xsd:boolean"
+    },
+    "ConditionalGroup": "wso2:ConditionalGroup",
+    "conditions": {
+      "@id": "wso2:conditions",
+      "@container": "@list"
+    },
+    "limit": {
+      "@id": "wso2:limit",
+      "@type": "@id"
+    },
+    "HeaderCondition": "wso2:HeaderCondition",
+    "headerName": {
+      "@id": "wso2:headerName",
+      "@type": "xsd:string"
+    },
+    "headerValue": {
+      "@id": "wso2:headerValue",
+      "@type": "xsd:string"
+    },
+    "ThrottleLimitBase": "wso2:ThrottleLimitBase",
+    "timeUnit": {
+      "@id": "wso2:timeUnit",
+      "@type": "xsd:string"
+    },
+    "unitTime": {
+      "@id": "wso2:unitTime",
+      "@type": "xsd:integer"
+    },
+    "AdvancedThrottlePolicyList": "wso2:AdvancedThrottlePolicyList",
+    "count": {
+      "@id": "wso2:count",
+      "@type": "xsd:integer"
+    },
+    "list": {
+      "@id": "wso2:list",
+      "@container": "@list"
+    },
+    "AIServiceProviderResponse": "wso2:AIServiceProviderResponse",
+    "id": {
+      "@id": "wso2:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "wso2:name",
+      "@type": "xsd:string"
+    },
+    "apiVersion": {
+      "@id": "wso2:apiVersion",
+      "@type": "xsd:string"
+    },
+    "builtInSupport": {
+      "@id": "wso2:builtInSupport",
+      "@type": "xsd:boolean"
+    },
+    "multipleModelProviderSupport": {
+      "@id": "wso2:multipleModelProviderSupport",
+      "@type": "xsd:boolean"
+    },
+    "configurations": {
+      "@id": "wso2:configurations",
+      "@type": "xsd:string"
+    },
+    "apiDefinition": {
+      "@id": "wso2:apiDefinition",
+      "@type": "xsd:string"
+    },
+    "modelProviders": {
+      "@id": "wso2:modelProviders",
+      "@container": "@list"
+    },
+    "deprecated": {
+      "@id": "wso2:deprecated",
+      "@type": "xsd:boolean"
+    },
+    "ModelProvider": "wso2:ModelProvider",
+    "models": {
+      "@id": "wso2:models",
+      "@container": "@list"
+    },
+    "AIServiceProviderRequest": "wso2:AIServiceProviderRequest",
+    "AIServiceProviderSummaryResponse": "wso2:AIServiceProviderSummaryResponse",
+    "AIServiceProviderSummaryResponseList": "wso2:AIServiceProviderSummaryResponseList",
+    "AlertType": "wso2:AlertType",
+    "AlertsSubscription": "wso2:AlertsSubscription",
+    "alerts": {
+      "@id": "wso2:alerts",
+      "@container": "@list"
+    },
+    "emailList": {
+      "@id": "wso2:emailList",
+      "@container": "@list"
+    },
+    "AlertTypesList": "wso2:AlertTypesList",
+    "APIArtifact": "wso2:APIArtifact",
+    "api": {
+      "@id": "wso2:api",
+      "@type": "xsd:string"
+    },
+    "APICategory": "wso2:APICategory",
+    "APICategoryList": "wso2:APICategoryList",
+    "ApiChatRequest": "wso2:ApiChatRequest",
+    "apiChatRequestId": {
+      "@id": "wso2:apiChatRequestId",
+      "@type": "xsd:string"
+    },
+    "command": {
+      "@id": "wso2:command",
+      "@type": "xsd:string"
+    },
+    "apiSpec": {
+      "@id": "wso2:apiSpec"
+    },
+    "response": {
+      "@id": "wso2:response"
+    },
+    "ApiChatResponse": "wso2:ApiChatResponse",
+    "taskStatus": {
+      "@id": "wso2:taskStatus",
+      "@type": "xsd:string"
+    },
+    "resource": {
+      "@id": "wso2:resource"
+    },
+    "result": {
+      "@id": "wso2:result",
+      "@type": "xsd:string"
+    },
+    "queries": {
+      "@id": "wso2:queries",
+      "@container": "@list"
+    },
+    "SampleQuery": "wso2:SampleQuery",
+    "scenario": {
+      "@id": "wso2:scenario",
+      "@type": "xsd:string"
+    },
+    "query": {
+      "@id": "wso2:query",
+      "@type": "xsd:string"
+    },
+    "DocumentList": "wso2:DocumentList",
+    "pagination": {
+      "@id": "wso2:pagination",
+      "@type": "@id"
+    },
+    "Pagination": "wso2:Pagination",
+    "offset": {
+      "@id": "wso2:offset",
+      "@type": "xsd:integer"
+    },
+    "total": {
+      "@id": "wso2:total",
+      "@type": "xsd:integer"
+    },
+    "next": {
+      "@id": "wso2:next",
+      "@type": "xsd:string"
+    },
+    "previous": {
+      "@id": "wso2:previous",
+      "@type": "xsd:string"
+    },
+    "Document": "wso2:Document",
+    "documentId": {
+      "@id": "wso2:documentId",
+      "@type": "xsd:string"
+    },
+    "summary": {
+      "@id": "wso2:summary",
+      "@type": "xsd:string"
+    },
+    "sourceType": {
+      "@id": "wso2:sourceType",
+      "@type": "xsd:string"
+    },
+    "sourceUrl": {
+      "@id": "wso2:sourceUrl",
+      "@type": "xsd:string"
+    },
+    "otherTypeName": {
+      "@id": "wso2:otherTypeName",
+      "@type": "xsd:string"
+    },
+    "APIKey": "wso2:APIKey",
+    "keyUUID": {
+      "@id": "wso2:keyUUID",
+      "@type": "xsd:string"
+    },
+    "keyName": {
+      "@id": "wso2:keyName",
+      "@type": "xsd:string"
+    },
+    "apiName": {
+      "@id": "wso2:apiName",
+      "@type": "xsd:string"
+    },
+    "applicationName": {
+      "@id": "wso2:applicationName",
+      "@type": "xsd:string"
+    },
+    "keyType": {
+      "@id": "wso2:keyType",
+      "@type": "xsd:string"
+    },
+    "user": {
+      "@id": "wso2:user",
+      "@type": "xsd:string"
+    },
+    "issuedOn": {
+      "@id": "wso2:issuedOn",
+      "@type": "xsd:integer"
+    },
+    "validityPeriod": {
+      "@id": "wso2:validityPeriod",
+      "@type": "xsd:integer"
+    },
+    "lastUsed": {
+      "@id": "wso2:lastUsed",
+      "@type": "xsd:integer"
+    },
+    "APIKeyRevokeRequest": "wso2:APIKeyRevokeRequest",
+    "APIKeyList": "wso2:APIKeyList",
+    "ErrorListItem_2": "wso2:ErrorListItem_2",
+    "APIAPIKeyRevokeRequest": "wso2:APIAPIKeyRevokeRequest",
+    "APIKeyDissociateRequest": "wso2:APIKeyDissociateRequest",
+    "APIAPIKeyInfo": "wso2:APIAPIKeyInfo",
+    "associatedApp": {
+      "@id": "wso2:associatedApp",
+      "@type": "xsd:string"
+    },
+    "APIKeyRevokeRequest_2": "wso2:APIKeyRevokeRequest_2",
+    "apikey": {
+      "@id": "wso2:apikey",
+      "@type": "xsd:string"
+    },
+    "APIKeyAssociationInfo": "wso2:APIKeyAssociationInfo",
+    "apiUUID": {
+      "@id": "wso2:apiUUID",
+      "@type": "xsd:string"
+    },
+    "APIKeyAssociation": "wso2:APIKeyAssociation",
+    "APIKeyInfo": "wso2:APIKeyInfo",
+    "Error_2": "wso2:Error_2",
+    "APIKeyRenewRequest": "wso2:APIKeyRenewRequest",
+    "APIAPIKeyGenerateRequest": "wso2:APIAPIKeyGenerateRequest",
+    "additionalProperties": {
+      "@id": "wso2:additionalProperties"
+    },
+    "APIAPIKeyList": "wso2:APIAPIKeyList",
+    "APIAPIKeyAssociateRequest": "wso2:APIAPIKeyAssociateRequest",
+    "applicationUUID": {
+      "@id": "wso2:applicationUUID",
+      "@type": "xsd:string"
+    },
+    "AppAPIKeyAssociateRequest": "wso2:AppAPIKeyAssociateRequest",
+    "APIKeyAssociationList": "wso2:APIKeyAssociationList",
+    "APIWithKeyInfo": "wso2:APIWithKeyInfo",
+    "APIKeyList_2": "wso2:APIKeyList_2",
+    "SubscribedAPIWithApiKeyList": "wso2:SubscribedAPIWithApiKeyList",
+    "APIKeyGenerateRequest": "wso2:APIKeyGenerateRequest",
+    "APIKey_2": "wso2:APIKey_2",
+    "APIMonetizationUsage": "wso2:APIMonetizationUsage",
+    "properties": {
+      "@id": "wso2:properties"
+    },
+    "SearchResultList": "wso2:SearchResultList",
+    "apis": {
+      "@id": "wso2:apis",
+      "@container": "@list"
+    },
+    "ApiResult": "wso2:ApiResult",
+    "provider": {
+      "@id": "wso2:provider",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "wso2:version",
+      "@type": "xsd:string"
+    },
+    "Pagination_2": "wso2:Pagination_2",
+    "APIInfo": "wso2:APIInfo",
+    "context": {
+      "@id": "wso2:context",
+      "@type": "xsd:string"
+    },
+    "createdTime": {
+      "@id": "wso2:createdTime",
+      "@type": "xsd:string"
+    },
+    "lifeCycleStatus": {
+      "@id": "wso2:lifeCycleStatus",
+      "@type": "xsd:string"
+    },
+    "thumbnailUri": {
+      "@id": "wso2:thumbnailUri",
+      "@type": "xsd:string"
+    },
+    "avgRating": {
+      "@id": "wso2:avgRating",
+      "@type": "xsd:string"
+    },
+    "throttlingPolicies": {
+      "@id": "wso2:throttlingPolicies",
+      "@container": "@list"
+    },
+    "advertiseInfo": {
+      "@id": "wso2:advertiseInfo",
+      "@type": "@id"
+    },
+    "businessInformation": {
+      "@id": "wso2:businessInformation",
+      "@type": "@id"
+    },
+    "isSubscriptionAvailable": {
+      "@id": "wso2:isSubscriptionAvailable",
+      "@type": "xsd:boolean"
+    },
+    "monetizationLabel": {
+      "@id": "wso2:monetizationLabel",
+      "@type": "xsd:string"
+    },
+    "gatewayType": {
+      "@id": "wso2:gatewayType",
+      "@type": "xsd:string"
+    },
+    "gatewayVendor": {
+      "@id": "wso2:gatewayVendor",
+      "@type": "xsd:string"
+    },
+    "monetizedInfo": {
+      "@id": "wso2:monetizedInfo",
+      "@type": "xsd:boolean"
+    },
+    "egress": {
+      "@id": "wso2:egress",
+      "@type": "xsd:boolean"
+    },
+    "subtype": {
+      "@id": "wso2:subtype",
+      "@type": "xsd:string"
+    },
+    "ThrottlingPolicyPermissionInfo": "wso2:ThrottlingPolicyPermissionInfo",
+    "roles": {
+      "@id": "wso2:roles",
+      "@container": "@list"
+    },
+    "MonetizationInfo": "wso2:MonetizationInfo",
+    "billingType": {
+      "@id": "wso2:billingType",
+      "@type": "xsd:string"
+    },
+    "billingCycle": {
+      "@id": "wso2:billingCycle",
+      "@type": "xsd:string"
+    },
+    "fixedPrice": {
+      "@id": "wso2:fixedPrice",
+      "@type": "xsd:string"
+    },
+    "pricePerRequest": {
+      "@id": "wso2:pricePerRequest",
+      "@type": "xsd:string"
+    },
+    "currencyType": {
+      "@id": "wso2:currencyType",
+      "@type": "xsd:string"
+    },
+    "API": "wso2:API",
+    "wsdlUri": {
+      "@id": "wso2:wsdlUri",
+      "@type": "xsd:string"
+    },
+    "isDefaultVersion": {
+      "@id": "wso2:isDefaultVersion",
+      "@type": "xsd:boolean"
+    },
+    "transport": {
+      "@id": "wso2:transport",
+      "@container": "@list"
+    },
+    "operations": {
+      "@id": "wso2:operations",
+      "@container": "@list"
+    },
+    "authorizationHeader": {
+      "@id": "wso2:authorizationHeader",
+      "@type": "xsd:string"
+    },
+    "apiKeyHeader": {
+      "@id": "wso2:apiKeyHeader",
+      "@type": "xsd:string"
+    },
+    "securityScheme": {
+      "@id": "wso2:securityScheme",
+      "@container": "@list"
+    },
+    "tags": {
+      "@id": "wso2:tags",
+      "@container": "@list"
+    },
+    "tiers": {
+      "@id": "wso2:tiers",
+      "@container": "@list"
+    },
+    "hasThumbnail": {
+      "@id": "wso2:hasThumbnail",
+      "@type": "xsd:boolean"
+    },
+    "monetization": {
+      "@id": "wso2:monetization",
+      "@type": "@id"
+    },
+    "endpointURLs": {
+      "@id": "wso2:endpointURLs",
+      "@container": "@list"
+    },
+    "environmentList": {
+      "@id": "wso2:environmentList",
+      "@container": "@list"
+    },
+    "scopes": {
+      "@id": "wso2:scopes",
+      "@container": "@list"
+    },
+    "subscriptions": {
+      "@id": "wso2:subscriptions",
+      "@type": "xsd:integer"
+    },
+    "initiatedFromGateway": {
+      "@id": "wso2:initiatedFromGateway",
+      "@type": "xsd:boolean"
+    },
+    "categories": {
+      "@id": "wso2:categories",
+      "@container": "@list"
+    },
+    "keyManagers": {
+      "@id": "wso2:keyManagers"
+    },
+    "lastUpdatedTime": {
+      "@id": "wso2:lastUpdatedTime",
+      "@type": "xsd:string"
+    },
+    "asyncTransportProtocols": {
+      "@id": "wso2:asyncTransportProtocols",
+      "@container": "@list"
+    },
+    "APIBusinessInformation": "wso2:APIBusinessInformation",
+    "businessOwner": {
+      "@id": "wso2:businessOwner",
+      "@type": "xsd:string"
+    },
+    "businessOwnerEmail": {
+      "@id": "wso2:businessOwnerEmail",
+      "@type": "xsd:string"
+    },
+    "technicalOwner": {
+      "@id": "wso2:technicalOwner",
+      "@type": "xsd:string"
+    },
+    "technicalOwnerEmail": {
+      "@id": "wso2:technicalOwnerEmail",
+      "@type": "xsd:string"
+    },
+    "APIOperations": "wso2:APIOperations",
+    "target": {
+      "@id": "wso2:target",
+      "@type": "xsd:string"
+    },
+    "verb": {
+      "@id": "wso2:verb",
+      "@type": "xsd:string"
+    },
+    "ThrottlingPolicy": "wso2:ThrottlingPolicy",
+    "policyLevel": {
+      "@id": "wso2:policyLevel",
+      "@type": "xsd:string"
+    },
+    "attributes": {
+      "@id": "wso2:attributes"
+    },
+    "dataUnit": {
+      "@id": "wso2:dataUnit",
+      "@type": "xsd:string"
+    },
+    "rateLimitCount": {
+      "@id": "wso2:rateLimitCount",
+      "@type": "xsd:integer"
+    },
+    "rateLimitTimeUnit": {
+      "@id": "wso2:rateLimitTimeUnit",
+      "@type": "xsd:string"
+    },
+    "quotaPolicyType": {
+      "@id": "wso2:quotaPolicyType",
+      "@type": "xsd:string"
+    },
+    "tierPlan": {
+      "@id": "wso2:tierPlan",
+      "@type": "xsd:string"
+    },
+    "stopOnQuotaReach": {
+      "@id": "wso2:stopOnQuotaReach",
+      "@type": "xsd:boolean"
+    },
+    "monetizationAttributes": {
+      "@id": "wso2:monetizationAttributes",
+      "@type": "@id"
+    },
+    "throttlingPolicyPermissions": {
+      "@id": "wso2:throttlingPolicyPermissions",
+      "@type": "@id"
+    },
+    "ScopeInfo": "wso2:ScopeInfo",
+    "key": {
+      "@id": "wso2:key",
+      "@type": "xsd:string"
+    },
+    "AdvertiseInfo": "wso2:AdvertiseInfo",
+    "advertised": {
+      "@id": "wso2:advertised",
+      "@type": "xsd:boolean"
+    },
+    "apiExternalProductionEndpoint": {
+      "@id": "wso2:apiExternalProductionEndpoint",
+      "@type": "xsd:string"
+    },
+    "apiExternalSandboxEndpoint": {
+      "@id": "wso2:apiExternalSandboxEndpoint",
+      "@type": "xsd:string"
+    },
+    "originalDevPortalUrl": {
+      "@id": "wso2:originalDevPortalUrl",
+      "@type": "xsd:string"
+    },
+    "apiOwner": {
+      "@id": "wso2:apiOwner",
+      "@type": "xsd:string"
+    },
+    "vendor": {
+      "@id": "wso2:vendor",
+      "@type": "xsd:string"
+    },
+    "APIList": "wso2:APIList",
+    "APIMonetizationInfo": "wso2:APIMonetizationInfo",
+    "enabled": {
+      "@id": "wso2:enabled",
+      "@type": "xsd:boolean"
+    },
+    "ApplicationUpdateRequest": "wso2:ApplicationUpdateRequest",
+    "owner": {
+      "@id": "wso2:owner",
+      "@type": "xsd:string"
+    },
+    "tokenType": {
+      "@id": "wso2:tokenType",
+      "@type": "xsd:string"
+    },
+    "Application": "wso2:Application",
+    "applicationId": {
+      "@id": "wso2:applicationId",
+      "@type": "xsd:string"
+    },
+    "throttlingPolicy": {
+      "@id": "wso2:throttlingPolicy",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "wso2:status",
+      "@type": "xsd:string"
+    },
+    "groups": {
+      "@id": "wso2:groups",
+      "@container": "@list"
+    },
+    "subscriptionCount": {
+      "@id": "wso2:subscriptionCount",
+      "@type": "xsd:integer"
+    },
+    "subscriptionScopes": {
+      "@id": "wso2:subscriptionScopes",
+      "@container": "@list"
+    },
+    "ApplicationList": "wso2:ApplicationList",
+    "ApplicationInfo": "wso2:ApplicationInfo",
+    "groupId": {
+      "@id": "wso2:groupId",
+      "@type": "xsd:string"
+    },
+    "KeyManagerInfo": "wso2:KeyManagerInfo",
+    "isGlobal": {
+      "@id": "wso2:isGlobal",
+      "@type": "xsd:boolean"
+    },
+    "isUsed": {
+      "@id": "wso2:isUsed",
+      "@type": "xsd:boolean"
+    },
+    "ApplicationKey": "wso2:ApplicationKey",
+    "keyMappingId": {
+      "@id": "wso2:keyMappingId",
+      "@type": "xsd:string"
+    },
+    "keyManager": {
+      "@id": "wso2:keyManager",
+      "@type": "xsd:string"
+    },
+    "consumerKey": {
+      "@id": "wso2:consumerKey",
+      "@type": "xsd:string"
+    },
+    "consumerSecret": {
+      "@id": "wso2:consumerSecret",
+      "@type": "xsd:string"
+    },
+    "consumerSecrets": {
+      "@id": "wso2:consumerSecrets",
+      "@container": "@list"
+    },
+    "supportedGrantTypes": {
+      "@id": "wso2:supportedGrantTypes",
+      "@container": "@list"
+    },
+    "callbackUrl": {
+      "@id": "wso2:callbackUrl",
+      "@type": "xsd:string"
+    },
+    "keyState": {
+      "@id": "wso2:keyState",
+      "@type": "xsd:string"
+    },
+    "mode": {
+      "@id": "wso2:mode",
+      "@type": "xsd:string"
+    },
+    "token": {
+      "@id": "wso2:token",
+      "@type": "@id"
+    },
+    "ApplicationToken": "wso2:ApplicationToken",
+    "accessToken": {
+      "@id": "wso2:accessToken",
+      "@type": "xsd:string"
+    },
+    "tokenScopes": {
+      "@id": "wso2:tokenScopes",
+      "@container": "@list"
+    },
+    "validityTime": {
+      "@id": "wso2:validityTime",
+      "@type": "xsd:integer"
+    },
+    "ApplicationKeyReGenerateResponse": "wso2:ApplicationKeyReGenerateResponse",
+    "ConsumerSecret": "wso2:ConsumerSecret",
+    "secretId": {
+      "@id": "wso2:secretId",
+      "@type": "xsd:string"
+    },
+    "secretValue": {
+      "@id": "wso2:secretValue",
+      "@type": "xsd:string"
+    },
+    "ApplicationKeyList": "wso2:ApplicationKeyList",
+    "ApplicationKeyMappingRequest": "wso2:ApplicationKeyMappingRequest",
+    "ApplicationKeyGenerateRequest": "wso2:ApplicationKeyGenerateRequest",
+    "grantTypesToBeSupported": {
+      "@id": "wso2:grantTypesToBeSupported",
+      "@container": "@list"
+    },
+    "clientId": {
+      "@id": "wso2:clientId",
+      "@type": "xsd:string"
+    },
+    "clientSecret": {
+      "@id": "wso2:clientSecret",
+      "@type": "xsd:string"
+    },
+    "BurstLimit": "wso2:BurstLimit",
+    "ApplicationThrottlePolicyList": "wso2:ApplicationThrottlePolicyList",
+    "ConsumerSecretList": "wso2:ConsumerSecretList",
+    "ConsumerSecretDeletionRequest": "wso2:ConsumerSecretDeletionRequest",
+    "ConsumerSecretCreationRequest": "wso2:ConsumerSecretCreationRequest",
+    "ApplicationTokenGenerateRequest": "wso2:ApplicationTokenGenerateRequest",
+    "revokeToken": {
+      "@id": "wso2:revokeToken",
+      "@type": "xsd:string"
+    },
+    "grantType": {
+      "@id": "wso2:grantType",
+      "@type": "xsd:string"
+    },
+    "WorkflowResponse": "wso2:WorkflowResponse",
+    "workflowStatus": {
+      "@id": "wso2:workflowStatus",
+      "@type": "xsd:string"
+    },
+    "jsonPayload": {
+      "@id": "wso2:jsonPayload",
+      "@type": "xsd:string"
+    },
+    "ApplicationThrottleReset": "wso2:ApplicationThrottleReset",
+    "userName": {
+      "@id": "wso2:userName",
+      "@type": "xsd:string"
+    },
+    "Application_2": "wso2:Application_2",
+    "keys": {
+      "@id": "wso2:keys",
+      "@container": "@list"
+    },
+    "hashEnabled": {
+      "@id": "wso2:hashEnabled",
+      "@type": "xsd:boolean"
+    },
+    "updatedTime": {
+      "@id": "wso2:updatedTime",
+      "@type": "xsd:string"
+    },
+    "visibility": {
+      "@id": "wso2:visibility",
+      "@type": "xsd:string"
+    },
+    "PolicyAdherenceWithRulesets": "wso2:PolicyAdherenceWithRulesets",
+    "rulesetValidationResults": {
+      "@id": "wso2:rulesetValidationResults",
+      "@container": "@list"
+    },
+    "RuleValidationResult": "wso2:RuleValidationResult",
+    "severity": {
+      "@id": "wso2:severity",
+      "@type": "xsd:string"
+    },
+    "violatedPath": {
+      "@id": "wso2:violatedPath"
+    },
+    "PolicyAdherenceSummary": "wso2:PolicyAdherenceSummary",
+    "followed": {
+      "@id": "wso2:followed",
+      "@type": "xsd:integer"
+    },
+    "violated": {
+      "@id": "wso2:violated",
+      "@type": "xsd:integer"
+    },
+    "unApplied": {
+      "@id": "wso2:unApplied",
+      "@type": "xsd:integer"
+    },
+    "RulesetValidationResult": "wso2:RulesetValidationResult",
+    "violatedRules": {
+      "@id": "wso2:violatedRules",
+      "@container": "@list"
+    },
+    "followedRules": {
+      "@id": "wso2:followedRules",
+      "@container": "@list"
+    },
+    "RulesetValidationResultWithoutRules": "wso2:RulesetValidationResultWithoutRules",
+    "ruleType": {
+      "@id": "wso2:ruleType",
+      "@type": "xsd:string"
+    },
+    "SeverityBasedRuleViolationCount": "wso2:SeverityBasedRuleViolationCount",
+    "violatedRulesCount": {
+      "@id": "wso2:violatedRulesCount",
+      "@type": "xsd:integer"
+    },
+    "ArtifactComplianceDetails": "wso2:ArtifactComplianceDetails",
+    "info": {
+      "@id": "wso2:info",
+      "@type": "@id"
+    },
+    "governedPolicies": {
+      "@id": "wso2:governedPolicies",
+      "@container": "@list"
+    },
+    "ArtifactComplianceList": "wso2:ArtifactComplianceList",
+    "ArtifactComplianceStatus": "wso2:ArtifactComplianceStatus",
+    "policyAdherenceSummary": {
+      "@id": "wso2:policyAdherenceSummary",
+      "@type": "@id"
+    },
+    "severityBasedRuleViolationSummary": {
+      "@id": "wso2:severityBasedRuleViolationSummary",
+      "@container": "@list"
+    },
+    "ArtifactComplianceSummary": "wso2:ArtifactComplianceSummary",
+    "compliant": {
+      "@id": "wso2:compliant",
+      "@type": "xsd:integer"
+    },
+    "nonCompliant": {
+      "@id": "wso2:nonCompliant",
+      "@type": "xsd:integer"
+    },
+    "pending": {
+      "@id": "wso2:pending",
+      "@type": "xsd:integer"
+    },
+    "notApplicable": {
+      "@id": "wso2:notApplicable",
+      "@type": "xsd:integer"
+    },
+    "ArtifactInfo": "wso2:ArtifactInfo",
+    "extendedType": {
+      "@id": "wso2:extendedType",
+      "@type": "xsd:string"
+    },
+    "BotDetectionAlertSubscriptionList": "wso2:BotDetectionAlertSubscriptionList",
+    "BotDetectionAlertSubscription": "wso2:BotDetectionAlertSubscription",
+    "uuid": {
+      "@id": "wso2:uuid",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "wso2:email",
+      "@type": "xsd:string"
+    },
+    "BotDetectionData": "wso2:BotDetectionData",
+    "recordedTime": {
+      "@id": "wso2:recordedTime",
+      "@type": "xsd:integer"
+    },
+    "messageID": {
+      "@id": "wso2:messageID",
+      "@type": "xsd:string"
+    },
+    "apiMethod": {
+      "@id": "wso2:apiMethod",
+      "@type": "xsd:string"
+    },
+    "headerSet": {
+      "@id": "wso2:headerSet",
+      "@type": "xsd:string"
+    },
+    "messageBody": {
+      "@id": "wso2:messageBody",
+      "@type": "xsd:string"
+    },
+    "clientIp": {
+      "@id": "wso2:clientIp",
+      "@type": "xsd:string"
+    },
+    "BotDetectionDataList": "wso2:BotDetectionDataList",
+    "Comment": "wso2:Comment",
+    "content": {
+      "@id": "wso2:content",
+      "@type": "xsd:string"
+    },
+    "createdBy": {
+      "@id": "wso2:createdBy",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "wso2:category",
+      "@type": "xsd:string"
+    },
+    "parentCommentId": {
+      "@id": "wso2:parentCommentId",
+      "@type": "xsd:string"
+    },
+    "entryPoint": {
+      "@id": "wso2:entryPoint",
+      "@type": "xsd:string"
+    },
+    "commenterInfo": {
+      "@id": "wso2:commenterInfo",
+      "@type": "@id"
+    },
+    "replies": {
+      "@id": "wso2:replies",
+      "@type": "@id"
+    },
+    "PostRequestBody": "wso2:PostRequestBody",
+    "PatchRequestBody": "wso2:PatchRequestBody",
+    "CommentList": "wso2:CommentList",
+    "CommenterInfo": "wso2:CommenterInfo",
+    "firstName": {
+      "@id": "wso2:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "wso2:lastName",
+      "@type": "xsd:string"
+    },
+    "fullName": {
+      "@id": "wso2:fullName",
+      "@type": "xsd:string"
+    },
+    "CorrelationComponentsList": "wso2:CorrelationComponentsList",
+    "components": {
+      "@id": "wso2:components",
+      "@container": "@list"
+    },
+    "CorrelationComponentProperty": "wso2:CorrelationComponentProperty",
+    "value": {
+      "@id": "wso2:value",
+      "@container": "@list"
+    },
+    "CorrelationComponent": "wso2:CorrelationComponent",
+    "CustomRuleList": "wso2:CustomRuleList",
+    "BlockingConditionList": "wso2:BlockingConditionList",
+    "BlockingCondition": "wso2:BlockingCondition",
+    "conditionId": {
+      "@id": "wso2:conditionId",
+      "@type": "xsd:string"
+    },
+    "conditionType": {
+      "@id": "wso2:conditionType",
+      "@type": "xsd:string"
+    },
+    "conditionValue": {
+      "@id": "wso2:conditionValue"
+    },
+    "conditionStatus": {
+      "@id": "wso2:conditionStatus",
+      "@type": "xsd:boolean"
+    },
+    "BlockingConditionStatus": "wso2:BlockingConditionStatus",
+    "Endpoints": "wso2:Endpoints",
+    "endpoints": {
+      "@id": "wso2:endpoints",
+      "@container": "@list"
+    },
+    "GatewayInstanceList": "wso2:GatewayInstanceList",
+    "GatewayInstance": "wso2:GatewayInstance",
+    "gatewayId": {
+      "@id": "wso2:gatewayId",
+      "@type": "xsd:string"
+    },
+    "lastActive": {
+      "@id": "wso2:lastActive",
+      "@type": "xsd:string"
+    },
+    "AdditionalProperty": "wso2:AdditionalProperty",
+    "EnvironmentList": "wso2:EnvironmentList"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "WSO2 API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects WSO2's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-04) from openapi/wso2-advanced-policy-collection-api-openapi.yml, openapi/wso2-advanced-policy-individual-api-openapi.yml, openapi/wso2-aiserviceprovider-api-openapi.yml.",
+  "dcterms:created": "2026-10-04",
+  "dcterms:source": [
+    "openapi/wso2-advanced-policy-collection-api-openapi.yml",
+    "openapi/wso2-advanced-policy-individual-api-openapi.yml",
+    "openapi/wso2-aiserviceprovider-api-openapi.yml",
+    "openapi/wso2-aiserviceproviders-api-openapi.yml",
+    "openapi/wso2-alert-subscriptions-api-openapi.yml"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-additional-subscription-info-list-schema.json",
+  "title": "Additional Subscription Info List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-subscriptions-api-openapi.yml#/components/schemas/AdditionalSubscriptionInfoList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of additional information sets of subscription returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AdditionalSubscriptionInfo"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "AdditionalSubscriptionInfo": {
+      "title": "Additional Information of subscriptions related to an API",
+      "type": "object",
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "The UUID of the subscription",
+          "readOnly": true
+        },
+        "applicationId": {
+          "type": "string",
+          "description": "The UUID of the application"
+        },
+        "applicationName": {
+          "type": "string",
+          "description": "The name of the application"
+        },
+        "apiId": {
+          "type": "string",
+          "description": "The unique identifier of the API."
+        },
+        "isSolaceAPI": {
+          "type": "boolean"
+        },
+        "solaceOrganization": {
+          "type": "string"
+        },
+        "solaceDeployedEnvironments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "environmentName": {
+                "type": "string"
+              },
+              "environmentDisplayName": {
+                "type": "string"
+              },
+              "organizationName": {
+                "type": "string"
+              },
+              "solaceURLs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "protocol": {
+                      "type": "string"
+                    },
+                    "endpointURL": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "SolaceTopicsObject": {
+                "type": "object",
+                "properties": {
+                  "defaultSyntax": {
+                    "$ref": "#/$defs/SolaceTopics"
+                  },
+                  "mqttSyntax": {
+                    "$ref": "#/$defs/SolaceTopics"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "SolaceTopics": {
+      "title": "SolaceTopics",
+      "type": "object",
+      "properties": {
+        "publishTopics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subscribeTopics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

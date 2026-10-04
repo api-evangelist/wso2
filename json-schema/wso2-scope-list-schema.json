@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-scope-list-schema.json",
+  "title": "Scope Role Mapping List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-system-scopes-api-openapi.yml#/components/schemas/ScopeList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of scopes available for tenant.\n",
+      "readOnly": true
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Scope"
+      }
+    }
+  },
+  "$defs": {
+    "Scope": {
+      "title": "Scope Role",
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Portal name.\n"
+        },
+        "name": {
+          "type": "string",
+          "description": "Scope name.\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "About scope.\n"
+        },
+        "roles": {
+          "type": "array",
+          "description": "Roles for the particular scope.\n",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-throttling-policy-list-schema.json",
+  "title": "Throttling Policy List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-throttling-policies-api-openapi.yml#/components/schemas/ThrottlingPolicyList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Throttling Policies returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ThrottlingPolicy"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "MonetizationInfo": {
+      "title": "Monetization",
+      "type": "object",
+      "properties": {
+        "billingType": {
+          "type": "string",
+          "enum": [
+            "fixedPrice",
+            "dynamicRate"
+          ]
+        },
+        "billingCycle": {
+          "type": "string"
+        },
+        "fixedPrice": {
+          "type": "string"
+        },
+        "pricePerRequest": {
+          "type": "string"
+        },
+        "currencyType": {
+          "type": "string"
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "ThrottlingPolicy": {
+      "title": "Throttling Policy",
+      "required": [
+        "name",
+        "requestCount",
+        "stopOnQuotaReach",
+        "tierPlan",
+        "unitTime"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "policyLevel": {
+          "type": "string",
+          "enum": [
+            "application",
+            "subscription"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom attributes added to the throttling policy\n"
+        },
+        "requestCount": {
+          "type": "integer",
+          "description": "Maximum number of requests which can be sent within a provided unit time\n",
+          "format": "int64"
+        },
+        "dataUnit": {
+          "description": "Unit of data allowed to be transfered. Allowed values are \"KB\", \"MB\" and \"GB\"\n",
+          "type": "string"
+        },
+        "unitTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "timeUnit": {
+          "type": "string"
+        },
+        "rateLimitCount": {
+          "type": "integer",
+          "default": 0,
+          "description": "Burst control request count"
+        },
+        "rateLimitTimeUnit": {
+          "type": "string",
+          "description": "Burst control time unit"
+        },
+        "quotaPolicyType": {
+          "type": "string",
+          "description": "Default quota limit type",
+          "enum": [
+            "REQUESTCOUNT",
+            "BANDWIDTHVOLUME"
+          ]
+        },
+        "tierPlan": {
+          "type": "string",
+          "description": "This attribute declares whether this tier is available under commercial or free\n",
+          "enum": [
+            "FREE",
+            "COMMERCIAL"
+          ]
+        },
+        "stopOnQuotaReach": {
+          "type": "boolean",
+          "description": "If this attribute is set to false, you are capabale of sending requests\neven if the request count exceeded within a unit time\n"
+        },
+        "monetizationAttributes": {
+          "$ref": "#/$defs/MonetizationInfo"
+        },
+        "throttlingPolicyPermissions": {
+          "$ref": "#/$defs/ThrottlingPolicyPermissionInfo"
+        }
+      }
+    },
+    "ThrottlingPolicyPermissionInfo": {
+      "title": "Throttling Policy Permission info object with throttling policy permission details",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "allow",
+            "deny"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "description": "roles for this permission",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

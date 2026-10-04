@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-llmprovider-response-schema.json",
+  "title": "LLMProviderResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-llm-provider-api-openapi.yml#/components/schemas/LLMProviderResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "name": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "apiVersion": {
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "builtInSupport": {
+      "type": "boolean",
+      "description": "Is built-in support"
+    },
+    "description": {
+      "maxLength": 1023,
+      "type": "string"
+    },
+    "configurations": {
+      "type": "string",
+      "description": "LLM Provider configurations"
+    },
+    "apiDefinition": {
+      "type": "string",
+      "description": "OpenAPI specification"
+    },
+    "modelList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of models supported by the LLM Provider"
+    }
+  }
+}

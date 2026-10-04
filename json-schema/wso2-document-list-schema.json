@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-document-list-schema.json",
+  "title": "Document List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-documents-api-openapi.yml#/components/schemas/DocumentList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Documents returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Document"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "Document": {
+      "title": "Document",
+      "required": [
+        "name",
+        "sourceType",
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "HOWTO",
+            "SAMPLES",
+            "PUBLIC_FORUM",
+            "SUPPORT_FORUM",
+            "API_MESSAGE_FORMAT",
+            "SWAGGER_DOC",
+            "OTHER"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "sourceType": {
+          "type": "string",
+          "enum": [
+            "INLINE",
+            "MARKDOWN",
+            "URL",
+            "FILE"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string"
+        },
+        "otherTypeName": {
+          "type": "string"
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    }
+  }
+}

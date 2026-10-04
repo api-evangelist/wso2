@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-key-manager-app-usages-schema.json",
+  "title": "Key Manager Application Usages.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-key-manager-individual-api-openapi.yml#/components/schemas/KeyManagerAppUsages",
+  "required": [
+    "applicationCount",
+    "applications"
+  ],
+  "type": "object",
+  "properties": {
+    "applicationCount": {
+      "type": "integer",
+      "description": "The total count of applications."
+    },
+    "applications": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ApplicationInfoKeyManager"
+      }
+    }
+  },
+  "$defs": {
+    "ApplicationInfoKeyManager": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the application."
+        },
+        "uuid": {
+          "type": "string",
+          "description": "The UUID of the application."
+        },
+        "organizationId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The ID of the organization to which the application belongs."
+        },
+        "owner": {
+          "type": "string",
+          "description": "The owner of the application."
+        },
+        "organization": {
+          "type": "string",
+          "description": "The organization of the application."
+        }
+      },
+      "required": [
+        "name",
+        "uuid",
+        "owner",
+        "organization"
+      ]
+    }
+  }
+}

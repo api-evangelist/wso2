@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-api-chat-request-schema.json",
+  "title": "API Chat request",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-api-chat-api-openapi.yml#/components/schemas/ApiChatRequest",
+  "properties": {
+    "apiChatRequestId": {
+      "type": "string",
+      "description": "Request UUID\n"
+    },
+    "command": {
+      "type": "string",
+      "description": "User specified testcase to be tested against the API\n"
+    },
+    "apiSpec": {
+      "type": "object",
+      "properties": {
+        "serviceUrl": {
+          "type": "string",
+          "description": "Service URL of API if any"
+        },
+        "tools": {
+          "type": "array",
+          "description": "Extracted Http tools from the OpenAPI specification",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "HTTP status code of the response"
+        },
+        "path": {
+          "type": "string",
+          "description": "HTTP path url with encoded parameters"
+        },
+        "headers": {
+          "type": "object",
+          "description": "Response headers"
+        },
+        "body": {
+          "type": "object",
+          "description": "Response payload"
+        }
+      }
+    }
+  }
+}

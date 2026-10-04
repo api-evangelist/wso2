@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-key-manager-apiusages-schema.json",
+  "title": "Key Manager API Usages.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-key-manager-individual-api-openapi.yml#/components/schemas/KeyManagerAPIUsages",
+  "required": [
+    "apiCount",
+    "apis"
+  ],
+  "type": "object",
+  "properties": {
+    "apiCount": {
+      "type": "integer",
+      "description": "The total count of APIs."
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/APIInfoKeyManager"
+      }
+    }
+  },
+  "$defs": {
+    "APIInfoKeyManager": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the API."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the entry (e.g., \"API\")."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the API."
+        },
+        "transportType": {
+          "type": "string",
+          "description": "The transport type of the API."
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The description of the API."
+        },
+        "context": {
+          "type": "string",
+          "description": "The context of the API."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the API."
+        },
+        "provider": {
+          "type": "string",
+          "description": "The provider of the API."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the API."
+        },
+        "thumbnailUri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URI of the thumbnail of the API."
+        },
+        "advertiseOnly": {
+          "type": "boolean",
+          "description": "Indicates if the API is advertised only."
+        },
+        "keyManagerEntry": {
+          "type": "string",
+          "description": "The key manager entry related to the API."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "version",
+        "provider"
+      ]
+    }
+  }
+}

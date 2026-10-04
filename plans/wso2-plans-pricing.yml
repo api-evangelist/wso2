@@ -2,6 +2,7 @@
 generated: '2026-09-20'
 method: searched
 source: https://wso2.com/api-platform/pricing/
+name: WSO2 API Plans
 sources:
 - https://wso2.com/api-platform/pricing/
 provenance:

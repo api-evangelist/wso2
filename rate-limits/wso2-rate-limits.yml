@@ -2,6 +2,7 @@
 generated: '2026-09-20'
 method: searched
 source: https://apim.docs.wso2.com/en/latest/api-gateway/rate-limiting/understand-rate-limit-enforcement/
+name: WSO2 API Rate Limits
 sources:
 - https://apim.docs.wso2.com/en/latest/api-gateway/rate-limiting/understand-rate-limit-enforcement/
 provenance:

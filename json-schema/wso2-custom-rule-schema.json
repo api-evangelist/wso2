@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-custom-rule-schema.json",
+  "title": "Custom Rule",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-custom-rules-collection-api-openapi.yml#/components/schemas/CustomRule",
+  "allOf": [
+    {
+      "$ref": "#/$defs/ThrottlePolicy"
+    },
+    {
+      "required": [
+        "keyTemplate",
+        "siddhiQuery"
+      ],
+      "type": "object",
+      "properties": {
+        "siddhiQuery": {
+          "type": "string",
+          "description": "Siddhi query which represents the custom throttling policy"
+        },
+        "keyTemplate": {
+          "type": "string",
+          "description": "The specific combination of attributes that are checked in the policy."
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "ThrottlePolicy": {
+      "title": "Generic Throttling Policy",
+      "required": [
+        "policyName"
+      ],
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "description": "Id of policy",
+          "readOnly": true
+        },
+        "policyName": {
+          "maxLength": 60,
+          "minLength": 1,
+          "type": "string",
+          "description": "Name of policy"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the policy",
+          "maxLength": 512
+        },
+        "description": {
+          "maxLength": 1024,
+          "type": "string",
+          "description": "Description of the policy"
+        },
+        "isDeployed": {
+          "type": "boolean",
+          "description": "Indicates whether the policy is deployed successfully or not.",
+          "default": false
+        },
+        "type": {
+          "type": "string",
+          "description": "Indicates the type of throttle policy"
+        }
+      }
+    }
+  }
+}

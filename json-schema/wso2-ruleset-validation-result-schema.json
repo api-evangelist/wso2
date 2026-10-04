@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-ruleset-validation-result-schema.json",
+  "title": "RulesetValidationResult",
+  "description": "Result of the ruleset validation.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-artifact-compliance-api-openapi.yml#/components/schemas/RulesetValidationResult",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of the ruleset."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the ruleset."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the ruleset validation.",
+      "enum": [
+        "PASSED",
+        "FAILED",
+        "UNAPPLIED"
+      ]
+    },
+    "violatedRules": {
+      "type": "array",
+      "description": "List of violated rules.",
+      "items": {
+        "$ref": "#/$defs/RuleValidationResult"
+      }
+    },
+    "followedRules": {
+      "type": "array",
+      "description": "List of followed rules.",
+      "items": {
+        "$ref": "#/$defs/RuleValidationResult"
+      }
+    }
+  },
+  "$defs": {
+    "RuleValidationResult": {
+      "type": "object",
+      "description": "Result of the rule validation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the rule."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the rule."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the rule validation.",
+          "enum": [
+            "PASSED",
+            "FAILED"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "description": "Severity level of the rule violation.",
+          "enum": [
+            "ERROR",
+            "WARN",
+            "INFO"
+          ]
+        },
+        "violatedPath": {
+          "type": "object",
+          "description": "Path in the artifact where the rule is violated.",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path in the artifact where the rule is violated."
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the path."
+            }
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Message to be displayed when the rule is violated."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the rule."
+        }
+      }
+    }
+  }
+}

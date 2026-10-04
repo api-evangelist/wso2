@@ -106,7 +106,122 @@ paths:
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/ai-service-providers/a2f1e643-9b2a-4f58-bd7a-8c2d3f1e9d6f"'
       operationId: getAIServiceProvider
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
+    AIServiceProviderRequest:
+      title: AIServiceProvider
+      required:
+      - name
+      - apiVersion
+      - configurations
+      - apiDefinition
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: OpenAI
+        apiVersion:
+          maxLength: 255
+          minLength: 1
+          type: string
+          example: 1.0.0
+        description:
+          maxLength: 1023
+          type: string
+          example: OpenAI LLM
+        multipleModelProviderSupport:
+          type: string
+          description: 'Indicates whether the AI Service Provider supports multiple model providers.
+
+            If true, the AI Service Provider can support multiple model providers.
+
+            If false, the AI Service Provider supports only one model provider.
+
+            '
+          default: 'false'
+        configurations:
+          type: string
+          description: LLM Provider configurations
+        apiDefinition:
+          type: string
+          description: OpenAPI specification
+          format: binary
+        modelProviders:
+          type: string
+    ModelProvider:
+      title: Model Provider
+      type: object
+      required:
+      - name
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+            example: gpt-4o
+        name:
+          type: string
+          example: OpenAI
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
     AIServiceProviderResponse:
       title: AIServiceProviderResponse
       type: object
@@ -171,96 +286,6 @@ components:
           description: 'Description about individual errors occurred
 
             '
-    ModelProvider:
-      title: Model Provider
-      type: object
-      required:
-      - name
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            type: string
-            example: gpt-4o
-        name:
-          type: string
-          example: OpenAI
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-    AIServiceProviderRequest:
-      title: AIServiceProvider
-      required:
-      - name
-      - apiVersion
-      - configurations
-      - apiDefinition
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: OpenAI
-        apiVersion:
-          maxLength: 255
-          minLength: 1
-          type: string
-          example: 1.0.0
-        description:
-          maxLength: 1023
-          type: string
-          example: OpenAI LLM
-        multipleModelProviderSupport:
-          type: string
-          description: 'Indicates whether the AI Service Provider supports multiple model providers.
-
-            If true, the AI Service Provider can support multiple model providers.
-
-            If false, the AI Service Provider supports only one model provider.
-
-            '
-          default: 'false'
-        configurations:
-          type: string
-          description: LLM Provider configurations
-        apiDefinition:
-          type: string
-          description: OpenAPI specification
-          format: binary
-        modelProviders:
-          type: string
   parameters:
     aiServiceProviderId:
       name: aiServiceProviderId
@@ -271,31 +296,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

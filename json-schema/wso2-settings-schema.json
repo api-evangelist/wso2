@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-settings-schema.json",
+  "title": "Settings",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-settings-api-openapi.yml#/components/schemas/Settings",
+  "type": "object",
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gatewayTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "IsJWTEnabledForLoginTokens": {
+      "type": "boolean",
+      "default": false
+    },
+    "orgAccessControlEnabled": {
+      "type": "boolean",
+      "description": "Is Organization-based access control configuration enabled\n"
+    },
+    "keyManagerConfiguration": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "defaultConsumerKeyClaim": {
+            "type": "string"
+          },
+          "defaultScopesClaim": {
+            "type": "string"
+          },
+          "authConfigurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/KeyManagerConfiguration"
+            }
+          },
+          "configurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/KeyManagerConfiguration"
+            }
+          },
+          "endpointConfigurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/KeyManagerConfiguration"
+            }
+          },
+          "configurationConstraints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/ConfigurationConstraint"
+            }
+          }
+        }
+      }
+    },
+    "gatewayConfiguration": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "supportedModes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "configurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/GatewayConfiguration"
+            }
+          },
+          "defaultHostnameTemplate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "analyticsEnabled": {
+      "type": "boolean",
+      "description": "To determine whether analytics is enabled or not"
+    },
+    "transactionCounterEnable": {
+      "type": "boolean",
+      "description": "To determine whether the transaction counter is enabled or not"
+    },
+    "isGatewayNotificationEnabled": {
+      "type": "boolean",
+      "description": "Is Gateway Notification Enabled",
+      "default": false
+    },
+    "platformGatewayVersions": {
+      "type": "array",
+      "description": "API Platform Gateway versions for the quick-start guide.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "consumptionExportEnabled": {
+      "type": "boolean",
+      "description": "Whether the ConsumptionDataExportService OSGi service is available"
+    }
+  },
+  "$defs": {
+    "ConfigurationConstraint": {
+      "title": "Configurable Configuration Constraints",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "tooltip": {
+          "type": "string"
+        },
+        "constraintType": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "default": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    "GatewayConfiguration": {
+      "title": "Gateway Configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "mask": {
+          "type": "boolean"
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "tooltip": {
+          "type": "string"
+        },
+        "default": {
+          "type": "object",
+          "properties": {}
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      }
+    },
+    "KeyManagerConfiguration": {
+      "title": "Key Manager Configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "mask": {
+          "type": "boolean"
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "tooltip": {
+          "type": "string"
+        },
+        "default": {
+          "type": "object",
+          "properties": {}
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "updateDisabled": {
+          "type": "boolean",
+          "description": "Indicates that this configuration field cannot be modified once the Key Manager is created.",
+          "default": false
+        }
+      }
+    }
+  }
+}

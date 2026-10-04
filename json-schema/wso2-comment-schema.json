@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-comment-schema.json",
+  "title": "Comment",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-comments-api-openapi.yml#/components/schemas/Comment",
+  "required": [
+    "content"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "content": {
+      "maxLength": 512,
+      "type": "string"
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "createdBy": {
+      "type": "string",
+      "readOnly": true
+    },
+    "updatedTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "category": {
+      "type": "string",
+      "readOnly": true,
+      "default": "general"
+    },
+    "parentCommentId": {
+      "type": "string",
+      "readOnly": true
+    },
+    "entryPoint": {
+      "type": "string",
+      "readOnly": true,
+      "enum": [
+        "devPortal",
+        "publisher"
+      ]
+    },
+    "commenterInfo": {
+      "$ref": "#/$defs/CommenterInfo"
+    },
+    "replies": {
+      "$ref": "#/$defs/CommentList"
+    }
+  },
+  "$defs": {
+    "Comment": {
+      "title": "Comment",
+      "required": [
+        "content"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "content": {
+          "maxLength": 512,
+          "type": "string"
+        },
+        "createdTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "createdBy": {
+          "type": "string",
+          "readOnly": true
+        },
+        "updatedTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "category": {
+          "type": "string",
+          "readOnly": true,
+          "default": "general"
+        },
+        "parentCommentId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "entryPoint": {
+          "type": "string",
+          "readOnly": true,
+          "enum": [
+            "devPortal",
+            "publisher"
+          ]
+        },
+        "commenterInfo": {
+          "$ref": "#/$defs/CommenterInfo"
+        },
+        "replies": {
+          "$ref": "#/$defs/CommentList"
+        }
+      }
+    },
+    "CommentList": {
+      "title": "Comments List",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "readOnly": true,
+          "description": "Number of Comments returned.\n"
+        },
+        "list": {
+          "type": "array",
+          "readOnly": true,
+          "items": {
+            "$ref": "#/$defs/Comment"
+          }
+        },
+        "pagination": {
+          "$ref": "#/$defs/Pagination"
+        }
+      }
+    },
+    "CommenterInfo": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        }
+      }
+    },
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    }
+  }
+}

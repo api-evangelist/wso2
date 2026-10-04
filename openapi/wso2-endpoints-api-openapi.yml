@@ -65,32 +65,34 @@ paths:
       tags:
       - Endpoints
 components:
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    Endpoints:
-      title: Endpoints Response
-      properties:
-        endpoints:
-          description: 'The end points which has been deployed in the gateway
-
-            '
-          type: array
-          items:
-            type: string
-            example: <endpoint xmlns="http://ws.apache.org/ns/synapse" name="PizzaShackAPI--v1.0.0_APIproductionEndpoint"><http uri-template="https://localhost:9443/am/sample/pizzashack/v1/api/"><timeout><responseAction>fault</responseAction></timeout></http><property name="ENDPOINT_ADDRESS" value="https://localhost:9443/am/sample/pizzashack/v1/api/"/></endpoint>
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -123,30 +125,28 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-  parameters:
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
+    Endpoints:
+      title: Endpoints Response
+      properties:
+        endpoints:
+          description: 'The end points which has been deployed in the gateway
 
-        '
-      required: true
-      schema:
-        type: string
-    version:
-      name: version
-      in: query
-      description: 'version of the API
+            '
+          type: array
+          items:
+            type: string
+            example: <endpoint xmlns="http://ws.apache.org/ns/synapse" name="PizzaShackAPI--v1.0.0_APIproductionEndpoint"><http uri-template="https://localhost:9443/am/sample/pizzashack/v1/api/"><timeout><responseAction>fault</responseAction></timeout></http><property name="ENDPOINT_ADDRESS" value="https://localhost:9443/am/sample/pizzashack/v1/api/"/></endpoint>
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string
+            '

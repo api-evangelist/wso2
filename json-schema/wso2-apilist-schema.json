@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apilist-schema.json",
+  "title": "API List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-get-api-info-api-openapi.yml#/components/schemas/APIList",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of APIs returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/APIMetaData"
+      }
+    }
+  },
+  "$defs": {
+    "APIMetaData": {
+      "properties": {
+        "apiUUID": {
+          "type": "string",
+          "description": "UUID of API."
+        },
+        "apiId": {
+          "type": "integer"
+        },
+        "provider": {
+          "type": "string",
+          "description": "API Provider name."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the API"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the API."
+        },
+        "context": {
+          "type": "string",
+          "description": "Context of the API."
+        },
+        "policy": {
+          "type": "string",
+          "description": "API level throttling policy."
+        },
+        "apiType": {
+          "type": "string",
+          "description": "Type of the API."
+        },
+        "isDefaultVersion": {
+          "type": "boolean",
+          "description": "Whether this is the default version of the API."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of API."
+        }
+      }
+    }
+  }
+}

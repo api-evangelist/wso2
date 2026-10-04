@@ -127,6 +127,26 @@ paths:
       operationId: postThrottlingPoliciesCustom
       x-operation-id-source: derived
 components:
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: 'Media types acceptable for the response. Default is application/json.
+
+        '
+      schema:
+        type: string
+        default: application/json
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: 'Media type of the entity in the body. Default is application/json.
+
+        '
+      required: true
+      schema:
+        type: string
+        default: application/json
   schemas:
     CustomRule:
       title: Custom Rule
@@ -147,57 +167,6 @@ components:
             type: string
             description: The specific combination of attributes that are checked in the policy.
             example: $userId
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    ThrottlePolicy:
-      title: Generic Throttling Policy
-      required:
-      - policyName
-      type: object
-      properties:
-        policyId:
-          type: string
-          description: Id of policy
-          readOnly: true
-          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
-        policyName:
-          maxLength: 60
-          minLength: 1
-          type: string
-          description: Name of policy
-          example: 30PerMin
-        displayName:
-          type: string
-          description: Display name of the policy
-          example: 30PerMin
-          maxLength: 512
-        description:
-          maxLength: 1024
-          type: string
-          description: Description of the policy
-          example: Allows 30 request per minute
-        isDeployed:
-          type: boolean
-          description: Indicates whether the policy is deployed successfully or not.
-          default: false
-        type:
-          type: string
-          description: Indicates the type of throttle policy
-      discriminator:
-        propertyName: type
     CustomRuleList:
       title: Custom Rule List
       type: object
@@ -245,27 +214,70 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-  parameters:
-    Accept:
-      name: Accept
-      in: header
-      description: 'Media types acceptable for the response. Default is application/json.
+    ThrottlePolicy:
+      title: Generic Throttling Policy
+      required:
+      - policyName
+      type: object
+      properties:
+        policyId:
+          type: string
+          description: Id of policy
+          readOnly: true
+          example: 0c6439fd-9b16-3c2e-be6e-1086e0b9aa93
+        policyName:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: Name of policy
+          example: 30PerMin
+        displayName:
+          type: string
+          description: Display name of the policy
+          example: 30PerMin
+          maxLength: 512
+        description:
+          maxLength: 1024
+          type: string
+          description: Description of the policy
+          example: Allows 30 request per minute
+        isDeployed:
+          type: boolean
+          description: Indicates whether the policy is deployed successfully or not.
+          default: false
+        type:
+          type: string
+          description: Indicates the type of throttle policy
+      discriminator:
+        propertyName: type
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
-        '
-      schema:
-        type: string
-        default: application/json
-    Content-Type:
-      name: Content-Type
-      in: header
-      description: 'Media type of the entity in the body. Default is application/json.
-
-        '
-      required: true
-      schema:
-        type: string
-        default: application/json
+            '
   responses:
+    UnsupportedMediaType:
+      description: Unsupported Media Type. The entity of the request was not in a supported format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 415
+            message: Unsupported media type
+            description: The entity of the request was not in a supported format
+            moreInfo: ''
+            error: []
     NotAcceptable:
       description: Not Acceptable. The requested media type is not supported.
       content:
@@ -288,18 +300,6 @@ components:
             code: 400
             message: Bad Request
             description: Invalid request or validation error
-            moreInfo: ''
-            error: []
-    UnsupportedMediaType:
-      description: Unsupported Media Type. The entity of the request was not in a supported format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 415
-            message: Unsupported media type
-            description: The entity of the request was not in a supported format
             moreInfo: ''
             error: []
   securitySchemes:

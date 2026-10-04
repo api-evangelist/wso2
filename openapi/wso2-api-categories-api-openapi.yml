@@ -43,6 +43,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    APICategoryList:
+      title: API Category List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of API categories returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APICategory'
     APICategory:
       title: API Category
       required:
@@ -58,20 +72,6 @@ components:
         description:
           type: string
           example: Finance related APIs
-    APICategoryList:
-      title: API Category List
-      type: object
-      properties:
-        count:
-          type: integer
-          description: 'Number of API categories returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APICategory'
   parameters:
     requestedTenant:
       name: X-WSO2-Tenant

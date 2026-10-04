@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-workflow-list-schema.json",
+  "title": "WorkflowList",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-workflow-collection-api-openapi.yml#/components/schemas/WorkflowList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of workflow processes returned.\n"
+    },
+    "next": {
+      "type": "string",
+      "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+    },
+    "previous": {
+      "type": "string",
+      "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/WorkflowInfo"
+      }
+    }
+  },
+  "$defs": {
+    "WorkflowInfo": {
+      "title": "Workflow info object with basic workflow details",
+      "type": "object",
+      "properties": {
+        "workflowType": {
+          "type": "string",
+          "description": "Type of the Workflow Request. It shows which type of request is it.\n",
+          "enum": [
+            "APPLICATION_CREATION",
+            "SUBSCRIPTION_CREATION",
+            "USER_SIGNUP",
+            "APPLICATION_REGISTRATION_PRODUCTION",
+            "APPLICATION_REGISTRATION_SANDBOX",
+            "APPLICATION_DELETION",
+            "API_STATE",
+            "API_PRODUCT_STATE",
+            "SUBSCRIPTION_DELETION",
+            "SUBSCRIPTION_UPDATE",
+            "REVISION_DEPLOYMENT",
+            "APPLICATION_UPDATE"
+          ]
+        },
+        "workflowStatus": {
+          "type": "string",
+          "description": "Show the Status of the the workflow request whether it is approved or created.\n",
+          "enum": [
+            "APPROVED",
+            "CREATED"
+          ]
+        },
+        "createdTime": {
+          "type": "string",
+          "description": "Time of the the workflow request created.\n"
+        },
+        "updatedTime": {
+          "type": "string",
+          "description": "Time of the the workflow request updated.\n"
+        },
+        "referenceId": {
+          "type": "string",
+          "description": "Workflow external reference is used to identify the workflow requests uniquely.\n"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {}
+        },
+        "description": {
+          "type": "string",
+          "description": "description is a message with basic details about the workflow request.\n"
+        }
+      }
+    }
+  }
+}

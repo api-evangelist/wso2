@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-apiinfo-schema.json",
+  "title": "Subscription Information for API.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-get-api-info-api-openapi.yml#/components/schemas/APIInfo",
+  "properties": {
+    "apiUUID": {
+      "type": "string",
+      "description": "UUID of API."
+    },
+    "apiId": {
+      "type": "integer"
+    },
+    "provider": {
+      "type": "string",
+      "description": "API Provider name."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the API"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the API."
+    },
+    "context": {
+      "type": "string",
+      "description": "Context of the API."
+    },
+    "policy": {
+      "type": "string",
+      "description": "API level throttling policy."
+    },
+    "apiType": {
+      "type": "string",
+      "description": "Type of the API."
+    },
+    "isDefaultVersion": {
+      "type": "boolean",
+      "description": "Whether this is the default version of the API."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of API."
+    },
+    "urlMappings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/URLMapping"
+      }
+    },
+    "subscripitons": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SubscriptionInfo"
+      }
+    }
+  },
+  "$defs": {
+    "ApplicationInfo": {
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "subName": {
+          "type": "string"
+        },
+        "policy": {
+          "type": "string",
+          "description": "Application level throtting policy."
+        },
+        "tokenType": {
+          "type": "string",
+          "description": "type of the token."
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ApplicationKeyMapping"
+          }
+        }
+      }
+    },
+    "ApplicationKeyMapping": {
+      "properties": {
+        "consumerKey": {
+          "type": "string"
+        },
+        "keyType": {
+          "type": "string"
+        },
+        "keyManager": {
+          "type": "string"
+        }
+      }
+    },
+    "SubscriptionInfo": {
+      "properties": {
+        "subscriptionUUID": {
+          "type": "string"
+        },
+        "subscriptionPolicy": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "application": {
+          "$ref": "#/$defs/ApplicationInfo"
+        }
+      }
+    },
+    "URLMapping": {
+      "properties": {
+        "authScheme": {
+          "type": "string"
+        },
+        "throttlingPolicy": {
+          "type": "string"
+        },
+        "httpMethod": {
+          "type": "string"
+        },
+        "urlPattern": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

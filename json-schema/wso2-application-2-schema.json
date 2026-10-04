@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-2-schema.json",
+  "title": "Application",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-applications-api-openapi.yml#/components/schemas/Application_2",
+  "required": [
+    "name",
+    "throttlingPolicy"
+  ],
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "readOnly": true
+    },
+    "name": {
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string"
+    },
+    "throttlingPolicy": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "description": {
+      "maxLength": 512,
+      "type": "string"
+    },
+    "tokenType": {
+      "type": "string",
+      "description": "Type of the access token generated for this application.\n\n**OAUTH:** A UUID based access token\n**JWT:** A self-contained, signed JWT based access token which is issued by default.\n",
+      "default": "JWT",
+      "enum": [
+        "OAUTH",
+        "JWT"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "readOnly": true,
+      "default": ""
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subscriptionCount": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "keys": {
+      "type": "array",
+      "readOnly": true,
+      "items": {
+        "$ref": "#/$defs/ApplicationKey"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "subscriptionScopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScopeInfo"
+      }
+    },
+    "owner": {
+      "type": "string",
+      "description": "Application created user\n",
+      "readOnly": true
+    },
+    "hashEnabled": {
+      "type": "boolean",
+      "readOnly": true
+    },
+    "createdTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "updatedTime": {
+      "type": "string",
+      "readOnly": true
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "PRIVATE",
+        "SHARED_WITH_ORG"
+      ]
+    }
+  },
+  "$defs": {
+    "ApplicationKey": {
+      "title": "Application key details",
+      "type": "object",
+      "properties": {
+        "keyMappingId": {
+          "type": "string",
+          "description": "Key Manager Mapping UUID",
+          "readOnly": true
+        },
+        "keyManager": {
+          "type": "string",
+          "description": "Key Manager Name"
+        },
+        "consumerKey": {
+          "type": "string",
+          "description": "Consumer key of the application",
+          "readOnly": true
+        },
+        "consumerSecret": {
+          "type": "string",
+          "description": "Consumer secret of the application",
+          "readOnly": true
+        },
+        "consumerSecrets": {
+          "type": "array",
+          "description": "A list of all consumer secrets of the application When multiple consumer secrets are enabled",
+          "items": {
+            "$ref": "#/$defs/ConsumerSecret"
+          }
+        },
+        "supportedGrantTypes": {
+          "type": "array",
+          "description": "The grant types that are supported by the application",
+          "items": {
+            "type": "string"
+          }
+        },
+        "callbackUrl": {
+          "type": "string",
+          "description": "Callback URL"
+        },
+        "keyState": {
+          "type": "string",
+          "description": "Describes the state of the key generation."
+        },
+        "keyType": {
+          "type": "string",
+          "description": "Describes to which endpoint the key belongs",
+          "enum": [
+            "PRODUCTION",
+            "SANDBOX"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "description": "Describe the which mode Application Mapped.",
+          "enum": [
+            "MAPPED",
+            "CREATED"
+          ]
+        },
+        "groupId": {
+          "type": "string",
+          "description": "Application group id (if any)."
+        },
+        "token": {
+          "$ref": "#/$defs/ApplicationToken"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "properties": {},
+          "description": "additionalProperties (if any)."
+        }
+      }
+    },
+    "ApplicationToken": {
+      "title": "Application token details to invoke APIs",
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "description": "Access token"
+        },
+        "tokenScopes": {
+          "type": "array",
+          "description": "Valid comma seperated scopes for the access token",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validityTime": {
+          "type": "integer",
+          "description": "Maximum validity time for the access token",
+          "format": "int64"
+        }
+      }
+    },
+    "ConsumerSecret": {
+      "type": "object",
+      "properties": {
+        "secretId": {
+          "type": "string",
+          "description": "Unique identifier for the secret"
+        },
+        "secretValue": {
+          "type": "string",
+          "description": "The actual secret string"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "description": "Additional dynamic properties for the secret creation request.",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "ScopeInfo": {
+      "title": "API Scope info object with scope details",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Allowed roles for the scope"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the scope"
+        }
+      }
+    }
+  }
+}

@@ -76,30 +76,22 @@ paths:
     servers:
     - url: https://apis.wso2.com/api/am/devportal/v3
 components:
-  responses:
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
   schemas:
-    OrganizationInfo:
-      title: Organization Info
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        organizationId:
+        code:
           type: string
-          example: 01234567-0123-0123-0123-012345678901
-        name:
+          description: Error code
+        message:
           type: string
-          example: My Organization
+          description: 'Description about individual errors occurred
+
+            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -133,35 +125,26 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    OrganizationInfo:
+      title: Organization Info
       type: object
       properties:
-        code:
+        organizationId:
           type: string
-          description: Error code
-        message:
+          example: 01234567-0123-0123-0123-012345678901
+        name:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-    ErrorListItem_2:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+          example: My Organization
+    CurrentAndNewPasswords:
+      title: Current and new passowrd of the user
       type: object
       properties:
-        code:
+        currentPassword:
           type: string
-        message:
+          example: password123
+        newPassword:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
+          example: newpassword1234
     Error_2:
       title: Error object returned with 4XX HTTP status
       required:
@@ -194,16 +177,33 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem_2'
-    CurrentAndNewPasswords:
-      title: Current and new passowrd of the user
+    ErrorListItem_2:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        currentPassword:
+        code:
           type: string
-          example: password123
-        newPassword:
+        message:
           type: string
-          example: newpassword1234
+          description: 'Description about individual errors occurred
+
+            '
+  responses:
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

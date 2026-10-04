@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-service-list-schema.json",
+  "title": "Paginated List of Services in Service Catalog",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-services-api-openapi.yml#/components/schemas/ServiceList",
+  "type": "object",
+  "properties": {
+    "list": {
+      "type": "array",
+      "title": "List of Services in Service Catalog",
+      "items": {
+        "$ref": "#/$defs/Service"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "Pagination": {
+      "title": "Pagination",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "Service": {
+      "type": "object",
+      "title": "The Service Object",
+      "required": [
+        "name",
+        "version",
+        "definitionType",
+        "serviceUrl"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[^\\*]+$",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 30,
+          "minLength": 1
+        },
+        "serviceKey": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "serviceUrl": {
+          "type": "string"
+        },
+        "definitionType": {
+          "type": "string",
+          "description": "The type of the provided API definition",
+          "enum": [
+            "OAS2",
+            "OAS3",
+            "WSDL1",
+            "WSDL2",
+            "GRAPHQL_SDL",
+            "ASYNC_API"
+          ]
+        },
+        "securityType": {
+          "type": "string",
+          "description": "The security type of the endpoint",
+          "enum": [
+            "BASIC",
+            "DIGEST",
+            "OAUTH2",
+            "X509",
+            "API_KEY",
+            "NONE"
+          ],
+          "default": "NONE"
+        },
+        "mutualSSLEnabled": {
+          "type": "boolean",
+          "description": "Whether Mutual SSL is enabled for the endpoint",
+          "default": false
+        },
+        "usage": {
+          "type": "integer",
+          "description": "Number of usages of the service in APIs",
+          "readOnly": true
+        },
+        "createdTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "readOnly": true
+        },
+        "md5": {
+          "type": "string"
+        },
+        "definitionUrl": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

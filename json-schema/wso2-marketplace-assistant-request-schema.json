@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-marketplace-assistant-request-schema.json",
+  "title": "MarketplaceAssistantRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-marketplace-assistant-api-openapi.yml#/components/schemas/MarketplaceAssistantRequest",
+  "required": [
+    "query",
+    "history"
+  ],
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "natural langugae query given by the user."
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ChatMessage"
+      }
+    }
+  },
+  "$defs": {
+    "ChatMessage": {
+      "required": [
+        "content",
+        "role"
+      ],
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "user or assistant role of a chat message."
+        },
+        "content": {
+          "type": "string",
+          "description": "content of the message."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-blocking-condition-list-schema.json",
+  "title": "Blocking Conditions List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-deny-policies-collection-api-openapi.yml#/components/schemas/BlockingConditionList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Blocking Conditions returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BlockingCondition"
+      }
+    }
+  },
+  "$defs": {
+    "BlockingCondition": {
+      "title": "Blocking Conditions",
+      "required": [
+        "conditionType",
+        "conditionValue"
+      ],
+      "type": "object",
+      "properties": {
+        "conditionId": {
+          "type": "string",
+          "description": "Id of the blocking condition"
+        },
+        "conditionType": {
+          "type": "string",
+          "description": "Type of the blocking condition",
+          "enum": [
+            "API",
+            "APPLICATION",
+            "IP",
+            "IPRANGE",
+            "USER"
+          ]
+        },
+        "conditionValue": {
+          "type": "object",
+          "properties": {},
+          "description": "Value of the blocking condition"
+        },
+        "conditionStatus": {
+          "type": "boolean",
+          "description": "Status of the blocking condition"
+        }
+      },
+      "description": "Blocking Conditions"
+    }
+  }
+}

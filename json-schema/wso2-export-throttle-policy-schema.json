@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-export-throttle-policy-schema.json",
+  "title": "Export Throttling Policy",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-import-export-api-openapi.yml#/components/schemas/ExportThrottlePolicy",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object"
+    }
+  }
+}

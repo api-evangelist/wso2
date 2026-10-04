@@ -50,34 +50,20 @@ paths:
       - lang: Curl
         source: 'curl -k -H "Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8" "https://127.0.0.1:9443/api/am/admin/v4/alert-types"'
 components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    AlertType:
-      title: Alert Type
-      type: object
-      properties:
-        id:
-          type: string
-          description: The alert Id
-          example: '1'
-        name:
-          type: string
-          description: The name of the alert.
-          example: AbnormalResponseTime
     AlertTypesList:
       title: Alert Types List
       type: object
@@ -90,6 +76,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlertType'
+    AlertType:
+      title: Alert Type
+      type: object
+      properties:
+        id:
+          type: string
+          description: The alert Id
+          example: '1'
+        name:
+          type: string
+          description: The name of the alert.
+          example: AbnormalResponseTime
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -123,19 +121,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-  responses:
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

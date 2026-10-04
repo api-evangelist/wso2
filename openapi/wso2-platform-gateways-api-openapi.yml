@@ -189,79 +189,44 @@ paths:
       - OAuth2Security:
         - apim:admin
 components:
-  schemas:
-    UpdatePlatformGatewayRequest:
-      title: Update Platform Gateway Request
-      description: 'Request body for PUT /gateways/{gatewayId}. Per PUT semantics, send the full resource
-
-        representation. Name and vhost are immutable (server validates they match the existing gateway).
-
-        '
-      required:
-      - name
-      - displayName
-      - vhost
-      type: object
-      properties:
-        name:
-          type: string
-          pattern: ^[a-z0-9-]+$
-          minLength: 3
-          maxLength: 64
-          description: Gateway identifier (immutable; must match existing). Required for PUT full representation.
-        vhost:
-          type: string
-          format: uri
-          description: Gateway URL (immutable; must match existing). Same name as platform API; type is URL. Example https://mg.wso2.com
-          example: https://mg.wso2.com
-        displayName:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Human-readable gateway name
-          example: Production Gateway 01
-        description:
-          type: string
-          maxLength: 1023
-          description: Optional description
-        properties:
-          type: object
-          additionalProperties: true
-          description: Custom key-value properties for the gateway
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
           example:
-            region: us-west
-            tier: premium
-        permissions:
-          type: object
-          description: Gateway visibility permissions (on-prem extension)
-          properties:
-            permissionType:
-              type: string
-              enum:
-              - PUBLIC
-              - ALLOW
-              - DENY
-              default: PUBLIC
-            roles:
-              type: array
-              items:
-                type: string
-              description: List of roles for ALLOW/DENY permission types
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    Conflict:
+      description: Conflict. Specified resource already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 409
+            message: Conflict
+            description: Specified resource already exists
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
+  schemas:
     GatewayList:
       title: Gateway List
       type: object
@@ -273,39 +238,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlatformGatewayResponse'
-    Error:
-      title: Error object returned with 4XX HTTP status
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code
-          format: int64
-        message:
-          type: string
-          description: Error message.
-        description:
-          type: string
-          description: 'A detail description about the error message.
-
-            '
-        moreInfo:
-          type: string
-          description: 'Preferably an url with more details about the error.
-
-            '
-        error:
-          type: array
-          description: 'If there are more than one error list them out.
-
-            For example, list out validation errors by each field.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
     PlatformGatewayResponse:
       title: Platform Gateway Response
       description: Platform gateway response (without registration token). Used for list and get.
@@ -452,43 +384,111 @@ components:
               the gateway to the control plane WebSocket. Store e.g. as GATEWAY_REGISTRATION_TOKEN.
 
               '
-  responses:
-    Conflict:
-      description: Conflict. Specified resource already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      title: Error object returned with 4XX HTTP status
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code
+          format: int64
+        message:
+          type: string
+          description: Error message.
+        description:
+          type: string
+          description: 'A detail description about the error message.
+
+            '
+        moreInfo:
+          type: string
+          description: 'Preferably an url with more details about the error.
+
+            '
+        error:
+          type: array
+          description: 'If there are more than one error list them out.
+
+            For example, list out validation errors by each field.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+    UpdatePlatformGatewayRequest:
+      title: Update Platform Gateway Request
+      description: 'Request body for PUT /gateways/{gatewayId}. Per PUT semantics, send the full resource
+
+        representation. Name and vhost are immutable (server validates they match the existing gateway).
+
+        '
+      required:
+      - name
+      - displayName
+      - vhost
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[a-z0-9-]+$
+          minLength: 3
+          maxLength: 64
+          description: Gateway identifier (immutable; must match existing). Required for PUT full representation.
+        vhost:
+          type: string
+          format: uri
+          description: Gateway URL (immutable; must match existing). Same name as platform API; type is URL. Example https://mg.wso2.com
+          example: https://mg.wso2.com
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Human-readable gateway name
+          example: Production Gateway 01
+        description:
+          type: string
+          maxLength: 1023
+          description: Optional description
+        properties:
+          type: object
+          additionalProperties: true
+          description: Custom key-value properties for the gateway
           example:
-            code: 409
-            message: Conflict
-            description: Specified resource already exists
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
+            region: us-west
+            tier: premium
+        permissions:
+          type: object
+          description: Gateway visibility permissions (on-prem extension)
+          properties:
+            permissionType:
+              type: string
+              enum:
+              - PUBLIC
+              - ALLOW
+              - DENY
+              default: PUBLIC
+            roles:
+              type: array
+              items:
+                type: string
+              description: List of roles for ALLOW/DENY permission types
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
   securitySchemes:
     OAuth2Security:
       type: oauth2

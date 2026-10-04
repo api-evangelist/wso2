@@ -75,21 +75,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    MonetizationUsagePublishInfo:
+      title: Usage publish status
       type: object
       properties:
-        code:
+        state:
           type: string
-          description: Error code
-        message:
+          description: State of usage publish job
+          example: RUNNING
+        status:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
+          description: Status of usage publish job
+          example: SUCCESSFULL
+        startedTime:
+          type: string
+          description: Timestamp of the started time of the Job
+          example: '1599196134000'
+        lastPublsihedTime:
+          type: string
+          description: Timestamp of the last published time
+          example: '1599196134000'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -123,26 +128,21 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    MonetizationUsagePublishInfo:
-      title: Usage publish status
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        state:
+        code:
           type: string
-          description: State of usage publish job
-          example: RUNNING
-        status:
+          description: Error code
+        message:
           type: string
-          description: Status of usage publish job
-          example: SUCCESSFULL
-        startedTime:
-          type: string
-          description: Timestamp of the started time of the Job
-          example: '1599196134000'
-        lastPublsihedTime:
-          type: string
-          description: Timestamp of the last published time
-          example: '1599196134000'
+          description: 'Description about individual errors occurred
+
+            '
     PublishStatus:
       title: Usage publish status
       type: object
@@ -156,18 +156,6 @@ components:
           description: detailed message of the status
           example: Records published successfully
   responses:
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
     NotFound:
       description: Not Found. The specified resource does not exist.
       content:
@@ -178,6 +166,18 @@ components:
             code: 404
             message: Not Found
             description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
             moreInfo: ''
             error: []
   securitySchemes:

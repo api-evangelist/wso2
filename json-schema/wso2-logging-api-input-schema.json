@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-logging-api-input-schema.json",
+  "title": "API Info object with log details",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-tenant-logs-api-openapi.yml#/components/schemas/LoggingApiInput",
+  "required": [
+    "logLevel"
+  ],
+  "properties": {
+    "logLevel": {
+      "type": "string"
+    },
+    "resourceMethod": {
+      "type": "string"
+    },
+    "resourcePath": {
+      "type": "string"
+    }
+  }
+}

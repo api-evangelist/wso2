@@ -50,21 +50,20 @@ paths:
       operationId: getRecommendations
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     recommendedAPI:
       title: Recommended API
       type: object
@@ -79,6 +78,20 @@ components:
           type: string
           description: Average rating of the API
           example: '4.5'
+    Recommendations:
+      title: API recommendations
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of APIs returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/recommendedAPI'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -111,33 +124,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    Recommendations:
-      title: API recommendations
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of APIs returned.
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/recommendedAPI'
-  responses:
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   securitySchemes:
     OAuth2Security:
       type: oauth2

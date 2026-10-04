@@ -113,6 +113,49 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SubscriptionInfo:
+      properties:
+        subscriptionUUID:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        subscriptionPolicy:
+          type: string
+          example: Gold
+        status:
+          type: string
+          example: UnBlocked
+        application:
+          $ref: '#/components/schemas/ApplicationInfo'
+    URLMapping:
+      properties:
+        authScheme:
+          type: string
+          example: Application & Application User
+        throttlingPolicy:
+          type: string
+          example: Unlimited
+        httpMethod:
+          type: string
+          example: GET
+        urlPattern:
+          type: string
+          example: /menu
+        scopes:
+          type: array
+          items:
+            type: string
+            example: read
+    ApplicationKeyMapping:
+      properties:
+        consumerKey:
+          type: string
+          example: d290f1ee-6c54-4b01-90e6-d701848f0851
+        keyType:
+          type: string
+          example: Production
+        keyManager:
+          type: string
+          example: Resident Key Manager
     APIInfo:
       title: Subscription Information for API.
       properties:
@@ -163,39 +206,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SubscriptionInfo'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    URLMapping:
-      properties:
-        authScheme:
-          type: string
-          example: Application & Application User
-        throttlingPolicy:
-          type: string
-          example: Unlimited
-        httpMethod:
-          type: string
-          example: GET
-        urlPattern:
-          type: string
-          example: /menu
-        scopes:
-          type: array
-          items:
-            type: string
-            example: read
     APIMetaData:
       properties:
         apiUUID:
@@ -237,6 +247,19 @@ components:
           type: string
           description: Status of API.
           example: Published
+    APIList:
+      title: API List
+      properties:
+        count:
+          type: integer
+          description: 'Number of APIs returned.
+
+            '
+          example: 1
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/APIMetaData'
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -269,19 +292,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    SubscriptionInfo:
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       properties:
-        subscriptionUUID:
+        code:
           type: string
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        subscriptionPolicy:
+          description: Error code
+        message:
           type: string
-          example: Gold
-        status:
-          type: string
-          example: UnBlocked
-        application:
-          $ref: '#/components/schemas/ApplicationInfo'
+          description: 'Description about individual errors occurred
+
+            '
     ApplicationInfo:
       properties:
         uuid:
@@ -312,30 +336,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationKeyMapping'
-    ApplicationKeyMapping:
-      properties:
-        consumerKey:
-          type: string
-          example: d290f1ee-6c54-4b01-90e6-d701848f0851
-        keyType:
-          type: string
-          example: Production
-        keyManager:
-          type: string
-          example: Resident Key Manager
-    APIList:
-      title: API List
-      properties:
-        count:
-          type: integer
-          description: 'Number of APIs returned.
-
-            '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/APIMetaData'
   responses:
     NotFound:
       description: Not Found. The specified resource does not exist.

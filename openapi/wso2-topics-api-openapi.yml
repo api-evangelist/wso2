@@ -56,37 +56,61 @@ paths:
       operationId: getApisByApiIdTopics
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
   schemas:
-    TopicList:
-      title: Topic List
+    Pagination:
+      title: Pagination
       type: object
       properties:
-        count:
+        offset:
           type: integer
-          description: 'Number of Topics returned.
-
-            '
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
           example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Topic'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
+        next:
           type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
 
             '
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     Topic:
       title: Topic
       type: object
@@ -132,60 +156,36 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    Pagination:
-      title: Pagination
+    TopicList:
+      title: Topic List
       type: object
       properties:
-        offset:
+        count:
           type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
+          description: 'Number of Topics returned.
+
+            '
           example: 1
-        next:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
           type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
+        message:
+          type: string
+          description: 'Description about individual errors occurred
 
             '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
-  responses:
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
   parameters:
     requestedTenant:
       name: X-WSO2-Tenant

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-bot-detection-alert-subscription-list-schema.json",
+  "title": "Bot Detection Alert Subscription List",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-bot-detection-alert-subscriptions-api-openapi.yml#/components/schemas/BotDetectionAlertSubscriptionList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Bot Detection Alert Subscriptions returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BotDetectionAlertSubscription"
+      }
+    }
+  },
+  "$defs": {
+    "BotDetectionAlertSubscription": {
+      "title": "Bot Detection Alert Subscription",
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "UUID of the subscription"
+        },
+        "email": {
+          "type": "string",
+          "description": "email"
+        }
+      }
+    }
+  }
+}

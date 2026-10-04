@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-tenant-info-schema.json",
+  "title": "Tenant information",
+  "description": "The tenant information of the user",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-tenants-api-openapi.yml#/components/schemas/TenantInfo",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "tenantDomain": {
+      "type": "string"
+    },
+    "tenantId": {
+      "type": "integer"
+    }
+  }
+}

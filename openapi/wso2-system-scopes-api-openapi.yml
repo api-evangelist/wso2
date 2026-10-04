@@ -202,7 +202,66 @@ paths:
       operationId: putSystemScopesRoleAliases
       x-operation-id-source: derived
 components:
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 500
+            message: Internal Server Error
+            description: The server encountered an internal error. Please contact administrator.
+            moreInfo: ''
+            error: []
+    BadRequest:
+      description: Bad Request. Invalid request or validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Bad Request
+            description: Invalid request or validation error
+            moreInfo: ''
+            error: []
   schemas:
+    ScopeSettings:
+      title: Settings
+      type: object
+      properties:
+        name:
+          type: string
+          example: apim:subscribe
+    ScopeList:
+      title: Scope Role Mapping List
+      type: object
+      properties:
+        count:
+          type: integer
+          description: 'Number of scopes available for tenant.
+
+            '
+          readOnly: true
+          example: 60
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scope'
     RoleAliasList:
       title: Role alias list
       type: object
@@ -215,21 +274,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RoleAlias'
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -263,21 +307,22 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    ScopeList:
-      title: Scope Role Mapping List
+    RoleAlias:
+      title: Role alias
       type: object
       properties:
-        count:
-          type: integer
-          description: 'Number of scopes available for tenant.
-
-            '
-          readOnly: true
-          example: 60
-        list:
+        role:
+          type: string
+          description: The original role
+          example: Internal/subscriber
+        aliases:
           type: array
+          description: The role mapping for role alias
+          example:
+          - Subscriber
+          - Internal/subscriber
           items:
-            $ref: '#/components/schemas/Scope'
+            type: string
     Scope:
       title: Scope Role
       type: object
@@ -310,66 +355,21 @@ components:
           - Internal/publisher
           items:
             type: string
-    RoleAlias:
-      title: Role alias
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        role:
+        code:
           type: string
-          description: The original role
-          example: Internal/subscriber
-        aliases:
-          type: array
-          description: The role mapping for role alias
-          example:
-          - Subscriber
-          - Internal/subscriber
-          items:
-            type: string
-    ScopeSettings:
-      title: Settings
-      type: object
-      properties:
-        name:
+          description: Error code
+        message:
           type: string
-          example: apim:subscribe
-  responses:
-    InternalServerError:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 500
-            message: Internal Server Error
-            description: The server encountered an internal error. Please contact administrator.
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
-    BadRequest:
-      description: Bad Request. Invalid request or validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 400
-            message: Bad Request
-            description: Invalid request or validation error
-            moreInfo: ''
-            error: []
+          description: 'Description about individual errors occurred
+
+            '
   parameters:
     scopeName:
       name: scopeName

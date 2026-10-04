@@ -221,90 +221,61 @@ paths:
       operationId: getApisByApiIdDocumentsByDocumentIdContent
       x-operation-id-source: derived
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: 'Starting point within the complete list of items qualified.
-
-        '
-      schema:
-        type: integer
-        default: 0
-    documentId:
-      name: documentId
-      in: path
-      description: 'Document Identifier
-
-        '
-      required: true
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      description: 'Maximum size of resource array to return.
-
-        '
-      schema:
-        type: integer
-        default: 25
-    requestedTenant:
-      name: X-WSO2-Tenant
-      in: header
-      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: '**API ID** consisting of the **UUID** of the API.
-
-        '
-      required: true
-      schema:
-        type: string
-    If-None-Match:
-      name: If-None-Match
-      in: header
-      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
-
-        variant of the resourec.
-
-        '
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: Not Found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not Found
+            description: The specified resource does not exist
+            moreInfo: ''
+            error: []
+    NotAcceptable:
+      description: Not Acceptable. The requested media type is not supported.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 406
+            message: Not Acceptable
+            description: The requested media type is not supported
+            moreInfo: ''
+            error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    Pagination:
+      title: Pagination
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-          description: 'Description about individual errors occurred
-
-            '
-    DocumentList:
-      title: Document List
-      type: object
-      properties:
-        count:
+        offset:
           type: integer
-          description: 'Number of Documents returned.
+          example: 0
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 1
+        next:
+          type: string
+          description: 'Link to the next subset of resources qualified.
+
+            Empty if no more resources are to be returned.
 
             '
-          example: 1
-        list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Document'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+          example: ''
+        previous:
+          type: string
+          description: 'Link to the previous subset of resources qualified.
+
+            Empty if current subset is the first subset returned.
+
+            '
+          example: ''
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -337,35 +308,22 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    Pagination:
-      title: Pagination
+    DocumentList:
+      title: Document List
       type: object
       properties:
-        offset:
+        count:
           type: integer
-          example: 0
-        limit:
-          type: integer
-          example: 10
-        total:
-          type: integer
+          description: 'Number of Documents returned.
+
+            '
           example: 1
-        next:
-          type: string
-          description: 'Link to the next subset of resources qualified.
-
-            Empty if no more resources are to be returned.
-
-            '
-          example: ''
-        previous:
-          type: string
-          description: 'Link to the previous subset of resources qualified.
-
-            Empty if current subset is the first subset returned.
-
-            '
-          example: ''
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Document:
       title: Document
       required:
@@ -408,31 +366,73 @@ components:
         otherTypeName:
           type: string
           example: ''
-  responses:
-    NotAcceptable:
-      description: Not Acceptable. The requested media type is not supported.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 406
-            message: Not Acceptable
-            description: The requested media type is not supported
-            moreInfo: ''
-            error: []
-    NotFound:
-      description: Not Found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not Found
-            description: The specified resource does not exist
-            moreInfo: ''
-            error: []
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
+  parameters:
+    documentId:
+      name: documentId
+      in: path
+      description: 'Document Identifier
+
+        '
+      required: true
+      schema:
+        type: string
+    requestedTenant:
+      name: X-WSO2-Tenant
+      in: header
+      description: "For cross-tenant invocations, this is used to specify the tenant domain, where the resource need to be\n  retrieved from.\n"
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum size of resource array to return.
+
+        '
+      schema:
+        type: integer
+        default: 25
+    offset:
+      name: offset
+      in: query
+      description: 'Starting point within the complete list of items qualified.
+
+        '
+      schema:
+        type: integer
+        default: 0
+    apiId:
+      name: apiId
+      in: path
+      description: '**API ID** consisting of the **UUID** of the API.
+
+        '
+      required: true
+      schema:
+        type: string
+    If-None-Match:
+      name: If-None-Match
+      in: header
+      description: 'Validator for conditional requests; based on the ETag of the formerly retrieved
+
+        variant of the resourec.
+
+        '
+      schema:
+        type: string
   securitySchemes:
     OAuth2Security:
       type: oauth2

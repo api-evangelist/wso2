@@ -119,14 +119,6 @@ components:
           - name
           items:
             type: string
-    GraphQLSchemaTypeList:
-      title: List of types and corresponding fields of the GraphQL Schema
-      type: object
-      properties:
-        typeList:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphQLSchemaType'
     GraphQLCustomComplexityInfo:
       title: GraphQL Custom Complexity Info
       required:
@@ -153,6 +145,14 @@ components:
 
             '
           example: 1
+    GraphQLSchemaTypeList:
+      title: List of types and corresponding fields of the GraphQL Schema
+      type: object
+      properties:
+        typeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLSchemaType'
     GraphQLQueryComplexityInfo:
       title: GraphQL Query Complexity Info
       type: object

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-application-token-schema.json",
+  "title": "Application token details to invoke APIs",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-application-tokens-api-openapi.yml#/components/schemas/ApplicationToken",
+  "type": "object",
+  "properties": {
+    "accessToken": {
+      "type": "string",
+      "description": "Access token"
+    },
+    "tokenScopes": {
+      "type": "array",
+      "description": "Valid comma seperated scopes for the access token",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validityTime": {
+      "type": "integer",
+      "description": "Maximum validity time for the access token",
+      "format": "int64"
+    }
+  }
+}

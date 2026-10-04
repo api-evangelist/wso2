@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-ruleset-list-schema.json",
+  "title": "RulesetList",
+  "description": "A list of rulesets.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-rulesets-api-openapi.yml#/components/schemas/RulesetList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of rulesets returned."
+    },
+    "list": {
+      "type": "array",
+      "description": "List of rulesets.",
+      "items": {
+        "$ref": "#/$defs/RulesetInfo"
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Pagination"
+    }
+  },
+  "$defs": {
+    "Pagination": {
+      "title": "Pagination",
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "next": {
+          "type": "string",
+          "description": "Link to the next subset of resources qualified.\nEmpty if no more resources are to be returned.\n"
+        },
+        "previous": {
+          "type": "string",
+          "description": "Link to the previous subset of resources qualified.\nEmpty if current subset is the first subset returned.\n"
+        }
+      }
+    },
+    "RulesetInfo": {
+      "type": "object",
+      "description": "Detailed information about a ruleset.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID of the ruleset.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the ruleset."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the ruleset."
+        },
+        "ruleCategory": {
+          "type": "string",
+          "description": "Category the rules included in ruleset.",
+          "enum": [
+            "SPECTRAL"
+          ]
+        },
+        "ruleType": {
+          "type": "string",
+          "description": "Context or area to which the ruleset applies.",
+          "enum": [
+            "API_METADATA",
+            "API_DEFINITION",
+            "API_DOCUMENTATION"
+          ],
+          "x-enum-varnames": [
+            "API_METADATA",
+            "API_DEFINITION",
+            "API_DOCUMENTATION"
+          ]
+        },
+        "artifactType": {
+          "type": "string",
+          "description": "The type of artifact that the ruleset validates.",
+          "enum": [
+            "REST_API",
+            "ASYNC_API",
+            "MCP"
+          ]
+        },
+        "documentationLink": {
+          "type": "string",
+          "description": "URL to the documentation related to the ruleset."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Entity or individual providing the ruleset."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Identifier of the user who created the ruleset.",
+          "readOnly": true
+        },
+        "createdTime": {
+          "type": "string",
+          "description": "Timestamp when the ruleset was created.",
+          "readOnly": true
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Identifier of the user who last updated the ruleset.",
+          "readOnly": true
+        },
+        "updatedTime": {
+          "type": "string",
+          "description": "Timestamp when the ruleset was last updated.",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "name",
+        "ruleType",
+        "artifactType",
+        "provider"
+      ]
+    }
+  }
+}

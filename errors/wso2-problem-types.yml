@@ -1,0 +1,115 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/wso2-advanced-policy-collection-api-openapi.yml
+- openapi/wso2-advanced-policy-individual-api-openapi.yml
+- openapi/wso2-aiserviceprovider-api-openapi.yml
+- openapi/wso2-aiserviceproviders-api-openapi.yml
+- openapi/wso2-alert-subscriptions-api-openapi.yml
+- openapi/wso2-alerts-api-openapi.yml
+- openapi/wso2-api-artifact-api-openapi.yml
+- openapi/wso2-api-categories-api-openapi.yml
+- openapi/wso2-api-category-collection-api-openapi.yml
+- openapi/wso2-api-category-individual-api-openapi.yml
+- openapi/wso2-api-chat-api-openapi.yml
+- openapi/wso2-api-documents-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: Error
+coverage:
+  operations: 268
+  statuses_declared: 13
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request. Invalid request or validation error.
+  operations: 142
+  media_types:
+  - application/json
+  schema: Error
+- status: 401
+  title: Unauthorized
+  description: Unauthorized. The user is not authorized.
+  operations: 48
+  media_types:
+  - application/json
+  schema: Error
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  operations: 40
+  media_types:
+  - application/json
+  schema: Error
+- status: 404
+  title: Not Found
+  description: Not Found. The specified resource does not exist.
+  operations: 173
+  media_types:
+  - application/json
+  schema: Error
+- status: 405
+  title: Method Not Allowed
+  description: MethodNotAllowed.
+  operations: 2
+  media_types: []
+  schema: null
+- status: 406
+  title: Not Acceptable
+  description: Not Acceptable. The requested media type is not supported.
+  operations: 58
+  media_types:
+  - application/json
+  schema: Error
+- status: 409
+  title: Conflict
+  description: Conflict. Specified resource already exists.
+  operations: 8
+  media_types:
+  - application/json
+  schema: Error
+- status: 412
+  title: Precondition Failed
+  description: Precondition Failed. The request has not been performed because one of the preconditions is not met.
+  operations: 33
+  media_types:
+  - application/json
+  schema: Error
+- status: 413
+  title: Content Too Large
+  description: Payload Too Large. Request entity is larger than limits defined by server.
+  operations: 3
+  media_types:
+  - application/json
+  schema: Error
+- status: 415
+  title: Unsupported Media Type
+  description: Unsupported Media Type. The entity of the request was not in a supported format.
+  operations: 16
+  media_types:
+  - application/json
+  schema: Error
+- status: 429
+  title: Too Many Requests
+  description: Too many requests.
+  operations: 1
+  media_types:
+  - application/json
+  schema: Error
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error.
+  operations: 83
+  media_types:
+  - application/json
+  - text/plain
+  schema: Error
+- status: default
+  title: null
+  description: Unexpected error
+  operations: 1
+  media_types:
+  - application/json
+  schema: Error

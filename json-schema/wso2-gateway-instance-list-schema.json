@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wso2/main/json-schema/wso2-gateway-instance-list-schema.json",
+  "title": "Gateway instance list",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/wso2-environments-api-openapi.yml#/components/schemas/GatewayInstanceList",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of Gateway Instances returned.\n"
+    },
+    "list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GatewayInstance"
+      }
+    }
+  },
+  "$defs": {
+    "GatewayInstance": {
+      "title": "Gateway instance in the gateway environment",
+      "type": "object",
+      "required": [
+        "gatewayId"
+      ],
+      "properties": {
+        "gatewayId": {
+          "type": "string"
+        },
+        "lastActive": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "default": "ACTIVE",
+          "enum": [
+            "ACTIVE",
+            "EXPIRED"
+          ]
+        }
+      }
+    }
+  }
+}

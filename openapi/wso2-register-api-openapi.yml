@@ -68,23 +68,47 @@ components:
             moreInfo: ''
             error: []
   schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
+    DCRResult:
+      title: DCRResult
       type: object
       properties:
-        code:
+        callbackUrl:
           type: string
-        message:
+          readOnly: true
+          example: www.example.com
+        clientName:
           type: string
-          description: 'Description about individual errors occurred
-
-            '
-        description:
+          readOnly: true
+          example: rest_api_publisher
+        clientId:
           type: string
-          description: "A detail description about the error message.          \n"
+          readOnly: true
+          example: fosJTsHQyluahdppkJMFUm6cm3ca
+        clientSecret:
+          type: string
+          readOnly: true
+          example: aSF_ljQZ1e7qxiJ9YraG_NGJ9Iwa
+        isSaasApplication:
+          type: string
+          readOnly: true
+          example: true
+        appOwner:
+          type: string
+          readOnly: true
+          example: admin
+        jsonString:
+          type: string
+          readOnly: true
+        jsonAppAttribute:
+          type: string
+          readOnly: true
+        applicationUUID:
+          type: string
+          readOnly: true
+        tokenType:
+          type: string
+          readOnly: true
+          example: JWT
     DCR:
       title: DCR
       type: object
@@ -149,47 +173,23 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
-    DCRResult:
-      title: DCRResult
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
       type: object
       properties:
-        callbackUrl:
+        code:
           type: string
-          readOnly: true
-          example: www.example.com
-        clientName:
+        message:
           type: string
-          readOnly: true
-          example: rest_api_publisher
-        clientId:
+          description: 'Description about individual errors occurred
+
+            '
+        description:
           type: string
-          readOnly: true
-          example: fosJTsHQyluahdppkJMFUm6cm3ca
-        clientSecret:
-          type: string
-          readOnly: true
-          example: aSF_ljQZ1e7qxiJ9YraG_NGJ9Iwa
-        isSaasApplication:
-          type: string
-          readOnly: true
-          example: true
-        appOwner:
-          type: string
-          readOnly: true
-          example: admin
-        jsonString:
-          type: string
-          readOnly: true
-        jsonAppAttribute:
-          type: string
-          readOnly: true
-        applicationUUID:
-          type: string
-          readOnly: true
-        tokenType:
-          type: string
-          readOnly: true
-          example: JWT
+          description: "A detail description about the error message.          \n"
   securitySchemes:
     OAuth2Security:
       type: oauth2

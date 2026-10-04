@@ -65,21 +65,34 @@ paths:
       tags:
       - Api Artifact
 components:
-  schemas:
-    ErrorListItem:
-      title: Description of individual errors that may have occurred during a request.
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: 'Description about individual errors occurred
+  parameters:
+    apiName:
+      name: apiName
+      in: query
+      description: 'Name of the API
 
-            '
+        '
+      required: true
+      schema:
+        type: string
+    version:
+      name: version
+      in: query
+      description: 'version of the API
+
+        '
+      required: true
+      schema:
+        type: string
+    tenantDomain:
+      name: tenantDomain
+      in: query
+      description: 'Tenant Domain of the API
+
+        '
+      schema:
+        type: string
+  schemas:
     Error:
       title: Error object returned with 4XX HTTP status
       required:
@@ -112,6 +125,20 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorListItem'
+    ErrorListItem:
+      title: Description of individual errors that may have occurred during a request.
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: 'Description about individual errors occurred
+
+            '
     APIArtifact:
       title: API Artifact Response
       properties:
@@ -121,30 +148,3 @@ components:
 
             '
           example: ''
-  parameters:
-    apiName:
-      name: apiName
-      in: query
-      description: 'Name of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    version:
-      name: version
-      in: query
-      description: 'version of the API
-
-        '
-      required: true
-      schema:
-        type: string
-    tenantDomain:
-      name: tenantDomain
-      in: query
-      description: 'Tenant Domain of the API
-
-        '
-      schema:
-        type: string
