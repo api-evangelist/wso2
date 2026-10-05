@@ -1,0 +1,12 @@
+{
+ "url": "https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3.yaml",
+ "requested_url": "https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3.yaml",
+ "status": 200,
+ "content_type": "application/octet-stream",
+ "bytes": 309352,
+ "sha256": "ffab02167349c7053d0406e6176755580d3774cf752c55c12a5f2f9450e49681",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
