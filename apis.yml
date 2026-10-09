@@ -256,6 +256,8 @@ common:
     description: Identity provider integration for OAuth2 flows.
 - type: LlmsText
   url: https://wso2.com/llms.txt
+- type: SpectralRules
+  url: https://github.com/wso2/agent-skills/blob/f53805729ad42f76bc616a11906e10de2c7bc0a1/plugins/api-platform/skills/api-design/references/agent-readiness-spectral/ai-readiness.yaml
 apis:
 - aid: wso2:wso2-advanced-policy-collection-api
   name: WSO2 Advanced Policy (Collection) API

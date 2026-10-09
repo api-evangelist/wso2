@@ -52,3 +52,33 @@ plans:
   overage: Enterprise plans are billed based on Order Form.
 rate_limit_statements:
 - Max API Requests/Month 1M per month 10M per month Custom
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - hybrid
+  - metered
+  units: []
+  plans:
+  - name: 30-Day Trial
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Growth
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods:
+    - none
