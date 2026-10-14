@@ -1,0 +1,47 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- https://github.com/marketplace?type=apps
+- https://marketplace.visualstudio.com/vscode
+marketplace_apps: []
+edges:
+- partner_name: GitHub Marketplace (apps)
+  partner: github
+  partner_match: aggregator
+  type: marketplace
+  marketplace: github-apps
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://github.com/marketplace/choreo-apps
+  listing_count: 1
+  apps:
+  - WSO2 Cloud App
+  publisher_name: wso2-enterprise
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+- partner_name: Visual Studio Code Marketplace
+  partner: vs-code-marketplace
+  partner_match: aggregator
+  type: marketplace
+  marketplace: vscode
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.visualstudio.com/publishers/WSO2
+  listing_count: 5
+  apps:
+  - Ballerina
+  - WSO2 Platform [Deprecated]
+  - 'WSO2 Integrator: MI'
+  - WSO2 Enterprise Integrator
+  - Hurl Client
+  publisher_name: WSO2
+  badges:
+  - Verified publisher
+  - Verified domain
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+source:
+- https://github.com/marketplace?type=apps
+- https://marketplace.visualstudio.com/vscode
