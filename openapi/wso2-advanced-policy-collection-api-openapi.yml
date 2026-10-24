@@ -580,3 +580,9 @@ components:
             apim:gov_rule_manage: Manage governance rules
             apim:organization_manage: Manage Organizations
             apim:organization_read: Read Organizations
+x-provenance:
+  method: harvested
+  publisher: WSO2
+  source: https://apim.docs.wso2.com/en/latest/reference/product-apis/admin-apis/admin-v4/admin-v4.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

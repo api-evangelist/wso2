@@ -161,3 +161,9 @@ components:
             apim:sub_alert_manage: Retrieve, subscribe and configure Developer Portal alert types
             apim:app_import_export: Import and export applications related operations
             apim:admin: Manage all admin operations
+x-provenance:
+  method: harvested
+  publisher: WSO2
+  source: https://apim.docs.wso2.com/en/latest/reference/product-apis/devportal-apis/devportal-v3/devportal-v3.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
